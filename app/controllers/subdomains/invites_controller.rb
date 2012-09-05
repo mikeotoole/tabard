@@ -26,7 +26,7 @@ class Subdomains::InvitesController < SubdomainsController
 
   # POST /invites(.:format)
   def update
-    add_new_flash_message 'Invite was successfully created.','success' if @invite.update_attributes(params[:invite])
+    flash[:success] = 'Invite was successfully created.' if @invite.update_attributes(params[:invite])
     respond_with(@invite, location: event_url(@invite.event))
   end
 

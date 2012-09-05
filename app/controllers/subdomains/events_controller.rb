@@ -55,7 +55,7 @@ class Subdomains::EventsController < SubdomainsController
       end
       render :month_index, layout: 'calendar'
     else
-      add_new_flash_message 'Invalid date.', 'alert'
+      flash[:alert] = 'Invalid date.'
       redirect_to month_events_url(year: Date.today.year, month: Date.today.month)
     end
   end
@@ -84,7 +84,7 @@ class Subdomains::EventsController < SubdomainsController
       end
       render :week_index, layout: 'calendar'
     else
-      add_new_flash_message 'Invalid date.', 'alert'
+      flash[:alert] = 'Invalid date.'
       redirect_to week_events_url year: Date.today.year, week: Date.today.cweek
     end
   end
@@ -107,21 +107,21 @@ class Subdomains::EventsController < SubdomainsController
 
   # POST /events
   def create
-    add_new_flash_message 'Event was successfully created.', 'success' if @event.save
+    flash[:success] = 'Event was successfully created.' if @event.save
     respond_with(@event)
   end
 
   # PUT /events/1
   def update
     if @event.update_attributes(params[:event])
-      add_new_flash_message 'Event was successfully updated.', 'success'
+      flash[:success] = 'Event was successfully updated.'
     end
     respond_with(@event)
   end
 
   # DELETE /events/1
   def destroy
-    add_new_flash_message 'Event has been removed.', 'notice' if @event.destroy
+    flash[:notice] = 'Event has been removed.' if @event.destroy
     respond_with(@event)
   end
 
@@ -131,11 +131,11 @@ class Subdomains::EventsController < SubdomainsController
     participant.user_profile = current_user.user_profile
     participant.character_proxy = (character_active? ? current_character.character_proxy : nil)
     if participant.save
-      add_new_flash_message 'Successfully responded as attending.', 'success'
+      flash[:success] = 'Successfully responded as attending.'
       redirect_to url_for(@event), action: :show
       return
     else
-      add_new_flash_message 'Unable to respond to event.', 'alert'
+      flash[:alert] = 'Unable to respond to event.'
       redirect_to url_for(@event), action: :show
       return
     end
@@ -197,6 +197,6 @@ protected
   def rsvp_flash
     default_url_options[:host] = ENV["RAILS_ENV"] == 'production' ? "#{current_community.subdomain}.tabard.co" : "#{current_community.subdomain}.lvh.me"
     invite = current_user.invites.find_by_event_id(@event.id)
-    add_new_flash_message "You have not RSVP'd to this event yet. <a href='#{edit_invite_url(invite)}'>Respond now</a>", 'notice' if invite != nil and invite.status == nil
+    flash[:notice] = "You have not RSVP'd to this event yet. <a href='#{edit_invite_url(invite)}'>Respond now</a>" if invite != nil and invite.status == nil
   end
 end

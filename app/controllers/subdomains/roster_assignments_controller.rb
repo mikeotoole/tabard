@@ -55,9 +55,9 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
     if @roster_assignment.save
       @roster_assignment.approve(current_user.user_profile_id != @roster_assignment.community_profile_user_profile_id) if can? :manage, @roster_assignment
       if @roster_assignment.is_pending
-        add_new_flash_message "Your request to add #{@roster_assignment.character_proxy_name} to the roster has been sent.", 'notice'
+        flash[:notice] = "Your request to add #{@roster_assignment.character_proxy_name} to the roster has been sent."
       else
-        add_new_flash_message "#{@roster_assignment.character_proxy_name} has been added to the roster.", 'success'
+        flash[:success] = "#{@roster_assignment.character_proxy_name} has been added to the roster."
       end
     end
     community_profile = current_user.community_profiles.find_by_community_id(current_community.id)
@@ -72,7 +72,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
     #@roster_assignment = RosterAssignment.find(params[:id])
     character_name = @roster_assignment.character_proxy_name
     if @roster_assignment.destroy
-      add_new_flash_message "#{character_name} has been removed from the roster.", 'notice'
+      flash[:notice] = "#{character_name} has been removed from the roster."
     end
     redirect_to my_roster_assignments_path
   end
@@ -86,7 +86,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
           roster_assignment.destroy
         end
       end
-      add_new_flash_message "The roster has been updated.", 'notice'
+      flash[:notice] = "The roster has been updated."
     end
     redirect_to roster_assignments_path
   end
@@ -100,7 +100,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   # PUT /roster_assignments/1/approve
   def approve
     @roster_assignment.approve(current_user.user_profile_id != @roster_assignment.community_profile_user_profile_id)
-    add_new_flash_message "#{@roster_assignment.character_proxy_name} has been added to the community roster.", 'success'
+    flash[:success] = "#{@roster_assignment.character_proxy_name} has been added to the community roster."
     redirect_to pending_roster_assignments_path
   end
 
@@ -113,7 +113,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
           roster_assignment.approve(current_user.user_profile_id != roster_assignment.community_profile_user_profile_id)
         end
       end
-      add_new_flash_message "The roster has been updated.", 'success'
+      flash[:success] = "The roster has been updated."
     end
     redirect_to pending_roster_assignments_path
   end
@@ -121,7 +121,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   # PUT /roster_assignments/1/reject
   def reject
     @roster_assignment.reject(current_user.user_profile_id != @roster_assignment.community_profile_user_profile_id)
-    add_new_flash_message "You have rejcted #{@roster_assignment.character_proxy_name} from joining the roster.", 'notice'
+    flash[:notice] = "You have rejcted #{@roster_assignment.character_proxy_name} from joining the roster."
     redirect_to pending_roster_assignments_path
   end
 
@@ -134,7 +134,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
           roster_assignment.reject(current_user.user_profile_id != roster_assignment.community_profile_user_profile_id)
         end
       end
-      add_new_flash_message "The roster has been updated.", 'success'
+      flash[:success] = "The roster has been updated."
     end
     redirect_to pending_roster_assignments_path
   end

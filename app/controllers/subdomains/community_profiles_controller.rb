@@ -25,11 +25,11 @@ class Subdomains::CommunityProfilesController < SubdomainsController
       community_application = @community_profile.community_application
       community_application.remove_from_community(current_user.user_profile)
       if @community_profile.user_profile == current_user.user_profile
-        add_new_flash_message "You have left the \"#{current_community.name}\" community.", 'success'
+        flash[:success] = "You have left the \"#{current_community.name}\" community."
         redirect_to root_url(subdomain: current_community.subdomain)
         return
       else
-        add_new_flash_message "#{@community_profile.user_profile_display_name} has been removed from the community.", 'notice'
+        flash[:notice] = "#{@community_profile.user_profile_display_name} has been removed from the community."
       end
     end
     respond_with @community_profile, location: roster_assignments_url

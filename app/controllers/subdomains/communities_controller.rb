@@ -37,9 +37,9 @@ class Subdomains::CommunitiesController < SubdomainsController
       if @community.update_attributes(params[:community])
         @community.action_items.delete(:update_settings)
         @community.save
-        add_new_flash_message 'Your changes have been saved.', 'success'
+        flash[:success] = 'Your changes have been saved.'
       else
-        add_new_flash_message 'Error. Unable to save changes.', 'alert'
+        flash[:alert] = 'Error. Unable to save changes.'
       end
     rescue Excon::Errors::HTTPStatusError, Excon::Errors::SocketError, Excon::Errors::Timeout, Excon::Errors::ProxyParseError, Excon::Errors::StubNotFound
       logger.error "#{$!}"
@@ -74,7 +74,7 @@ class Subdomains::CommunitiesController < SubdomainsController
     end
     respond_to do |format|
       format.html {
-        flash[:error] = message unless success
+        flash[:alert] = message unless success
         redirect_to subdomain_home_url
       }
       format.js { render json: { success: success, message: message } }

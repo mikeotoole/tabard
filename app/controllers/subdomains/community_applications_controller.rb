@@ -47,10 +47,10 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   # GET /community_applications/new.json
   def new
     if current_user.is_member? current_community
-      add_new_flash_message "You are already a member of this community.", 'notice'
+      flash[:notice] = "You are already a member of this community."
       redirect_to my_roster_assignments_path
     elsif current_user.application_pending? current_community
-      add_new_flash_message "You have already applied to this community. Your application is pending review.", 'notice'
+      flash[:notice] = "You have already applied to this community. Your application is pending review."
       redirect_to root_url(subdomain: current_community.subdomain)
     else
       @community_application.submission.custom_form.questions.each do |question|
@@ -63,7 +63,7 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   # POST /community_applications.json
   def create
     if @community_application.save
-      add_new_flash_message @community_application.custom_form_thankyou, 'success'
+      flash[:success] = @community_application.custom_form_thankyou
     end
     respond_with @community_application, location: custom_form_thankyou_url(@community_application.custom_form), error_behavior: :list
   end
@@ -72,7 +72,7 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   # DELETE /community_applications/1.json
   def destroy
     if @community_application.withdraw
-      add_new_flash_message 'Your application has been withdrawn.', 'notice'
+      flash[:notice] = 'Your application has been withdrawn.'
     end
     respond_with @community_application
   end
@@ -82,10 +82,10 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
     params[:proxy_hash] ||= Hash.new
     if @community_application.accept_application(current_user.user_profile, params[:proxy_hash])
       if can? :accept, Role
-        add_new_flash_message "The application to \"#{@community_application.community_name}\" has been accepted. Assign roles to this user.", 'success'
+        flash[:success] = "The application to \"#{@community_application.community_name}\" has been accepted. Assign roles to this user."
         redirect_to user_profile_url(@community_application.user_profile, anchor: 'roles', subdomain: false)
       else
-        add_new_flash_message "The application to \"#{@community_application.community_name}\" has been accepted.", 'success'
+        flash[:success] = "The application to \"#{@community_application.community_name}\" has been accepted."
         redirect_to @community_application
       end
     else
@@ -98,7 +98,7 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
 
   # This rejects the specified application.
   def reject
-    add_new_flash_message 'The application has been rejected.', 'notice' if @community_application.reject_application(current_user.user_profile)
+    flash[:notice] = 'The application has been rejected.' if @community_application.reject_application(current_user.user_profile)
     redirect_to community_applications_url
   end
 ###

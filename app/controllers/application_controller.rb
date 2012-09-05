@@ -69,21 +69,6 @@ class ApplicationController < ActionController::Base
   end
 
 ###
-# Public Methods
-###
-  ###
-  # Adds a new message to the flash messsages array
-  # [Args]
-  #   * +message_body+ -> The body of the message.
-  #   * +message_class+ -> What type of message it is, including but not limited to "alert", "notice", "announcement", etc.
-  #   * +message_title+ -> The title of the message.
-  ###
-  def add_new_flash_message(message_body, message_class="notice", message_title="")
-    flash[:messages] = Array.new unless flash[:messages]
-    flash[:messages] << { class: message_class, title: message_title, body: message_body }
-  end
-
-###
 # Active Admin
 ###
   # Returns current cancan ability for current user/admin_user.
@@ -111,12 +96,6 @@ protected
 ###
 # Helper Methods
 ###
-
-  # This helper method lets the applicaiton layout view know whether or not to hide announcements within the flash messages partial.
-  def hide_announcements?
-    !!@hide_announcements
-  end
-  helper_method :hide_announcements?
 
   # This gets a timezone collection hash
   def timezone_collection_hash
@@ -292,7 +271,7 @@ protected
   ###
   def check_force_logout
     if current_user and current_user.force_logout
-      add_new_flash_message('You have been logged out for system maintenance')
+      flash[:notice] = 'You have been logged out for system maintenance'
       redirect_to destroy_user_session_path
     end
   end

@@ -43,7 +43,7 @@ class Subdomains::SupportedGamesController < SubdomainsController
                                          params[:supported_game][:server_type])
 
     if @supported_game.save
-      add_new_flash_message 'Game has been added.', 'success'
+      flash[:success] = 'Game has been added.'
       @action = 'created'
       redirect_to supported_games_url
     else
@@ -62,7 +62,7 @@ class Subdomains::SupportedGamesController < SubdomainsController
     is_changed = @supported_game.changed?
 
     if @supported_game.save
-      add_new_flash_message 'Game saved.', 'success'
+      flash[:success] = 'Game saved.'
       @action = is_changed ? 'edited' : nil
     end
 
@@ -71,7 +71,7 @@ class Subdomains::SupportedGamesController < SubdomainsController
 
   # DELETE /supported_games/1
   def destroy
-    add_new_flash_message('Game was successfully removed.') if @supported_game.destroy
+    flash[:notice] = 'Game was successfully removed.' if @supported_game.destroy
     respond_with(@supported_game)
   end
 

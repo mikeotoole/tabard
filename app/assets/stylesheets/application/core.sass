@@ -93,17 +93,7 @@ body
       &:hover
         color: #fff
     
-    &.announcement
-      +bg_gradient(#74548e,#5f4078)
-      color: #eae1f2
-      &:before
-        background-position: -450px -30px
-      &:hover
-        color: #fff
-    
-    .dismiss,
-    .view,
-    .read
+    .dismiss
       background: #fff
       border: 1px solid rgba(#000,.5)
       +border_radius(2)
@@ -129,13 +119,6 @@ body
         right: -10px
         top: -10px
     
-    .dismiss,
-    .view
-      right: 10px
-    
-    .read
-      right: 40px
-    
     .link:before
       bottom: 0
       content: ''
@@ -154,9 +137,7 @@ body
       z-index: 89
       &:before
         +opacity(1)
-      .dismiss,
-      .view,
-      .read
+      .dismiss
         +opacity(.7)
         &:hover
           border-color: #fff

@@ -12,7 +12,6 @@ class Subdomains::AnnouncementsController < SubdomainsController
 ###
   before_filter :block_unauthorized_user!
   before_filter :ensure_current_user_is_member
-  before_filter :hide_all_annoucements
   before_filter :authorize_community_and_game, only: [:community, :game]
   authorize_resource except: [:community, :game]
   skip_before_filter :limit_subdomain_access
@@ -44,7 +43,7 @@ class Subdomains::AnnouncementsController < SubdomainsController
         format.html
       end
     else
-      add_new_flash_message "Announcement not found.", 'alert'
+      flash[:alert] = "Announcement not found."
       redirect_to community_announcements_url
     end
   end
@@ -61,14 +60,14 @@ class Subdomains::AnnouncementsController < SubdomainsController
 
     if @announcement.save
       set_last_posted_as((@announcement.charater_posted? ? @announcement.character_proxy : @announcement.user_profile))
-      add_new_flash_message 'Announcement was successfully created.','success'
+      flash[:success] = 'Announcement was successfully created.'
     end
     respond_with(@announcement)
   end
 
   # DELETE /announcements/:id(.:format)
   def destroy
-    add_new_flash_message 'Announcement was successfully removed.' if @announcement.destroy
+    flash[:notice] = 'Announcement was successfully removed.' if @announcement.destroy
     respond_with(@announcement)
   end
 
@@ -95,9 +94,9 @@ class Subdomains::AnnouncementsController < SubdomainsController
   def lock
     @announcement.is_locked = true
     if @announcement.save
-      add_new_flash_message "Announcement was successfully locked."
+      flash[:notice] = "Announcement was successfully locked."
     else
-      add_new_flash_message "Announcement was not locked, internal rails error.", 'alert'
+      flash[:alert] = "Announcement was not locked, internal rails error.", 'alert'
     end
     redirect_to :back
     return
@@ -107,9 +106,9 @@ class Subdomains::AnnouncementsController < SubdomainsController
   def unlock
     @announcement.is_locked = false
     if @announcement.save
-      add_new_flash_message "Announcement was successfully unlocked."
+      flash[:notice] = "Announcement was successfully unlocked."
     else
-      add_new_flash_message "Announcement was not unlocked, internal rails error.", 'alert'
+      flash[:alert] =  "Announcement was not unlocked, internal error."
     end
     redirect_to :back
     return
@@ -125,21 +124,12 @@ class Subdomains::AnnouncementsController < SubdomainsController
         end
       end
       if delete_count < params[:ids].size
-        add_new_flash_message "#{help.pluralize(params[:ids].size - delete_count, 'announcement')} could not be located and/or removed at this time.", 'alert'
+        flash[:alert] = "#{help.pluralize(params[:ids].size - delete_count, 'announcement')} could not be located and/or removed at this time."
       else
-        add_new_flash_message "#{help.pluralize(delete_count, 'announcement')} removed.", 'success'
+        flash[:success] = "#{help.pluralize(delete_count, 'announcement')} removed."
       end
     end
     redirect_to announcements_url
-  end
-
-  ###
-  # _before_filter
-  #
-  # This before filter tells the view to hide the display of announcements in the flash messages, which happens by default.
-  ###
-  def hide_all_annoucements
-    @hide_announcements = true
   end
 
   #Before Filter

@@ -8,7 +8,7 @@
 class DocumentAcceptanceController < ApplicationController
 
   skip_before_filter :ensure_accepted_most_recent_legal_documents
-  before_filter :find_document, :hide_all_annoucements, only: [:new, :create]
+  before_filter :find_document, only: [:new, :create]
 
   # GET /accept_document/:id(.:format)
   def new
@@ -16,8 +16,8 @@ class DocumentAcceptanceController < ApplicationController
       current_user.update_acceptance_of_documents(@document)
       redirect_to user_profile_url(current_user.user_profile), notice: "You have already accepted the document"
     end
-    add_new_flash_message("You must accept the updated \"Terms of Service\" to continue to use Tabard&trade;.", "alert") unless current_user.accepted_current_terms_of_service
-    add_new_flash_message("You must accept the updated \"Privacy Policy\" to continue to use Tabard&trade;.", "alert") unless current_user.accepted_current_privacy_policy
+    flash[:alert] = "You must accept the updated \"Terms of Service\" to continue to use Tabard&trade;." unless current_user.accepted_current_terms_of_service
+    flash[:alert] = "You must accept the updated \"Privacy Policy\" to continue to use Tabard&trade;." unless current_user.accepted_current_privacy_policy
   end
 
   # POST /accept_document/:id(.:format)
@@ -44,14 +44,5 @@ class DocumentAcceptanceController < ApplicationController
   ###
   def find_document
     @document = Document.find_by_id(params[:id])
-  end
-
-  ###
-  # _before_filter
-  #
-  # This before filter tells the view to hide the display of announcements in the flash messages, which happens by default.
-  ###
-  def hide_all_annoucements
-    @hide_announcements = true
   end
 end

@@ -13,7 +13,6 @@ class RegistrationsController < Devise::RegistrationsController
   skip_before_filter :ensure_not_ssl_mode, only: [:create, :update, :new, :edit, :disable_confirmation, :destroy]
   before_filter :ensure_secure_subdomain, only: [:create, :update, :new, :edit, :disable_confirmation, :destroy]
   before_filter :block_unauthorized_user!, only: [:cancel_confirmation]
-  before_filter :hide_the_announcements, only: [:new, :edit, :update]
 
 ###
 # Sign Up
@@ -21,8 +20,8 @@ class RegistrationsController < Devise::RegistrationsController
   # Overriding Devise method to add a flash if the user is signing up from a community.
   def new
     community = Community.find_by_id(params[:community_id])
-    add_new_flash_message "Before you can apply to #{community.name} you need to create a Tabard&trade; account or login.", "notice" if community
-    add_new_flash_message "This version of Tabard&trade; is a Beta Test. ALL DATA WILL BE REMOVED at the end of the test.", "alert" if User::BETA_CODE_REQUIRED
+    flash[:notice] =  "Before you can apply to #{community.name} you need to create a Tabard&trade; account or login." if community
+    flash[:alert] = "This version of Tabard&trade; is a Beta Test. ALL DATA WILL BE REMOVED at the end of the test." if User::BETA_CODE_REQUIRED
     super
   end
 
@@ -30,12 +29,12 @@ class RegistrationsController < Devise::RegistrationsController
   def create
     user = User.find_by_email(params[:user][:email]) if params[:user] and params[:user][:email]
     if user and user.user_disabled_at
-      add_new_flash_message "You need to reactivate your account.", "alert"
+      flash[:alert] = "You need to reactivate your account."
       redirect_to reinstate_confirmation_url
 #     elsif !!params[:user][:is_partial_request]
 #       build_resource
 #       resource.save
-#       add_new_flash_message "Great! We need a little more information before your account can be created.", "notice"
+#       flash[:success] = "Great! We need a little more information before your account can be created."
 #       resource.errors.clear
 #       #clean_up_passwords resource
 #       render :new
@@ -50,7 +49,6 @@ class RegistrationsController < Devise::RegistrationsController
   # GET /users/disable_confirmation
   def disable_confirmation
     @user = current_user
-    @hide_announcements = true
     if not @user
       set_flash_message :alert, :not_signed_id
       redirect_to new_user_session_url(subdomain: 'secure', protocol: "https://")
@@ -62,10 +60,9 @@ class RegistrationsController < Devise::RegistrationsController
     success = resource ? resource.disable_by_user(params) : false
     if success
       Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
-      add_new_flash_message "Your account has been deactivated.", "notice"
+      flash[:notice] = "Your account has been deactivated."
       redirect_to root_url_hack_helper(root_url(protocol: "http://", subdomain: false))
     else
-      @hide_announcements = true
       render 'disable_confirmation'
     end
   end
@@ -82,7 +79,7 @@ class RegistrationsController < Devise::RegistrationsController
   def send_reinstate
     user = User.find_by_email(params[:user][:email]) if params[:user]
     success = user ? user.reinstate_by_user : false
-    add_new_flash_message "If a deactivated account with that address exists, you will receive an email with reactivation instructions in a few minutes.", "notice"
+    flash[:notice] = "If a deactivated account with that address exists, you will receive an email with reactivation instructions in a few minutes."
     redirect_to root_url
   end
 
@@ -114,7 +111,7 @@ class RegistrationsController < Devise::RegistrationsController
         resource.errors.add(:accepted_current_privacy_policy, "must be accepted")
       end
     else
-      add_new_flash_message 'Account reactivation token has expired, please request a new one.', 'alert'
+      flash[:alert] = 'Account reactivation token has expired, please request a new one.'
       resource.errors.add(:base, "Account reactivation token has expired, please request a new one")
     end
 
@@ -123,7 +120,7 @@ class RegistrationsController < Devise::RegistrationsController
       resource.reset_password_token = nil
       resource.reset_password_sent_at = nil
       resource.save!
-      add_new_flash_message "Your account has been reactivated. Welcome back to Tabard&trade;!", "success"
+      flash[:success] = "Your account has been reactivated. Welcome back to Tabard&trade;!"
       sign_in(resource_name, resource)
       redirect_to after_sign_in_path_for(resource)
     else
@@ -147,10 +144,5 @@ class RegistrationsController < Devise::RegistrationsController
   # Where to redirect to after updating the account with devise
   def after_update_path_for(resource)
     edit_user_registration_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"))
-  end
-
-  # Hides the announcements.
-  def hide_the_announcements
-    @hide_announcements = true
   end
 end
