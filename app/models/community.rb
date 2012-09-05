@@ -172,6 +172,23 @@ class Community < ActiveRecord::Base
     self.community_profiles.count
   end
 
+  def is_disabled?
+    # TODO add no pay here
+    self.is_over_max_capacity?
+  end
+
+  def is_over_max_capacity?
+    self.current_number_of_users > self.max_number_of_users
+  end
+
+  def is_at_max_capacity?
+    self.current_number_of_users == self.max_number_of_users
+  end
+
+  def is_at_almost_max_capacity?
+    self.current_number_of_users >= self.max_number_of_users * 0.9 and self.current_number_of_users < self.max_number_of_users
+  end
+
   # The number of additional members allowed from upgrades.
   def user_pack_upgrade_amount
     total_bonus_users = 0
