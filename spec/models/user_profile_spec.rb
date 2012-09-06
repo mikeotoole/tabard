@@ -199,7 +199,7 @@ describe UserProfile do
       profile_one.is_member?(DefaultObjects.community_two)
       profile_two.is_member?(DefaultObjects.community)
       profile_two.is_member?(DefaultObjects.community_two)
-      profile_one.address_book.count.should eq(3)
+      profile_one.address_book.length.should eq(3)
       profile_one.address_book.should include(profile_two)
     end
   end

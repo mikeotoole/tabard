@@ -24,28 +24,31 @@ class SubscriptionsController < ApplicationController
   # GET /subscriptions/:id/edit(.:format)
   def edit
     if @community.blank?
-      redirect_to forbidden_url
-    end
-    @community.current_subscription_package.community_plan.community_upgrades.each do |upgrade|
-      @community.current_subscription_package.current_community_upgrades.new(community_upgrade_id: upgrade.id, number_in_use: 0) unless @community.current_subscription_package.community_upgrades.include?(upgrade)
+      raise CanCan::AccessDenied
+    else
+      @community.current_subscription_package.community_plan.community_upgrades.each do |upgrade|
+       @community.current_subscription_package.current_community_upgrades.new(community_upgrade_id: upgrade.id, number_in_use: 0) unless @community.current_subscription_package.community_upgrades.include?(upgrade)
+      end
     end
   end
 
   # PUT /subscriptions/:id(.:format)
   def update
-    if @community.blank? or params[:community].blank?
-      redirect_to forbidden_url
+    if @community.blank?
+      raise CanCan::AccessDenied
     else
       @stripe_card_token = params[:stripe_card_token]
-
-      begin
-        flash[:success] = "Your plan has been changed" if @community.update_attributes_with_payment(params[:community], @stripe_card_token)
-      rescue Stripe::StripeError => e
-        logger.error "StripeError: #{e.message}"
-        @community.errors.add :base, "There was a problem with your credit card"
-        @stripe_card_token = nil
+      if params[:community].blank?
+        @community.errors.add :base, "You must pick a plan"
+      else
+        begin
+          add_new_flash_message("Your plan has been changed",'success') if @community.update_attributes_with_payment(params[:community], @stripe_card_token)
+        rescue Stripe::StripeError => e
+          logger.error "StripeError: #{e.message}"
+          @community.errors.add :base, "There was a problem with your credit card"
+          @stripe_card_token = nil
+        end
       end
-
       respond_with(@community, location: edit_subscription_url(@community))
     end
   end

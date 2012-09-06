@@ -94,16 +94,17 @@ describe Community do
       end
       add_a_user.accept_application(community.admin_profile).should eq false
     end
-    it "should be 100 for pro" do
+    it "should be upto custom plan amount" do
       pro_plan = CommunityPlan.create({
         title: "Pro",
         description: "This is the default Pro plan.",
         price_per_month_in_cents: 1000,
-        is_available: true
+        is_available: true,
+        max_number_of_users: 88
         }, without_protection: true)
       community.community_plan = pro_plan
       community.save!
-      while community.community_profiles.count < 100 do
+      while community.community_profiles.count < 88 do
         add_a_user.accept_application(community.admin_profile).should eq true
       end
       add_a_user.accept_application(community.admin_profile).should eq false
