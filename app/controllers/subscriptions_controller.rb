@@ -26,8 +26,8 @@ class SubscriptionsController < ApplicationController
     if @community.blank?
       redirect_to forbidden_url
     end
-    @community.community_plan.community_upgrades.each do |upgrade|
-      @community.current_community_upgrades.new(community_upgrade_id: upgrade.id, number_in_use: 0) unless @community.community_upgrades.include?(upgrade)
+    @community.current_subscription_package.community_plan.community_upgrades.each do |upgrade|
+      @community.current_subscription_package.current_community_upgrades.new(community_upgrade_id: upgrade.id, number_in_use: 0) unless @community.current_subscription_package.community_upgrades.include?(upgrade)
     end
   end
 

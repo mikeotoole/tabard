@@ -1,9 +1,10 @@
 %fieldset
   = hidden_field_tag :stripe_card_token
   %ol
-    = f.association :community_plan, :collection => available_plans, :prompt => "Choose a Plan", as: :radio_buttons
-    = f.simple_fields_for :current_community_upgrades do |cf|
-      = render cf.object.community_upgrade.type.to_s.tableize.singularize, community: community, current_community_upgrade: cf.object, upgrade: CommunityUpgrade.find_by_id(cf.object.community_upgrade_id), cf: cf
+    = f.simple_fields_for :current_subscription_package do |cs|
+      = cs.association :community_plan, :collection => available_plans, :prompt => "Choose a Plan", as: :radio_buttons
+      = cs.simple_fields_for :current_community_upgrades do |cf|
+        = render cf.object.community_upgrade.type.to_s.tableize.singularize, community: community, current_community_upgrade: cf.object, upgrade: CommunityUpgrade.find_by_id(cf.object.community_upgrade_id), cf: cf
 
 - if stripe_card_token.present? or current_user.stripe_customer_token.present?
   - # TODO Should add the abillity to change payment method.
