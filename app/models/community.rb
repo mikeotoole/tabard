@@ -41,7 +41,7 @@ class Community < ActiveRecord::Base
   belongs_to :community_plan
   has_many :community_upgrades, through: :current_community_upgrades
   belongs_to :current_subscription_package, class_name: "SubscriptionPackage"
-  belongs_to :recurring_subscription_package_id, class_name: "SubscriptionPackage"
+  belongs_to :recurring_subscription_package, class_name: "SubscriptionPackage"
 
   has_many :community_applications, dependent: :destroy
   has_many :pending_applications, class_name: "CommunityApplication", conditions: {status: "Pending"}
