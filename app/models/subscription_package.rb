@@ -46,9 +46,11 @@ class SubscriptionPackage < ActiveRecord::Base
       new_plan = CommunityPlan.find_by_id(self.community_plan_id)
       if not old_plan.blank? and old_plan.price_per_month_in_cents > new_plan.price_per_month_in_cents
         # TODO Add end date
-        old_package = SubscriptionPackage.create(community_plan_id: self.community_plan_id_was)
+        old_package = SubscriptionPackage.create(community_plan_id: self.community_plan_id)
         self.community.update_column(:recurring_subscription_package_id, old_package.id)
         CurrentCommunityUpgrade.where(subscription_package_id: self.id).update_all(subscription_package_id: old_package.id)
+
+        self.community_plan_id = self.community_plan_id_was
       end
     end
   end

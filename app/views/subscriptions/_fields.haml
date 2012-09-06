@@ -1,6 +1,10 @@
 - card_is_present = (stripe_card_token.present? or current_user.stripe_customer_token.present?)
 %fieldset
   = hidden_field_tag :stripe_card_token
+  -unless community.recurring_subscription_package.blank?
+    %span Herp your plan will change to:
+    = community.recurring_subscription_package.community_plan.title
+    = community.recurring_subscription_package.to_yaml
   %ol
     = f.simple_fields_for :current_subscription_package do |cs|
       = cs.association :community_plan, :collection => available_plans, :prompt => "Choose a Plan", as: :radio_buttons
