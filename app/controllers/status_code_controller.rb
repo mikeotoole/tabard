@@ -12,7 +12,7 @@ class StatusCodeController < ApplicationController
 
   # This is the forbidden method
   def forbidden
-    render :fobidden, status: :fobidden
+    render :forbidden, status: :forbidden
   end
 
   # This is the 404 method
