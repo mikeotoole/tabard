@@ -39,7 +39,7 @@ class SubscriptionsController < ApplicationController
       @stripe_card_token = params[:stripe_card_token]
 
       begin
-        add_new_flash_message("Your plan has been changed",'success') if @community.update_attributes_with_payment(params[:community], @stripe_card_token)
+        flash[:success] = "Your plan has been changed" if @community.update_attributes_with_payment(params[:community], @stripe_card_token)
       rescue Stripe::StripeError => e
         logger.error "StripeError: #{e.message}"
         @community.errors.add :base, "There was a problem with your credit card"

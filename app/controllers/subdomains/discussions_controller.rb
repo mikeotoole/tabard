@@ -46,7 +46,7 @@ class Subdomains::DiscussionsController < SubdomainsController
   def create
     @discussion.user_profile = current_user.user_profile
     if @discussion.save
-      add_new_flash_message('Discussion was successfully created.','success')
+      flash[:success] = 'Discussion was successfully created.'
       set_last_posted_as((@discussion.charater_posted? ? @discussion.character_proxy : @discussion.user_profile))
     end
     respond_with(@discussion)
@@ -57,14 +57,14 @@ class Subdomains::DiscussionsController < SubdomainsController
     @discussion.assign_attributes(params[:discussion])
     params[:discussion][:has_been_edited] = true if @discussion.changed?
     if @discussion.update_attributes(params[:discussion])
-      add_new_flash_message('Discussion was successfully updated.','success')
+      flash[:success] = 'Discussion was successfully updated.'
     end
     respond_with(@discussion)
   end
 
   # DELETE /discussions/:id(.:format)
   def destroy
-    add_new_flash_message('Discussion was successfully removed.') if @discussion.destroy
+    flash[:notice] = 'Discussion was successfully removed.' if @discussion.destroy
     respond_with(@discussion, location: discussion_space_url(@discussion.discussion_space))
   end
 
@@ -75,9 +75,9 @@ class Subdomains::DiscussionsController < SubdomainsController
   def lock
     @discussion.is_locked = true
     if @discussion.save
-      add_new_flash_message("Discussion was successfully locked.")
+      flash[:notice] = "Discussion was successfully locked."
     else
-      add_new_flash_message("Discussion was not locked, internal rails error.", 'alert')
+      flash[:alert] = "Discussion was not locked, internal rails error."
     end
     redirect_to :back
     return
@@ -87,9 +87,9 @@ class Subdomains::DiscussionsController < SubdomainsController
   def unlock
     @discussion.is_locked = false
     if @discussion.save
-      add_new_flash_message("Discussion was successfully unlocked.")
+      flash[:notice] = "Discussion was successfully unlocked."
     else
-      add_new_flash_message("Discussion was not unlocked, internal rails error.", 'alert')
+      flash[:alert] = "Discussion was not unlocked, internal rails error."
     end
     redirect_to :back
     return

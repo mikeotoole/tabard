@@ -44,14 +44,16 @@
       margin: 0
       right: 10px
 
-  #flash li
-    border-left: 0
-    border-right: 0
-    +border_radius(0)
-    
-    &:last-child
-      border-bottom-color: #000
+  #flash
+    margin-top: -1px
+    li
+      border-left: 0
+      border-right: 0
       +border_radius(0)
+      
+      &:last-child
+        border-bottom-color: #000
+        +border_radius(0)
 
   #body
     +box_shadow(none)

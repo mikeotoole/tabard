@@ -37,7 +37,7 @@ class SupportTicketsController < ApplicationController
     if @support_ticket.save
       redirect_to support_url(@support_ticket)
     else
-      flash[:error] = "The description was blank, so a support ticket could not be created."
+      flash[:alert] = "The description was blank, so a support ticket could not be created."
       redirect_to support_index_url
     end
   end

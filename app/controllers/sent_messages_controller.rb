@@ -48,7 +48,7 @@ class SentMessagesController < MailboxController
     @message = current_user.sent_messages.build(params[:message])
     authorize!(:create, @message)
     if @message.save
-      add_new_flash_message("Your message has been sent.",'success')
+      flash[:success] = "Your message has been sent."
       redirect_to inbox_path
     else
       if @message.to.blank?

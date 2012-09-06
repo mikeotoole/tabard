@@ -36,14 +36,14 @@ class Subdomains::SubmissionsController < SubdomainsController
 
   # POST /custom_forms/:custom_form_id/submissions(.:format)
   def create
-    add_new_flash_message 'Your submission was successful.', 'success' if @submission.save
+    flash[:success] = 'Your submission was successful.' if @submission.save
     respond_with @submission, location: custom_form_thankyou_url(@submission.custom_form)
   end
 
   # DELETE /submissions/:id(.:format)
   def destroy
     if @submission
-      add_new_flash_message 'Submission was removed.', 'notice' if @submission.destroy
+      flash[:notice] = 'Submission was removed.' if @submission.destroy
     end
     redirect_to custom_form_submissions_path @submission.custom_form
   end

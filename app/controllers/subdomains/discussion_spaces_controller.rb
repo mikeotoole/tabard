@@ -43,7 +43,7 @@ class Subdomains::DiscussionSpacesController < SubdomainsController
   # POST /discussion_spaces
   def create
     if @discussion_space.save
-      add_new_flash_message 'Discussion space has been created.', 'success'
+      flash[:success] = 'Discussion space has been created.'
       @action = 'created'
     end
     respond_with(@discussion_space)
@@ -54,7 +54,7 @@ class Subdomains::DiscussionSpacesController < SubdomainsController
     @discussion_space.assign_attributes(params[:discussion_space])
     is_changed = @discussion_space.changed?
     if @discussion_space.save
-      add_new_flash_message 'Discussion space has been saved.', 'success'
+      flash[:success] = 'Discussion space has been saved.'
       @action = is_changed ? 'edited' : nil
     end
     respond_with(@discussion_space)
@@ -62,7 +62,7 @@ class Subdomains::DiscussionSpacesController < SubdomainsController
 
   # DELETE /discussion_spaces/1
   def destroy
-    add_new_flash_message('Discussion space was successfully removed.') if @discussion_space.delay_destory
+    flash[:notice] = 'Discussion space was successfully removed.' if @discussion_space.delay_destory
     respond_with(@discussion_space)
   end
 

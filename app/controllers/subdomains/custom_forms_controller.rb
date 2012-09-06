@@ -34,7 +34,7 @@ class Subdomains::CustomFormsController < SubdomainsController
   # POST /custom_forms
   def create
     if @custom_form.save
-      add_new_flash_message "Form \"#{@custom_form.name}\" has been created.", 'success'
+      flash[:success] = "Form \"#{@custom_form.name}\" has been created."
       respond_with @custom_form, location: custom_forms_url
     else
       respond_with @custom_form
@@ -48,7 +48,7 @@ class Subdomains::CustomFormsController < SubdomainsController
   # PUT /custom_forms/1
   def update
     if @custom_form.update_attributes(params[:custom_form])
-      add_new_flash_message "Form \"#{@custom_form.name}\" has been saved.", 'success'
+      flash[:success] = "Form \"#{@custom_form.name}\" has been saved."
     end
     respond_with @custom_form, location: custom_forms_url
   end
@@ -56,7 +56,7 @@ class Subdomains::CustomFormsController < SubdomainsController
   # DELETE /custom_forms/1
   def destroy
     if @custom_form
-      add_new_flash_message('Form was successfully removed.') if @custom_form.destroy
+      flash[:notice] = 'Form was successfully removed.' if @custom_form.destroy
     end
     respond_with @custom_form
   end
@@ -65,9 +65,9 @@ class Subdomains::CustomFormsController < SubdomainsController
   def publish
     @custom_form.is_published = true
     if @custom_form.save
-      add_new_flash_message "Form \"#{@custom_form.name}\" has been published.", 'success'
+      flash[:success] = "Form \"#{@custom_form.name}\" has been published."
     else
-      add_new_flash_message "Unable to publish Form \"#{@custom_form.name}\".", 'alert'
+      flash[:alert] = "Unable to publish Form \"#{@custom_form.name}\"."
     end
     redirect_to custom_forms_url
   end
@@ -76,9 +76,9 @@ class Subdomains::CustomFormsController < SubdomainsController
   def unpublish
     @custom_form.is_published = false
     if @custom_form.save
-      add_new_flash_message "Form \"#{@custom_form.name}\" has been unpublished.", 'success'
+      flash[:success] = "Form \"#{@custom_form.name}\" has been unpublished."
     else
-      add_new_flash_message "Unable to publish Form \"#{@custom_form.name}\".", 'alert'
+      flash[:alert] = "Unable to publish Form \"#{@custom_form.name}\"."
     end
     redirect_to custom_forms_url
   end

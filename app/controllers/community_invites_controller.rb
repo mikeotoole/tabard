@@ -21,7 +21,7 @@ class CommunityInvitesController < ApplicationController
     temp_ability = Ability.new(current_user)
     temp_ability.dynamicContextRules(current_user, @community_invite.community)
     temp_ability.authorize! :create, @community_invite
-    add_new_flash_message "#{@community_invite.applicant_display_name} has been invited to #{@community_invite.community_name}", 'success' if @community_invite.save!
+    flash[:success] = "#{@community_invite.applicant_display_name} has been invited to #{@community_invite.community_name}" if @community_invite.save!
     respond_with(@community_invite, location: @community_invite.applicant)
   end
 end

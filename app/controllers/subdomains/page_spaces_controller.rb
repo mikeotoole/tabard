@@ -43,7 +43,7 @@ class Subdomains::PageSpacesController < SubdomainsController
   # POST /page_spaces(.:format)
   def create
     if @page_space.save
-      add_new_flash_message 'Page space has been created.', 'success'
+      flash[:success] = 'Page space has been created.'
       @action = 'created'
     end
     respond_with(@page_space)
@@ -55,7 +55,7 @@ class Subdomains::PageSpacesController < SubdomainsController
     is_changed = @page_space.changed?
 
     if @page_space.save
-      add_new_flash_message 'Page space has been saved.', 'success'
+      flash[:success] = 'Page space has been saved.'
       @action = is_changed ? 'edited' : nil
     end
     respond_with(@page_space)
@@ -63,7 +63,7 @@ class Subdomains::PageSpacesController < SubdomainsController
 
   # DELETE /page_spaces/:id(.:format)
   def destroy
-    add_new_flash_message('Page space was successfully removed.') if @page_space.destroy
+    flash[:notice] = 'Page space was successfully removed.' if @page_space.destroy
     respond_with(@page_space)
   end
 

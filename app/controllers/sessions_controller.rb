@@ -12,7 +12,6 @@ class SessionsController < Devise::SessionsController
 
   # Overriding new to hide announcements
   def new
-    @hide_announcements = true
     super
   end
   ###
@@ -22,7 +21,6 @@ class SessionsController < Devise::SessionsController
     sign_out(current_admin_user) if current_admin_user
     current_user.update_column(:force_logout, false) if current_user and current_user.force_logout
     resource = warden.authenticate!(scope: resource_name, recall: "#{controller_path}#new")
-    session[:hide_announcements] = true
     after_sign_in_path = after_sign_in_path_for(resource)
     flash[:notice] = "This version of Tabard&trade; is a Beta Test. ALL DATA WILL BE REMOVED at the end of the test." if User::BETA_CODE_REQUIRED
     respond_with resource, location: after_sign_in_path.match(/\.js$/) ? root_url : after_sign_in_path
