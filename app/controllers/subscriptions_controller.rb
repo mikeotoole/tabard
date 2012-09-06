@@ -26,10 +26,9 @@ class SubscriptionsController < ApplicationController
     if @community.blank?
       raise CanCan::AccessDenied
     else
-      @community.community_plan.community_upgrades.each do |upgrade|
-        @community.current_community_upgrades.new(community_upgrade_id: upgrade.id, number_in_use: 0) unless @community.community_upgrades.include?(upgrade)
-      end
-    end
+     @community.current_subscription_package.community_plan.community_upgrades.each do |upgrade|
+       @community.current_subscription_package.current_community_upgrades.new(community_upgrade_id: upgrade.id, number_in_use: 0) unless @community.current_subscription_package.community_upgrades.include?(upgrade)
+     end
   end
 
   # PUT /subscriptions/:id(.:format)

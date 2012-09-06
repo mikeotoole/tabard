@@ -29,7 +29,7 @@ class SwtorCharactersController < ApplicationController
   def create
     begin
       @swtor_character = SwtorCharacter.create_character(params, current_user)
-      add_new_flash_message("\"#{@swtor_character.name}\" has been created.",'success') if @swtor_character.character_proxy and @swtor_character.character_proxy.valid?
+      flash[:success] = "\"#{@swtor_character.name}\" has been created." if @swtor_character.character_proxy and @swtor_character.character_proxy.valid?
     rescue Excon::Errors::HTTPStatusError, Excon::Errors::SocketError, Excon::Errors::ProxyParseError, Excon::Errors::StubNotFound
       logger.error "#{$!}"
       @swtor_character.errors.add :base, "An error has occurred while processing the image."
@@ -50,7 +50,7 @@ class SwtorCharactersController < ApplicationController
         @swtor_character.swtor = Swtor.game_for_faction_server(SwtorCharacter.faction(params[:swtor_character][:advanced_class]), params[:server_name])
       end
       params[:swtor_character][:char_class] = SwtorCharacter.char_class(params[:swtor_character][:advanced_class]) if params[:swtor_character][:advanced_class]
-      add_new_flash_message("Details for \"#{@swtor_character.name}\" have been saved.",'success') if @swtor_character.update_attributes(params[:swtor_character])
+      flash[:success] = "Details for \"#{@swtor_character.name}\" have been saved." if @swtor_character.update_attributes(params[:swtor_character])
     rescue Excon::Errors::HTTPStatusError, Excon::Errors::SocketError, Excon::Errors::ProxyParseError, Excon::Errors::StubNotFound
       logger.error "#{$!}"
       @swtor_character.errors.add :base, "An error has occurred while processing the image."
@@ -63,7 +63,7 @@ class SwtorCharactersController < ApplicationController
 
   # DELETE /swtor_characters/:id(.:format)
   def destroy
-    add_new_flash_message("\"#{@swtor_character.name}\" has been removed.", 'notice') if @swtor_character and @swtor_character.destroy
+    flash[:notice] = "\"#{@swtor_character.name}\" has been removed." if @swtor_character and @swtor_character.destroy
 
     respond_with @swtor_character, location: user_profile_url(@swtor_character.user_profile) + '#characters'
   end

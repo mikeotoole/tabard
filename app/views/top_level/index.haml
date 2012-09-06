@@ -10,13 +10,13 @@
     %ul
       %li.current
         = image_tag 'main/slide-explosion.jpg'
-        %p Spend your time playing the game instead of managing guildmates.
+        %p Built from the ground up with dedicated gamers like you in mind.
       %li
         = image_tag 'main/slide-wasteland.jpg'
-        %p Create character profiles and join multiple communities.
+        %p Spend your time playing the game instead of managing guildmates.
       %li
         = image_tag 'main/slide-snowbase.jpg'
-        %p Customize member applications and screen applicants.
+        %p Setting up your guild with Tabard is so easy, even a noob can do it.
 
   = simple_form_for 'user', url: user_registration_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), html: { class: 'signup' } do |f|
     %h2 Sign up

@@ -28,7 +28,7 @@ class CommunitiesController < ApplicationController
   # GET /communities/new(.:format)
   def new
     @community.admin_profile = current_user.user_profile
-    @community.community_plan = CommunityPlan.default_plan
+    @community.build_current_subsciption_package({community_plan: CommunityPlan.default_plan}, without_protection: true)
   end
 
   # POST /communities(.:format)
@@ -43,7 +43,7 @@ class CommunitiesController < ApplicationController
       else
         success = @community.save
       end
-      add_new_flash_message("Your community has been created.", 'success') if success
+      flash[:success] = "Your community has been created." if success
     rescue Excon::Errors::HTTPStatusError, Excon::Errors::SocketError, Excon::Errors::Timeout, Excon::Errors::ProxyParseError, Excon::Errors::StubNotFound
       logger.error "#{$!}"
       @community.errors.add :base, "An error has occurred while processing the image."
@@ -59,10 +59,10 @@ class CommunitiesController < ApplicationController
     if params[:user] and current_user.valid_password?(params[:user][:current_password])
       Community.delay.destory_community(@community.id)
       @community.update_column(:pending_removal, true)
-      add_new_flash_message 'Community is being removed.', 'notice'
+      flash[:notice] = 'Community is being removed.'
       redirect_to user_profile_url(current_user.user_profile, subdomain: false, protocol: "http://")
     else
-      add_new_flash_message 'Password was not valid.', 'alert'
+      flash[:alert] = 'Password was not valid.'
       redirect_to community_remove_confirmation_url(subdomain: @community.subdomain)
     end
   end

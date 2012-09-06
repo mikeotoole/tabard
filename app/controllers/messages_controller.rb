@@ -33,7 +33,7 @@ class MessagesController < MailboxController
       errormsg = 'Message not found.'
       respond_to do |format|
         format.html {
-          add_new_flash_message errormsg, 'alert'
+          flash[:alert] = errormsg
           redirect_to inbox_url
         }
         format.js { render text: errormsg }
@@ -68,7 +68,7 @@ class MessagesController < MailboxController
     @message = current_user.received_messages.find_by_id(params[:id])
     authorize!(:update, @message)
     if @message.update_attributes(folder_id: folder.id, has_been_read: true)
-      add_new_flash_message("Message was moved to #{folder.name}.",'success')
+      flash[:success] = "Message was moved to #{folder.name}."
     end
     if params[:return_url]
       redirect_to params[:return_url], only_path: true
@@ -154,7 +154,7 @@ class MessagesController < MailboxController
       @message = current_user.received_messages.find(params[:id])
       authorize!(:update, @message)
       if @message.update_attributes(is_removed: true, folder_id: nil, has_been_read: true)
-        add_new_flash_message('Message was removed.')
+        flash[:notice] = 'Message was removed.'
       end
       redirect_to trash_path
     else # If a message is not given all messages will be removed from the trash.

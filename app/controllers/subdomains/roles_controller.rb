@@ -40,7 +40,7 @@ class Subdomains::RolesController < SubdomainsController
     if @role.save
       respond_to do |format|
         format.html {
-          add_new_flash_message "A new role named \"#{@role.name}\" has been created.", 'success'
+          flash[:success] = "A new role named \"#{@role.name}\" has been created."
           redirect_to roles_path
         }
         format.js {
@@ -50,7 +50,7 @@ class Subdomains::RolesController < SubdomainsController
     else
       respond_to do |format|
         format.html {
-          add_new_flash_message "Unable to create role.", 'alert'
+          flash[:alert] = "Unable to create role."
           render :index
         }
         format.js {
@@ -66,7 +66,7 @@ class Subdomains::RolesController < SubdomainsController
     if @role.update_attributes(params[:role])
       respond_to do |format|
         format.html {
-          add_new_flash_message "The \"#{@role.name}\" role has been saved.", 'success'
+          flash[:success] = "The \"#{@role.name}\" role has been saved."
           redirect_to roles_path
         }
         format.js {
@@ -76,7 +76,7 @@ class Subdomains::RolesController < SubdomainsController
     else
       respond_to do |format|
         format.html {
-          add_new_flash_message "There was an error saving the \"#{@role.name}\" role.", 'alert'
+          flash[:alert] = "There was an error saving the \"#{@role.name}\" role."
           render :index
         }
         format.js {
@@ -90,7 +90,7 @@ class Subdomains::RolesController < SubdomainsController
   def destroy
     role_name = @role.name
     if @role.destroy
-      add_new_flash_message "The \"#{role_name}\" role has been deleted.", 'notice'
+      flash[:notice] = "The \"#{role_name}\" role has been deleted."
       redirect_to roles_path
     end
   end

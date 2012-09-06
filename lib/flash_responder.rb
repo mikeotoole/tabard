@@ -23,9 +23,6 @@ module FlashResponder
         end
       end
     end
-    if options.has_key? :hide_announcements
-      @session.instance_variable_set :@hide_announcements, options[:hide_announcements]
-    end
     super
   end
 end

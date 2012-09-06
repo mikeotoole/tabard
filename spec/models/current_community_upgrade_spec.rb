@@ -2,13 +2,12 @@
 #
 # Table name: current_community_upgrades
 #
-#  id                   :integer          not null, primary key
-#  community_id         :integer
-#  community_upgrade_id :integer
-#  number_in_use        :integer
-#  created_at           :datetime         not null
-#  updated_at           :datetime         not null
-#  subcription_amount   :integer
+#  id                      :integer          not null, primary key
+#  community_upgrade_id    :integer
+#  number_in_use           :integer
+#  created_at              :datetime         not null
+#  updated_at              :datetime         not null
+#  subscription_package_id :integer
 #
 
 require 'spec_helper'

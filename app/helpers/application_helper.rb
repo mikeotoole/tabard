@@ -10,26 +10,6 @@ module ApplicationHelper
 ###
 # Public Methods
 ###
-  ###
-  # Adds a new message to the flash messsages array
-  # [Args]
-  #   * +message_body+ -> The body of the message.
-  #   * +message_class+ -> What type of message it is, including but not limited to "alert", "notice", "success", "announcement", etc.
-  #   * +message_title+ -> The title of the message.
-  ###
-  def add_new_flash_message(message_body, message_class="notice", message_title="")
-    flash[:messages] = Array.new unless flash[:messages]
-    flash[:messages] << { class: message_class, title: message_title, body: message_body }
-  end
-
-  # Removes all flash messages
-  def clear_flash_messages
-    flash.delete(:alert)
-    flash.delete(:error)
-    flash.delete(:notice)
-    flash.delete(:messages)
-    session.delete(:hide_announcements)
-  end
 
   ###
   # Adds the ability to pass a default value when delivering yeilds in the view.

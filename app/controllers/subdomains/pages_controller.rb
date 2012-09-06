@@ -41,7 +41,7 @@ class Subdomains::PagesController < SubdomainsController
   # POST /page_spaces/:page_space_id/pages(.:format)
   def create
     if @page.save
-      add_new_flash_message 'Page has been created.', 'success'
+      flash[:success] = 'Page has been created.'
       @action = 'created'
     end
     respond_with @page
@@ -56,7 +56,7 @@ class Subdomains::PagesController < SubdomainsController
     end
     is_changed = @page.changed?
     if @page.save
-      add_new_flash_message 'Page has been saved.', 'success'
+      flash[:success] = 'Page has been saved.'
       @action = is_changed ? 'edited' : nil
     end
     respond_with @page
@@ -64,7 +64,7 @@ class Subdomains::PagesController < SubdomainsController
 
   # DELETE /pages/:id(.:format)
   def destroy
-    add_new_flash_message('Page was successfully removed.') if @page.destroy
+    flash[:notice] = 'Page was successfully removed.' if @page.destroy
     respond_with(@page, location: page_space_url(@page.page_space))
   end
 

@@ -58,7 +58,7 @@ class Subdomains::CommunityInvitesController < SubdomainsController
       end
     end
     flash[:success] = "#{@number_created} recruit invitation#{@number_created > 1 ? 's' : ''} sent." if @number_created > 0
-    flash[:error] = "#{@number_failed} recruit invitation#{@number_failed > 1 ? 's' : ''} failed to be sent." if @number_failed > 0
+    flash[:alert] = "#{@number_failed} recruit invitation#{@number_failed > 1 ? 's' : ''} failed to be sent." if @number_failed > 0
     redirect_to community_invites_url
   end
 
