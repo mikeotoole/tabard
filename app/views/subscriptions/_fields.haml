@@ -1,5 +1,4 @@
-- card_is_present = stripe_card_token.present? or current_user.stripe_customer_token.present?
-
+- card_is_present = (stripe_card_token.present? or current_user.stripe_customer_token.present?)
 %fieldset
   = hidden_field_tag :stripe_card_token
   %ol

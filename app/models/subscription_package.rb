@@ -1,5 +1,6 @@
 class SubscriptionPackage < ActiveRecord::Base
   attr_accessible :community_plan_id, :end_date, :current_community_upgrades_attributes
+  before_validation :ensure_full_package_time
   belongs_to :community_plan
   has_many :current_community_upgrades, inverse_of: :subscription_package
   has_many :community_upgrades, through: :current_community_upgrades
@@ -35,6 +36,17 @@ class SubscriptionPackage < ActiveRecord::Base
   ###
   def max_number_of_users
     return self.community_plan.max_number_of_users + self.user_pack_upgrade_amount
+  end
+
+  def ensure_full_package_time
+    if self.community_plan_id_changed?
+      old_plan = CommunityPlan.find_by_id(self.community_plan_id_was)
+      new_plan = CommunityPlan.find_by_id(self.community_plan_id)
+      if not old_plan.blank? and old_plan.price_per_month_in_cents > new_plan.price_per_month_in_cents
+        # TODO Copy
+        puts "KAJSHDKJAHDKJHASKDHAJSHDKJHADKHAKDHASDKJ"
+      end
+    end
   end
 end
 
