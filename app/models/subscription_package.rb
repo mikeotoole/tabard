@@ -40,6 +40,7 @@ class SubscriptionPackage < ActiveRecord::Base
   end
 
   def ensure_full_package_time
+    # TODO take upgrades into account
     if self.community_plan_id_changed?
       old_plan = CommunityPlan.find_by_id(self.community_plan_id_was)
       new_plan = CommunityPlan.find_by_id(self.community_plan_id)
