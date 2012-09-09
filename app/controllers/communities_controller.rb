@@ -28,7 +28,7 @@ class CommunitiesController < ApplicationController
   # GET /communities/new(.:format)
   def new
     @community.admin_profile = current_user.user_profile
-    @community.community_plan = CommunityPlan.default_plan
+    @community.build_current_subsciption_package({community_plan: CommunityPlan.default_plan}, without_protection: true)
   end
 
   # POST /communities(.:format)

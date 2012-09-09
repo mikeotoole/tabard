@@ -2,7 +2,7 @@ class DefaultObjects
   def self.user
     @user ||= DefaultObjects.user_profile.user
   end
-  
+
   def self.user_profile
     @user_profile ||= FactoryGirl.create(:user_profile, :user => FactoryGirl.create(:user))
     if not @user_profile.is_member?(DefaultObjects.community)
@@ -24,10 +24,10 @@ class DefaultObjects
     end
     end
     unless @user_profile.announcements.size > 0
-      announcement1 = DefaultObjects.community.announcements.new(:name => "Announcement 1", 
+      announcement1 = DefaultObjects.community.announcements.new(:name => "Announcement 1",
         :body => "Herp Derp")
       announcement1.user_profile = DefaultObjects.community.admin_profile
-      announcement2 = DefaultObjects.community.announcements.new(:name => "Announcement 2", 
+      announcement2 = DefaultObjects.community.announcements.new(:name => "Announcement 2",
         :body => "Herp Derp!")
       announcement2.user_profile = DefaultObjects.community.admin_profile
       announcement1.save
@@ -62,15 +62,15 @@ class DefaultObjects
   def self.fresh_user_profile
     @fresh_user_profile ||= FactoryGirl.create(:user_profile_with_characters, :user => FactoryGirl.create(:user))
   end
-  
+
   def self.wow
     @wow ||= FactoryGirl.create(:wow)
   end
-  
+
   def self.swtor
     @swtor ||= FactoryGirl.create(:swtor)
   end
-  
+
   def self.minecraft
     @minecraft ||= FactoryGirl.create(:minecraft)
   end
@@ -82,7 +82,7 @@ class DefaultObjects
   def self.swtor_character_proxy
     @swtor_character_proxy ||= FactoryGirl.create(:character_proxy_with_swtor_character)
   end
-  
+
   def self.community
     @community ||= FactoryGirl.create(:community, :name => "Default Community")
     unless @community.games.include?(DefaultObjects.wow)
@@ -95,10 +95,10 @@ class DefaultObjects
       @community.supported_games.create!(:name => "Test Minecraft Game", :game_id => DefaultObjects.minecraft, :game_type => "Minecraft")
     end
     unless @community.announcements.size > 0
-      announcement1 = @community.announcements.new(:name => "Announcement 1", 
+      announcement1 = @community.announcements.new(:name => "Announcement 1",
         :body => "Herp Derp")
       announcement1.user_profile = @community.admin_profile
-      announcement2 = @community.announcements.new(:name => "Announcement 2", 
+      announcement2 = @community.announcements.new(:name => "Announcement 2",
         :body => "Herp Derp!")
       announcement2.user_profile = @community.admin_profile
       announcement1.save!
@@ -106,18 +106,35 @@ class DefaultObjects
     end
     @community
   end
-  
-    
+
   def self.community_admin
     if @community_admin
       @community_admin
-    else 
+    else
       @community_admin = DefaultObjects.community.admin_profile.user
       @community_admin.owned_communities << DefaultObjects.community
       @community_admin
     end
   end
-  
+
+  def self.community_admin_with_stripe
+    if @community_admin_with_stripe
+      @community_admin_with_stripe
+    else
+      community = FactoryGirl.create(:community, :name => "Admin with Stripe Comm")
+      @community_admin_with_stripe = community.admin_profile.user
+
+      stripe_customer = Stripe::Customer.create(
+        :description => "Customer for test@example.com",
+        :card => DefaultObjects.stripe_card_token.id
+      )
+      @community_admin_with_stripe.stripe_customer_token = stripe_customer.id
+      @community_admin_with_stripe.owned_communities << community
+      @community_admin_with_stripe.save!
+      @community_admin_with_stripe
+    end
+  end
+
   def self.community_two
     @community_two ||= FactoryGirl.create(:community, :name => "Default Community Two")
     unless @community_two.games.include?(DefaultObjects.swtor)
@@ -125,7 +142,7 @@ class DefaultObjects
     end
     @community_two
   end
-  
+
   def self.custom_form
     @custom_form ||= FactoryGirl.create(:custom_form)
   end
@@ -135,19 +152,19 @@ class DefaultObjects
   end
 
   def self.random_discussion
-    @random_discussion ||= FactoryGirl.create(:discussion, 
-        :discussion_space_id => self.general_discussion_space.id, 
+    @random_discussion ||= FactoryGirl.create(:discussion,
+        :discussion_space_id => self.general_discussion_space.id,
         :user_profile_id => self.community.admin_profile_id)
   end
-  
+
   def self.discussion_space
     @discussion_space ||= FactoryGirl.create(:discussion_space)
   end
-  
+
   def self.discussion
     @discussion ||= FactoryGirl.create(:discussion)
   end
-  
+
   def self.page_space
     @page_space ||= FactoryGirl.create(:page_space)
   end
@@ -155,7 +172,18 @@ class DefaultObjects
   def self.general_page_space
     @general_page_space ||= FactoryGirl.create(:page_space, :name => "General Stuff")
   end
-  
+
+  def self.stripe_card_token
+    Stripe::Token.create(
+        :card => {
+        :number => "4242424242424242",
+        :exp_month => 9,
+        :exp_year => 2023,
+        :cvc => 314
+      },
+    )
+  end
+
   def self.clean
     @user = nil
     @user_profile = nil
@@ -166,6 +194,7 @@ class DefaultObjects
     @minecraft = nil
     @community = nil
     @community_two = nil
+    @community_admin_with_stripe = nil
     @general_discussion_space = nil
     @random_discussion = nil
     @custom_form = nil

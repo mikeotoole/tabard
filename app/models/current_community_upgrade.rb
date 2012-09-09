@@ -11,13 +11,12 @@ class CurrentCommunityUpgrade < ActiveRecord::Base
 ###
 # Associations
 ###
-  belongs_to :community, inverse_of: :current_community_upgrades
+  belongs_to :subscription_package, inverse_of: :current_community_upgrades
   belongs_to :community_upgrade, inverse_of: :current_community_upgrades
 
 ###
 # Validators
 ###
-  validates :community_id, uniqueness: {scope: [:community_upgrade_id]}
   validate :upgrade_is_compatable
 
 ###
@@ -31,12 +30,7 @@ class CurrentCommunityUpgrade < ActiveRecord::Base
   # from its previous subscription then from the currently subscribed to plan.
   ###
   def current_amount
-    return number_in_use if community.community_subscription_date.blank?
-    if community.community_subscription_date > Time.now
-      return number_in_use
-    else
-      return subcription_amount
-    end
+    number_in_use
   end
 
   # Returns the total price for all community upgrades of a single type in cents.
@@ -64,15 +58,16 @@ protected
   # This method sets the subscription amount to the number of upgrades the community is subscribed to.
   ###
   def update_amounts
-    if number_in_use_changed?
-      if not number_in_use_was.blank? and number_in_use_was > number_in_use
-        self.subcription_amount = number_in_use_was
-      else
-        self.subcription_amount = number_in_use
-      end
-    else
-      return true
-    end
+    # TODO Fix This
+    #if number_in_use_changed?
+    #  if not number_in_use_was.blank? and number_in_use_was > number_in_use
+    #    self.subcription_amount = number_in_use_was
+    #  else
+    #    self.subcription_amount = number_in_use
+    #  end
+    #else
+    #  return true
+    #end
   end
 
 ###
@@ -84,10 +79,11 @@ protected
   # This method ensures that the community's plan allows the upgrade.
   ###
   def upgrade_is_compatable
-    unless self.community.community_plan.community_upgrades.include? self.community_upgrade
-      errors.add(:community_upgrade, "is not compatable with the community's plan.")
-      return false
-    end
+    # TODO Fix this
+    #unless self.community.community_plan.community_upgrades.include? self.community_upgrade
+    #  errors.add(:community_upgrade, "is not compatable with the community's plan.")
+    #  return false
+    #end
   end
 end
 
@@ -95,12 +91,11 @@ end
 #
 # Table name: current_community_upgrades
 #
-#  id                   :integer          not null, primary key
-#  community_id         :integer
-#  community_upgrade_id :integer
-#  number_in_use        :integer
-#  created_at           :datetime         not null
-#  updated_at           :datetime         not null
-#  subcription_amount   :integer
+#  id                      :integer          not null, primary key
+#  community_upgrade_id    :integer
+#  number_in_use           :integer
+#  created_at              :datetime         not null
+#  updated_at              :datetime         not null
+#  subscription_package_id :integer
 #
 

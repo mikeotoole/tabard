@@ -1,45 +1,49 @@
-- card_is_present = stripe_card_token.present? or current_user.stripe_customer_token.present?
-
+- card_is_present = (stripe_card_token.present? or current_user.stripe_customer_token.present?)
 %fieldset
   = hidden_field_tag :stripe_card_token
+  -unless community.recurring_subscription_package.blank?
+    %span Herp your plan will change to:
+    = community.recurring_subscription_package.community_plan.title
+    = community.recurring_subscription_package.to_yaml
   %ol
-    = f.association :community_plan, :collection => available_plans, :prompt => "Choose a Plan", as: :radio_buttons
-    = f.simple_fields_for :current_community_upgrades do |cf|
-      = render cf.object.community_upgrade.type.to_s.tableize.singularize, community: community, current_community_upgrade: cf.object, upgrade: CommunityUpgrade.find_by_id(cf.object.community_upgrade_id), cf: cf
+    = f.simple_fields_for :current_subscription_package do |cs|
+      = cs.association :community_plan, :collection => available_plans, :prompt => "Choose a Plan", as: :radio_buttons
+      = cs.simple_fields_for :current_community_upgrades do |cf|
+        = render cf.object.community_upgrade.type.to_s.tableize.singularize, community: community, current_community_upgrade: cf.object, upgrade: CommunityUpgrade.find_by_id(cf.object.community_upgrade_id), cf: cf
 
 - if card_is_present
   %p
     Your card info is currently on file.
     = link_to 'Enter new card?', "javascript:$('cc_fields').show();$(this).closest('p').hide();"
-
-%fieldset{ id: 'cc_fields', class: card_is_present ? 'hide' : '' }
-  %hr
-  %h1 Payment
-  %ol
-    %li
-      = label_tag :card_name, "Name on Card "
-      = text_field_tag :card_name, nil, name: nil
-    %li
-      = label_tag :card_number, "Card Number "
-      = text_field_tag :card_number, nil, name: nil
-    %li.selects
-      %label Card Expiration
-      .select{ id: 'card_exp_month', class: 'month', data: {placeholder: 'Month'} }
-        %ul
-          - (1..12).each do |m|
-            %li
-              %input{ type: 'radio', name: 'card_month', id: "card_exp_month_#{m}", value: m }
-              %label{ for: "card_exp_month_#{m}" }= Date::MONTHNAMES[m]
-      .select{ id: 'card_exp_year', class: 'year', data: {placeholder: 'Year'} }
-        %ul
-          - (Date.today.year .. Date.today.year+15).each do |y|
-            %li
-              %input{ type: 'radio', name: 'card_year', id: "card_exp_year_#{y}", value: y }
-              %label{ for: "card_exp_year_#{y}" }= y
-    %li
-      = label_tag :card_cvc, "Security Code"
-      = text_field_tag :card_cvc, nil, name: nil, style: 'width: 100px'
-      %dfn.hint 3 or 4 digit number on the back of your card
-    %li
-      = label_tag :card_address_zip, "Billing Zip/Postal Code"
-      = text_field_tag :card_address_zip, nil, name: nil, style: 'width: 150px'
+- else
+  %fieldset{ id: 'cc_fields', class: card_is_present ? 'hide' : '' }
+    %hr
+    %h1 Payment
+    %ol
+      %li
+        = label_tag :card_name, "Name on Card "
+        = text_field_tag :card_name, nil, name: nil
+      %li
+        = label_tag :card_number, "Card Number "
+        = text_field_tag :card_number, nil, name: nil
+      %li.selects
+        %label Card Expiration
+        .select{ id: 'card_exp_month', class: 'month', data: {placeholder: 'Month'} }
+          %ul
+            - (1..12).each do |m|
+              %li
+                %input{ type: 'radio', name: 'card_month', id: "card_exp_month_#{m}", value: m }
+                %label{ for: "card_exp_month_#{m}" }= Date::MONTHNAMES[m]
+        .select{ id: 'card_exp_year', class: 'year', data: {placeholder: 'Year'} }
+          %ul
+            - (Date.today.year .. Date.today.year+15).each do |y|
+              %li
+                %input{ type: 'radio', name: 'card_year', id: "card_exp_year_#{y}", value: y }
+                %label{ for: "card_exp_year_#{y}" }= y
+      %li
+        = label_tag :card_cvc, "Security Code"
+        = text_field_tag :card_cvc, nil, name: nil, style: 'width: 100px'
+        %dfn.hint 3 or 4 digit number on the back of your card
+      %li
+        = label_tag :card_address_zip, "Billing Zip/Postal Code"
+        = text_field_tag :card_address_zip, nil, name: nil, style: 'width: 150px'

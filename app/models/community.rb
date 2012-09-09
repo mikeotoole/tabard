@@ -28,8 +28,8 @@ class Community < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :slogan, :is_accepting_members, :email_notice_on_application, :is_protected_roster, :is_public_roster, :theme_id, :theme, :community_plan_id,
-    :background_color, :title_color, :background_image, :remove_background_image, :background_image_cache, :home_page_id, :pitch, :current_community_upgrades_attributes
+  attr_accessible :name, :slogan, :is_accepting_members, :email_notice_on_application, :is_protected_roster, :is_public_roster, :theme_id, :theme, :current_subscription_package,
+    :background_color, :title_color, :background_image, :remove_background_image, :background_image_cache, :home_page_id, :pitch, :current_subscription_package_attributes
 
 ###
 # Associations
@@ -39,8 +39,9 @@ class Community < ActiveRecord::Base
   belongs_to :community_application_form, dependent: :destroy, class_name: "CustomForm", autosave: true
 
   belongs_to :community_plan
-  has_many :current_community_upgrades, inverse_of: :community
   has_many :community_upgrades, through: :current_community_upgrades
+  belongs_to :current_subscription_package, class_name: "SubscriptionPackage"
+  belongs_to :recurring_subscription_package, class_name: "SubscriptionPackage"
 
   has_many :community_applications, dependent: :destroy
   has_many :pending_applications, class_name: "CommunityApplication", conditions: {status: "Pending"}
@@ -67,13 +68,13 @@ class Community < ActiveRecord::Base
   belongs_to :home_page, class_name: "Page"
 
   accepts_nested_attributes_for :theme
-  accepts_nested_attributes_for :current_community_upgrades, :allow_destroy => true, :reject_if => proc { |attributes| attributes['number_in_use'].blank? or attributes['number_in_use'].to_i <= 0 }
+  accepts_nested_attributes_for :current_subscription_package
 
 ###
 # Callbacks
 ###
   nilify_blanks only: [:pitch, :slogan]
-  before_validation :remove_incompatible_upgrades
+  before_validation :downgrade_subscription
   before_create :update_subdomain
   before_create :setup_action_items
   after_create :setup_community_application_form
@@ -103,7 +104,6 @@ class Community < ActiveRecord::Base
   validates :slogan, length: { maximum: MAX_SLOGAN_LENGTH }
   validates :pitch, length: { maximum: MAX_PITCH_LENGTH }
   validates :admin_profile, presence: true
-  validates :community_plan, presence: true
   validates :background_color, format: { with: /^[0-9a-fA-F]{6}$/, message: "Only valid HEX colors are allowed." },
             unless: Proc.new{|community| community.background_color.blank? }
   validates :title_color, format: { with: /^[0-9a-fA-F]{6}$/, message: "Only valid HEX colors are allowed." },
@@ -156,7 +156,7 @@ class Community < ActiveRecord::Base
   # [Returns] True if not on the free plan.
   ###
   def is_paid_community?
-    not self.community_plan.is_free_plan?
+    not self.actual_subscription_pack.community_plan.is_free_plan?
   end
 
   ###
@@ -164,7 +164,7 @@ class Community < ActiveRecord::Base
   # This includes plan and upgrade amounts.
   ###
   def max_number_of_users
-    return self.community_plan.max_number_of_users + self.user_pack_upgrade_amount
+    self.actual_subscription_pack.max_number_of_users
   end
 
   # The current number of community members.
@@ -193,29 +193,22 @@ class Community < ActiveRecord::Base
     self.current_number_of_users >= self.max_number_of_users * 0.9 and self.current_number_of_users < self.max_number_of_users
   end
 
-  # The number of additional members allowed from upgrades.
-  def user_pack_upgrade_amount
-    total_bonus_users = 0
-    self.community_upgrades.where{type == "CommunityUserPackUpgrade"}.each do |upgrade|
-      if upgrade.is_a? CommunityUserPackUpgrade
-        total_bonus_users = total_bonus_users + upgrade.total_bonus_users(self)
-      end
-    end
-    return total_bonus_users
-  end
-
   # Total price for this communities plans and upgrades in cents.
   def total_price_per_month_in_cents
-    price = self.community_plan.price_per_month_in_cents
-    self.current_community_upgrades.each do |current_community_upgrade|
-      price = price + current_community_upgrade.total_price_per_month_in_cents
-    end
-    price
+    self.actual_subscription_pack.total_price_per_month_in_cents
   end
 
   # Total price for this communities plans and upgrades in dollars.
   def total_price_per_month_in_dollars
     self.total_price_per_month_in_cents/100.0
+  end
+
+  def actual_subscription_pack
+    if current_subscription_package.has_expired?
+      # TODO Magic redo
+    else
+      return self.current_subscription_package
+    end
   end
 
   ###
@@ -388,17 +381,9 @@ protected
 ###
 # Callback Methods
 ###
-  ###
-  # _before_validation_
-  #
-  # When the community plan is changed any upgrades that are not compatible with the new plan are removed.
-  ###
-  def remove_incompatible_upgrades
-    if self.community_plan_id_changed?
-      self.current_community_upgrades.each do |current_upgrade|
-        current_upgrade.mark_for_destruction unless current_upgrade.community_upgrade.community_plans.include? self.community_plan
-      end
-    end
+  
+  def downgrade_subscription
+    return true
   end
 
   ###
@@ -555,29 +540,30 @@ end
 #
 # Table name: communities
 #
-#  id                              :integer          not null, primary key
-#  name                            :string(255)
-#  slogan                          :string(255)
-#  is_accepting_members            :boolean          default(TRUE)
-#  email_notice_on_application     :boolean          default(TRUE)
-#  subdomain                       :string(255)
-#  created_at                      :datetime         not null
-#  updated_at                      :datetime         not null
-#  admin_profile_id                :integer
-#  member_role_id                  :integer
-#  is_protected_roster             :boolean          default(FALSE)
-#  community_application_form_id   :integer
-#  community_announcement_space_id :integer
-#  is_public_roster                :boolean          default(TRUE)
-#  deleted_at                      :datetime
-#  background_image                :string(255)
-#  background_color                :string(255)
-#  theme_id                        :integer
-#  title_color                     :string(255)
-#  home_page_id                    :integer
-#  pending_removal                 :boolean          default(FALSE)
-#  action_items                    :text
-#  pitch                           :string(255)
-#  community_plan_id               :integer
+#  id                                :integer          not null, primary key
+#  name                              :string(255)
+#  slogan                            :string(255)
+#  is_accepting_members              :boolean          default(TRUE)
+#  email_notice_on_application       :boolean          default(TRUE)
+#  subdomain                         :string(255)
+#  created_at                        :datetime         not null
+#  updated_at                        :datetime         not null
+#  admin_profile_id                  :integer
+#  member_role_id                    :integer
+#  is_protected_roster               :boolean          default(FALSE)
+#  community_application_form_id     :integer
+#  community_announcement_space_id   :integer
+#  is_public_roster                  :boolean          default(TRUE)
+#  deleted_at                        :datetime
+#  background_image                  :string(255)
+#  background_color                  :string(255)
+#  theme_id                          :integer
+#  title_color                       :string(255)
+#  home_page_id                      :integer
+#  pending_removal                   :boolean          default(FALSE)
+#  action_items                      :text
+#  pitch                             :string(255)
+#  current_subscription_package_id   :integer
+#  recurring_subscription_package_id :integer
 #
 
