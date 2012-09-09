@@ -15,13 +15,13 @@
     .avatar= image_tag @user_profile.avatar_url :large
     .actions
       - if can? :update, @user_profile
-        = link_to "Settings", edit_user_registration_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), icon: '✲'
-        = link_to 'Edit Profile', edit_user_profile_url(@user_profile), icon: '✎'
+        = link_to "Settings", edit_user_registration_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), class: 'settings'
+        = link_to 'Edit Profile', edit_user_profile_url(@user_profile), class: 'edit'
       - elsif user_signed_in?
         - if current_user.address_book.include? @user_profile
-          = link_to 'Message', compose_mail_to_url(@user_profile), icon: '✉'
+          = link_to 'Message', compose_mail_to_url(@user_profile), class: 'message'
         - if @communitys_to_invite_to.any?
-          .recruit{ icon: '✍' }
+          .recruit
             Recruit to&hellip;
             %ul
               - @communitys_to_invite_to.each do |community|
@@ -31,7 +31,7 @@
       - if @user_profile.communities.any?
         %ul.communities
           - @user_profile.communities.includes(:admin_profile).each do |community|
-            %li= link_to shorten_words(community.name), root_url(subdomain: community.subdomain), (@user_profile == community.admin_profile ? { meta: '✭' } : {})
+            %li= link_to shorten_words(community.name), root_url(subdomain: community.subdomain)
       - elsif is_my_profile
         %p
           You don't have any memberships yet.

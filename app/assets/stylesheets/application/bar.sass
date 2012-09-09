@@ -40,13 +40,16 @@
         text-indent: -500em
         width: 50px
         &:before
-          background: image-url('bar/icons.png') no-repeat
-          bottom: 0
+          color: #fff
           content: ''
+          font: 3em Picara
+          height: 50px
           left: 0
+          line-height: 50px
           +opacity(.55)
           position: absolute
           right: 0
+          text-indent: 0
           top: 10px
         &[meta]:after
           background: #B23D22
@@ -71,11 +74,11 @@
             background: #e45431
             color: #fff
       &.calendar a:before
-        background-position: 0 0
+        content: '\F206'
       &.notice a:before
-        background-position: 0 -50px
+        content: '\F207'
       &.envelope a:before
-        background-position: 0 -100px
+        content: '\F100'
   
   .menu
     height: 30px

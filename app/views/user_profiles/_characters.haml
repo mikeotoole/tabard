@@ -2,7 +2,7 @@
   %h2
     Star Wars: The Old Republic
     - if user_signed_in? and user_profile == current_user.user_profile
-      = link_to '+ add new', new_swtor_character_url
+      = link_to 'Add new', new_swtor_character_url
 - if user_profile.swtor_characters.any?
   %ul.characters
     = render 'swtor_characters/list', characters: user_profile.swtor_characters.includes(character_proxy: [:user_profile])
@@ -11,7 +11,7 @@
   %h2
     World of Warcraft
     - if user_signed_in? and user_profile == current_user.user_profile
-      = link_to '+ add new', new_wow_character_url
+      = link_to 'Add new', new_wow_character_url
 - if user_profile.wow_characters.any?
   %ul.characters
     = render 'wow_characters/list', characters: user_profile.wow_characters.includes(character_proxy: [:user_profile])
@@ -20,7 +20,7 @@
   %h2
     Minecraft
     - if user_signed_in? and user_profile == current_user.user_profile
-      = link_to '+ add new', new_minecraft_character_url
+      = link_to 'Add new', new_minecraft_character_url
 - if user_profile.minecraft_characters.any?
   %ul.characters
     = render 'minecraft_characters/list', characters: user_profile.minecraft_characters.includes(character_proxy: [:user_profile])

@@ -45,10 +45,8 @@ button,
   background: #A23826
   +bg_gradient(#d24723,#792b28)
   color: #f8d5bb
-  
   &.read span:before
-    background-position: -420px -30px
-  
+    content: '\f107'
   &:focus,
   &:hover
     background: #BE4931
@@ -355,7 +353,9 @@ body.index.minecrafts #submenu .minecraft
           border: none
           padding: 0 3px !important
           text-decoration: none
-          
+          &:before
+            content: '\f000'
+            font: 2em Picara
           &:hover
             background: #A13A30 !important
         

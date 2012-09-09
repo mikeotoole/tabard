@@ -48,8 +48,7 @@ jQuery(document).ready ($) ->
   $('table.invites thead th:last').each ->
     invitedRows = $(@).closest('table').find('tbody tr')
     if invitedRows.length > 0
-      $(@).html('<a>✔</a>')
-      checka = $(@).find('a')
+      checka = $('<a>').appendTo @
       checka.addClass('checked') if invitedRows.find('td.actions a.approve').length == invitedRows.length
       checka.click ->
         if invitedRows.find('td.actions a.approve').length == invitedRows.length

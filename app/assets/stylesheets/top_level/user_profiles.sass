@@ -130,34 +130,37 @@ body.user_profiles.dashboard
             height: 26px
             line-height: 26px
             margin: 5px
-            padding: 0
+            padding: 0 5px
             position: relative
             text-decoration: none
-            
-            &[icon]
-              +border_radius(0)
-              padding: 0 10px 0 33px
-              +transition(none)
-              
+            text-shadow: 0 -1px 1px #000
+            &:before
+              background: #70667A
+              +border_radius(3)
+              display: block
+              float: left
+              font: 2em Picara
+              height: 26px
+              left: 0
+              line-height: 26px
+              margin: 0 5px 0 -5px
+              +opacity(.5)
+              text-align: center
+              top: 0
+              width: 26px
+            &.edit:before
+              content: '\f007'
+            &.message:before
+              content: '\f100'
+            &.recruit:before
+              content: '\f202'
+            &.settings:before
+              content: '\f204'
+            &:hover
+              background: #CB472C
               &:before
-                background: #51415b
-                content: attr(icon)
-                color: #B1AEB4
-                font-size: 15px
-                height: 26px
-                left: 0
-                line-height: 26px
-                position: absolute
-                text-align: center
-                top: 0
-                width: 26px
-              
-              &:hover
-                background: #CB472C
-                
-                &:before
-                  background: #CB472C
-                  color: #fff
+                background: transparent
+                +opacity(.9)
             
             >ul
               background: #CC4728
@@ -220,27 +223,24 @@ body.user_profiles.dashboard
               display: block
               margin: 0
               padding: 5px 0 5px 30px
+              position: relative
               text-decoration: none
-              
+              text-shadow: 0 1px 1px #fff
+              &:before
+                display: none
+              &:after
+                border: 5px solid transparent
+                border-left-color: #ccc
+                content: ''
+                left: 15px
+                position: absolute
+                top: 10px
               &:hover
                 background: #A23B31
                 color: #fff
-              
-              &[meta]
-                position: relative
-                
-                &:before
-                  display: none
-                
+                text-shadow: 0 -1px 1px #000
                 &:after
-                  color: #999
-                  content: attr(meta)
-                  left: 5px
-                  position: absolute
-                  top: 5px
-                
-                &:hover:after
-                  color: #fff
+                  border-left-color: #fff
             
             &:first-child a
               +border_radius(3,3,0,0)
@@ -301,9 +301,12 @@ body.user_profiles.dashboard
                 position: absolute
                 right: 7px
                 text-decoration: none
-                text-shadow: none
+                text-shadow: 0 -1px 1px #000
                 top: 7px
-                
+                &:before
+                  content: '\f002'
+                  font: 1.5em Picara
+                  padding-right: 5px
                 &:hover
                   background: #A53E34
             
@@ -320,7 +323,6 @@ body.user_profiles.dashboard
                 padding: 20px 0 20px 75px
                 position: relative
                 width: 220px
-                
                 &:before
                   display: none
                 
@@ -331,7 +333,6 @@ body.user_profiles.dashboard
                   position: absolute
                   top: 20px
                   width: 60px
-                  
                   &:before
                     background: image-url('application/comment-shadow.png') 0 0 no-repeat
                     content: ''
@@ -346,23 +347,19 @@ body.user_profiles.dashboard
                   line-height: 1em
                   margin: 0 0 10px
                   padding: 0
-                  
                   a
                     color: #56149C
                     margin: 0 -3px
-                    
                     &:hover
                       color: #BE4124
                 
                 .attributes
                   font-size: 13px
                   line-height: 15px
-                  
                   dt
                     clear: left
                     float: left
                     width: 60px
-                  
                   dd
                     color: #000
                     float: left
@@ -379,8 +376,17 @@ body.user_profiles.dashboard
                 &.check a
                   background: #327BB4 !important
                   color: #fff
-                  font-size: 14px
-                  width: 10px
+                  display: block
+                  float: left
+                  height: 24px
+                  margin: -2px
+                  padding: 0 !important
+                  text-align: center
+                  text-shadow: 0 -1px 1px #000
+                  width: 24px
+                  &:before
+                    font: 1.5em Picara
+                    line-height: auto
                   &:hover
                     background: #A03B32 !important
               
@@ -393,6 +399,9 @@ body.user_profiles.dashboard
                   padding: 10px
                   &.check
                     padding: 10px 14px
+                  &.check:empty:before
+                    content: '\f000'
+                    font: 2em Picara
                   &.check input,
                   &.check label
                     margin-left: -9px
@@ -460,7 +469,9 @@ body.user_profiles.dashboard
                   color: #251533
                 &:before
                   color: #251533 !important
-                  content: '\2714'
+                  content: '\f000'
+                  font: 1.5em Picara
+                  line-height: auto
               &.busy:after
                 background: image-url('application/busy-mini.gif') 50% 50% no-repeat #aaa
                 +border_radius(3)
@@ -487,14 +498,17 @@ body.user_profiles.dashboard
             width: 40px
             z-index: 1
             &:before
-              background: image-url('application/icons.png')
               content: ''
+              color: #000
+              font: 2.5em Picara
               +opacity(.3)
               height: 30px
               width: 30px
               left: 5px
               position: absolute
-              top: 5px
+              text-align: center
+              text-indent: 0
+              top: 0
 
             &:nth-child(1)
               right: 0
@@ -521,15 +535,15 @@ body.user_profiles.dashboard
               visibility: visible
               z-index: 1
             &.invites:before
-              background-position: -1080px 0
+              content: '\f206'
             &.announcements:before
-              background-position: -450px 0
+              content: '\f207'
             &.activities:before
-              background-position: -1020px 0
+              content: '\f205'
             &.characters:before
-              background-position: -570px 0
+              content: '\f200'
             &.roles:before
-              background-position: -150px 0
+              content: '\f108'
             &:hover
               background: #fff
               cursor: pointer

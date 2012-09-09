@@ -291,12 +291,9 @@ jQuery(document).ready ($) ->
   $('body')
     .on 'init', 'thead th.check:not(:has(a))', ->
       rowChecks = $(@).closest('table').find('tbody td.check input')
-      $(@)
-        .append('<a>✔</a>')
-        .find('a')
-        .click ->
-          if rowChecks.filter(':checked').length == rowChecks.length
-            rowChecks.attr 'checked', false
-          else
-            rowChecks.attr 'checked', true
+      $('<a>').appendTo(@).click ->
+        if rowChecks.filter(':checked').length == rowChecks.length
+          rowChecks.attr 'checked', false
+        else
+          rowChecks.attr 'checked', true
     .trigger 'init'

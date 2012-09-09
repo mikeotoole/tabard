@@ -8,7 +8,7 @@
           - announcement = acknowledgement.announcement
           - if acknowledgement.has_been_viewed?
             %tr.read
-              %td.check.compact= '✔'
+              %td.check.compact
               %td
                 %strong= link_to shorten_words(announcement.name), announcement_url(announcement, subdomain: announcement.subdomain)
               %td= link_to shorten_words(announcement.community_name), root_url(subdomain: announcement.subdomain)
