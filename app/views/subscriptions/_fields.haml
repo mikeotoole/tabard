@@ -1,17 +1,17 @@
 - card_is_present = (stripe_card_token.present? or current_user.stripe_customer_token.present?)
 %fieldset
   = hidden_field_tag :stripe_card_token
-  -unless community.recurring_subscription_package.blank?
-    %span Herp your plan will change to:
-    = community.recurring_subscription_package.community_plan.title
-    = community.recurring_subscription_package.to_yaml
+  -unless community.current_subscription_package.blank?
+    %span Herp your plan is currently:
+    = community.current_subscription_package.community_plan.title
+    = community.current_subscription_package.to_yaml
   %ol
-    = f.simple_fields_for :current_subscription_package do |cs|
+    = f.simple_fields_for :recurring_subscription_package do |cs|
       = cs.association :community_plan, :collection => available_plans, :prompt => "Choose a Plan", as: :radio_buttons
       = cs.simple_fields_for :current_community_upgrades do |cf|
         = render cf.object.community_upgrade.type.to_s.tableize.singularize, community: community, current_community_upgrade: cf.object, upgrade: CommunityUpgrade.find_by_id(cf.object.community_upgrade_id), cf: cf
 
-- if card_is_present
+- if card_is_present or true
   %p
     Your card info is currently on file.
     = link_to 'Enter new card?', "javascript:$('cc_fields').show();$(this).closest('p').hide();"
