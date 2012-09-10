@@ -1,12 +1,12 @@
 class SubscriptionPackage < ActiveRecord::Base
   attr_accessible :community_plan_id, :end_date, :current_community_upgrades_attributes
-  before_save :ensure_full_package_time
   belongs_to :community_plan
   has_one :community, foreign_key: "current_subscription_package_id"
   has_many :current_community_upgrades, inverse_of: :subscription_package
   has_many :community_upgrades, through: :current_community_upgrades
   accepts_nested_attributes_for :current_community_upgrades, :allow_destroy => true, :reject_if => proc { |attributes| attributes['number_in_use'].blank? or attributes['number_in_use'].to_i <= 0 }
 
+  delegate :title, to: :community_plan, prefix: true
   def has_expired?
     false
   end
@@ -37,22 +37,6 @@ class SubscriptionPackage < ActiveRecord::Base
   ###
   def max_number_of_users
     return self.community_plan.max_number_of_users + self.user_pack_upgrade_amount
-  end
-
-  def ensure_full_package_time
-    # TODO take upgrades into account
-    if self.community_plan_id_changed?
-      old_plan = CommunityPlan.find_by_id(self.community_plan_id_was)
-      new_plan = CommunityPlan.find_by_id(self.community_plan_id)
-      if not old_plan.blank? and old_plan.price_per_month_in_cents > new_plan.price_per_month_in_cents
-        # TODO Add end date
-        old_package = SubscriptionPackage.create(community_plan_id: self.community_plan_id)
-        self.community.update_column(:recurring_subscription_package_id, old_package.id)
-        CurrentCommunityUpgrade.where(subscription_package_id: self.id).update_all(subscription_package_id: old_package.id)
-
-        self.community_plan_id = self.community_plan_id_was
-      end
-    end
   end
 end
 

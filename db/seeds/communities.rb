@@ -5,7 +5,7 @@
 # Create a community
 def create_community(admin_user_last_name, name, slogan, game_array)
   admin_user = UserProfile.find_by_last_name(admin_user_last_name)
-  community = admin_user.owned_communities.create!({name: name, slogan: slogan, theme: Theme.default_theme, current_subscription_package: SubscriptionPackage.create({community_plan: CommunityPlan.default_plan}, without_protection: true)}, without_protection: true)
+  community = admin_user.owned_communities.create!({name: name, slogan: slogan, theme: Theme.default_theme, recurring_subscription_package: SubscriptionPackage.create({community_plan: CommunityPlan.default_plan}, without_protection: true)}, without_protection: true)
   puts "#{admin_user.name} is creating #{name} Community"
   game_array.each do |game_name|
     case game_name
@@ -109,6 +109,7 @@ unless @dont_run
 
   # Just Another Headshot
   headshot = create_community('Billy', 'Just Another Headshot', 'Boom baby!', %w(Empire Horde Minecraft))
+  puts "Headshot is going PRO"
   community_plan = CommunityPlan.find_by_title("Pro")
   token = Stripe::Token.create(
       :card => {
@@ -118,7 +119,7 @@ unless @dont_run
       :cvc => 314
     },
   )
-  headshot.update_attributes_with_payment({current_subscription_package: SubscriptionPackage.create({community_plan_id: community_plan.id}, without_protection: true)}, token.id)
+  headshot.update_attributes_with_payment({recurring_subscription_package: SubscriptionPackage.create({community_plan_id: community_plan.id}, without_protection: true)}, token.id)
   headshot.save!
 
   billy = UserProfile.find_by_last_name('Billy')

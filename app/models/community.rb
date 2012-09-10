@@ -28,8 +28,8 @@ class Community < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :slogan, :is_accepting_members, :email_notice_on_application, :is_protected_roster, :is_public_roster, :theme_id, :theme, :current_subscription_package,
-    :background_color, :title_color, :background_image, :remove_background_image, :background_image_cache, :home_page_id, :pitch, :current_subscription_package_attributes
+  attr_accessible :name, :slogan, :is_accepting_members, :email_notice_on_application, :is_protected_roster, :is_public_roster, :theme_id, :theme, :recurring_subscription_package,
+    :background_color, :title_color, :background_image, :remove_background_image, :background_image_cache, :home_page_id, :pitch, :recurring_subscription_package_attributes
 
 ###
 # Associations
@@ -38,7 +38,6 @@ class Community < ActiveRecord::Base
   belongs_to :member_role, class_name: "Role"
   belongs_to :community_application_form, dependent: :destroy, class_name: "CustomForm", autosave: true
 
-  belongs_to :community_plan
   has_many :community_upgrades, through: :current_community_upgrades
   belongs_to :current_subscription_package, class_name: "SubscriptionPackage"
   belongs_to :recurring_subscription_package, class_name: "SubscriptionPackage"
@@ -68,7 +67,7 @@ class Community < ActiveRecord::Base
   belongs_to :home_page, class_name: "Page"
 
   accepts_nested_attributes_for :theme
-  accepts_nested_attributes_for :current_subscription_package
+  accepts_nested_attributes_for :recurring_subscription_package
 
 ###
 # Callbacks
@@ -81,6 +80,8 @@ class Community < ActiveRecord::Base
   after_create :setup_member_role, :make_admin_a_member
   after_create :setup_default_community_items
   after_destroy :destroy_admin_community_profile_and_member_role
+  before_save :ensure_current_subscription_package
+  after_save :ensure_full_package_time
 
 ###
 # Delegates
@@ -88,7 +89,6 @@ class Community < ActiveRecord::Base
   delegate :css, to: :theme, prefix: true
   delegate :background_author, to: :theme, prefix: true, allow_nil: true
   delegate :background_author_url, to: :theme, prefix: true, allow_nil: true
-  delegate :title, to: :community_plan, prefix: true, allow_nil: true
   delegate :email, to: :admin_profile, prefix: true, allow_nil: true
   delegate :user, to: :admin_profile, prefix: true, allow_nil: true
 
@@ -204,10 +204,40 @@ class Community < ActiveRecord::Base
   end
 
   def actual_subscription_pack
-    if current_subscription_package.has_expired?
-      # TODO Magic redo
-    else
-      return self.current_subscription_package
+    return self.recurring_subscription_package
+  end
+
+  def community_plan_title
+    self.actual_subscription_pack.community_plan_title
+  end
+
+  def ensure_current_subscription_package
+    # TODO take upgrades into account
+    if self.current_subscription_package.blank?
+      the_attributes = self.recurring_subscription_package.attributes
+      the_attributes.delete('id')
+      self.current_subscription_package = SubscriptionPackage.create!(the_attributes, without_protection: true)
+      self.recurring_subscription_package.current_community_upgrades.each do |upgrade|
+        the_attributes = upgrade.attributes
+        the_attributes.delete('id')
+        the_attributes['subscription_package_id'] = self.current_subscription_package.id
+        self.current_subscription_package.current_community_upgrades.create!(the_attributes, without_protection: true)
+      end
+    end
+  end
+
+  def ensure_full_package_time
+    if self.recurring_subscription_package.total_price_per_month_in_cents > self.current_subscription_package.total_price_per_month_in_cents
+      logger.debug "MORE EXPENSIVE PLAN, UPGRADE CURRENT"
+      the_attributes = self.recurring_subscription_package.attributes
+      the_attributes.delete('id')
+      self.update_column(:current_subscription_package_id, SubscriptionPackage.create(the_attributes, without_protection: true).id)
+      self.recurring_subscription_package.current_community_upgrades.each do |upgrade|
+        the_attributes = upgrade.attributes
+        the_attributes.delete('id')
+        the_attributes['subscription_package_id'] = self.current_subscription_package.id
+        self.current_subscription_package.current_community_upgrades.create!(the_attributes, without_protection: true)
+      end
     end
   end
 
