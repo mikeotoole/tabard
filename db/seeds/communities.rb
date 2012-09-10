@@ -109,6 +109,7 @@ unless @dont_run
 
   # Just Another Headshot
   headshot = create_community('Billy', 'Just Another Headshot', 'Boom baby!', %w(Empire Horde Minecraft))
+  puts "Headshot is going PRO"
   community_plan = CommunityPlan.find_by_title("Pro")
   token = Stripe::Token.create(
       :card => {

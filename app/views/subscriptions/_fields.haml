@@ -5,6 +5,7 @@
     %span Herp your plan is currently:
     = community.current_subscription_package.community_plan.title
     = community.current_subscription_package.to_yaml
+    = community.current_subscription_package.current_community_upgrades.to_yaml
   %ol
     = f.simple_fields_for :recurring_subscription_package do |cs|
       = cs.association :community_plan, :collection => available_plans, :prompt => "Choose a Plan", as: :radio_buttons
