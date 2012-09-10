@@ -12,7 +12,7 @@
       = cs.simple_fields_for :current_community_upgrades do |cf|
         = render cf.object.community_upgrade.type.to_s.tableize.singularize, community: community, current_community_upgrade: cf.object, upgrade: CommunityUpgrade.find_by_id(cf.object.community_upgrade_id), cf: cf
 
-- if card_is_present or true
+- if card_is_present
   %p
     Your card info is currently on file.
     = link_to 'Enter new card?', "javascript:$('cc_fields').show();$(this).closest('p').hide();"
