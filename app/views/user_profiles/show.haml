@@ -20,11 +20,11 @@
       - elsif user_signed_in?
         - if current_user.address_book.include? @user_profile
           = link_to 'Message', compose_mail_to_url(@user_profile), class: 'message'
-        - if @communitys_to_invite_to.any?
+        - if @communities_to_invite_to.any?
           .recruit
             Recruit to&hellip;
             %ul
-              - @communitys_to_invite_to.each do |community|
+              - @communities_to_invite_to.each do |community|
                 %li= link_to community.name, community_invites_url(community_invite: {applicant_id: @user_profile.id, community_id: community.id, sponsor_id: current_user.user_profile_id}), method: :post
     - if @user_profile.publicly_viewable or is_my_profile
       %h3 My Communities

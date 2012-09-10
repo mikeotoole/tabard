@@ -197,10 +197,11 @@
       &:after
         background: #993528
         color: #d1b188
-        content: attr(icon)
+        font: 2em Picara
         height: 25px
         left: 0
-        line-height: 25px
+        line-height: auto
+        +opacity(.9)
         position: absolute
         text-align: center
         top: 5px
@@ -215,6 +216,22 @@
           color: #fff
     li:last-child a
       border-bottom: 0
+
+    &.communities a:after
+      content: '\F500'
+
+    li.add a:after
+      content: '\F002'
+    li.characters a:after
+      content: '\F008'
+    li.logout a:after
+      content: '\F001'
+    li.profile a:after
+      content: '\F200'
+    li.settings a:after
+      content: '\F204'
+    li.subscriptions a:after
+      content: '\F00E'
 
 body.signed_in #bar .menu
   margin: 0 -250px 0 0

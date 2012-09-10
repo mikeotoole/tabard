@@ -6,13 +6,13 @@
   - if current_user.communities.any?
     %li
       %span My Communities
-      %ul
+      %ul.communities
         - current_user.communities.includes(:admin_profile).each do |community|
-          %li= link_to shorten_words(community.name), actual_community_url(community), class: current_community == community ? 'current' : '', icon: current_user.user_profile == community.admin_profile ? '✭' : '◎'
+          %li= link_to shorten_words(community.name), actual_community_url(community), class: current_community == community ? 'current' : ''
         - unless current_user.communities.any?
-          = link_to 'Find a community', search_url(subdomain: false), icon: '◎'
+          = link_to 'Find a community', search_url(subdomain: false)
         - if current_user.owned_communities.size < Community::MAX_OWNED_COMMUNITIES
-          %li.extra= link_to 'Add a community', new_community_url(subdomain: false), icon: '+'
+          %li.add= link_to 'Add a community', new_community_url(subdomain: false)
 
 %ul.dashboard
   %li.notice
@@ -25,8 +25,8 @@
 .avatar
   = link_to image_tag(current_user.avatar_url :tiny), user_profile_url(current_user.user_profile, subdomain: false, anchor: 'characters')
   %ul
-    %li.characters= link_to 'My Characters', user_profile_url(current_user.user_profile, subdomain: false, anchor: 'characters'), icon: 'Ξ'
-    %li.profile= link_to 'Edit My Profile', edit_user_profile_url(current_user.user_profile), icon: '✎'
-    %li.settings= link_to 'Account Settings', account_settings_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), icon: '✲'
-    %li.settings= link_to 'Subscriptions', subscriptions_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), icon: '$'
-    %li.logout= link_to 'Logout', destroy_user_session_url, method: :delete, icon: '✕'
+    %li.profile= link_to 'Edit My Profile', edit_user_profile_url(current_user.user_profile)
+    %li.characters= link_to 'My Characters', user_profile_url(current_user.user_profile, subdomain: false, anchor: 'characters')
+    %li.settings= link_to 'Account Settings', account_settings_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"))
+    %li.subscriptions= link_to 'Subscriptions', subscriptions_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"))
+    %li.logout= link_to 'Logout', destroy_user_session_url, method: :delete

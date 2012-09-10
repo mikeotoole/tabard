@@ -149,13 +149,13 @@ body.user_profiles.dashboard
               top: 0
               width: 26px
             &.edit:before
-              content: '\f007'
+              content: '\F007'
             &.message:before
-              content: '\f100'
+              content: '\F100'
             &.recruit:before
-              content: '\f202'
+              content: '\F30B'
             &.settings:before
-              content: '\f204'
+              content: '\F204'
             &:hover
               background: #CB472C
               &:before
@@ -229,18 +229,19 @@ body.user_profiles.dashboard
               &:before
                 display: none
               &:after
-                border: 5px solid transparent
-                border-left-color: #ccc
-                content: ''
-                left: 15px
+                color: #aaa
+                content: '\F500'
+                font: 1.5em Picara
+                left: 10px
+                line-height: auto
                 position: absolute
-                top: 10px
+                top: 5px
               &:hover
                 background: #A23B31
                 color: #fff
                 text-shadow: 0 -1px 1px #000
                 &:after
-                  border-left-color: #fff
+                  color: #fff
             
             &:first-child a
               +border_radius(3,3,0,0)
@@ -304,7 +305,7 @@ body.user_profiles.dashboard
                 text-shadow: 0 -1px 1px #000
                 top: 7px
                 &:before
-                  content: '\f002'
+                  content: '\F002'
                   font: 1.5em Picara
                   padding-right: 5px
                 &:hover
@@ -400,7 +401,7 @@ body.user_profiles.dashboard
                   &.check
                     padding: 10px 14px
                   &.check:empty:before
-                    content: '\f000'
+                    content: '\F000'
                     font: 2em Picara
                   &.check input,
                   &.check label
@@ -469,7 +470,7 @@ body.user_profiles.dashboard
                   color: #251533
                 &:before
                   color: #251533 !important
-                  content: '\f000'
+                  content: '\F000'
                   font: 1.5em Picara
                   line-height: auto
               &.busy:after
@@ -535,15 +536,15 @@ body.user_profiles.dashboard
               visibility: visible
               z-index: 1
             &.invites:before
-              content: '\f206'
+              content: '\F206'
             &.announcements:before
-              content: '\f207'
+              content: '\F207'
             &.activities:before
-              content: '\f205'
+              content: '\F205'
             &.characters:before
-              content: '\f200'
+              content: '\F200'
             &.roles:before
-              content: '\f108'
+              content: '\F108'
             &:hover
               background: #fff
               cursor: pointer
