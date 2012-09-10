@@ -84,14 +84,14 @@ button,
   +bg_gradient(#943918,#6D2D16)
   border-color: #2A1E1D
   color: #ffe6b0
-  
+  text-shadow: 0 -1px 1px #000
   &:focus,
   &:hover
     +bg_gradient(#FACB63,#ecae25)
     +box_shadow(0 0 15px rgba(#FACB63,.2))
     border-color: #fff
     color: #000
-  
+    text-shadow: 0 1px 1px #fff
   &.disabled
     +bg_gradient(#943918,#6D2D16)
     color: #9e543a
@@ -130,42 +130,29 @@ button,
       border: 1px solid #6C3A2B
       border-left: 0
       border-right: 0
-      
       li
-        
         a
           background: #bb5c22
           color: #2A1E1D
-        
         span
           background: #8D502B
           color: #2A1E1D
-        
         &:before
           border-left-color: #2A1E1D
-        
         &:after
           border-left-color: #bb5c22
-        
         &:hover
-          
           &:after
             border-left-color: #FACB63
-            
           a
             background: #FACB63
             color: #000
-        
         &:last-child
-        
           &:after
             border-left-color: #8D502B
-          
           &:hover
-            
             &:after
               border-left-color: #FACB63
-            
             span
               background: #FACB63
               color: #000
@@ -175,71 +162,18 @@ button,
     
   .actions a
     background-color: #943918
-    
+    &:after
+      color: #2A1E1D
+      text-shadow: 0 1px 1px #d0734d
     &:hover
       background-color: #FACB63
       +box_shadow(0 0 10px rgba(#ECAE26,.5))
-    
-      &[meta]
-      
-        &:before
-          background: #c0a295
-          border-color: #A78373
-          color: #000
-        
-        &:after
-          border-left-color: #A78373
-    
-    &.apply
-      background-position: 0 0
-  
-    &.approve
-      background-position: -510px 0
-      
-    &.delete
-      background-position: -30px 0
-      
-    &.edit
-      background-position: -60px 0
-        
-    &.event
-      background-position: -1080px 0
-    
-    &.invitees
-      background-position: -570px 0
-    
-    &.lock
-      background-position: -180px 0
-      
-    &.month
-      background-position: -1140px 0
-      
-    &.new
-      background-position: 0 0
-    
-    &.profile
-      background-position: -570px 0
-    
-    &.publish
-      background-position: -420px 0
-    
-    &.reject
-      background-position: -540px 0
-      
-    &.review
-      background-position: -120px 0
-    
-    &.submission
-      background-position: -600px 0
-    
-    &.unlock
-      background-position: -150px 0
-      
-    &.unpublish
-      background-position: -390px 0
-      
-    &.week
-      background-position: -1110px 0
+      &[meta]:before
+        background: #c0a295
+        border-color: #c0a295
+        color: #000
+      &:after
+        text-shadow: 0 1px 1px #fff
   
   
   // FORMS
@@ -540,18 +474,13 @@ button,
               background: #F3EB77
         
         .actions a
-            
-          &.edit
-            background-position: -65px -35px
-          
-          &.delete
-            background-position: -35px -35px
-          
-          &.lock
-            background-position: -185px -35px
-          
-          &.unlock
-            background-position: -155px -35px
+          background: transparent
+          &:after
+            color: #78594D
+            text-shadow: none
+          &:hover:after
+            color: #FCC85E
+            text-shadow: none
         
         em
           background: #804f34
@@ -632,20 +561,19 @@ button,
       &.busy:after
         background-color: rgba(#F0EE7C,.5)
       
-      >label:before
-        background-color: #7F4F35
-        background-position: -185px -35px !important
-      
-      >input:checked + label:before
-        background-position: -155px -35px !important
+      >label
+        color: #c0a497
+      >input:checked + label
+        color: #FCC85E
       
       button
         background: #BB5C22
         border-color: #5A3226
         color: #000
-        
+        text-shadow: 0 1px 1px #A88372
         &:hover
           background: #FACB63
+          text-shadow: none
   
   
   // ACTIVITIES
@@ -660,72 +588,43 @@ button,
 
   h2.status
     border-bottom-color: #78594D
-    
     a
       color: #fff
-      
       &:hover
         color: #000
-  
   .submission
-  
     h1,
     h2
       background: #8D502B
       color: #fff
-      
+      text-shadow: 0 -1px 1px #000
+      &:before
+        color: #cbad9a
       &:after
         border-left-color: rgba(#000,.2)
         border-right-color: rgba(#fff,.2)
-  
-    h1,
-    .questions >h2
-      
-      &:before
-        background-position: -120px -30px
-    
     .sidebar
-      
-      .submitter h2:before
-        background-position: -570px -30px
-      
-      .characters h2:before
-        background-position: -570px -30px
-        
       .characters >label,
       .characters >ul li,
       .submitter a
         background: #F18E46
         color: #000
-          
         img.avatar
           background: #6E5247
           +box_shadow(0 0 5px rgba(#000,.5))
-      
       .submitter a:hover
         background: #F9E56D
         color: #000
-      
       .characters >label
-        
         &:after
           color: #6E5247
-        
         &:hover
           background: #F9E56D
           color: #000
-          
           &:after
             color: #000
-      
-      .instructions h2:before
-        background-position: -450px -30px
-
     .questions dt
       color: #fff
-      
-    h2.comments:before
-      background-position: -450px -30px
   
   
   // CUSTOM FORMS
@@ -858,13 +757,15 @@ button,
   // DATE/TIME PICKER
   
   button.ui-datepicker-trigger
-    background-color: #705348
-    background-position: -1079px -29px
-    
-    &:hover,
-    &:focus
-      background-color: #9f7768
-      background-position: -1079px -29px
+    background: #6D5045
+    &:before
+      color: #e1cbc1
+      text-shadow: 0 -1px 1px #000
+    &:hover
+      background: #FCC85E
+      &:before
+        color: #000
+        text-shadow: 0 1px 1px #fff
   
 .ui-datepicker
   background: #DF4623

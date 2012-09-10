@@ -421,58 +421,64 @@ body.index.minecrafts #submenu .minecraft
           div
             position: relative
             a
-              background: image-url('application/icons.png') no-repeat #aaa
+              background: #aaa
               +border_radius(3)
               display: block
               float: left
               height: 30px
-              overflow: hidden
               padding: 0
+              position: relative
               margin: 0 0 0 5px
               text-indent: -500em
               +transition(background-color .2s linear, box-shadow .2s linear)
               width: 30px
+              &:after
+                color: #fff
+                display: block
+                font: 30px Picara
+                height: 30px
+                left: 0
+                line-height: 25px
+                +opacity(.99)
+                position: absolute
+                text-align: center
+                text-indent: 0
+                text-shadow: 0 -1px 1px #666
+                top: 0
+                width: 30px
+              &.apply:after
+                content: '\F30B'
+              &.close:after
+                content: '\F001'
+              &.comment:after
+                content: '\F201'
+              &.delete:after
+                content: '\F103'
+              &.edit:after
+                content: '\F007'
+              &.recruit:after
+                content: '\F30B'
+              &.remove:after
+                content: '\F001'
+              &.view:after
+                content: '\F003'
               &:hover
-                background: image-url('application/icons.png') no-repeat #be4124
+                background: #be4124
                 +box_shadow(0 0 10px #333)
-                &[meta]
-                  &:before
-                    background: rgba(#251634,.8)
-                    +border_radius(3)
-                    color: #fff
-                    content: attr(meta)
-                    font-size: 13px
-                    height: 30px
-                    line-height: 30px
-                    margin: 0 5px 0 0
-                    padding: 0 10px
-                    position: absolute
-                    right: 100%
-                    text-indent: 0
-                    white-space: nowrap
-                  &:after
-                    border: 5px solid transparent
-                    border-left: 5px solid rgba(#251634,.8)
-                    content: ''
-                    height: 0
-                    left: -5px
-                    position: absolute
-                    top: 10px
-                    width: 0
-              &.apply
-                background-position: -120px -30px
-              &.close
-                background-position: -30px -30px
-              &.comment
-                background-position: -1170px -30px
-              &.delete
-                background-position: -30px -30px
-              &.edit
-                background-position: -60px -30px
-              &.recruit
-                background-position: -960px -30px
-              &.view
-                background-position: -960px -30px
+                &[meta]:before
+                  background: rgba(#251634,.8)
+                  +border_radius(3)
+                  color: #fff
+                  content: attr(meta)
+                  font-size: 13px
+                  height: 30px
+                  line-height: 30px
+                  margin: 0 5px 0 0
+                  padding: 0 10px
+                  position: absolute
+                  right: 100%
+                  text-indent: 0
+                  white-space: nowrap
         
         a
           white-space: nowrap
@@ -945,7 +951,7 @@ body.sessions
         padding: 0 0 20px
         text-shadow: 1px 1px 1px #fff
       a.close
-        background: image-url('application/icons.png') -30px -30px no-repeat #aaa
+        background: #aaa
         +border_radius(3)
         height: 30px
         overflow: hidden
@@ -955,6 +961,19 @@ body.sessions
         text-indent: -500em
         top: 10px
         width: 30px
+        &:before
+          color: #fff
+          content: '\F001'
+          height: 30px
+          font: 2.5em Picara
+          left: 0
+          line-height: 25px
+          position: absolute
+          text-align: center
+          text-indent: 0
+          text-shadow: 0 -1px 1px #666
+          top: 0
+          width: 30px
         &:hover
           background-color: #BF4220
           color: #fff

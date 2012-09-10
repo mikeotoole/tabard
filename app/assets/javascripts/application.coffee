@@ -183,7 +183,7 @@ jQuery(document).ready ($) ->
   # Flash message events
   $('body').on 'init', '#flash li', ->
     unless $(@).hasClass 'announcement'
-      $('<a class="dismiss">✕</a>')
+      $('<a class="dismiss"></a>')
         .appendTo(@)
         .click ->
           adjustHeaderByFlash(300,-1)

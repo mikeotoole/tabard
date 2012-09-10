@@ -130,11 +130,13 @@ body
           padding: 0 40px 0 10px
           +transition(none)
           &:before
-            background: image-url('application/icons.png') no-repeat
-            content: ''
+            content: '\F204'
+            font: 2.2em Picara
             height: 30px
+            line-height: auto
             position: absolute
             right: 5px
+            text-align: center
             top: 0
             width: 30px
           &:after
@@ -150,31 +152,33 @@ body
             padding-left: 35px
             &:after
               display: block
+              font: 2em Picara
               height: 25px
               left: 0
-              line-height: 25px
+              line-height: auto
+              +opacity(.9)
               position: absolute
               text-align: center
               top: 5px
               width: 25px
           >li.settings a:after
-            content: '\2732'
+            content: '\F204'
           >li.roster a:after
-            content: '\22EF'
+            content: '\F008'
           >li.myroster a:after
-            content: '\039E'
+            content: '\F200'
           >li.games a:after
-            content: '\101C'
+            content: '\F008'
           >li.forms a:after
-            content: '\270E'
+            content: '\F007'
           >li.roles a:after
-            content: '\262F'
+            content: '\F108'
           >li.recruit a:after
-            content: '\270D'
+            content: '\F30B'
           >li.applications a:after
-            content: '\2764'
+            content: '\F30A'
           >li.leave a:after
-            content: '\2715'
+            content: '\F001'
 
 body.fixed-menu #header .menu
   +border_radius(0)
@@ -360,23 +364,17 @@ body.fixed-menu #header .menu
     font-size: 0
     white-space: nowrap
     word-spacing: 0
-    
-  .actions a
-    background: image-url('application/icons.png') no-repeat
-    +border_radius(3)
-    display: inline-block
-    height: 30px
-    overflow: hidden
-    padding: 0
-    margin: 0 0 0 5px
-    text-indent: -500em
-    +transition(background-color .2s linear, box-shadow .2s linear)
-    width: 30px
-    
-    &:hover
-      background: image-url('application/icons.png') no-repeat
-    
-      &[meta]:before
+    a
+      +border_radius(3)
+      display: inline-block
+      height: 30px
+      padding: 0
+      position: relative
+      margin: 0 0 0 5px
+      text-indent: -500em
+      +transition(background-color .2s linear, box-shadow .2s linear)
+      width: 30px
+      &[meta]:hover:before
         border: 1px solid
         +border_radius(3)
         content: attr(meta)
@@ -389,16 +387,51 @@ body.fixed-menu #header .menu
         right: 100%
         text-indent: 0
         white-space: nowrap
-      
-      &[meta]:after
-        border: 5px solid transparent
-        border-left: 5px solid
-        content: ''
-        height: 0
-        left: -5px
+      &:after
+        font: 30px Picara
+        height: 30px
+        left: 0
+        line-height: 25px
         position: absolute
-        top: 10px
-        width: 0
+        text-align: center
+        top: 0
+        width: 30px
+      &.apply:after
+        content: '\F30B'
+      &.approve:after
+        content: '\F202'
+      &.delete:after
+        content: '\F103'
+      &.edit:after
+        content: '\F007'
+      &.event:after
+        content: '\F206'
+      &.invitees:after
+        content: '\F200'
+      &.lock:after
+        content: '\F108'
+      &.month:after
+        content: '\F009'
+      &.new:after
+        content: '\F002'
+      &.profile:after
+        content: '\F200'
+      &.publish:after
+        content: '\F106'
+      &.reject:after
+        content: '\F203'
+      &.remove:after
+        content: '\F001'
+      &.review:after
+        content: '\F30A'
+      &.submission:after
+        content: '\F30A'
+      &.unlock:after
+        content: '\F109'
+      &.unpublish:after
+        content: '\F107'
+      &.week:after
+        content: '\F008'
 
 
   // TABLES
@@ -879,28 +912,30 @@ body.fixed-menu #header .menu
         font-size: 12px
         line-height: 20px
         margin: 0
-        padding: 0 5px 0 0
+        padding: 0 10px 0 0
         position: absolute
         right: 0
-        
         &:before
-          background: image-url('application/icons.png') no-repeat !important
-          border: 0
+          background: transparent !important
+          border: 0 !important
           +border_radius(0)
           bottom: 0
           +box_shadow(none !important)
-          content: ''
+          content: '\F109'
+          font: 2em Picara
           height: 20px
           left: auto
-          margin: 0 0 0 -25px
+          line-height: 15px
+          margin: 0
+          +opacity(.4)
           position: absolute
-          right: -20px
+          right: -16px
+          text-align: center
+          text-indent: 0
           width: 20px
           z-index: 2
-            
         &:after
           display: none
-      
       >input
         bottom: 14px
         display: none
@@ -912,6 +947,9 @@ body.fixed-menu #header .menu
         right: -8px
         width: 1px
         z-index: 0
+        &:checked + label:before
+          content: '\F108'
+          +opacity(.99)
     
     #newcomment
       height: 175px
@@ -986,10 +1024,8 @@ body.fixed-menu #header .menu
     border-bottom: 1px solid
     margin: 0 0 30px
     padding: 0 0 5px
-  
   .submission
     margin: -30px 0 0 0
-  
     h1,
     h2
       +border_radius(3)
@@ -999,16 +1035,16 @@ body.fixed-menu #header .menu
       margin: 30px 0 15px
       padding: 0 10px 0 50px
       position: relative
-      
       &:before
-        background: image-url('application/icons.png') no-repeat
         content: ''
-        height: 30px
-        left: 5px
+        font: 2.5em Picara
+        height: 40px
+        left: 0
+        line-height: 30px
         position: absolute
-        top: 5px
-        width: 30px
-      
+        text-align: center
+        top: 0
+        width: 40px
       &:after
         border-left: 1px solid
         border-right: 1px solid
@@ -1018,44 +1054,38 @@ body.fixed-menu #header .menu
         position: absolute
         top: 0
         width: 0
-  
     h1,
     .questions >h2
       width: 520px
-    
+      &:before
+        content: '\F005'
     .sidebar
       float: right
       width: 280px
-      
       .submitter
         margin: 0 0 30px
-        
+        h2:before
+          content: '\F200'
         img.avatar
           height: 40px
           width: 40px
-      
       .characters
-        
+        h2:before
+          content: '\F008'
         p
           padding: 0 0 15px
-        
         .select
           float: none
           margin: -30px 0 30px !important
           width: 244px
-          
           ul
             width: 276px
-          
           input:checked + label
             width: 236px
-          
           .error
             width: 260px
-        
         .picker input:checked + label
           display: none
-        
       .characters >label,
       .characters >ul li,
       .submitter a
@@ -1067,7 +1097,6 @@ body.fixed-menu #header .menu
         padding: 4px 20px 4px 50px
         position: relative
         +transition(background .2s linear)
-          
         img.avatar
           +border_radius(2)
           height: 40px
@@ -1075,7 +1104,6 @@ body.fixed-menu #header .menu
           position: absolute
           top: 4px
           width: 40px
-      
       .submitter a
         height: auto
         font-size: 14px
@@ -1084,14 +1112,10 @@ body.fixed-menu #header .menu
         padding: 0 8px 0 50px
         text-decoration: none
         +transition(background .2s linear)
-      
       .characters
-      
         >label
-          
           &:before
             display: none
-          
           &:after
             content: '\00D7'
             font-size: 17px
@@ -1099,81 +1123,62 @@ body.fixed-menu #header .menu
             position: absolute
             top: 0
             right: 5px
-            
         >ul
           padding: 0 0 30px
-          
           li
             height: auto
             min-height: 32px
             padding: 8px 8px 8px 50px
-            
             span
               display: block
               min-height: 16px
               line-height: 16px
-          
               &.name
                 font-size: 14px
-                
               &.game
                 font-size: 12px
-          
           + ul,
           + .select,
           + input + .select
             margin: -30px 0 0
-      
       .instructions
         padding: 0 0 15px
-        
+        h2:before
+          content: '\F000'
         p
           line-height: 1.2em
           padding: 0 0 15px
           word-wrap: break-word
-
     .questions
       float: left
       padding: 0 0 30px
       width: 580px
-      
       >fieldset >ol >li
         padding: 0 0 20px
-      
         >label,
         .select >label
           font-size: 18px
-        
         >input,
         >textarea
           width: 558px
-          
         .select
           margin-bottom: 15px
           width: auto
-          
           ul
             width: 576px
-            
             input:checked + label
               width: 536px
-        
         mark.error
           width: 560px
-    
     h2.comments
       margin: 60px 0 0
-      
       &:before
-        background-position: -450px -30px
-    
+        content: '\F201'
     aside.comments
       margin-top: 0
-    
     #newcomment h3
       margin-left: 10px
       margin-right: 10px
-    
   .submit
     +border_radius(3,3,0,0)
     border-top: 1px solid
@@ -1181,9 +1186,7 @@ body.fixed-menu #header .menu
     margin: 30px 0 15px
     padding: 15px 15px 30px
     position: relative
-    
     &.busy
-      
       &:before
         background: image-url('application/busy.gif') center center no-repeat
         content: ''
@@ -1192,10 +1195,8 @@ body.fixed-menu #header .menu
         position: absolute
         right: 0
         top: 0
-      
       .button
         visibility: hidden
-    
     .secondary
       display: block
       float: right

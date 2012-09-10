@@ -153,74 +153,68 @@
   #content #body .sidemenu a,
   #content #body .sidemenu button,
   #content #body .sidemenu .wmd-button
-    background: image-url('application/icons.png') no-repeat #333
-    border: 1px solid #333
+    background: #333
     +border_radius(30)
     +box_shadow(0 0 15px #888)
     display: block
-    height: 30px
+    height: 32px
     +opacity(.7)
-    overflow: hidden
     margin: 0 14px 10px
     padding: 0
-    position: static
+    position: relative
     text-decoration: none
     text-indent: -100em
-    width: 30px
-    +transition(box-shadow .2s linear, border .2s linear)
-    
+    width: 32px
+    +transition(background .1s linear, box-shadow .2s linear, border .2s linear)
+    &:after
+      color: #fff
+      font: 2.5em Picara
+      height: 32px
+      left: 0
+      line-height: 25px
+      position: absolute
+      text-align: center
+      text-indent: 0
+      text-shadow: 0 -1px 1px #000
+      top: 0
+      width: 32px
     &:hover
-      border: 1px solid #000
-      +box_shadow(0 0 20px #ccc)
-      +opacity(1)
-      
-      &[meta],
-      &[title]
-        
-        &:before
-          background: #A23B31
-          border: 1px solid #CFA893 !important
-          +border_radius(3)
-          +box_shadow(-5px 0 15px rgba(#000,.7))
-          color: #F8D5BB
-          font-size: 13px
-          height: 30px !important
-          left: 68px !important
-          letter-spacing: 0
-          line-height: 30px
-          margin: -1px 0 0
-          padding: 0 10px
-          position: absolute
-          text-indent: 0
-          text-transform: none
-          top: auto  !important
-          width: auto  !important
-          white-space: nowrap
-          z-index: 15
-        
-        &:after
-          border: 5px solid transparent
-          border-right: 5px solid #CFA893
-          content: ''
-          height: 0
-          margin: 10px 0
-          position: absolute
-          right: -9px
-          width: 0
-          z-index: 16
-          
+      background: #fff
+      +box_shadow(0 0 20px #000)
+      +opacity(.99)
+      &:after
+        color: #000
+        text-shadow: none
+      &[meta]:before,
+      &[title]:before
+        background: #000
+        +border_radius(0,3,3,0)
+        color: #fff
+        font-size: 13px
+        height: 30px !important
+        left: 45px !important
+        letter-spacing: 0
+        line-height: 30px
+        margin: 0
+        padding: 0 10px
+        position: absolute
+        text-indent: 0
+        text-transform: none
+        top: auto  !important
+        width: auto  !important
+        white-space: nowrap
+        z-index: 15
       &[meta]:before
         content: attr(meta) !important
-      
       &[title]:before
         content: attr(title) !important
     
     &.wmd-save
       background-color: #2D7CB4
-      background-position: -480px -30px
       border-color: #1c6293
       +opacity(1)
-      
+      &:after
+        content: '\F000'
       &:hover
         border-color: #4594cc
     
@@ -254,41 +248,51 @@
         height: 100%
         padding: 0
         li
+          left: 0 !important
           list-style: none
+          &:before
+            display: none
           &.wmd-button
             cursor: pointer
             height: 30px
             margin-top: -5px
-            &#wmd-bold-button
-              background-position: -630px -30px
+            position: relative
+            &#wmd-bold-button:after
+              content: '\F300'
             &#wmd-italic-button
-              background-position: -660px -30px
               display: none
-            &#wmd-link-button
-              background-position: -690px -30px
-            &#wmd-quote-button
-              background-position: -750px -30px
+              &:after
+                content: '\F301'
+            &#wmd-link-button:after
+              content: '\F305'
+            &#wmd-quote-button:after
+              content: '\F308'
             &#wmd-code-button
-              background-position: -780px -30px
               display: none
-            &#wmd-image-button
-              background-position: -810px -30px
-            &#wmd-ulist-button
-              background-position: -840px -30px
-            &#wmd-olist-button
-              background-position: -870px -30px
-            &#wmd-heading-button
-              background-position: -900px -30px
+              &:after
+                content: '\F309'
+            &#wmd-image-button:after
+              content: '\F307'
+            &#wmd-ulist-button:after
+              content: '\F304'
+            &#wmd-olist-button:after
+              content: '\F303'
+            &#wmd-heading-button:after
+              content: '\F302'
             &#wmd-hr-button
               display: none
+              &:after
+                content: '\F008'
             &#wmd-undo-button
-              background-position: -930px -30px
               display: none
+              &:after
+                content: '\F004'
             &#wmd-redo-button
-              background-position: -960px -30px
               display: none
-            &#wmd-help-button
-              background-position: -990px -30px
+              &:after
+                content: '\F003'
+            &#wmd-help-button:after
+              content: '\F005'
       
     dd
       padding: 0 !important
@@ -297,60 +301,61 @@
         button
           margin: -5px 14px 15px
       &.toggle
-        a,
-        button
-          background-position: -480px -30px !important
+        a:after,
+        button:after
+          content: '\F000'
       &.cancel
-        a,
-        button
-          background-position: -930px -30px !important
+        a:after,
+        button:after
+          content: '\F00A'
       &.inbox
-        a,
-        button
-          background-position: -270px -30px
+        a:after,
+        button:after
+          content: '\F101'
       &.sent
-        a,
-        button
-          background-position: -300px -30px
+        a:after,
+        button:after
+          content: '\F102'
       &.trash
-        a,
-        button
-          background-position: -240px -30px
+        a:after,
+        button:after
+          content: '\F103'
       &.compose
-        a,
-        button
-          background-position: -120px -30px
+        a:after,
+        button:after
+          content: '\F30B'
       &.move
-        a,
-        button
-          background-position: -210px -30px
+        a:after,
+        button:after
+          content: '\F104'
       &.unread
-        a,
-        button
-          background-position: -420px -30px
+        a:after,
+        button:after
+          content: '\F106'
       &.read
-        a,
-        button
-          background-position: -390px -30px
+        a:after,
+        button:after
+          content: '\F107'
       &.destroy
-        a,
-        button
-          background-position: -360px -30px
+        a:after,
+        button:after
+          content: '\F105'
       &.current
         a,
         button
-          background-color: #2D7CB4
-          border-color: #5099cc
-          +box_shadow(0 0 20px #ccc)
-          +opacity(1)
-      &.list a
-        background-position: -930px -30px
-      &.new a
-        background-position: 0 -30px
-      &.week a
-        background-position: -1110px -30px
-      &.month a
-        background-position: -1140px -30px
+          background: #227FB5
+          +box_shadow(0 0 20px #000)
+          +opacity(.99)
+          &:after
+            color: #fff
+      &.list a:after
+        content: '\F008'
+      &.new a:after
+        content: '\F002'
+      &.week a:after
+        content: '\F008'
+      &.month a:after
+        content: '\F009'
 
   &.subdomains.pages
     #wmd-fields
