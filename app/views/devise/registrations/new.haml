@@ -21,7 +21,7 @@
           = f.input :birth_year, as: :radio, label: false, collection: Time.zone.now.year.downto(Time.zone.now.year-100), wrapper_tag: :div, wrapper_html: {class: 'select year', data: {placeholder: 'Year'}}
           - if f.object.errors[:date_of_birth].any?
             %mark.error= f.object.errors[:date_of_birth].first
-        %li.help{ href: 'javascript:;', onclick: '$.alert({title:"Your Birthday",body:"Tabard is a service exclusively for players 13 years of age and older. We need your birthday to make sure that you are eligable for an account."})' }
+        %li.help{ href: 'javascript:;', onclick: '$.alert({title:"Your Birthday",body:"Tabard is a service exclusively for players 13 years of age and older. We need your birthday to make sure that you are eligible for an account."})' }
           Why is my birthday required?
         - unless !!cookies[:timezone]
           = f.input :time_zone, required: false, collection: timezone_collection_hash, as: :radio, wrapper_html: { class: 'select' }
