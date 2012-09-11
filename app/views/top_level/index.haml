@@ -30,7 +30,7 @@
         = f.input :birth_month, as: :radio, label: false, collection: (1..12).collect{|m| m = [Date::MONTHNAMES[m], m]}, wrapper_tag: 'div', wrapper_html: { class: 'select month', data: {placeholder: 'Birth Month'} }
         = f.input :birth_day, as: :radio, label: false, collection: 1..31, wrapper_tag: 'div', wrapper_html: { class: 'select day', data: {placeholder: 'Day'} }
         = f.input :birth_year, as: :radio, label: false, collection: Time.zone.now.year.downto(Time.zone.now.year-100), wrapper_tag: 'div', wrapper_html: { class: 'select year', data: {placeholder: 'Year'} }
-      %p.help{ href: 'javascript:;', onclick: '$.alert({title:"Your Birthday",body:"Tabard is a service exclusively for players 13 years of age and older. We need your birthday to make sure that you are eligable for an account."})' }
+      %p.help{ href: 'javascript:;', onclick: '$.alert({title:"Your Birthday",body:"Tabard is a service exclusively for players 13 years of age and older. We need your birthday to make sure that you are eligible for an account."})' }
         Why is my birthday required?
       %p.terms
         By clicking "Sign up", you agree to our
