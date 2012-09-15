@@ -13,7 +13,7 @@
               - if plan.price_per_month_in_cents > 0
                 = "$#{plan.price_per_month_in_cents/100}/mo"
               - else
-                You dirty freeloader
+                This one is on us
             - if is_current
               %span.date= "Renews #{community.current_invoice_end_date.strftime '%b. %e'}"
       = cs.simple_fields_for :current_community_upgrades do |cf|
