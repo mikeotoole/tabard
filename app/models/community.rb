@@ -205,7 +205,7 @@ class Community < ActiveRecord::Base
 
   def actual_subscription_pack
     unless self.current_subscription_package.blank? 
-      if self.current_subscription_package.expired?
+      if self.current_subscription_package.has_expired?
         self.clone_recurring_to_current
       else
         return self.current_subscription_package

@@ -7,8 +7,10 @@ class SubscriptionPackage < ActiveRecord::Base
   accepts_nested_attributes_for :current_community_upgrades, :allow_destroy => true, :reject_if => proc { |attributes| attributes['number_in_use'].blank? or attributes['number_in_use'].to_i <= 0 }
 
   delegate :title, to: :community_plan, prefix: true
+
+  
   def has_expired?
-    false
+    self.end_date < Date.today
   end
 
   # Total price for this communities plans and upgrades in cents.
@@ -37,10 +39,6 @@ class SubscriptionPackage < ActiveRecord::Base
   ###
   def max_number_of_users
     return self.community_plan.max_number_of_users + self.user_pack_upgrade_amount
-  end
-
-  def expired?
-    self.end_date < Date.today
   end
 end
 
