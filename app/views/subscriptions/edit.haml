@@ -20,7 +20,7 @@
           %li.plans
             - @available_plans.each do |plan|
               - is_current = plan.id == @community.current_subscription_package.community_plan_id
-              %input{ id: "community_plan_#{plan.id}", type: :radio, name: 'community[recurring_subscription_package_attributes][community_plan_id]', data: {price: plan.price_per_month_in_cents}, value: plan.id, checked: is_current ? 'checked' : nil }
+              %input{ id: "community_plan_#{plan.id}", type: :radio, name: 'community[recurring_subscription_package_attributes][community_plan_id]', data: {price: plan.price_per_month_in_cents, members: plan.max_number_of_users}, value: plan.id, checked: is_current ? 'checked' : nil }
               %label{ for: "community_plan_#{plan.id}" }
                 %span.title= plan.title
                 %span.price
