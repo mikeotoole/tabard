@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120915175530) do
+ActiveRecord::Schema.define(:version => 20120906162755) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -602,6 +602,7 @@ ActiveRecord::Schema.define(:version => 20120915175530) do
 
   create_table "subscription_packages", :force => true do |t|
     t.integer  "community_plan_id"
+    t.date     "end_date"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
   end

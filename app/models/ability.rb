@@ -14,7 +14,7 @@ class Ability
   #   * +user+ -> This is the current_user, passed in from devise to CanCan.
   ###
   def initialize(user)
-    alias_action :destroy, :to => :delete
+    alias_action :destroy, to: :delete
     user ||= User.guest
     anonymous_user_rules(user)
     site_member_rules(user) if user.persisted? and user.user_profile and user.user_profile.persisted? # This ensures that only an actual user has these permissions.

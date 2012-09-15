@@ -1,0 +1,159 @@
+@import mixins
+
+#form_with_subscription
+  width: 100%
+
+  .plans
+    height: 160px
+    padding: 20px 0 0
+    label
+      background: #333
+      +bg_gradient(#555555,#333333)
+      +border_radius(3)
+      display: block
+      float: left
+      height: 140px
+      margin: 0
+      padding: 0
+      position: relative
+      text-indent: 0 !important
+      text-shadow: 0 -2px 2px #000
+      +transition(box-shadow .2s linear)
+      width: 440px
+      &:before
+        display: none
+      &:after
+        background: transparent !important
+        border: 0 !important
+        border-left: 1px solid #000 !important
+        bottom: 10px !important
+        +box_shadow(none !important)
+        color: #777
+        content: '\F501' !important
+        font: 130px Picara !important
+        height: auto !important
+        left: auto !important
+        line-height: 130px
+        position: absolute
+        right: 10px !important
+        text-align: center
+        text-indent: 0
+        text-shadow: 0 -1px 1px #000
+        top: 10px !important
+        width: 140px !important
+    label:first-of-type
+      margin-right: 20px
+    .title
+      color: #ccc
+      font-size: 40px
+      height: 40px
+      left: 30px
+      line-height: 40px
+      position: absolute
+      top: 30px
+    .price
+      color: #999
+      font-size: 20px
+      height: 20px
+      left: 30px
+      line-height: 20px
+      position: absolute
+      top: 70px
+    .date
+      display: none
+
+    label:hover
+      background: #444
+      +bg_gradient(#666666,#444444)
+      &:after
+        color: #aaa
+      .title
+        color: #fff
+
+    input:checked + label
+      background: #000
+      +bg_gradient(#333333,#000000)
+      +box_shadow(0 0 20px #B33E1E)
+      cursor: default
+      &:before
+        background: transparent
+        border: 40px solid transparent
+        border-top-color: #fff
+        +border_radius(0)
+        +box_shadow(none)
+        content: ''
+        display: block
+        height: 0
+        left: 180px
+        position: absolute
+        top: -20px
+        width: 0
+      &:after
+        border-left-color: #333 !important
+        color: #0083B7
+      .title
+        color: #fff
+      .price
+        color: #0083B7
+      .date
+        color: #999
+        display: block
+        font-size: 13px
+        height: 13px
+        left: 30px
+        line-height: 13px
+        position: absolute
+        top: 90px
+
+  .members_package
+    margin: 0 0 40px
+    width: 320px !important
+
+#cc_input
+  +border_radius(3,3,0,0)
+  +box_shadow(0 -5px 5px rgba(#000,.1))
+  margin: 30px 0
+  h1
+    +bg_gradient(#eeeeee,#ffffff)
+    border-top: 1px solid #ccc
+    +border_radius(3,3,0,0)
+    padding: 20px
+    position: relative
+  >p
+    margin: -20px 20px 20px
+    position: relative
+    z-index: 2
+    .onfile,
+    .newcard
+      background: #777
+      +border_radius(3)
+      color: #eee
+      display: block
+      float: left
+      padding: 3px 6px
+      text-decoration: none
+      text-shadow: 0 -1px 1px #000
+      &:hover
+        background: #B33E1E
+        color: #fff
+    .onfile
+      display: none
+    .newcard
+      display: block
+    &:after
+      clear: both
+      content: '.'
+      display: block
+      height: 0
+      visibility: hidden
+  #cc_fields
+    margin: 0 20px
+    display: none
+  &.show_fields
+    >p
+      .onfile
+        display: block
+      .newcard
+        display: none
+    #cc_fields
+      display: block

@@ -56,6 +56,26 @@ jQuery(document).ready ($) ->
   curMemberCount = $('#population .value').data 'value'
   totNeededPacks = if curMemberCount <= 100 then 0 else Math.ceil (curMemberCount - 100) / 20
 
+  # Toggling between packages
+  $('#form_with_subscription').on 'change', '.plans input', ->
+    price = parseInt $(@).attr 'data-price'
+    if price
+      $('#form_with_subscription .members_package').show()
+      $('#cc_input').slideDown()
+    else
+      $('#form_with_subscription .members_package').hide()
+      $('#cc_input').hide()
+
+  # Toggling new/onfile card
+  $('#cc_input > p')
+    .on 'click', '.onfile', ->
+      $('#cc_input').removeClass 'show_fields'
+      $('#cc_fields').hide()
+    .on 'click', '.newcard', ->
+      $('#cc_input').addClass 'show_fields'
+      $('#cc_fields').slideDown()
+
+  # Get the number of packages required to keep the community afloat
   if totNeededPacks > 0
     for input in $('body .select.members_package input')
       $input = $(input)
@@ -64,6 +84,7 @@ jQuery(document).ready ($) ->
       else
         break
 
+  # When the package upgrades change
   $('body').on 'change', '.select.members_package input', ->
     selectEl = $(@).closest '.select'
     data = selectEl.data()

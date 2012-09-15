@@ -24,7 +24,7 @@ class StripePlan < ActiveRecord::Base
 ###
 # Validators
 ###
-  validates :amount, numericality: { :greater_than => 0 },
+  validates :amount, numericality: { greater_than: 0 },
                        uniqueness: true
 
 ###
@@ -47,11 +47,11 @@ class StripePlan < ActiveRecord::Base
   def create_plan_on_stripe
     begin
       Stripe::Plan.create(
-        :amount => self.amount,
-        :interval => 'month',
-        :name => self.strip_id,
-        :currency => 'usd',
-        :id => self.strip_id
+        amount: self.amount,
+        interval: 'month',
+        name: self.strip_id,
+        currency: 'usd',
+        id: self.strip_id
       )
     rescue Stripe::InvalidRequestError => e
       throw e unless e.message == "Plan already exists."

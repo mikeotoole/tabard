@@ -40,7 +40,7 @@ module ActiveAdmin
             if controller.action_methods.include?("destroy")
               link_to(I18n.t('active_admin.delete_model', model: active_admin_config.resource_name),
                 resource_path(resource),
-                method: :delete, :data => { :confirm => I18n.t('active_admin.delete_confirmation') })
+                method: :delete, data: { confirm: I18n.t('active_admin.delete_confirmation') })
             end
           end
         end

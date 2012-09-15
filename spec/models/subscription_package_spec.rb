@@ -4,6 +4,7 @@
 #
 #  id                :integer          not null, primary key
 #  community_plan_id :integer
+#  end_date          :date
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #
