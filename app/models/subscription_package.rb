@@ -38,6 +38,10 @@ class SubscriptionPackage < ActiveRecord::Base
   def max_number_of_users
     return self.community_plan.max_number_of_users + self.user_pack_upgrade_amount
   end
+
+  def expired?
+    self.end_date < Date.today
+  end
 end
 
 # == Schema Information
