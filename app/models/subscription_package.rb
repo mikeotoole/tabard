@@ -8,12 +8,6 @@ class SubscriptionPackage < ActiveRecord::Base
 
   delegate :title, to: :community_plan, prefix: true
 
-
-  def has_expired?
-    self.end_date.blank?
-    self.end_date < Date.today
-  end
-
   # Total price for this communities plans and upgrades in cents.
   def total_price_per_month_in_cents
     price = self.community_plan.price_per_month_in_cents

@@ -91,6 +91,7 @@ class Community < ActiveRecord::Base
   delegate :background_author_url, to: :theme, prefix: true, allow_nil: true
   delegate :email, to: :admin_profile, prefix: true, allow_nil: true
   delegate :user, to: :admin_profile, prefix: true, allow_nil: true
+  delegate :current_invoice_end_date, to: :admin_profile, allow_nil: true
 
 ###
 # Validators
@@ -203,9 +204,13 @@ class Community < ActiveRecord::Base
     self.total_price_per_month_in_cents/100.0
   end
 
+  def current_subscription_package_has_expired?
+    return current_invoice_end_date < Date.today
+  end
+
   def actual_subscription_pack
     unless self.current_subscription_package.blank? 
-      if self.current_subscription_package.has_expired?
+      if self.current_subscription_package_has_expired?
         self.clone_recurring_to_current
       else
         return self.current_subscription_package
@@ -228,7 +233,11 @@ class Community < ActiveRecord::Base
   def clone_recurring_to_current
     the_attributes = self.recurring_subscription_package.attributes
     the_attributes.delete('id')
-    self.update_column(:current_subscription_package_id, SubscriptionPackage.create(the_attributes, without_protection: true).id)
+    if self.persisted?
+      self.update_column(:current_subscription_package_id, SubscriptionPackage.create(the_attributes, without_protection: true).id)
+    else
+      self.current_subscription_package = SubscriptionPackage.create(the_attributes, without_protection: true)
+    end
     self.recurring_subscription_package.current_community_upgrades.each do |upgrade|
       the_attributes = upgrade.attributes
       the_attributes.delete('id')
