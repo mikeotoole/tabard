@@ -60,11 +60,9 @@ jQuery(document).ready ($) ->
   $('#form_with_subscription').on 'change', '.plans input', ->
     price = parseInt $(@).attr 'data-price'
     if price
-      $('#form_with_subscription .members_package').show()
-      $('#cc_input').slideDown()
+      $('#upgrades, #cc_input').slideDown()
     else
-      $('#form_with_subscription .members_package').hide()
-      $('#cc_input').hide()
+      $('#upgrades, #cc_input').hide()
 
   # Toggling new/onfile card
   $('#cc_input > p')
