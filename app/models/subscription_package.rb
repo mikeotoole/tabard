@@ -8,8 +8,9 @@ class SubscriptionPackage < ActiveRecord::Base
 
   delegate :title, to: :community_plan, prefix: true
 
-  
+
   def has_expired?
+    self.end_date.blank?
     self.end_date < Date.today
   end
 
