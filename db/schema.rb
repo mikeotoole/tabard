@@ -173,38 +173,35 @@ ActiveRecord::Schema.define(:version => 20120915165905) do
   create_table "communities", :force => true do |t|
     t.string   "name"
     t.string   "slogan"
-    t.boolean  "is_accepting_members",              :default => true
-    t.boolean  "email_notice_on_application",       :default => true
+    t.boolean  "is_accepting_members",            :default => true
+    t.boolean  "email_notice_on_application",     :default => true
     t.string   "subdomain"
-    t.datetime "created_at",                                           :null => false
-    t.datetime "updated_at",                                           :null => false
+    t.datetime "created_at",                                         :null => false
+    t.datetime "updated_at",                                         :null => false
     t.integer  "admin_profile_id"
     t.integer  "member_role_id"
-    t.boolean  "is_protected_roster",               :default => false
+    t.boolean  "is_protected_roster",             :default => false
     t.integer  "community_application_form_id"
     t.integer  "community_announcement_space_id"
-    t.boolean  "is_public_roster",                  :default => true
+    t.boolean  "is_public_roster",                :default => true
     t.datetime "deleted_at"
     t.string   "background_image"
     t.string   "background_color"
     t.integer  "theme_id"
     t.string   "title_color"
     t.integer  "home_page_id"
-    t.boolean  "pending_removal",                   :default => false
+    t.boolean  "pending_removal",                 :default => false
     t.text     "action_items"
     t.string   "pitch"
-    t.integer  "current_subscription_package_id"
-    t.integer  "recurring_subscription_package_id"
+    t.integer  "community_plan_id"
   end
 
   add_index "communities", ["admin_profile_id"], :name => "index_communities_on_admin_profile_id"
   add_index "communities", ["community_announcement_space_id"], :name => "index_communities_on_community_announcement_space_id"
   add_index "communities", ["community_application_form_id"], :name => "index_communities_on_community_application_form_id", :unique => true
-  add_index "communities", ["current_subscription_package_id"], :name => "index_communities_on_current_subscription_package_id"
   add_index "communities", ["home_page_id"], :name => "index_communities_on_home_page_id"
   add_index "communities", ["member_role_id"], :name => "index_communities_on_member_role_id", :unique => true
   add_index "communities", ["name"], :name => "index_communities_on_name"
-  add_index "communities", ["recurring_subscription_package_id"], :name => "index_communities_on_recurring_subscription_package_id"
   add_index "communities", ["theme_id"], :name => "index_communities_on_theme_id"
 
   create_table "community_applications", :force => true do |t|
@@ -287,17 +284,6 @@ ActiveRecord::Schema.define(:version => 20120915165905) do
     t.string   "type"
     t.text     "upgrade_options"
   end
-
-  create_table "current_community_upgrades", :force => true do |t|
-    t.integer  "community_upgrade_id"
-    t.integer  "number_in_use"
-    t.datetime "created_at",              :null => false
-    t.datetime "updated_at",              :null => false
-    t.integer  "subscription_package_id"
-  end
-
-  add_index "current_community_upgrades", ["community_upgrade_id"], :name => "index_current_community_upgrades_on_community_upgrade_id"
-  add_index "current_community_upgrades", ["subscription_package_id"], :name => "index_current_community_upgrades_on_subscription_package_id"
 
   create_table "custom_forms", :force => true do |t|
     t.string   "name"
@@ -632,13 +618,6 @@ ActiveRecord::Schema.define(:version => 20120915165905) do
   add_index "submissions", ["custom_form_id"], :name => "index_submissions_on_custom_form_id"
   add_index "submissions", ["user_profile_id"], :name => "index_submissions_on_user_profile_id"
 
-  create_table "subscription_packages", :force => true do |t|
-    t.integer  "community_plan_id"
-    t.date     "end_date"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
-  end
-
   create_table "support_comments", :force => true do |t|
     t.integer  "support_ticket_id"
     t.integer  "user_profile_id"
@@ -755,7 +734,6 @@ ActiveRecord::Schema.define(:version => 20120915165905) do
     t.boolean  "is_email_on_message",                              :default => true
     t.boolean  "is_email_on_announcement",                         :default => true
     t.string   "stripe_customer_token"
-    t.date     "stripe_subscription_date"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

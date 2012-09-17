@@ -25,6 +25,8 @@ class Community < ActiveRecord::Base
   # Used by validator to limit restrict pitch length
   MAX_PITCH_LENGTH = 100
 
+attr_accessor :new_community_plan_id
+
 ###
 # Attribute accessible
 ###
@@ -37,10 +39,6 @@ class Community < ActiveRecord::Base
   belongs_to :admin_profile, class_name: "UserProfile"
   belongs_to :member_role, class_name: "Role"
   belongs_to :community_application_form, dependent: :destroy, class_name: "CustomForm", autosave: true
-
-  has_many :community_upgrades, through: :current_community_upgrades
-  belongs_to :current_subscription_package, class_name: "SubscriptionPackage"
-  belongs_to :recurring_subscription_package, class_name: "SubscriptionPackage"
 
   has_many :community_applications, dependent: :destroy
   has_many :pending_applications, class_name: "CommunityApplication", conditions: {status: "Pending"}
@@ -65,24 +63,23 @@ class Community < ActiveRecord::Base
   has_many :events, dependent: :destroy
   belongs_to :theme
   belongs_to :home_page, class_name: "Page"
+
+  # Plans and upgrades
   has_many :invoice_items
+  #has_many :community_upgrades, through: :invoice_items, as: :item, conditions: {}
 
   accepts_nested_attributes_for :theme
-  accepts_nested_attributes_for :recurring_subscription_package
 
 ###
 # Callbacks
 ###
   nilify_blanks only: [:pitch, :slogan]
-  before_validation :downgrade_subscription
   before_create :update_subdomain
   before_create :setup_action_items
   after_create :setup_community_application_form
   after_create :setup_member_role, :make_admin_a_member
   after_create :setup_default_community_items
   after_destroy :destroy_admin_community_profile_and_member_role
-  before_save :ensure_current_subscription_package
-  after_save :ensure_full_package_time
 
 ###
 # Delegates
@@ -92,7 +89,6 @@ class Community < ActiveRecord::Base
   delegate :background_author_url, to: :theme, prefix: true, allow_nil: true
   delegate :email, to: :admin_profile, prefix: true, allow_nil: true
   delegate :user, to: :admin_profile, prefix: true, allow_nil: true
-  delegate :current_invoice_end_date, to: :admin_profile, allow_nil: true
 
 ###
 # Validators
@@ -158,7 +154,7 @@ class Community < ActiveRecord::Base
   # [Returns] True if not on the free plan.
   ###
   def is_paid_community?
-    not self.actual_subscription_pack.community_plan.is_free_plan?
+    not self.community_plan.is_free_plan?
   end
 
   ###
@@ -166,7 +162,8 @@ class Community < ActiveRecord::Base
   # This includes plan and upgrade amounts.
   ###
   def max_number_of_users
-    self.actual_subscription_pack.max_number_of_users
+    # TODO: need to add upgrades
+    self.community_plan.max_number_of_users
   end
 
   # The current number of community members.
@@ -197,7 +194,7 @@ class Community < ActiveRecord::Base
 
   # Total price for this communities plans and upgrades in cents.
   def total_price_per_month_in_cents
-    self.actual_subscription_pack.total_price_per_month_in_cents
+    self.community_plan.price_per_month_in_cents
   end
 
   # Total price for this communities plans and upgrades in dollars.
@@ -205,52 +202,23 @@ class Community < ActiveRecord::Base
     self.total_price_per_month_in_cents/100.0
   end
 
-  def current_subscription_package_has_expired?
-    return current_invoice_end_date < Date.today
-  end
-
-  def actual_subscription_pack
-    unless self.current_subscription_package.blank? 
-      if self.current_subscription_package_has_expired?
-        self.clone_recurring_to_current
-      else
-        return self.current_subscription_package
-      end
-    end
-    return self.recurring_subscription_package
-  end
-
   def community_plan_title
-    self.actual_subscription_pack.community_plan_title
+    self.community_plan.title
   end
 
-  def ensure_current_subscription_package
-    # TODO take upgrades into account
-    if self.current_subscription_package.blank?
-      self.clone_recurring_to_current
-    end
+  def community_plan
+    invoiceitem = self.invoice_items.where{(item_type == "CommunityPlan") & (start_date <= DateTime.now) & (end_date >= DateTime.now)}.limit(1).first
+    invoiceitem ? invoiceitem.item : CommunityPlan.default_plan
   end
 
-  def clone_recurring_to_current
-    the_attributes = self.recurring_subscription_package.attributes
-    the_attributes.delete('id')
-    if self.persisted?
-      self.update_column(:current_subscription_package_id, SubscriptionPackage.create(the_attributes, without_protection: true).id)
-    else
-      self.current_subscription_package = SubscriptionPackage.create(the_attributes, without_protection: true)
-    end
-    self.recurring_subscription_package.current_community_upgrades.each do |upgrade|
-      the_attributes = upgrade.attributes
-      the_attributes.delete('id')
-      the_attributes['subscription_package_id'] = self.current_subscription_package.id
-      self.current_subscription_package.current_community_upgrades.create!(the_attributes, without_protection: true)
-    end
+  def community_upgrades
+    invoiceitems = self.invoice_items.where{(item_type == "CommunityUpgrade") & (start_date <= DateTime.now) & (end_date >= DateTime.now)}
+    nil
   end
 
-  def ensure_full_package_time
-    if self.recurring_subscription_package.total_price_per_month_in_cents > self.current_subscription_package.total_price_per_month_in_cents
-      clone_recurring_to_current
-    end
+  def current_invoice_end_date
+    # TODO: Need to return real date.
+    DateTime.now
   end
 
   ###
@@ -265,6 +233,12 @@ class Community < ActiveRecord::Base
       self.errors.add :base, "Payment information is required"
       return false
     else
+
+      # Get the admins current invoice (create if it does not exist).
+      # Get current recuring plan invoice item (to be charged next month).
+      # Edit current recuring plan invoice item with new_community_plan_id
+      # invoice.invoice_items.create()
+
       self.attributes = community_attributes
       if self.valid?
         new_total_price = self.admin_profile_user.new_total_price_per_month_in_cents(self)
@@ -423,11 +397,6 @@ protected
 ###
 # Callback Methods
 ###
-
-  def downgrade_subscription
-    return true
-  end
-
   ###
   # _before_create_
   #
