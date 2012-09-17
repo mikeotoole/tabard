@@ -189,6 +189,14 @@ class User < ActiveRecord::Base
     price
   end
 
+  def current_invoice_end_date
+    if self.stripe_subscription_date.blank?
+      return Date.today
+    else
+      return self.stripe_subscription_date + 30.days
+    end
+  end
+
   ###
   # Used to update a community plan and bill the community admin using Stripe.
   # [Args]

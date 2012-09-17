@@ -4,12 +4,10 @@ class SubscriptionPackage < ActiveRecord::Base
   has_one :community, foreign_key: "current_subscription_package_id"
   has_many :current_community_upgrades, inverse_of: :subscription_package
   has_many :community_upgrades, through: :current_community_upgrades
-  accepts_nested_attributes_for :current_community_upgrades, :allow_destroy => true, :reject_if => proc { |attributes| attributes['number_in_use'].blank? or attributes['number_in_use'].to_i <= 0 }
+  accepts_nested_attributes_for :current_community_upgrades, allow_destroy: true, reject_if: proc { |attributes| attributes['number_in_use'].blank? or attributes['number_in_use'].to_i <= 0 }
 
+  delegate :id, to: :community_plan, prefix: true
   delegate :title, to: :community_plan, prefix: true
-  def has_expired?
-    false
-  end
 
   # Total price for this communities plans and upgrades in cents.
   def total_price_per_month_in_cents

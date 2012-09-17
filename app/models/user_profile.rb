@@ -82,6 +82,7 @@ class UserProfile < ActiveRecord::Base
   delegate :is_disabled?, to: :user
   delegate :is_email_on_message, to: :user
   delegate :is_email_on_announcement, to: :user
+  delegate :current_invoice_end_date, to: :user
 
 ###
 # Callbacks

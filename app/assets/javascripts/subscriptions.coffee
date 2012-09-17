@@ -56,6 +56,46 @@ jQuery(document).ready ($) ->
   curMemberCount = $('#population .value').data 'value'
   totNeededPacks = if curMemberCount <= 100 then 0 else Math.ceil (curMemberCount - 100) / 20
 
+  # Update the values of the community population percentage bar
+  updatePopulationBar = () ->
+    maxMembers = getMaxMemberCount()
+    newPercentage = Math.round(curMemberCount / maxMembers * 1000) / 10
+    newPercentage = 100 if newPercentage > 100
+    $('#population').attr 'data-max', "#{maxMembers} Members Max"
+    $('#population .value').css minWidth: "#{newPercentage}%"
+    if maxMembers is curMemberCount
+      $('#population').addClass 'full'
+    else if maxMembers < curMemberCount
+      $('#population').addClass 'overage'
+    else
+      $('#population').removeClass 'full overage'
+
+  # Get the current number of extra members via the package upgrade
+  getMaxMemberCount = ->
+    formEl = $('#form_with_subscription')
+    base = parseInt formEl.find('.plans input:checked').attr 'data-members'
+    extra = parseInt formEl.find('.members_package:visible input:checked').val() or 0
+    base + extra * 20
+
+  # Toggling between packages
+  $('#form_with_subscription').on 'change', '.plans input', ->
+    price = parseInt $(@).attr 'data-price'
+    if price
+      $('#upgrades, #cc_input').slideDown()
+    else
+      $('#upgrades, #cc_input').hide()
+    updatePopulationBar()
+
+  # Toggling new/onfile card
+  $('#cc_input > p')
+    .on 'click', '.onfile', ->
+      $('#cc_input').removeClass 'show_fields'
+      $('#cc_fields').hide()
+    .on 'click', '.newcard', ->
+      $('#cc_input').addClass 'show_fields'
+      $('#cc_fields').slideDown()
+
+  # Get the number of packages required to keep the community afloat
   if totNeededPacks > 0
     for input in $('body .select.members_package input')
       $input = $(input)
@@ -64,25 +104,12 @@ jQuery(document).ready ($) ->
       else
         break
 
+  # When the package upgrades change
   $('body').on 'change', '.select.members_package input', ->
-    selectEl = $(@).closest '.select'
-    data = selectEl.data()
-    val = selectEl.find('input:checked').val()
-
-    # Update population percentage bar
-    newMemberMax = 100 + val * 20
-    newPercentage = Math.round(curMemberCount / newMemberMax * 1000) / 10
-    newPercentage = 100 if newPercentage > 100
-    $('#population').attr 'data-max', "#{newMemberMax} Members Max"
-    $('#population .value').css minWidth: "#{newPercentage}%"
-    if newMemberMax is curMemberCount
-      $('#population').addClass 'full'
-    else if newMemberMax < curMemberCount
-      $('#population').addClass 'overage'
-    else
-      $('#population').removeClass 'full overage'
+    updatePopulationBar()
 
     # Destroy package on/off
+    data = $(@).closest('.select').data()
     if data.destroy?
       destroyEl = $("input[data-destroy='#{data.destroy}']")
       destroyEl.val if parseInt(val) is 0 then 'true' else 'false'

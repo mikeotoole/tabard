@@ -92,6 +92,7 @@ class Community < ActiveRecord::Base
   delegate :background_author_url, to: :theme, prefix: true, allow_nil: true
   delegate :email, to: :admin_profile, prefix: true, allow_nil: true
   delegate :user, to: :admin_profile, prefix: true, allow_nil: true
+  delegate :current_invoice_end_date, to: :admin_profile, allow_nil: true
 
 ###
 # Validators
@@ -204,7 +205,18 @@ class Community < ActiveRecord::Base
     self.total_price_per_month_in_cents/100.0
   end
 
+  def current_subscription_package_has_expired?
+    return current_invoice_end_date < Date.today
+  end
+
   def actual_subscription_pack
+    unless self.current_subscription_package.blank? 
+      if self.current_subscription_package_has_expired?
+        self.clone_recurring_to_current
+      else
+        return self.current_subscription_package
+      end
+    end
     return self.recurring_subscription_package
   end
 
@@ -215,30 +227,29 @@ class Community < ActiveRecord::Base
   def ensure_current_subscription_package
     # TODO take upgrades into account
     if self.current_subscription_package.blank?
-      the_attributes = self.recurring_subscription_package.attributes
+      self.clone_recurring_to_current
+    end
+  end
+
+  def clone_recurring_to_current
+    the_attributes = self.recurring_subscription_package.attributes
+    the_attributes.delete('id')
+    if self.persisted?
+      self.update_column(:current_subscription_package_id, SubscriptionPackage.create(the_attributes, without_protection: true).id)
+    else
+      self.current_subscription_package = SubscriptionPackage.create(the_attributes, without_protection: true)
+    end
+    self.recurring_subscription_package.current_community_upgrades.each do |upgrade|
+      the_attributes = upgrade.attributes
       the_attributes.delete('id')
-      self.current_subscription_package = SubscriptionPackage.create!(the_attributes, without_protection: true)
-      self.recurring_subscription_package.current_community_upgrades.each do |upgrade|
-        the_attributes = upgrade.attributes
-        the_attributes.delete('id')
-        the_attributes['subscription_package_id'] = self.current_subscription_package.id
-        self.current_subscription_package.current_community_upgrades.create!(the_attributes, without_protection: true)
-      end
+      the_attributes['subscription_package_id'] = self.current_subscription_package.id
+      self.current_subscription_package.current_community_upgrades.create!(the_attributes, without_protection: true)
     end
   end
 
   def ensure_full_package_time
     if self.recurring_subscription_package.total_price_per_month_in_cents > self.current_subscription_package.total_price_per_month_in_cents
-      logger.debug "MORE EXPENSIVE PLAN, UPGRADE CURRENT"
-      the_attributes = self.recurring_subscription_package.attributes
-      the_attributes.delete('id')
-      self.update_column(:current_subscription_package_id, SubscriptionPackage.create(the_attributes, without_protection: true).id)
-      self.recurring_subscription_package.current_community_upgrades.each do |upgrade|
-        the_attributes = upgrade.attributes
-        the_attributes.delete('id')
-        the_attributes['subscription_package_id'] = self.current_subscription_package.id
-        self.current_subscription_package.current_community_upgrades.create!(the_attributes, without_protection: true)
-      end
+      clone_recurring_to_current
     end
   end
 

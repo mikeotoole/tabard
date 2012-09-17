@@ -28,7 +28,7 @@ class CommunityPlan < ActiveRecord::Base
 # Scopes
 ###
   scope :available, lambda {
-    where{(is_available == true)}
+    where{(is_available == true)}.order :price_per_month_in_cents
   }
 
 ###
