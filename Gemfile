@@ -18,6 +18,9 @@ ruby '1.9.3'
 # Database Protection
   gem 'validates_lengths_from_database'#                                                    MIT - https://github.com/rubiety/validates_lengths_from_database
 
+# Date Validation
+  gem 'validates_timeliness' #                                                              MIT - https://github.com/adzap/validates_timeliness
+
 # User Authentication
   gem 'devise'#                                                                             MIT - https://github.com/plataformatec/devise
 

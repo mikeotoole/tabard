@@ -65,6 +65,7 @@ class Community < ActiveRecord::Base
   has_many :events, dependent: :destroy
   belongs_to :theme
   belongs_to :home_page, class_name: "Page"
+  has_many :invoice_items
 
   accepts_nested_attributes_for :theme
   accepts_nested_attributes_for :recurring_subscription_package
@@ -411,7 +412,7 @@ protected
 ###
 # Callback Methods
 ###
-  
+
   def downgrade_subscription
     return true
   end

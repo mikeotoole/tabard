@@ -15,6 +15,7 @@ class CommunityPlan < ActiveRecord::Base
   has_many :communities
   has_many :community_plan_upgrades
   has_many :community_upgrades, through: :community_plan_upgrades
+  has_many :invoice_items, as: :item
 
 ###
 # Validators

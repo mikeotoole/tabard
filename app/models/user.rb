@@ -45,6 +45,7 @@ class User < ActiveRecord::Base
   belongs_to :user_profile, inverse_of: :user, dependent: :destroy
   has_many :document_acceptances, dependent: :destroy
   has_many :accepted_documents, through: :document_acceptances, class_name: "Document", source: "document"
+  has_many :invoices, dependent: :destroy
   accepts_nested_attributes_for :user_profile
 
 ###
@@ -114,9 +115,8 @@ class User < ActiveRecord::Base
         message: "Must contain at least 2 of the following: lowercase letter, uppercase letter, number and punctuation symbols."
       },
       if: :password_required?
-  validates :date_of_birth, presence: true
+  validates_date :date_of_birth, on_or_before: :thirteen_years_ago, on_or_before_message: "you must be 13 years of age to use this service"
   validates :time_zone, presence: true, inclusion: { in: (-11..13).to_a, message: 'is not valid.' }
-  validate :at_least_13_years_old
   with_options if: Proc.new{ BETA_CODE_REQUIRED and !Rails.env.test? } do |user|
     user.validates :beta_code, presence: {message: "is required for the closed beta"}, on: :create
     user.validate :valid_beta_key, on: :create
@@ -213,6 +213,11 @@ class User < ActiveRecord::Base
       return false unless plan.present?
       if self.stripe_customer_token.present?
         c = Stripe::Customer.retrieve(self.stripe_customer_token)
+
+        # TODO: Look if customer has a current plan.
+        # If yes
+
+
         is_prorated = current_total_price < new_total_price
         if stripe_card_token.present?
           # Update credit card info and subscription
@@ -228,11 +233,15 @@ class User < ActiveRecord::Base
                                                   plan: plan.strip_id,
                                                   card: stripe_card_token)
         self.stripe_customer_token = customer.id
-        self.stripe_subscription_date = DateTime.now.utc
+        self.stripe_subscription_date = Date.now.utc unless self.stripe_subscription_date.present?
         self.save!
       end
       return true
     end
+  end
+
+  def current_invoice
+    self.invoices.where{period_start_date < Time.now & period_end_date > Time.now}
   end
 
 ###
@@ -428,11 +437,6 @@ protected
 ###
 # Validator Mathods
 ###
-  # This validation method ensures that the user is 13 years of age according to the date_of_birth.
-  def at_least_13_years_old
-    errors.add(:date_of_birth, "you must be 13 years of age to use this service") if !self.date_of_birth? or (Time.zone.now - 13.years).to_date < self.date_of_birth
-  end
-
   # This validates the beta code
   def valid_beta_key
     errors.add(:beta_code, "is invalid") if self.beta_code and self.beta_code.gsub(/\s+/,"").upcase != BETA_CODE

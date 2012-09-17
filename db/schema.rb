@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120906162755) do
+ActiveRecord::Schema.define(:version => 20120915165905) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -419,6 +419,38 @@ ActiveRecord::Schema.define(:version => 20120906162755) do
   add_index "invites", ["character_proxy_id"], :name => "index_invites_on_character_proxy_id"
   add_index "invites", ["event_id"], :name => "index_invites_on_event_id"
   add_index "invites", ["user_profile_id"], :name => "index_invites_on_user_profile_id"
+
+  create_table "invoice_items", :force => true do |t|
+    t.integer  "price_each"
+    t.integer  "quantity"
+    t.datetime "add_date"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.string   "discription"
+    t.string   "item_type"
+    t.integer  "item_id"
+    t.integer  "community_id"
+    t.boolean  "is_recurring", :default => true
+    t.boolean  "is_prorated",  :default => false
+    t.integer  "invoice_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+  end
+
+  create_table "invoices", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "stripe_invoice_id"
+    t.datetime "period_start_date"
+    t.datetime "period_end_date"
+    t.datetime "paid_date"
+    t.string   "stripe_customer_id"
+    t.integer  "discount_percent_off"
+    t.string   "discount_discription"
+    t.datetime "deleted_at"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+  end
 
   create_table "message_associations", :force => true do |t|
     t.integer  "message_id"
