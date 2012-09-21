@@ -405,6 +405,12 @@ class User < ActiveRecord::Base
     User.find(self).destroy
   end
 
+  def current_invoice
+    today = Date.today
+    invoice = self.invoices.where{(period_start_date <= today) & (period_end_date >= today)}.limit(1).first
+    return invoice
+  end
+
 ###
 # Protected Methods
 ###
@@ -481,5 +487,6 @@ end
 #  is_email_on_message               :boolean          default(TRUE)
 #  is_email_on_announcement          :boolean          default(TRUE)
 #  stripe_customer_token             :string(255)
+#  stripe_subscription_date          :date
 #
 

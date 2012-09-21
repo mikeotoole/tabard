@@ -14,7 +14,7 @@ class SubscriptionsController < ApplicationController
   skip_before_filter :ensure_not_ssl_mode
   skip_before_filter :limit_subdomain_access
   before_filter :ensure_secure_subdomain
-  before_filter :load_variables, only: [:edit, :update]
+  before_filter :load_variables, only: [:edit, :update, :create]
 
   # GET /subscriptions(.:format)
   def index
@@ -26,10 +26,16 @@ class SubscriptionsController < ApplicationController
     if @community.blank?
       raise CanCan::AccessDenied
     else
-      # @community.recurring_subscription_package.community_plan.community_upgrades.each do |upgrade|
-#        @community.recurring_subscription_package.current_community_upgrades.new(community_upgrade_id: upgrade.id, number_in_use: 0) unless @community.recurring_subscription_package.community_upgrades.include?(upgrade)
-#       end
+      @current_invoice = current_user.current_invoice
+      if @current_invoice.blank?
+        @current_invoice = current_user.invoices.new({period_start_date: Date.today}, without_protection: true) 
+        @current_invoice.recurring_plan_invoice_item_for_community(@community)
+      end
     end
+  end
+  def create
+    current_user.invoices.create(params[:invoice])
+    redirect_to edit_subscription_url(@community)
   end
 
   # PUT /subscriptions/:id(.:format)

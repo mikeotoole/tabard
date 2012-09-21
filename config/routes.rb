@@ -1,5 +1,6 @@
 DaBvRails::Application.routes.draw do
 
+  post "/subscriptions/:id/" => "subscriptions#create"
   resources :subscriptions, only: [:index, :update, :edit]
 
   resources :minecraft_characters

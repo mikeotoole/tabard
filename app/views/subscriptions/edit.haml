@@ -7,73 +7,13 @@
   = javascript_include_tag "https://js.stripe.com/v1/"
   = javascript_include_tag "subscriptions"
   = stylesheet_link_tag "top_level/subscriptions"
-
-#body
-  %h1= "Subscription for \"#{shorten_words @community.name}\""
-
-  = simple_form_for @community, url: subscription_url(@community, subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), html: {novalidate: true, id: "form_with_subscription"} do |f|
-
-    %fieldset
-      = hidden_field_tag :stripe_card_token
-      %ol
-        %li.plans
-          - @available_plans.each do |plan|
-            - is_current = plan.id == @community.community_plan.id
-            %input{ id: "community_plan_#{plan.id}", type: :radio, name: 'community[new_community_plan_id]', data: {price: plan.price_per_month_in_cents, members: plan.max_number_of_users}, value: plan.id, checked: is_current ? 'checked' : nil }
-            %label{ for: "community_plan_#{plan.id}" }
-              %span.title= plan.title
-              %span.price
-                - if plan.price_per_month_in_cents > 0
-                  = "$#{plan.price_per_month_in_cents/100}/month"
-                - else
-                  This one is on us
-              - if is_current
-                %span.date= "Renews #{@community.current_invoice_end_date.strftime '%b. %e'}"
-
-        = render "communities/population", community: @community
-
-      #upgrades.section
-
-
-    #cc_input.section{ class: card_is_present ? '' : 'show_fields' }
-      %h1 Payment
-
-      - if card_is_present
-        %p
-          Your card information is on file.
-          %br
-          = link_to 'Enter new card info?', 'javascript:;', class: 'newcard'
-          = link_to 'Use card on file', 'javascript:;', class: 'onfile'
-
-      %fieldset{ id: 'cc_fields', class: card_is_present ? 'hide' : '' }
-        %ol
-          %li
-            = label_tag :card_name, "Name on Card "
-            = text_field_tag :card_name, nil, name: nil
-          %li
-            = label_tag :card_number, "Card Number "
-            = text_field_tag :card_number, nil, name: nil
-          %li.selects
-            %label Card Expiration
-            .select{ id: 'card_exp_month', class: 'month', data: {placeholder: 'Month'} }
-              %ul
-                - (1..12).each do |m|
-                  %li
-                    %input{ type: 'radio', name: 'card_month', id: "card_exp_month_#{m}", value: m }
-                    %label{ for: "card_exp_month_#{m}" }= Date::MONTHNAMES[m]
-            .select{ id: 'card_exp_year', class: 'year', data: {placeholder: 'Year'} }
-              %ul
-                - (Date.today.year .. Date.today.year+15).each do |y|
-                  %li
-                    %input{ type: 'radio', name: 'card_year', id: "card_exp_year_#{y}", value: y }
-                    %label{ for: "card_exp_year_#{y}" }= y
-          %li
-            = label_tag :card_cvc, "Security Code"
-            = text_field_tag :card_cvc, nil, name: nil, style: 'width: 100px'
-            %dfn.hint 3 or 4 digit number on the back of your card
-          %li
-            = label_tag :card_address_zip, "Billing Zip/Postal Code"
-            = text_field_tag :card_address_zip, nil, name: nil, style: 'width: 150px'
-
-    %p.submit
-      = f.button :submit, 'Update Subscription'
+=simple_form_for @current_invoice, url: subscription_url(@community, subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), html: {novalidate: true, id: "form_with_subscription"} do |f|
+  %p=@current_invoice.to_yaml
+  %hr
+  %h2 Your Plan
+  =f.simple_fields_for :invoice_items do |sf|
+    =sf.input :community_id, as: :hidden
+    =sf.input :item_type, as: :hidden
+    =sf.input :item_id, as: :radio, collection: @available_plans.map{|p| p.id }
+  %hr
+  = f.button :submit, 'Update Subscription'
