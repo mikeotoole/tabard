@@ -12,26 +12,26 @@ class InvoiceItem < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :item, :quantity
+  attr_accessible :item, :quantity, :community_id, :item_type, :item_id
 
 ###
 # Associations
 ###
-  belongs_to :invoice
-  belongs_to :commuinty
+  belongs_to :invoice, inverse_of: :invoice_items
+  belongs_to :community
   belongs_to :item, polymorphic: true
 
 ###
 # Validators
 ###
-  validates :invoice, presence: true
-  validates :price_each, presence: true
-  validates :quantity, presence: true
-  validates :discription, presence: true
-  validates :commuinty, presence: true
-  validates_date :add_date, between: [:period_start_date, :period_end_date],
-                            after_message: "Must be after invoice start date",
-                            before_message: "Must be before invoice end date"
+  #validates :invoice, presence: true
+  #validates :price_each, presence: true
+  #validates :quantity, presence: true
+  #validates :discription, presence: true
+  #validates :community, presence: true
+  #validates_date :add_date, between: [:period_start_date, :period_end_date],
+  #                          after_message: "Must be after invoice start date",
+  #                          before_message: "Must be before invoice end date"
 
 ###
 # Delegates

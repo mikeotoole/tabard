@@ -30,8 +30,8 @@ attr_accessor :new_community_plan_id
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :slogan, :is_accepting_members, :email_notice_on_application, :is_protected_roster, :is_public_roster, :theme_id, :theme, :recurring_subscription_package,
-    :background_color, :title_color, :background_image, :remove_background_image, :background_image_cache, :home_page_id, :pitch, :recurring_subscription_package_attributes
+  attr_accessible :name, :slogan, :is_accepting_members, :email_notice_on_application, :is_protected_roster, :is_public_roster, :theme_id, :theme,
+    :background_color, :title_color, :background_image, :remove_background_image, :background_image_cache, :home_page_id, :pitch
 
 ###
 # Associations

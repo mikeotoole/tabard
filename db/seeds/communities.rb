@@ -119,7 +119,7 @@ unless @dont_run
       :cvc => 314
     },
   )
-  headshot.update_attributes_with_payment({new_community_plan_id: community_plan.id}, without_protection: true)}, token.id)
+  #headshot.update_attributes_with_payment({new_community_plan_id: community_plan.id}, without_protection: true)}, token.id)
   headshot.save!
 
   billy = UserProfile.find_by_last_name('Billy')

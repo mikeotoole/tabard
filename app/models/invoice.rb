@@ -12,20 +12,32 @@ class Invoice < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible
+  attr_accessible :invoice_items_attributes
 
 ###
 # Associations
 ###
   belongs_to :user
-  has_many :invoice_items, dependent: :destroy
+  has_many :invoice_items, dependent: :destroy, inverse_of: :invoice
 
 ###
 # Validators
 ###
-  validates :user, presence: true
-  validates_date :period_start_date, on_or_after: :today
-  validates_date :period_end_date, on_or_after: :period_start_date
+  #validates :user, presence: true
+  #validates_date :period_start_date, on_or_after: :today
+  #validates_date :period_end_date, on_or_after: :period_start_date
+
+  accepts_nested_attributes_for :invoice_items, allow_destroy: true
+
+  def recurring_plan_invoice_item_for_community(community)
+    com_id = community.id
+    some_plan = self.invoice_items.where{(item_type == "CommunityPlan") & (is_recurring == true) & (community_id == com_id) & (is_prorated == false)}.limit(1).first
+    if some_plan.blank?
+      return self.invoice_items.new({item: CommunityPlan.default_plan, community: community}, without_protection: true) 
+    else
+      return some_plan
+    end
+  end
 end
 
 # == Schema Information
