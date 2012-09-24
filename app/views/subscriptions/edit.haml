@@ -8,12 +8,21 @@
   = javascript_include_tag "subscriptions"
   = stylesheet_link_tag "top_level/subscriptions"
 =simple_form_for @current_invoice, url: subscription_url(@community, subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), html: {novalidate: true, id: "form_with_subscription"} do |f|
+  =f.input :id, as: :hidden
   %p=@current_invoice.to_yaml
   %hr
   %h2 Your Plan
-  =f.simple_fields_for :invoice_items do |sf|
+  %p=@current_invoice.invoice_items.to_yaml
+  =f.simple_fields_for :invoice_items, @current_plan_invoice_item do |sf|
     =sf.input :community_id, as: :hidden
     =sf.input :item_type, as: :hidden
     =sf.input :item_id, as: :radio, collection: @available_plans.map{|p| p.id }
+  %hr
+  =f.simple_fields_for :invoice_items, @all_upgrades_invoice_items do |sf|
+    %p=sf.object.to_yaml
+    =sf.input :community_id, as: :hidden
+    =sf.input :item_type, as: :hidden
+    =sf.input :item_id, as: :hidden
+    =sf.input :quantity
   %hr
   = f.button :submit, 'Update Subscription'

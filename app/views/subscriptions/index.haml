@@ -19,7 +19,7 @@
           %tr
             %td= link_to shorten_words(community.name, 21), edit_subscription_path(community)
             %td= community.community_plan_title
-            %td.r= number_to_currency(community.total_price_per_month_in_dollars)
+            %td.r= number_to_currency(current_user.total_price_per_month_in_dollars(community))
             %td.actions
               %div
                 = link_to 'View', root_url(subdomain: community.subdomain), meta: 'View Community', class: 'view'

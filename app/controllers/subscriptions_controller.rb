@@ -26,11 +26,18 @@ class SubscriptionsController < ApplicationController
     if @community.blank?
       raise CanCan::AccessDenied
     else
-      @current_invoice = current_user.current_invoice
+      # TODO Mike fix current invoice method.
+      @current_invoice = current_user.invoices.last
       if @current_invoice.blank?
-        @current_invoice = current_user.invoices.new({period_start_date: Date.today}, without_protection: true) 
-        @current_invoice.recurring_plan_invoice_item_for_community(@community)
+        @current_invoice = current_user.invoices.new({period_start_date: Time.now.beginning_of_day}, without_protection: true) 
       end
+      @current_plan_invoice_item = @current_invoice.recurring_plan_invoice_item_for_community(@community)
+      @current_plan = @current_plan_invoice_item.item
+      @existing_upgrades_invoice_items = @current_invoice.recurring_upgrade_invoice_item_for_community(@community)
+      @existing_upgrades = @existing_upgrades_invoice_items.map{|i| i.item}
+      @new_upgrades = @current_plan.community_upgrades.delete_if{|plan| @existing_upgrades.include?(plan) }
+      @new_upgrades_invoice_items = @new_upgrades.map{ |item| @current_invoice.invoice_items.new({item: item, quantity: 0, price_each: item.price_per_month_in_cents, community_id: @community.id}, without_protection: true)}
+      @all_upgrades_invoice_items = @existing_upgrades_invoice_items + @new_upgrades_invoice_items
     end
   end
   def create
@@ -40,6 +47,10 @@ class SubscriptionsController < ApplicationController
 
   # PUT /subscriptions/:id(.:format)
   def update
+    @invoice = current_user.invoices.find_by_id(params[:invoice].delete(:id))
+    @invoice.update_attributes(params[:invoice])
+    redirect_to edit_subscription_url(@community)
+    return true
     if @community.blank?
       raise CanCan::AccessDenied
     else

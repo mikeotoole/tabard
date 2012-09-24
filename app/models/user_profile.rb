@@ -221,6 +221,10 @@ class UserProfile < ActiveRecord::Base
     end
   end
 
+  def total_price_per_month_in_cents(community)
+    self.user.total_price_per_month_in_cents(community)
+  end
+
   # Returns true if user is invited to event false otherwise.
   def invited?(event)
     self.invites.where(event_id: event.id).size > 0

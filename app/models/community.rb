@@ -194,7 +194,7 @@ attr_accessor :new_community_plan_id
 
   # Total price for this communities plans and upgrades in cents.
   def total_price_per_month_in_cents
-    self.community_plan.price_per_month_in_cents
+    self.admin_profile.total_price_per_month_in_cents(self)
   end
 
   # Total price for this communities plans and upgrades in dollars.

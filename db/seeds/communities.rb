@@ -122,6 +122,8 @@ unless @dont_run
 #   headshot.update_attributes_with_payment({new_community_plan_id: community_plan.id}, token.id)
 #   headshot.save!
 
+  more_headshot = create_community('Billy', 'Even More Headshots', 'Ka Boom Baby!', %w(Empire Horde Minecraft))
+
   billy = UserProfile.find_by_last_name('Billy')
 
   %w(Moose Turtle Badger O'Toole).each do |last_name|

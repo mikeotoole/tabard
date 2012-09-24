@@ -29,6 +29,19 @@ class Invoice < ActiveRecord::Base
 
   accepts_nested_attributes_for :invoice_items, allow_destroy: true
 
+  def total_price_per_month_in_cents(community)
+    price = 0
+    recurring_plan = self.recurring_plan_invoice_item_for_community(community)
+    upgrades = self.recurring_upgrade_invoice_item_for_community(community)
+    price = price + recurring_plan.price_each unless recurring_plan.blank?
+    price = price + upgrades.map{|u| u.price_each * u.quantity} unless upgrades.blank?
+    return price
+  end
+  def total_price_per_month_in_dollars
+    # TODO code this
+    0
+  end
+
   def recurring_plan_invoice_item_for_community(community)
     com_id = community.id
     some_plan = self.invoice_items.where{(item_type == "CommunityPlan") & (is_recurring == true) & (community_id == com_id) & (is_prorated == false)}.limit(1).first
@@ -37,6 +50,10 @@ class Invoice < ActiveRecord::Base
     else
       return some_plan
     end
+  end
+  def recurring_upgrade_invoice_item_for_community(community)
+    com_id = community.id
+    return self.invoice_items.where{(item_type != "CommunityPlan") & (is_recurring == true) & (community_id == com_id) & (is_prorated == false)}
   end
 end
 

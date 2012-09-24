@@ -161,19 +161,25 @@ class User < ActiveRecord::Base
 ###
 # Instance Methods
 ###
-
-  # Returns the total cost for all user's owned communities in cents.
-  def total_price_per_month_in_cents
-    price = 0
-    self.owned_communities.each do |community|
-      price = price + community.total_price_per_month_in_cents
+  def total_price_per_month_in_cents(community)
+    if self.current_invoice.blank?
+      0
+    else
+      self.current_invoice.total_price_per_month_in_cents(community)
     end
-    price
   end
 
   # Returns the total cost for all user's owned communities in dollars.
-  def total_price_per_month_in_dollars
-    self.total_price_per_month_in_cents/100.0
+  def total_price_per_month_in_dollars(community = nil)
+    if community.blank?
+      if self.current_invoice.blank?
+        0
+      else
+        self.current_invoice.total_price_per_month_in_dollars
+      end
+    else
+      self.total_price_per_month_in_cents(community)/100.0
+    end
   end
 
   ###
@@ -249,7 +255,7 @@ class User < ActiveRecord::Base
   end
 
   def current_invoice
-    self.invoices.where{period_start_date < Time.now & period_end_date > Time.now}
+    self.invoices.where{(period_start_date <= Time.now) & (period_end_date >= Time.now)}
   end
 
 ###
