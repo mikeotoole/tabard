@@ -162,8 +162,14 @@ attr_accessor :new_community_plan_id
   # This includes plan and upgrade amounts.
   ###
   def max_number_of_users
-    # TODO: need to add upgrades
-    self.community_plan.max_number_of_users
+    # TODO This has the potential to be very slow....
+    plan_total = self.community_plan.max_number_of_users
+    # TODO Fix this
+    #upgrade_total = self.invoice_items.where{(item_type @= "CommunityUserPackUpgrade") & (start_date <= DateTime.now) & (end_date >= DateTime.now)}
+    my_id = self.id
+    correct_invoice_items = CommunityUserPackUpgrade.joins{invoice_items}.where{invoice_items.community_id == my_id}
+    upgrade_total = InvoiceItem.where{item_id.in(correct_invoice_items) & (item_type == "CommunityUpgrade")}.map{|u| u.item.number_of_bonus_users * u.quantity}.inject(0,:+)
+    return plan_total + upgrade_total
   end
 
   # The current number of community members.
@@ -207,13 +213,15 @@ attr_accessor :new_community_plan_id
   end
 
   def community_plan
-    invoiceitem = self.invoice_items.where{(item_type == "CommunityPlan") & (start_date <= DateTime.now) & (end_date >= DateTime.now)}.limit(1).first
+    # TODO fix this
+    #invoiceitem = self.invoice_items.where{(item_type == "CommunityPlan") & (start_date <= DateTime.now) & (end_date >= DateTime.now)}.limit(1).first
+    invoiceitem = self.invoice_items.where{(item_type == "CommunityPlan")}.limit(1).first
     invoiceitem ? invoiceitem.item : CommunityPlan.default_plan
   end
 
   def community_upgrades
-    invoiceitems = self.invoice_items.where{(item_type == "CommunityUpgrade") & (start_date <= DateTime.now) & (end_date >= DateTime.now)}
-    nil
+    invoiceitems = self.invoice_items.where{(item_type != "CommunityPlan") & (start_date <= DateTime.now) & (end_date >= DateTime.now)}
+    return invoiceitems
   end
 
   def current_invoice_end_date
