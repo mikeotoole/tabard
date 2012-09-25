@@ -21,6 +21,8 @@ class InvoiceItem < ActiveRecord::Base
   belongs_to :community
   belongs_to :item, polymorphic: true
 
+  before_save :copy_price
+
 ###
 # Validators
 ###
@@ -38,6 +40,10 @@ class InvoiceItem < ActiveRecord::Base
 ###
   delegate :period_start_date, to: :invoice
   delegate :period_end_date, to: :invoice
+
+  def copy_price
+      self.price_each = item.price_per_month_in_cents unless item.blank?
+  end
 end
 
 # == Schema Information

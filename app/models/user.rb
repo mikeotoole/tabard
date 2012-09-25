@@ -255,7 +255,11 @@ class User < ActiveRecord::Base
   end
 
   def current_invoice
-    self.invoices.where{(period_start_date <= Time.now) & (period_end_date >= Time.now)}
+    # TODO Fix this
+    #today = Date.today
+    #invoice = self.invoices.where{(period_start_date <= today) & (period_end_date >= today)}.limit(1).first
+    #return invoice
+    self.invoices.last
   end
 
 ###
@@ -409,12 +413,6 @@ class User < ActiveRecord::Base
     self.disable_by_admin
     self.user_profile.nuke if self.user_profile
     User.find(self).destroy
-  end
-
-  def current_invoice
-    today = Date.today
-    invoice = self.invoices.where{(period_start_date <= today) & (period_end_date >= today)}.limit(1).first
-    return invoice
   end
 
 ###

@@ -33,8 +33,8 @@ class Invoice < ActiveRecord::Base
     price = 0
     recurring_plan = self.recurring_plan_invoice_item_for_community(community)
     upgrades = self.recurring_upgrade_invoice_item_for_community(community)
-    price = price + recurring_plan.price_each unless recurring_plan.blank?
-    price = price + upgrades.map{|u| u.price_each * u.quantity} unless upgrades.blank?
+    price = price + recurring_plan.price_each unless recurring_plan.blank? or recurring_plan.price_each.blank?
+    price = price + upgrades.map{|u| u.price_each * u.quantity}.inject(0,:+) unless upgrades.blank?
     return price
   end
   def total_price_per_month_in_dollars
@@ -44,7 +44,7 @@ class Invoice < ActiveRecord::Base
 
   def recurring_plan_invoice_item_for_community(community)
     com_id = community.id
-    some_plan = self.invoice_items.where{(item_type == "CommunityPlan") & (is_recurring == true) & (community_id == com_id) & (is_prorated == false)}.limit(1).first
+    some_plan = self.invoice_items.where{(item_type == "CommunityPlan") & (is_recurring == true) & (community_id == com_id) & (is_prorated == false) & (created_at != nil)}.limit(1).first
     if some_plan.blank?
       return self.invoice_items.new({item: CommunityPlan.default_plan, community: community}, without_protection: true) 
     else
