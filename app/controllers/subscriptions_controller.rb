@@ -27,9 +27,6 @@ class SubscriptionsController < ApplicationController
       raise CanCan::AccessDenied
     else
       @current_invoice = current_user.current_invoice
-      if @current_invoice.blank?
-        @current_invoice = current_user.invoices.new({period_start_date: Time.now.beginning_of_day}, without_protection: true)
-      end
       # Get invoice item for current plan.
       @current_plan_invoice_item = @current_invoice.recurring_plan_invoice_item_for_community(@community)
 
@@ -47,9 +44,6 @@ class SubscriptionsController < ApplicationController
 
   def create
     @invoice = current_user.current_invoice
-    if @invoice.blank?
-        @invoice = current_user.invoices.new({period_start_date: Time.now.beginning_of_day}, without_protection: true)
-      end
     @stripe_card_token = params[:stripe_card_token]
     begin
       if @invoice.update_attributes_with_payment(params[:invoice], @stripe_card_token)

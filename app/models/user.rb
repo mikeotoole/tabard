@@ -196,9 +196,10 @@ class User < ActiveRecord::Base
         c = Stripe::Customer.retrieve(self.stripe_customer_token)
 
         # TODO: Look if customer has a current plan.
+        # If no
+        new_payment = true
+
         # If yes
-
-
         is_prorated = current_total_price < new_total_price
         if stripe_card_token.present?
           # Update credit card info and subscription
@@ -214,19 +215,21 @@ class User < ActiveRecord::Base
                                                   plan: plan.strip_id,
                                                   card: stripe_card_token)
         self.stripe_customer_token = customer.id
+        new_payment = true
         self.save!
       end
+
+      invoice.period_end_date = Time.now.beginning_of_day if new_payment
+
       return true
     end
   end
 
   def current_invoice
-    # TODO Fix this
-    #today = Date.today
-    #invoice = self.invoices.where{(period_start_date <= today) & (period_end_date >= today)}.limit(1).first
-    #return invoice
-    invoice = self.invoices.last
-#     invoice = self.invoices.new({period_start_date: Time.now.beginning_of_day}, without_protection: true) if invoice.blank?
+    today = Time.now
+    invoice = self.invoices.where{(period_start_date <= today) & (period_end_date >= today)}.limit(1).first
+    invoice = self.invoices.new({period_start_date: Time.now.beginning_of_day,
+                                 period_end_date: Time.now.beginning_of_day + 30.days}, without_protection: true) if invoice.blank?
     return invoice
   end
 

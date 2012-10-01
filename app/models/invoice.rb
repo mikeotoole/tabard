@@ -29,8 +29,10 @@ class Invoice < ActiveRecord::Base
 # Validators
 ###
   validates :user, presence: true
-  #validates_date :period_start_date, on_or_after: :today
-  #validates_date :period_end_date, on_or_after: :period_start_date
+  validates :period_start_date, presence: true
+  validates :period_end_date, presence: true
+  validates_date :period_start_date, on_or_after: :today, on: :create
+  validates_date :period_end_date, on_or_after: :period_start_date, on: :create
   accepts_nested_attributes_for :invoice_items, allow_destroy: true
 
   ###
