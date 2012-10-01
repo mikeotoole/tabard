@@ -21,7 +21,7 @@ root = exports ? this
     $('#modal').prepend('<h1>' + title + '</h1>') if title
     $('#mask').remove() if $('.wmd-prompt-background').length
     $('#mask, .wmd-prompt-background')
-      .css({ opacity: 0 })
+      .css(opacity: 0)
       .animate({ opacity: .7 }, 400, 'linear')
     $('#modal')
       .css({ opacity: 0, marginLeft: -500 })
