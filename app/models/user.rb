@@ -161,39 +161,6 @@ class User < ActiveRecord::Base
 ###
 # Instance Methods
 ###
-  def total_price_per_month_in_cents(community)
-    if self.current_invoice.blank?
-      0
-    else
-      self.current_invoice.total_price_per_month_in_cents(community)
-    end
-  end
-
-  # Returns the total cost for all user's owned communities in dollars.
-  def total_price_per_month_in_dollars(community = nil)
-    if community.blank?
-      if self.current_invoice.blank?
-        0
-      else
-        self.current_invoice.total_price_per_month_in_dollars
-      end
-    else
-      self.total_price_per_month_in_cents(community)/100.0
-    end
-  end
-
-  ###
-  # Returns the total cost for all user's owned communities in cents if the given community is saved.
-  # This is designed to be given a community with its plan and/or upgrades updated but not saved.
-  ###
-  def new_total_price_per_month_in_cents(community)
-    price = community.total_price_per_month_in_cents
-    community_id = community.id
-    self.owned_communities.where{id != community_id}.each do |community|
-      price = price + community.total_price_per_month_in_cents
-    end
-    price
-  end
 
   def current_invoice_end_date
     if self.stripe_subscription_date.blank?
@@ -209,8 +176,9 @@ class User < ActiveRecord::Base
   #   * +stripe_card_token+ A Stripe card token. This is not required if the user has a Stripe customer id.
   # [Returns] True if the Stripe subscription was updated, false otherwise
   ###
-  def update_stripe(stripe_card_token, new_total_price)
-    current_total_price = self.total_price_per_month_in_cents
+  def update_stripe(stripe_card_token, invoice)
+    current_total_price = invoice.total_recurring_price_per_month_in_cents
+    new_total_price = invoice.new_total_recurring_price_per_month_in_cents
     if current_total_price == new_total_price
       return true
     elsif new_total_price == 0
@@ -218,7 +186,6 @@ class User < ActiveRecord::Base
       if self.stripe_customer_token.present?
         c = Stripe::Customer.retrieve(self.stripe_customer_token)
         s = c.cancel_subscription(at_period_end: true) if c.subscription.present?
-        # TODO: Need to make sure stripe_subscription_date is set to nil when subscription expires.
       end
       return true
     else
@@ -247,7 +214,6 @@ class User < ActiveRecord::Base
                                                   plan: plan.strip_id,
                                                   card: stripe_card_token)
         self.stripe_customer_token = customer.id
-        self.stripe_subscription_date = Date.now.utc unless self.stripe_subscription_date.present?
         self.save!
       end
       return true
@@ -259,7 +225,27 @@ class User < ActiveRecord::Base
     #today = Date.today
     #invoice = self.invoices.where{(period_start_date <= today) & (period_end_date >= today)}.limit(1).first
     #return invoice
-    self.invoices.last
+    invoice = self.invoices.last
+#     invoice = self.invoices.new({period_start_date: Time.now.beginning_of_day}, without_protection: true) if invoice.blank?
+    return invoice
+  end
+
+  def total_price_per_month_in_dollars
+    invoice = self.current_invoice
+    if invoice.present?
+      self.current_invoice.total_recurring_price_per_month_in_dollars
+    else
+      0
+    end
+  end
+
+  def total_price_per_month_in_dollars_for_community(community)
+    invoice = self.current_invoice
+    if invoice.present?
+      self.current_invoice.total_price_per_month_in_dollars_for_community(community)
+    else
+      0
+    end
   end
 
 ###

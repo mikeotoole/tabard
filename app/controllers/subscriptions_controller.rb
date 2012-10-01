@@ -26,47 +26,60 @@ class SubscriptionsController < ApplicationController
     if @community.blank?
       raise CanCan::AccessDenied
     else
-      # TODO Mike fix current invoice method.
-      @current_invoice = current_user.invoices.last
+      @current_invoice = current_user.current_invoice
       if @current_invoice.blank?
-        @current_invoice = current_user.invoices.new({period_start_date: Time.now.beginning_of_day}, without_protection: true) 
+        @current_invoice = current_user.invoices.new({period_start_date: Time.now.beginning_of_day}, without_protection: true)
       end
+      # Get invoice item for current plan.
       @current_plan_invoice_item = @current_invoice.recurring_plan_invoice_item_for_community(@community)
-      @current_plan = @current_plan_invoice_item.item
-      @existing_upgrades_invoice_items = @current_invoice.recurring_upgrade_invoice_item_for_community(@community)
-      @existing_upgrades = @existing_upgrades_invoice_items.map{|i| i.item}
-      @new_upgrades = @current_plan.community_upgrades.delete_if{|plan| @existing_upgrades.include?(plan) }
-      @new_upgrades_invoice_items = @new_upgrades.map{ |item| @current_invoice.invoice_items.new({item: item, quantity: 0, price_each: item.price_per_month_in_cents, community_id: @community.id}, without_protection: true)}
-      @all_upgrades_invoice_items = @existing_upgrades_invoice_items + @new_upgrades_invoice_items
+
+      current_plan = @current_plan_invoice_item.item
+
+      existing_upgrades_invoice_items = @current_invoice.recurring_upgrade_invoice_items_for_community(@community)
+
+      existing_upgrades = existing_upgrades_invoice_items.map{|i| i.item}
+      new_upgrades = current_plan.community_upgrades.delete_if{|plan| existing_upgrades.include?(plan) }
+      new_upgrades_invoice_items = new_upgrades.map{ |item| @current_invoice.invoice_items.new({item: item, quantity: 0, price_each: item.price_per_month_in_cents, community_id: @community.id}, without_protection: true)}
+
+      @all_upgrades_invoice_items = existing_upgrades_invoice_items + new_upgrades_invoice_items
     end
   end
+
   def create
-    current_user.invoices.create(params[:invoice])
-    redirect_to edit_subscription_url(@community)
+    @invoice = current_user.current_invoice
+    if @invoice.blank?
+        @invoice = current_user.invoices.new({period_start_date: Time.now.beginning_of_day}, without_protection: true)
+      end
+    @stripe_card_token = params[:stripe_card_token]
+    begin
+      if @invoice.update_attributes_with_payment(params[:invoice], @stripe_card_token)
+        flash[:success] = "Your plan has been changed"
+      end
+    rescue Stripe::StripeError => e
+      logger.error "StripeError: #{e.message}"
+      @invoice.errors.add :base, "There was a problem with your credit card"
+      @stripe_card_token = nil
+    end
+    respond_with(@invoice, location: edit_subscription_url(@community))
   end
 
   # PUT /subscriptions/:id(.:format)
   def update
     @invoice = current_user.invoices.find_by_id(params[:invoice].delete(:id))
-    @invoice.update_attributes(params[:invoice])
-    redirect_to edit_subscription_url(@community)
-    return true
-    if @community.blank?
+    if @invoice.blank?
       raise CanCan::AccessDenied
     else
       @stripe_card_token = params[:stripe_card_token]
-      if params[:community].blank?
-        @community.errors.add :base, "You must pick a plan"
-      else
-        begin
-          flash[:success] = "Your plan has been changed" if @community.update_attributes_with_payment(params[:community], @stripe_card_token)
-        rescue Stripe::StripeError => e
-          logger.error "StripeError: #{e.message}"
-          @community.errors.add :base, "There was a problem with your credit card"
-          @stripe_card_token = nil
+      begin
+        if @invoice.update_attributes_with_payment(params[:invoice], @stripe_card_token)
+          flash[:success] = "Your plan has been changed"
         end
+      rescue Stripe::StripeError => e
+        logger.error "StripeError: #{e.message}"
+        @invoice.errors.add :base, "There was a problem with your credit card"
+        @stripe_card_token = nil
       end
-      respond_with(@community, location: edit_subscription_url(@community))
+      respond_with(@invoice, location: edit_subscription_url(@community))
     end
   end
 

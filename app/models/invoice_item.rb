@@ -21,7 +21,13 @@ class InvoiceItem < ActiveRecord::Base
   belongs_to :community
   belongs_to :item, polymorphic: true
 
+###
+# Callbacks
+###
   before_save :copy_price
+  before_validation :set_is_recurring
+
+#   before_validation :set_price_each
 
 ###
 # Validators
@@ -34,16 +40,47 @@ class InvoiceItem < ActiveRecord::Base
   #validates_date :add_date, between: [:period_start_date, :period_end_date],
   #                          after_message: "Must be after invoice start date",
   #                          before_message: "Must be before invoice end date"
+#   validate :community_is_owned_by_user
+#   validates :item, presence: true
 
 ###
 # Delegates
 ###
   delegate :period_start_date, to: :invoice
   delegate :period_end_date, to: :invoice
+#
+# ###
+# # Protected Methods
+# ###
+# protected
+#
+# ###
+# # Callback Methods
+# ###
 
   def copy_price
-      self.price_each = item.price_per_month_in_cents unless item.blank?
+    self.price_each = item.price_per_month_in_cents unless item.blank?
   end
+
+  ###
+  # _before_validation_
+  #
+  #
+  ###
+  def set_is_recurring
+    self.is_recurring = true
+    self.is_prorated = false
+  end
+#
+#   ###
+#   # _before_validation_
+#   #
+#   #
+#   ###
+#   def set_price_each
+#     self.quantity = 1
+#     self.price_each = self.item.price_per_month_in_cents
+#   end
 end
 
 # == Schema Information
