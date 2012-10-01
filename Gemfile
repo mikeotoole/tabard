@@ -43,6 +43,7 @@ ruby '1.9.3'
 
 # Stripe
   gem 'stripe'
+  gem 'stripe_event'
 
 # Memory Usage
   gem 'oink'#                                                                               MIT - https://github.com/noahd1/oink

@@ -322,6 +322,9 @@ GEM
     stripe (1.7.1)
       multi_json (~> 1.1)
       rest-client (~> 1.4)
+    stripe_event (0.4.0)
+      rails (~> 3.1)
+      stripe (~> 1.6)
     subexec (0.2.2)
     terminal-table (1.4.5)
     thin (1.4.1)
@@ -400,6 +403,7 @@ DEPENDENCIES
   sqlite3
   squeel
   stripe
+  stripe_event
   thin
   timecop
   uglifier
