@@ -10,15 +10,17 @@
     %table
       %thead
         %tr
-          %th Item Name
-          %th Plan
+          %th Community Name
+          %th Current Plan
+          %th Recurring Plan
           %th Cost
           %th.actions
       %tbody
         - @owned_communities.each do |community|
           %tr
             %td= link_to shorten_words(community.name, 21), edit_subscription_path(community)
-            %td= community.community_plan_title
+            %td= community.current_community_plan_title
+            %td= community.recurring_community_plan_title
             %td.r= number_to_currency(current_user.total_price_per_month_in_dollars_for_community(community))
             %td.actions
               %div
@@ -26,7 +28,7 @@
                 = link_to 'Edit', edit_subscription_path(community), meta: 'Edit Subscription', class: 'edit'
       %tfoot
         %tr
-          %td.r{ colspan: 2 } Monthly Total
+          %td.r{ colspan: 3 } Monthly Total
           %td.r= number_to_currency(current_user.total_price_per_month_in_dollars)
           %td
   - else

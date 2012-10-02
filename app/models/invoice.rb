@@ -24,6 +24,7 @@ class Invoice < ActiveRecord::Base
 # Delegates
 ###
   delegate :stripe_customer_token, to: :user, prefix: true
+  delegate :previous_invoice, to: :user, allow_nil: true
 
 ###
 # Validators
@@ -91,11 +92,19 @@ class Invoice < ActiveRecord::Base
 
   def recurring_plan_invoice_item_for_community(community)
     com_id = community.id
-    some_plan = self.invoice_items.where{(item_type == "CommunityPlan") & (is_recurring == true) & (community_id == com_id) & (is_prorated == false) & (created_at != nil)}.limit(1).first
-    if some_plan.blank?
-      return self.invoice_items.new({item: CommunityPlan.default_plan, community: community, quantity: 1}, without_protection: true)
+    invoice_item = self.invoice_items.where{(item_type == "CommunityPlan") & (is_recurring == true) & (community_id == com_id) & (is_prorated == false) & (created_at != nil)}.limit(1).first
+    if invoice_item.blank?
+      invoice = self.previous_invoice
+      if invoice.present?
+        old_invoice_item = invoice.invoice_items.where{(item_type == "CommunityPlan") & (is_recurring == true) & (community_id == com_id) & (is_prorated == false) & (created_at != nil)}.limit(1).first
+        plan = old_invoice_item ? old_invoice_item.item : CommunityPlan.default_plan
+      else
+        plan = CommunityPlan.default_plan
+      end
+      invoice_item = self.invoice_items.new({item: plan, community: community, quantity: 1}, without_protection: true)
+      return invoice_item
     else
-      return some_plan
+      return invoice_item
     end
   end
 

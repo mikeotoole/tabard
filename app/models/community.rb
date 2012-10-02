@@ -89,6 +89,7 @@ attr_accessor :new_community_plan_id
   delegate :background_author_url, to: :theme, prefix: true, allow_nil: true
   delegate :email, to: :admin_profile, prefix: true, allow_nil: true
   delegate :user, to: :admin_profile, prefix: true, allow_nil: true
+  delegate :current_invoice, to: :admin_profile_user, allow_nil: true
 
 ###
 # Validators
@@ -154,7 +155,7 @@ attr_accessor :new_community_plan_id
   # [Returns] True if not on the free plan.
   ###
   def is_paid_community?
-    not self.community_plan.is_free_plan?
+    not self.current_community_plan.is_free_plan?
   end
 
   ###
@@ -163,7 +164,7 @@ attr_accessor :new_community_plan_id
   ###
   def max_number_of_users
     # TODO This has the potential to be very slow....
-    plan_total = self.community_plan.max_number_of_users
+    plan_total = self.current_community_plan.max_number_of_users
     # TODO Fix this
     #upgrade_total = self.invoice_items.where{(item_type @= "CommunityUserPackUpgrade") & (start_date <= DateTime.now) & (end_date >= DateTime.now)}
     my_id = self.id
@@ -208,19 +209,27 @@ attr_accessor :new_community_plan_id
     self.total_price_per_month_in_cents/100.0
   end
 
-  def community_plan_title
-    self.community_plan.title
+  def current_community_plan_title
+    self.current_community_plan.title
   end
 
-  def community_plan
-    # TODO fix this
-    #invoiceitem = self.invoice_items.where{(item_type == "CommunityPlan") & (start_date <= DateTime.now) & (end_date >= DateTime.now)}.limit(1).first
-    invoiceitem = self.invoice_items.where{(item_type == "CommunityPlan")}.limit(1).first
+  def recurring_community_plan_title
+    self.recurring_community_plan.title
+  end
+
+  def current_community_plan
+    today = Time.now
+    invoiceitem = self.invoice_items.where{(item_type == "CommunityPlan") & (start_date <= today) & (end_date >= today)}.limit(1).first
     invoiceitem ? invoiceitem.item : CommunityPlan.default_plan
   end
 
+  def recurring_community_plan
+    self.current_invoice.recurring_plan_invoice_item_for_community(self).item
+  end
+
   def community_upgrades
-    invoiceitems = self.invoice_items.where{(item_type != "CommunityPlan") & (start_date <= DateTime.now) & (end_date >= DateTime.now)}
+    today = Time.now
+    invoiceitems = self.invoice_items.where{(item_type != "CommunityPlan") & (start_date <= today) & (end_date >= today)}
     return invoiceitems
   end
 

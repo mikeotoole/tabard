@@ -24,8 +24,9 @@ class InvoiceItem < ActiveRecord::Base
 ###
 # Callbacks
 ###
-  before_save :copy_price
   before_validation :set_is_recurring
+  before_save :copy_price
+  before_save :set_dates
 
 #   before_validation :set_price_each
 
@@ -60,6 +61,11 @@ class InvoiceItem < ActiveRecord::Base
 
   def copy_price
     self.price_each = item.price_per_month_in_cents unless item.blank?
+  end
+
+  def set_dates
+    self.start_date = self.invoice.period_end_date
+    self.end_date = self.start_date + 30.days
   end
 
   ###
