@@ -42,6 +42,7 @@ class SubscriptionsController < ApplicationController
     end
   end
 
+  # POST /subscriptions/(.:format)
   def create
     @invoice = current_user.current_invoice
     @stripe_card_token = params[:stripe_card_token]
