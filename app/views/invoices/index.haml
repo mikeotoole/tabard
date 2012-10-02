@@ -1,0 +1,8 @@
+%h1 Invoices#index
+%p Find me in app/views/invoices/index.html.haml
+-unless @invoices.blank?
+  %ol
+    -@invoices.each do |invoice|
+      %li=invoice.to_yaml
+-else
+  %p="No invoices #{@invoices.to_yaml}"

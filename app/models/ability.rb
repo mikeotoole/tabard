@@ -159,6 +159,11 @@ class Ability
       invite.user_profile_id == user.user_profile_id
     end
 
+    #Invoice Rules
+    can [:read], Invoice do |invoice|
+      invoice.user_id = user.id
+    end
+
     # Messaging Rules
     can :manage, Folder do |folder|
       folder.user_profile_id == user.user_profile_id
