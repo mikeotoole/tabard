@@ -199,16 +199,6 @@ attr_accessor :new_community_plan_id
     self.current_number_of_users >= self.max_number_of_users * 0.9 and self.current_number_of_users < self.max_number_of_users
   end
 
-  # Total price for this communities plans and upgrades in cents.
-  def total_price_per_month_in_cents
-    self.admin_profile.total_price_per_month_in_cents(self)
-  end
-
-  # Total price for this communities plans and upgrades in dollars.
-  def total_price_per_month_in_dollars
-    self.total_price_per_month_in_cents/100.0
-  end
-
   def current_community_plan_title
     self.current_community_plan.title
   end

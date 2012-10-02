@@ -12,7 +12,7 @@ class InvoiceItem < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :item, :quantity, :community_id, :item_type, :item_id
+  attr_accessible :quantity, :community, :community_id, :item, :item_type, :item_id
 
 ###
 # Associations
@@ -29,6 +29,11 @@ class InvoiceItem < ActiveRecord::Base
   before_save :set_dates
 
 #   before_validation :set_price_each
+
+###
+# Scopes
+###
+  scope :recurring, where{(is_recurring == true) & (is_prorated == false)}
 
 ###
 # Validators

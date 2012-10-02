@@ -21,7 +21,7 @@
             %td= link_to shorten_words(community.name, 21), edit_subscription_path(community)
             %td= community.current_community_plan_title
             %td= community.recurring_community_plan_title
-            %td.r= number_to_currency(current_user.total_price_per_month_in_dollars_for_community(community))
+            %td.r= number_to_currency(current_user.total_recurring_price_per_month_in_dollars(community))
             %td.actions
               %div
                 = link_to 'View', root_url(subdomain: community.subdomain), meta: 'View Community', class: 'view'
@@ -29,7 +29,7 @@
       %tfoot
         %tr
           %td.r{ colspan: 3 } Monthly Total
-          %td.r= number_to_currency(current_user.total_price_per_month_in_dollars)
+          %td.r= number_to_currency(current_user.total_recurring_price_per_month_in_dollars)
           %td
   - else
     %p You don't have any active subscriptions.

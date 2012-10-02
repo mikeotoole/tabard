@@ -45,12 +45,14 @@ class Invoice < ActiveRecord::Base
   # Gets the total price per month in cents for a specific communities plan and upgrades.
   # This will only count plans and upgrades saved to the database.
   ###
-  def total_price_per_month_in_cents_for_community(community)
+  def total_recurring_price_per_month_in_cents(community=nil)
     price = 0
-    recurring_plan = self.recurring_plan_invoice_item_for_community(community)
-    upgrades = self.recurring_upgrade_invoice_items_for_community(community)
-    price = price + recurring_plan.price_each unless recurring_plan.blank? or recurring_plan.price_each.blank?
-    price = price + upgrades.map{|u| u.price_each * u.quantity}.inject(0,:+) unless upgrades.blank?
+    if community.blank?
+      invoice_items = self.invoice_items.recurring
+    else
+      invoice_items = self.invoice_items.recurring.where(community_id: community.id)
+    end
+    price = invoice_items.map{|u| u.price_each * u.quantity}.inject(0,:+) unless invoice_items.empty?
     return price
   end
 
@@ -58,21 +60,8 @@ class Invoice < ActiveRecord::Base
   # Gets the total price per month in dollars for a specific communities plan and upgrades.
   # This will only count plans and upgrades saved to the database.
   ###
-  def total_price_per_month_in_dollars_for_community(community)
-    self.total_price_per_month_in_cents_for_community(community)/100.0
-  end
-
-  def total_recurring_price_per_month_in_cents
-    price = 0
-    saved_recurring_invoice_items = self.invoice_items.where{(is_recurring == true) & (is_prorated == false)}
-    saved_recurring_invoice_items.each do |invoice_item|
-      price = price + (invoice_item.price_each * invoice_item.quantity)
-    end
-    return price
-  end
-
-  def total_recurring_price_per_month_in_dollars
-    self.total_recurring_price_per_month_in_cents/100.0
+  def total_recurring_price_per_month_in_dollars(community=nil)
+    self.total_recurring_price_per_month_in_cents(community)/100.0
   end
 
   ###
@@ -95,34 +84,30 @@ class Invoice < ActiveRecord::Base
     self.new_total_recurring_price_per_month_in_cents/100.0
   end
 
+  ###
+  # Returns all recurring plan invoice items for a community.
+  # If the community does not have one a new one is created with the default plan.
+  ###
   def recurring_plan_invoice_item_for_community(community)
     com_id = community.id
-    invoice_item = self.invoice_items.where{(item_type == "CommunityPlan") & (is_recurring == true) & (community_id == com_id) & (is_prorated == false) & (created_at != nil)}.limit(1).first
+    invoice_item = self.invoice_items.recurring.where{(item_type == "CommunityPlan") & (community_id == com_id)}.limit(1).first
     if invoice_item.blank?
-      invoice = self.previous_invoice
-      if invoice.present?
-        old_invoice_item = invoice.invoice_items.where{(item_type == "CommunityPlan") & (is_recurring == true) & (community_id == com_id) & (is_prorated == false) & (created_at != nil)}.limit(1).first
-        plan = old_invoice_item ? old_invoice_item.item : CommunityPlan.default_plan
-      else
-        plan = CommunityPlan.default_plan
-      end
-      invoice_item = self.invoice_items.new({item: plan, community: community, quantity: 1}, without_protection: true)
-      return invoice_item
-    else
-      return invoice_item
+      invoice_item = self.invoice_items.new({community: community, item: CommunityPlan.default_plan, quantity: 1}, without_protection: true)
     end
+    return invoice_item
   end
 
+  # Returns all recurring upgrade invoice items for a community.
   def recurring_upgrade_invoice_items_for_community(community)
     com_id = community.id
-    return self.invoice_items.where{(item_type != "CommunityPlan") & (is_recurring == true) & (community_id == com_id) & (is_prorated == false)}
+    return self.invoice_items.recurring.where{(item_type != "CommunityPlan") & (community_id == com_id)}
   end
 
   # Returns all recurring invoice items including unsaved ones.
   def recurring_invoice_items
     recurring_items = []
     self.invoice_items.each do |invoice_item|
-      recurring_items << invoice_item if invoice_item.is_recurring and not invoice_item.is_prorated
+      recurring_items << invoice_item if invoice_item.is_recurring
     end
     return recurring_items
   end
@@ -140,17 +125,6 @@ class Invoice < ActiveRecord::Base
       return false
     else
       self.attributes = invoice_attributes
-
-#       is_valid = self.valid?
-#       # HACK: WTF why does self.valid? not validate the invoice_items
-#       self.invoice_items.each do |item|
-#         break unless is_valid
-#         is_valid = item.valid?
-#         unless is_valid
-#           throw item.errors
-#         end
-#       end
-
       if self.valid?
         if self.user.update_stripe(stripe_card_token, self)
           return self.save!

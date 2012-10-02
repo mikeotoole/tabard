@@ -96,6 +96,7 @@ class User < ActiveRecord::Base
   delegate :pending_support_tickets, to: :user_profile, allow_nil: true
   delegate :in_progress_support_tickets, to: :user_profile, allow_nil: true
   delegate :closed_support_tickets, to: :user_profile, allow_nil: true
+  delegate :total_recurring_price_per_month_in_dollars, to: :current_invoice
 
 ###
 # Validators
@@ -162,14 +163,9 @@ class User < ActiveRecord::Base
 # Instance Methods
 ###
 
-  def current_invoice_end_date
-    if self.stripe_subscription_date.blank?
-      return Date.today
-    else
-      return self.stripe_subscription_date + 30.days
-    end
-  end
-
+###
+# Invoicing
+###
   ###
   # Used to update a community plan and bill the community admin using Stripe.
   # [Args]
@@ -220,7 +216,7 @@ class User < ActiveRecord::Base
       end
 
       if new_payment
-        invoice.period_end_date = Time.now.beginning_of_day 
+        invoice.period_end_date = Time.now.beginning_of_day
         invoice.is_closed = true
       end
 
@@ -234,36 +230,18 @@ class User < ActiveRecord::Base
     # If no invoice, look for previous invoice and copy the recurring items, then create
     if invoice.blank?
       invoice = self.invoices.new({period_start_date: Time.now.beginning_of_day, period_end_date: Time.now.beginning_of_day + 30.days}, without_protection: true)
-      return invoice if self.previous_invoice.blank?
-      previous_invoice.invoice_items.where{(is_recurring == true) & (is_prorated == false)}.each do |item|
-        invoice.invoice_items.new(item.attributes.extract!(:item, :quantity, :community_id, :item_type, :item_id), without_protection: true)
+      if self.previous_invoice.present? and previous_invoice.invoice_items.recurring.any?
+        previous_invoice.invoice_items.recurring.each do |ii|
+          invoice.invoice_items.new({community: ii.community, item: ii.item, quantity: ii.quantity}, without_protection: true)
+        end
+        invoice.save!
       end
-      invoice.save
     end
     return invoice
   end
 
   def previous_invoice
-    today = Time.now
     self.invoices.closed.limit(1).first
-  end
-
-  def total_price_per_month_in_dollars
-    invoice = self.current_invoice
-    if invoice.present?
-      self.current_invoice.total_recurring_price_per_month_in_dollars
-    else
-      0
-    end
-  end
-
-  def total_price_per_month_in_dollars_for_community(community)
-    invoice = self.current_invoice
-    if invoice.present?
-      self.current_invoice.total_price_per_month_in_dollars_for_community(community)
-    else
-      0
-    end
   end
 
 ###
