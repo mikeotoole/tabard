@@ -219,7 +219,10 @@ class User < ActiveRecord::Base
         self.save!
       end
 
-      invoice.period_end_date = Time.now.beginning_of_day if new_payment
+      if new_payment
+        invoice.period_end_date = Time.now.beginning_of_day 
+        invoice.is_closed = true
+      end
 
       return true
     end
@@ -228,14 +231,21 @@ class User < ActiveRecord::Base
   def current_invoice
     today = Time.now
     invoice = self.invoices.where{(period_start_date <= today) & (period_end_date >= today)}.limit(1).first
-    invoice ||= self.invoices.new({period_start_date: Time.now.beginning_of_day,
-                                   period_end_date: Time.now.beginning_of_day + 30.days}, without_protection: true)
+    # If no invoice, look for previous invoice and copy the recurring items, then create
+    if invoice.blank?
+      invoice = self.invoices.new({period_start_date: Time.now.beginning_of_day, period_end_date: Time.now.beginning_of_day + 30.days}, without_protection: true)
+      return invoice if self.previous_invoice.blank?
+      previous_invoice.invoice_items.where{(is_recurring == true) & (is_prorated == false)}.each do |item|
+        invoice.invoice_items.new(item.attributes, without_protection: true)
+      end
+      invoice.save
+    end
     return invoice
   end
 
   def previous_invoice
-    invoice_date = current_invoice.period_start_date
-    self.invoices.where{(period_end_date == invoice_date)}.limit(1).first
+    today = Time.now
+    self.invoices.where{(period_end_date < today)}.order(:period_end_date).reverse_order.limit(1).first
   end
 
   def total_price_per_month_in_dollars
