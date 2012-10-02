@@ -11,10 +11,9 @@
 #body
   %h1= "Subscription for \"#{shorten_words @community.name}\""
 
-  =simple_form_for @current_invoice, url: subscription_url(@community, subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), html: {novalidate: true, id: "form_with_subscription"} do |f|
+  = simple_form_for @current_invoice, url: subscription_url(@community, subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), method: :put, html: {novalidate: true, id: "form_with_subscription"} do |f|
     %fieldset
       = hidden_field_tag :stripe_card_token
-      = f.input :id, as: :hidden
       %ol
         %li.plans
           =f.simple_fields_for :invoice_items, @current_plan_invoice_item do |sf|

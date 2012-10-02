@@ -3,7 +3,10 @@ DaBvRails::Application.routes.draw do
   # Stripe Callbacks
   mount StripeEvent::Engine => '/stripe-sentry'
 
-  resources :subscriptions, only: [:index, :update, :create, :edit]
+  resources :subscriptions, only: :index
+  get '/subscriptions/:community_id/edit' => 'subscriptions#edit', as: :edit_subscription
+  put '/subscriptions/:community_id' => 'subscriptions#update', as: :subscription
+
   resources :invoices, only: [:index, :show]
 
   resources :minecraft_characters

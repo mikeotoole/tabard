@@ -14,14 +14,14 @@ class SubscriptionsController < ApplicationController
   skip_before_filter :ensure_not_ssl_mode
   skip_before_filter :limit_subdomain_access
   before_filter :ensure_secure_subdomain
-  before_filter :load_variables, only: [:edit, :update, :create]
+  before_filter :load_variables, only: [:edit, :update]
 
   # GET /subscriptions(.:format)
   def index
     @owned_communities = current_user.owned_communities
   end
 
-  # GET /subscriptions/:id/edit(.:format)
+  # GET /subscriptions/:community_id/edit(.:format)
   def edit
     if @community.blank?
       raise CanCan::AccessDenied
@@ -42,8 +42,8 @@ class SubscriptionsController < ApplicationController
     end
   end
 
-  # POST /subscriptions/(.:format)
-  def create
+  # PUT /subscriptions/:community_id
+  def update
     @invoice = current_user.current_invoice
     @stripe_card_token = params[:stripe_card_token]
     begin
@@ -58,26 +58,6 @@ class SubscriptionsController < ApplicationController
     respond_with(@invoice, location: edit_subscription_url(@community))
   end
 
-  # PUT /subscriptions/:id(.:format)
-  def update
-    @invoice = current_user.invoices.find_by_id(params[:invoice].delete(:id))
-    if @invoice.blank?
-      raise CanCan::AccessDenied
-    else
-      @stripe_card_token = params[:stripe_card_token]
-      begin
-        if @invoice.update_attributes_with_payment(params[:invoice], @stripe_card_token)
-          flash[:success] = "Your plan has been changed"
-        end
-      rescue Stripe::StripeError => e
-        logger.error "StripeError: #{e.message}"
-        @invoice.errors.add :base, "There was a problem with your credit card"
-        @stripe_card_token = nil
-      end
-      respond_with(@invoice, location: edit_subscription_url(@community))
-    end
-  end
-
 ###
 # Protected Methods
 ###
@@ -89,7 +69,7 @@ protected
   # Loads variables used by edit and update.
   ###
   def load_variables
-    @community = current_user.owned_communities.find_by_id(params[:id])
+    @community = current_user.owned_communities.find_by_id(params[:community_id])
     @available_plans = CommunityPlan.available
   end
 end
