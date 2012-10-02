@@ -192,10 +192,10 @@ class User < ActiveRecord::Base
         c = Stripe::Customer.retrieve(self.stripe_customer_token)
 
         # TODO: Look if customer has a current plan.
-        # If no
-        new_payment = true
+        # If no new_payment = false
 
         # If yes
+        new_payment = false
         is_prorated = current_total_price < new_total_price
         if stripe_card_token.present?
           # Update credit card info and subscription
