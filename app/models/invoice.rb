@@ -27,6 +27,11 @@ class Invoice < ActiveRecord::Base
   delegate :previous_invoice, to: :user, allow_nil: true
 
 ###
+# Scopes
+###
+  scope :closed, where{(is_closed == true)}.order(:period_end_date).reverse_order
+
+###
 # Validators
 ###
   validates :user, presence: true

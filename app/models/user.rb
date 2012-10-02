@@ -245,7 +245,7 @@ class User < ActiveRecord::Base
 
   def previous_invoice
     today = Time.now
-    self.invoices.where{(period_end_date < today)}.order(:period_end_date).reverse_order.limit(1).first
+    self.invoices.closed.limit(1).first
   end
 
   def total_price_per_month_in_dollars
