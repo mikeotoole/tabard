@@ -1,3 +1,28 @@
-%h1 Invoices#show
-%p Find me in app/views/invoices/show.haml
-%p= @invoice.to_yaml
+- title 'Invoices'
+
+#body
+  %h1 Invoices
+
+  #submenu
+
+  - if @invoice.invoice_items.size > 0
+    %table
+      %thead
+        %tr
+          %th item
+          %th price_each
+          %th quantity
+          %th Total
+      %tbody
+        - @invoice.invoice_items.group_by(&:community).each do |community, invoice_items|
+          %tr
+            %td.r{ colspan: 4 }=community.to_yaml
+          - invoice_items.each do |invoice_item|
+            %tr
+              %td= invoice_item.item.to_yaml
+              %td= invoice_item.price_each
+              %td= invoice_item.quantity
+              %td= invoice_item.price_each * invoice_item.quantity
+      %tfoot
+  - else
+    %p You don't have any invoices.

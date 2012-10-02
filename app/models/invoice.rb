@@ -42,6 +42,10 @@ class Invoice < ActiveRecord::Base
   validates_date :period_end_date, on_or_after: :period_start_date, on: :create
   accepts_nested_attributes_for :invoice_items, allow_destroy: true
 
+  def price
+    return 1000000000
+  end
+
   ###
   # Gets the total price per month in cents for a specific communities plan and upgrades.
   # This will only count plans and upgrades saved to the database.

@@ -1,10 +1,31 @@
-%h1 Invoices#index
-%p Find me in app/views/invoices/index.haml
--unless @invoices.blank?
-  %ol
-    -@invoices.each do |invoice|
-      %li
-        %p=invoice.to_yaml
-        %p=link_to "Invoice", invoice
--else
-  %p="No invoices #{@invoices.to_yaml}"
+- title 'Invoices'
+
+#body
+  %h1 Invoices
+
+  #submenu
+
+  - if @invoices.size > 0
+    %table
+      %thead
+        %tr
+          %th period_start_date
+          %th period_end_date
+          %th paid_date
+          %th Cost
+          %th is_closed
+          %th.actions
+      %tbody
+        - @invoices.each do |invoice|
+          %tr
+            %td= invoice.period_start_date
+            %td= invoice.period_end_date
+            %td= invoice.paid_date
+            %td.r= number_to_currency(invoice.price)
+            %td= invoice.is_closed
+            %td.actions
+              %div
+                = link_to 'Details', invoice, meta: 'View Details', class: 'view'
+      %tfoot
+  - else
+    %p You don't have any invoices.

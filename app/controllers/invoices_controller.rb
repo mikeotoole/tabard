@@ -6,7 +6,7 @@ class InvoicesController < ApplicationController
   before_filter :ensure_secure_subdomain
 
   def index
-    @invoices = current_user.invoices.closed
+    @invoices = current_user.invoices
   end
   
   def show
