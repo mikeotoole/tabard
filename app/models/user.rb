@@ -236,7 +236,7 @@ class User < ActiveRecord::Base
       invoice = self.invoices.new({period_start_date: Time.now.beginning_of_day, period_end_date: Time.now.beginning_of_day + 30.days}, without_protection: true)
       return invoice if self.previous_invoice.blank?
       previous_invoice.invoice_items.where{(is_recurring == true) & (is_prorated == false)}.each do |item|
-        invoice.invoice_items.new(item.attributes, without_protection: true)
+        invoice.invoice_items.new(item.attributes.extract!(:item, :quantity, :community_id, :item_type, :item_id), without_protection: true)
       end
       invoice.save
     end
