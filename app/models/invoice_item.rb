@@ -38,14 +38,14 @@ class InvoiceItem < ActiveRecord::Base
 ###
 # Validators
 ###
-  #validates :invoice, presence: true
-  #validates :price_each, presence: true
-  #validates :quantity, presence: true
-  #validates :discription, presence: true
+#   validates :invoice, presence: true
+#   validates :price_each, presence: true
+#   validates :quantity, presence: true
+#   validates :discription, presence: true
   #validates :community, presence: true
-  #validates_date :add_date, between: [:period_start_date, :period_end_date],
-  #                          after_message: "Must be after invoice start date",
-  #                          before_message: "Must be before invoice end date"
+#   validates_date :add_date, between: [:period_start_date, :period_end_date],
+#                            after_message: "Must be after invoice start date",
+#                            before_message: "Must be before invoice end date"
 #   validate :community_is_owned_by_user
 #   validates :item, presence: true
 
