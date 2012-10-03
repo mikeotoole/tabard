@@ -41,6 +41,14 @@ class Invoice < ActiveRecord::Base
   validates_date :period_start_date, on_or_after: :today, on: :create
   validates_date :period_end_date, on_or_after: :period_start_date, on: :create
   accepts_nested_attributes_for :invoice_items, allow_destroy: true
+  validate :no_reopening_closed_invoice
+#   validate :only_one_community_plan_item_per_period
+
+
+###
+# Callbacks
+###
+  after_save :create_next_invoice_when_closed
 
   def price
     return 1000000000
@@ -139,6 +147,49 @@ class Invoice < ActiveRecord::Base
         end
       else
         return false
+      end
+    end
+  end
+
+###
+# Protected Methods
+###
+protected
+
+###
+# Validator Mathods
+###
+  ###
+  # _Validator_
+  #
+  # Once an invoice is closed it can't be reopend.
+  ###
+  def no_reopening_closed_invoice
+    if not is_closed and is_closed_was
+      self.errors.add(:base, "A closed invoice can't be reopened.")
+    end
+  end
+
+###
+# Callback Methods
+###
+  ###
+  # _after_save_
+  #
+  # If this invoice was just closed it will create the next invoice if it does not exist.
+  ###
+  def create_next_invoice_when_closed
+    if is_closed and not is_closed_was
+      today = Time.now
+      invoice = self.user.invoices.where{(period_start_date <= today) & (period_end_date >= today)}.limit(1).first
+      if invoice.blank? and self.invoice_items.recurring.any?
+        invoice = self.user.invoices.new
+        invoice.period_start_date = self.period_end_date
+        invoice.period_end_date = self.period_end_date + 30.days
+        self.invoice_items.recurring.each do |ii|
+          invoice.invoice_items.new({community: ii.community, item: ii.item, quantity: ii.quantity}, without_protection: true)
+        end
+        invoice.save!
       end
     end
   end
