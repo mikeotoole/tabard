@@ -21,7 +21,7 @@
             %td= invoice.period_start_date
             %td= invoice.period_end_date
             %td= invoice.paid_date
-            %td.r= number_to_currency(invoice.price)
+            %td.r= number_to_currency(invoice.total_price_in_dollars)
             %td= invoice.is_closed
             %td.actions
               %div

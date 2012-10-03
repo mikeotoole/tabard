@@ -59,6 +59,13 @@ class InvoiceItem < ActiveRecord::Base
   delegate :title, to: :item, prefix: true
   delegate :description, to: :item, prefix: true
 
+
+
+
+  def total_price_in_dollars
+    self.price_each * self.quantity / 100
+  end
+
 ###
 # Protected Methods
 ###
@@ -70,10 +77,6 @@ protected
 
   def copy_price
     self.price_each = item.price_per_month_in_cents unless item.blank?
-  end
-
-  def total_price_in_dollars
-    self.price_each * self.quantity / 100
   end
 
   def set_dates

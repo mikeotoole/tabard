@@ -51,8 +51,12 @@ class Invoice < ActiveRecord::Base
 ###
   after_save :create_next_invoice_when_closed
 
-  def price
-    return 1000000000
+  def total_price_in_cents
+    invoice_items.empty? ? 0 : invoice_items.map{|ii| ii.price_per_month_in_cents * ii.quantity}.inject(0,:+)
+  end
+
+  def total_price_in_dollars
+    self.total_price_in_cents/100.0
   end
 
   def invoice_items_are_valid

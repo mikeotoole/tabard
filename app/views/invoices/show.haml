@@ -23,7 +23,7 @@
                 %span= invoice_item.item_title
                 %hr
                 %span= invoice_item.item_description
-              %td= number_to_currency(invoice_item.price_each/100)
+              %td= number_to_currency(invoice_item.price_each/100.0)
               %td= invoice_item.quantity
               %td= number_to_currency(invoice_item.total_price_in_dollars)
       %tfoot
