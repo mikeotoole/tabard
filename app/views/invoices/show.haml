@@ -19,10 +19,13 @@
             %td.r{ colspan: 4 }=community.to_yaml
           - invoice_items.each do |invoice_item|
             %tr
-              %td= invoice_item.item.to_yaml
-              %td= invoice_item.price_each
+              %td
+                %span= invoice_item.item_title
+                %hr
+                %span= invoice_item.item_description
+              %td= number_to_currency(invoice_item.price_each/100)
               %td= invoice_item.quantity
-              %td= invoice_item.price_each * invoice_item.quantity
+              %td= number_to_currency(invoice_item.total_price_in_dollars)
       %tfoot
   - else
     %p You don't have any invoices.
