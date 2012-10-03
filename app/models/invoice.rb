@@ -83,8 +83,9 @@ class Invoice < ActiveRecord::Base
   ###
   def new_total_recurring_price_per_month_in_cents
     price = 0
-    self.recurring_invoice_items.each do |invoice_item|
-      price = price + (invoice_item.item.price_per_month_in_cents * invoice_item.quantity)
+    recurring_invoice_items = self.invoice_items.select(&:is_recurring)
+    recurring_invoice_items.each do |invoice_item|
+      price = price + (invoice_item.price_per_month_in_cents * invoice_item.quantity)
     end
     return price
   end
@@ -114,15 +115,6 @@ class Invoice < ActiveRecord::Base
   def recurring_upgrade_invoice_items_for_community(community)
     com_id = community.id
     return self.invoice_items.recurring.where{(item_type != "CommunityPlan") & (community_id == com_id)}
-  end
-
-  # Returns all recurring invoice items including unsaved ones.
-  def recurring_invoice_items
-    recurring_items = []
-    self.invoice_items.each do |invoice_item|
-      recurring_items << invoice_item if invoice_item.is_recurring
-    end
-    return recurring_items
   end
 
   ###

@@ -111,7 +111,7 @@ unless @dont_run
   headshot = create_community('Billy', 'Just Another Headshot', 'Boom baby!', %w(Empire Horde Minecraft))
   billy = UserProfile.find_by_last_name('Billy')
 
-  puts "Headshot is going PRO"
+  puts "#### Headshot is going PRO ####"
   community_plan = CommunityPlan.find_by_title("Pro")
   token = Stripe::Token.create(
       :card => {
@@ -126,8 +126,7 @@ unless @dont_run
                                                             "quantity"=>"1",
                                                             "item_id"=>"#{community_plan.id}" }}}
   invoice = billy.current_invoice
-  invoice.update_attributes_with_payment(invoice_hash, token.id)
-  invoice.save!
+  throw "ERROR creating invoice" unless invoice.update_attributes_with_payment(invoice_hash, token.id)
 
   more_headshot = create_community('Billy', 'Even More Headshots', 'Ka Boom Baby!', %w(Empire Horde Minecraft))
 

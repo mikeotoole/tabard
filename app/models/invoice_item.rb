@@ -55,6 +55,7 @@ class InvoiceItem < ActiveRecord::Base
 ###
   delegate :period_start_date, to: :invoice
   delegate :period_end_date, to: :invoice
+  delegate :price_per_month_in_cents, to: :item
 
 ###
 # Protected Methods
