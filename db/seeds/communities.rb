@@ -109,6 +109,8 @@ unless @dont_run
 
   # Just Another Headshot
   headshot = create_community('Billy', 'Just Another Headshot', 'Boom baby!', %w(Empire Horde Minecraft))
+  billy = UserProfile.find_by_last_name('Billy')
+
   puts "Headshot is going PRO"
   community_plan = CommunityPlan.find_by_title("Pro")
   token = Stripe::Token.create(
@@ -119,12 +121,17 @@ unless @dont_run
       :cvc => 314
     },
   )
-#   headshot.update_attributes_with_payment({new_community_plan_id: community_plan.id}, token.id)
-#   headshot.save!
+  invoice_hash = { "invoice_items_attributes" => { "0" => { "community_id"=>"#{headshot.id}",
+                                                            "item_type"=>"CommunityPlan",
+                                                            "quantity"=>"1",
+                                                            "item_id"=>"#{community_plan.id}" }}}
+  invoice = billy.current_invoice
+  invoice.update_attributes_with_payment(invoice_hash, token.id)
+  invoice.save!
 
   more_headshot = create_community('Billy', 'Even More Headshots', 'Ka Boom Baby!', %w(Empire Horde Minecraft))
 
-  billy = UserProfile.find_by_last_name('Billy')
+
 
   %w(Moose Turtle Badger O'Toole).each do |last_name|
     application = generate_application(headshot, last_name)
