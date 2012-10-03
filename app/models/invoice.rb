@@ -38,12 +38,21 @@ class Invoice < ActiveRecord::Base
   validates :user, presence: true
   validates :period_start_date, presence: true
   validates :period_end_date, presence: true
+  validate :invoice_items_are_valid
   validates_date :period_start_date, on_or_after: :today, on: :create
   validates_date :period_end_date, on_or_after: :period_start_date, on: :create
   accepts_nested_attributes_for :invoice_items, allow_destroy: true
 
   def price
     return 1000000000
+  end
+
+  def invoice_items_are_valid
+    no_failures = true
+    self.invoice_items.each do |invoice_item|
+      no_failures = false unless invoice_item.valid?
+    end
+    self.errors.add(:base, "an invoice item has an error") unless no_failures
   end
 
   ###
