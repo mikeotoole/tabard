@@ -57,15 +57,15 @@ class InvoiceItem < ActiveRecord::Base
   delegate :period_end_date, to: :invoice
   delegate :title, to: :item, prefix: true, allow_nil: true
   delegate :description, to: :item, prefix: true, allow_nil: true
-#
-# ###
-# # Protected Methods
-# ###
-# protected
-#
-# ###
-# # Callback Methods
-# ###
+
+###
+# Protected Methods
+###
+protected
+
+###
+# Callback Methods
+###
 
   def copy_price
     self.price_each = item.price_per_month_in_cents unless item.blank?

@@ -227,17 +227,9 @@ class User < ActiveRecord::Base
   def current_invoice
     today = Time.now
     invoice = self.invoices.where{(period_start_date <= today) & (period_end_date >= today)}.limit(1).first
-    # If no invoice, look for previous invoice and copy the recurring items, then create
+    # If no invoice, create a new one.
     if invoice.blank?
       invoice = self.invoices.new({period_start_date: Time.now.beginning_of_day, period_end_date: Time.now.beginning_of_day + 30.days}, without_protection: true)
-      if self.previous_invoice.present? and previous_invoice.invoice_items.recurring.any?
-        invoice.period_start_date = self.previous_invoice.period_end_date
-        invoice.period_end_date = invoice.period_start_date + 30.days
-        previous_invoice.invoice_items.recurring.each do |ii|
-          invoice.invoice_items.new({community: ii.community, item: ii.item, quantity: ii.quantity}, without_protection: true)
-        end
-        invoice.save!
-      end
     end
     return invoice
   end
