@@ -44,8 +44,6 @@ class Invoice < ActiveRecord::Base
   validates_date :period_end_date, on_or_after: :period_start_date, on: :create
   accepts_nested_attributes_for :invoice_items, allow_destroy: true
   validate :no_reopening_closed_invoice
-  validate :only_one_community_plan_item_per_period
-
 
 ###
 # Callbacks
@@ -184,19 +182,6 @@ protected
       no_failures = false unless invoice_item.valid?
     end
     self.errors.add(:base, "an invoice item has an error") unless no_failures
-  end
-
-  ###
-  # _Validator_
-  #
-  # Validates child items
-  ###
-  def only_one_community_plan_item_per_period
-    self.invoice_items.group_by(&:community).each do |community, invoice_items|
-      invoice_items.group_by(&:item_type).each do |item_type, invoice_items|
-        self.errors.add(:base, "#{community.name} has more than one plan") if item_type == "CommunityPlan" and invoice_items.count > 1
-      end
-    end
   end
 
 ###

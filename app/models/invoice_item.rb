@@ -43,6 +43,7 @@ class InvoiceItem < ActiveRecord::Base
   validates :is_recurring, presence: true
   validate :community_is_owned_by_user
   validate :is_recurring_and_is_prorated_not_both_true
+  validate :only_one_community_plan_item_per_period  
   validates_datetime :start_date, on_or_after: lambda {|ii| ii.period_start_date }, if: Proc.new{|ii| ii.is_prorated }
   validates_datetime :end_date, is_at: lambda {|ii| ii.period_end_date }, if: Proc.new{|ii| ii.is_prorated }
 
@@ -104,6 +105,18 @@ protected
   ###
   def is_recurring_and_is_prorated_not_both_true
     self.errors.add(:base, "Prorated items can't be recurring.") if self.is_recurring and self.is_prorated
+  end
+
+  ###
+  # _Validator_
+  #
+  # Validates that plan dont overlap.
+  ###
+  def only_one_community_plan_item_per_period
+    com_id = self.community_id
+    start_d = self.start_date
+    end_d = self.end_date
+    self.errors.add(:base, "a plan already exists in that date range.") if self.item_type == "CommunityPlan" and InvoiceItem.where{(community_id == com_id) & (start_date > end_d) & (end_date < start_d)}.exists?
   end
 
 ###
