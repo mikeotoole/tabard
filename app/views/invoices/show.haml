@@ -4,7 +4,7 @@
   %h1 Invoices
 
   #submenu
-
+    = link_to 'All Invoices', invoices_url, class: 'button'
   - if @invoice.invoice_items.size > 0
     %table
       %thead
@@ -16,7 +16,7 @@
       %tbody
         - @invoice.invoice_items.group_by(&:community).each do |community, invoice_items|
           %tr
-            %td.l{ colspan: 4 }=link_to community.name, edit_subscription_path(community)
+            %td.l{ colspan: 4 }=link_to_unless @invoice.is_closed, community.name, edit_subscription_path(community)
           - invoice_items.each do |invoice_item|
             %tr
               %td
