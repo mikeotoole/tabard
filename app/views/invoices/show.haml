@@ -16,7 +16,7 @@
       %tbody
         - @invoice.invoice_items.group_by(&:community).each do |community, invoice_items|
           %tr
-            %td.l{ colspan: 4 }=link_to community.name, root_url(subdomain: community.subdomain)
+            %td.l{ colspan: 4 }=link_to community.name, edit_subscription_path(community)
           - invoice_items.each do |invoice_item|
             %tr
               %td
