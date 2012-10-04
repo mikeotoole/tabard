@@ -49,7 +49,8 @@ class Invoice < ActiveRecord::Base
 # Callbacks
 ###
   after_save :create_next_invoice_when_closed
-  before_validation :scrub_out_default_plans
+  before_save :scrub_out_default_plans
+  after_save :add_prorated_items
 
 ###
 # Instance Methods
@@ -216,6 +217,31 @@ protected
   def scrub_out_default_plans
     self.invoice_items.each do |invoice_item|
       invoice_item.delete if invoice_item.has_default_plan?
+    end
+  end
+
+  ###
+  # _after_save_
+  #
+  #
+  ###
+  def add_prorated_items
+    plan_invoice_items = self.invoice_items.select(&:has_community_plan?)
+    plan_invoice_items.each do |ii|
+      if ii.is_recurring
+        today = Time.now
+        unless (ii.start_date <= today and ii.end_date >= today)
+          com_id = ii.community_id
+          type = ii.item_type
+          invoice_items = InvoiceItem.where{(community_id == com_id) & (item_type == type) & (start_date <= today) & (end_date >= today)}.limit(1)
+          if invoice_items.empty?
+            new_ii = self.invoice_items.new(community: ii.community, quantity: ii.quantity, item: ii.item)
+            new_ii.is_recurring = false
+            new_ii.is_prorated = true
+            new_ii.save!
+          end
+        end
+      end
     end
   end
 end

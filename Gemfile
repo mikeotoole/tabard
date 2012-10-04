@@ -102,6 +102,7 @@ ruby '1.9.3'
     gem 'sqlite3'#                                                                          Custom - https://github.com/luislavena/sqlite3-ruby
     gem 'rspec-rails'#                                                                      MIT - https://github.com/rspec/rspec-rails
     gem 'factory_girl_rails'#                                                               MIT - https://github.com/thoughtbot/factory_girl_rails
+    gem 'debugger'
   end
 
 # Test Specific Gems
@@ -113,5 +114,4 @@ ruby '1.9.3'
     gem 'guard-livereload'#                                                                 MIT - https://github.com/guard/guard-livereload
     gem 'growl_notify'#                                                                     MIT - https://github.com/scottdavis/growl_notify
     gem 'simplecov'#                                                                        MIT - https://github.com/colszowka/simplecov
-    gem 'ruby-debug19'#                                                                     LGPL - http://rubyforge.org/projects/ruby-debug19
   end

@@ -25,7 +25,6 @@ class InvoiceItem < ActiveRecord::Base
 # Callbacks
 ###
   before_validation :set_dates
-  before_save :add_prorated_items
 
 ###
 # Scopes
@@ -41,7 +40,6 @@ class InvoiceItem < ActiveRecord::Base
   validates :quantity, presence: true
   validates :start_date, presence: true
   validates :end_date, presence: true
-  validates :is_recurring, presence: true
   validate :community_is_owned_by_user
   validate :is_recurring_and_is_prorated_not_both_true
   validate :only_one_community_plan_item_per_period
@@ -51,8 +49,6 @@ class InvoiceItem < ActiveRecord::Base
 ###
 # Delegates
 ###
-  delegate :user, to: :invoice
-  delegate :owns_community?, to: :user, prefix: true
   delegate :period_start_date, to: :invoice
   delegate :period_end_date, to: :invoice
   delegate :price_per_month_in_cents, to: :item
@@ -64,7 +60,11 @@ class InvoiceItem < ActiveRecord::Base
 ###
   # Returns the total price for this item (price each * quantity) in cents.
   def total_price_in_cents
-    self.price_per_month_in_cents * self.quantity
+    if self.is_prorated
+      (self.price_per_month_in_cents / 30) * self.number_of_days * self.quantity
+    else
+      self.price_per_month_in_cents * self.quantity
+    end
   end
 
   # Returns the total price for this item (price each * quantity) in dollars.
@@ -90,6 +90,11 @@ class InvoiceItem < ActiveRecord::Base
     self.item_type == "CommunityUserPackUpgrade"
   end
 
+  def number_of_days
+    distance_in_seconds = ((self.end_date - self.start_date).abs)
+    distance_in_seconds / 1.day
+  end
+
 ###
 # Protected Methods
 ###
@@ -104,7 +109,8 @@ protected
   # COMMENTED OUT
   ###
   def community_is_owned_by_user
-    self.errors.add(:base, "user does not own #{self.community.name}") unless self.user_owns_community?(self.community)
+#     self.errors.add(:base, "Broke!")
+#     return false
   end
 
   ###
@@ -150,29 +156,6 @@ protected
       end
     end
   end
-
-  ###
-  # _after_save_
-  #
-  #
-  ###
-  def add_prorated_items
-    today = Time.now
-    if self.is_recurring and self.invoice.present? and self.has_community_plan? and (self.item_type_changed? or self.item_id_changed?)
-      today = Time.now
-      unless (self.start_date <= today and end_date >= today)
-        com_id = self.community_id
-        type = self.item_type
-        invoice_items = InvoiceItem.where{(community_id == com_id) & (item_type == type) & (start_date <= today) & (end_date >= today)}.limit(1)
-        if invoice_items.empty?
-          puts "#### Creating prorated item ####"
-          ii = self.invoice.invoice_items.new(community: self.community, quantity: self.quantity, item: self.item)
-          ii.is_prorated = true
-        end
-      end
-    end
-  end
-
 end
 
 # == Schema Information
