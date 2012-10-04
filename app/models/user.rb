@@ -391,6 +391,10 @@ class User < ActiveRecord::Base
     User.find(self).destroy
   end
 
+  def owns_community?(community)
+    self.owned_communities.include?(community)
+  end
+
 ###
 # Protected Methods
 ###

@@ -50,6 +50,8 @@ class InvoiceItem < ActiveRecord::Base
 ###
 # Delegates
 ###
+  delegate :user, to: :invoice
+  delegate :owns_community?, to: :user, prefix: true
   delegate :period_start_date, to: :invoice
   delegate :period_end_date, to: :invoice
   delegate :price_per_month_in_cents, to: :item
@@ -93,8 +95,7 @@ protected
   # COMMENTED OUT
   ###
   def community_is_owned_by_user
-#     self.errors.add(:base, "Broke!")
-#     return false
+    self.errors.add(:base, "user does not own #{self.community.name}") unless self.user_owns_community?(self.community)
   end
 
   ###
