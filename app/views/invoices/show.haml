@@ -4,7 +4,7 @@
   %h1 Invoices
 
   #submenu
-
+    = link_to 'All Invoices', invoices_url, class: 'button'
   - if @invoice.invoice_items.size > 0
     %table
       %thead
@@ -16,7 +16,7 @@
       %tbody
         - @invoice.invoice_items.group_by(&:community).each do |community, invoice_items|
           %tr
-            %td.r{ colspan: 4 }=community.to_yaml
+            %td.l{ colspan: 4 }=link_to_unless @invoice.is_closed, community.name, edit_subscription_path(community)
           - invoice_items.each do |invoice_item|
             %tr
               %td
@@ -27,5 +27,8 @@
               %td= invoice_item.quantity
               %td= number_to_currency(invoice_item.total_price_in_dollars)
       %tfoot
+        %tr
+          %td.r{ colspan: 3 } Invoice Total
+          %td.r= number_to_currency(@invoice.total_price_in_dollars)
   - else
     %p You don't have any invoices.

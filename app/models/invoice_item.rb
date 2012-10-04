@@ -37,7 +37,8 @@ class InvoiceItem < ActiveRecord::Base
   validates :invoice, presence: true
   validates :community, presence: true
   validates :item, presence: true
-  validates :quantity, presence: true
+  validates :quantity, presence: true, numericality: { greater_than_or_equal_to: 1, only_integer: true}
+  validates :quantity, numericality: { less_than_or_equal_to: 1, only_integer: true}, if: Proc.new{|ii| ii.item_type == "CommunityPlan"}
   validates :start_date, presence: true
   validates :end_date, presence: true
   validate :community_is_owned_by_user
@@ -45,6 +46,7 @@ class InvoiceItem < ActiveRecord::Base
   validate :only_one_community_plan_item_per_period
   validates_datetime :start_date, on_or_after: lambda {|ii| ii.period_start_date }, if: Proc.new{|ii| ii.is_prorated }
   validates_datetime :end_date, is_at: lambda {|ii| ii.period_end_date }, if: Proc.new{|ii| ii.is_prorated }
+  validate :cant_be_edited_after_closed
 
 ###
 # Delegates
@@ -121,6 +123,12 @@ protected
   ###
   def is_recurring_and_is_prorated_not_both_true
     self.errors.add(:base, "Prorated items can't be recurring.") if self.is_recurring and self.is_prorated
+  end
+
+  def cant_be_edited_after_closed
+    if self.invoice.is_closed and self.invoice.is_closed_was
+      self.errors.add(:base, "A closed invoice's invoice items can't be edited.")
+    end
   end
 
   ###

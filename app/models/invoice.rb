@@ -44,6 +44,7 @@ class Invoice < ActiveRecord::Base
   validates_date :period_end_date, on_or_after: :period_start_date, on: :create
   accepts_nested_attributes_for :invoice_items, allow_destroy: true
   validate :no_reopening_closed_invoice
+  validate :cant_be_edited_after_closed
 
 ###
 # Callbacks
@@ -169,6 +170,12 @@ protected
   def no_reopening_closed_invoice
     if not is_closed and is_closed_was
       self.errors.add(:base, "A closed invoice can't be reopened.")
+    end
+  end
+
+  def cant_be_edited_after_closed
+    if is_closed and is_closed_was
+      self.errors.add(:base, "A closed invoice can't be edited.")
     end
   end
 
