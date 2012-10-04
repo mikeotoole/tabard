@@ -40,7 +40,7 @@ class CommunityUpgrade < ActiveRecord::Base
   validates :max_number_of_upgrades,
       presence: true,
       numericality: { only_integer: true, greater_than_or_equal_to: 0}
-  validate :no_changing_price
+  validate :no_changing_price, on: :update
 
 ###
 # Instance Methods

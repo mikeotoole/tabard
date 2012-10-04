@@ -23,7 +23,7 @@ class CommunityPlan < ActiveRecord::Base
   validates :title, presence: true
   validates :description, presence: true
   validates :price_per_month_in_cents, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0}
-  validate :no_changing_price
+  validate :no_changing_price, on: :update
 
 ###
 # Scopes
