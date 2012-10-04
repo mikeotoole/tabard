@@ -20,7 +20,7 @@
           - invoice_items.each do |invoice_item|
             %tr
               %td
-                %span= invoice_item.item_title
+                %span= invoice_item.title
                 %hr
                 %span= invoice_item.item_description
               %td= number_to_currency(invoice_item.price_per_month_in_cents/100.0)

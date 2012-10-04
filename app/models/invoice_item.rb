@@ -25,6 +25,7 @@ class InvoiceItem < ActiveRecord::Base
 # Callbacks
 ###
   before_validation :set_dates
+  before_save :add_prorated_items
 
 ###
 # Scopes
@@ -69,14 +70,22 @@ class InvoiceItem < ActiveRecord::Base
     self.total_price_in_cents / 100
   end
 
+  # Title for this invoice item. If the item is prorated that will be denoted.
+  def title
+    self.is_prorated ? "Prorated - #{self.item_title}" : self.item_title
+  end
+
   # Returns true if the item is the default plan.
   def has_default_plan?
     self.item == CommunityPlan.default_plan
   end
 
-  # Title for this invoice item. If the item is prorated that will be denoted.
-  def title
-    self.is_prorated ? "Prorated - #{self.item_title}" : self.item_title
+  def has_community_plan?
+    self.item_type == "CommunityPlan"
+  end
+
+  def has_community_upgrade?
+    self.item_type == "CommunityUserPackUpgrade"
   end
 
 ###
@@ -116,15 +125,21 @@ protected
     com_id = self.community_id
     start_d = self.start_date
     end_d = self.end_date
-    self.errors.add(:base, "a plan already exists in that date range.") if self.item_type == "CommunityPlan" and InvoiceItem.where{(community_id == com_id) & ((start_date > end_d) | (end_date < start_d))}.exists?
+    if self.item_type == "CommunityPlan" and InvoiceItem.where{(community_id == com_id) & ((start_date > end_d) | (end_date < start_d))}.exists?
+      self.errors.add(:base, "a plan already exists in that date range.")
+    end
   end
 
 ###
 # Callback Methods
 ###
-
+  ###
+  # _before_validation_
+  #
+  # This will set the item start and end dates based on the value of is_prorated.
+  ###
   def set_dates
-    if self.invoice.present?
+    if self.invoice.present? and not self.frozen?
       if self.is_prorated
         self.start_date = Time.now.beginning_of_day
         self.end_date = self.period_end_date
@@ -134,6 +149,29 @@ protected
       end
     end
   end
+
+  ###
+  # _after_save_
+  #
+  #
+  ###
+  def add_prorated_items
+    today = Time.now
+    if self.is_recurring and self.invoice.present? and self.has_community_plan? and (self.item_type_changed? or self.item_id_changed?)
+      today = Time.now
+      unless (self.start_date <= today and end_date >= today)
+        com_id = self.community_id
+        type = self.item_type
+        invoice_items = InvoiceItem.where{(community_id == com_id) & (item_type == type) & (start_date <= today) & (end_date >= today)}.limit(1)
+        if invoice_items.empty?
+          puts "#### Creating prorated item ####"
+          ii = self.invoice.invoice_items.new(community: self.community, quantity: self.quantity, item: self.item)
+          ii.is_prorated = true
+        end
+      end
+    end
+  end
+
 end
 
 # == Schema Information
