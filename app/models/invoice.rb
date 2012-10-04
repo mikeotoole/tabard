@@ -50,8 +50,8 @@ class Invoice < ActiveRecord::Base
 # Callbacks
 ###
   after_save :create_next_invoice_when_closed
-  before_save :scrub_out_default_plans
   after_save :add_prorated_items
+  before_save :make_free_non_recurring
 
 ###
 # Instance Methods
@@ -219,17 +219,6 @@ protected
   ###
   # _after_save_
   #
-  # If this invoice has a default plan, it quietly removed.
-  ###
-  def scrub_out_default_plans
-    self.invoice_items.each do |invoice_item|
-      invoice_item.delete if invoice_item.has_default_plan?
-    end
-  end
-
-  ###
-  # _after_save_
-  #
   #
   ###
   def add_prorated_items
@@ -249,6 +238,12 @@ protected
           end
         end
       end
+    end
+  end
+
+  def make_free_non_recurring
+    self.invoice_items.each do |invoice_item|
+      invoice_item.is_recurring = false if invoice_item.has_default_plan?
     end
   end
 end
