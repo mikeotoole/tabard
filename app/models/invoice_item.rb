@@ -63,6 +63,11 @@ class InvoiceItem < ActiveRecord::Base
     self.total_price_in_cents / 100
   end
 
+  # Returns true if the item is the default plan.
+  def has_default_plan?
+    self.item == CommunityPlan.default_plan
+  end
+
 ###
 # Protected Methods
 ###
