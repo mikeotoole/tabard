@@ -126,7 +126,11 @@ unless @dont_run
                                                             "quantity"=>"1",
                                                             "item_id"=>"#{community_plan.id}" }}}
   invoice = billy.current_invoice
-  throw "ERROR creating invoice" unless invoice.update_attributes_with_payment(invoice_hash, token.id)
+  unless invoice.update_attributes_with_payment(invoice_hash, token.id)
+    puts "Invoice Errors:"
+    puts invoice.errors.to_yaml
+    throw "ERROR creating invoice!"
+  end
 
   more_headshot = create_community('Billy', 'Even More Headshots', 'Ka Boom Baby!', %w(Empire Horde Minecraft))
 
