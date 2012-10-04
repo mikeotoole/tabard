@@ -115,7 +115,7 @@ class Invoice < ActiveRecord::Base
   ###
   def recurring_plan_invoice_item_for_community(community)
     com_id = community.id
-    invoice_item = self.invoice_items.recurring.where{(item_type == "CommunityPlan") & (community_id == com_id)}.limit(1).first
+    invoice_item = self.invoice_items.not_prorated.where{(item_type == "CommunityPlan") & (community_id == com_id)}.limit(1).first
     if invoice_item.blank?
       invoice_item = self.invoice_items.new({community: community, item: CommunityPlan.default_plan, quantity: 1}, without_protection: true)
     end
