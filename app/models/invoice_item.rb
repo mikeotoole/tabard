@@ -37,7 +37,8 @@ class InvoiceItem < ActiveRecord::Base
   validates :invoice, presence: true
   validates :community, presence: true
   validates :item, presence: true
-  validates :quantity, presence: true
+  validates :quantity, presence: true, numericality: { greater_than_or_equal_to: 1, only_integer: true}
+  validates :quantity, numericality: { less_than_or_equal_to: 1, only_integer: true}, if: Proc.new{|ii| ii.item_type == "CommunityPlan"}
   validates :start_date, presence: true
   validates :end_date, presence: true
   validates :is_recurring, presence: true
