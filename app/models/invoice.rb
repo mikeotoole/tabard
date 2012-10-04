@@ -31,6 +31,7 @@ class Invoice < ActiveRecord::Base
 # Scopes
 ###
   scope :closed, where{(is_closed == true)}.order(:period_end_date).reverse_order
+  scope :historical, order(:period_end_date).order(:period_start_date).reverse_order
 
 ###
 # Validators
@@ -38,18 +39,19 @@ class Invoice < ActiveRecord::Base
   validates :user, presence: true
   validates :period_start_date, presence: true
   validates :period_end_date, presence: true
-#   validate :invoice_items_are_valid
+  validate :invoice_items_are_valid
   validates_date :period_start_date, on_or_after: :today, on: :create
   validates_date :period_end_date, on_or_after: :period_start_date, on: :create
   accepts_nested_attributes_for :invoice_items, allow_destroy: true
   validate :no_reopening_closed_invoice
-#   validate :only_one_community_plan_item_per_period
+  validate :only_one_community_plan_item_per_period
 
 
 ###
 # Callbacks
 ###
   after_save :create_next_invoice_when_closed
+  before_validation :scrub_out_default_plans
 
 ###
 # Instance Methods
@@ -174,7 +176,7 @@ protected
   ###
   # _Validator_
   #
-  # COMMENTED OUT
+  # Validates child items
   ###
   def invoice_items_are_valid
     no_failures = true
@@ -182,6 +184,19 @@ protected
       no_failures = false unless invoice_item.valid?
     end
     self.errors.add(:base, "an invoice item has an error") unless no_failures
+  end
+
+  ###
+  # _Validator_
+  #
+  # Validates child items
+  ###
+  def only_one_community_plan_item_per_period
+    self.invoice_items.group_by(&:community).each do |community, invoice_items|
+      invoice_items.group_by(&:item_type).each do |item_type, invoice_items|
+        self.errors.add(:base, "#{community.name} has more than one plan") if item_type == "CommunityPlan" and invoice_items.count > 1
+      end
+    end
   end
 
 ###
@@ -205,6 +220,17 @@ protected
         end
         invoice.save!
       end
+    end
+  end
+
+  ###
+  # _after_save_
+  #
+  # If this invoice has a default plan, it quietly removed.
+  ###
+  def scrub_out_default_plans
+    self.invoice_items.each do |invoice_item|
+      invoice_item.destroy if invoice_item.has_default_plan?
     end
   end
 end

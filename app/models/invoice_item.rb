@@ -67,6 +67,11 @@ class InvoiceItem < ActiveRecord::Base
     self.total_price_in_cents / 100
   end
 
+  # Returns true if the item is the default plan.
+  def has_default_plan?
+    self.item == CommunityPlan.default_plan
+  end
+
   # Title for this invoice item. If the item is prorated that will be denoted.
   def title
     self.is_prorated ? "Pro Rated - #{self.item_title}" : self.item_title

@@ -18,8 +18,8 @@
       %tbody
         - @invoices.each do |invoice|
           %tr
-            %td= invoice.period_start_date
-            %td= invoice.period_end_date
+            %td= invoice.period_start_date.strftime("%m/%d/%Y")
+            %td= invoice.period_end_date.strftime("%m/%d/%Y")
             %td= invoice.paid_date
             %td.r= number_to_currency(invoice.total_price_in_dollars)
             %td= invoice.is_closed
