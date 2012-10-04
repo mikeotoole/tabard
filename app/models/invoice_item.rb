@@ -24,7 +24,7 @@ class InvoiceItem < ActiveRecord::Base
 ###
 # Callbacks
 ###
-  before_save :set_dates
+  before_validation :set_dates
 
 ###
 # Scopes
@@ -38,8 +38,12 @@ class InvoiceItem < ActiveRecord::Base
   validates :community, presence: true
   validates :item, presence: true
   validates :quantity, presence: true
+  validates :start_date, presence: true
+  validates :end_date, presence: true
+#   validates :is_recurring, presence: true
+#   validates :is_prorated, presence: true
   validate :community_is_owned_by_user
-
+  validate :is_recurring_and_is_prorated_not_both_true
 
 ###
 # Delegates
@@ -63,6 +67,11 @@ class InvoiceItem < ActiveRecord::Base
     self.total_price_in_cents / 100
   end
 
+  # Title for this invoice item. If the item is prorated that will be denoted.
+  def title
+    self.is_prorated ? "Pro Rated - #{self.item_title}" : self.item_title
+  end
+
 ###
 # Protected Methods
 ###
@@ -81,13 +90,25 @@ protected
 #     return false
   end
 
+  ###
+  # _Validator_
+  #
+  # This will inforce that an item can't be both recurring and prorated.
+  # An item can be both not recurring and not prorated.
+  ###
+  def is_recurring_and_is_prorated_not_both_true
+    self.errors.add(:base, "Prorated items can't be recurring.") if self.is_recurring and self.is_prorated
+  end
+
 ###
 # Callback Methods
 ###
 
   def set_dates
-    self.start_date = self.invoice.period_end_date
-    self.end_date = self.start_date + 30.days
+    if self.invoice.present?
+      self.start_date = self.invoice.period_end_date
+      self.end_date = self.start_date + 30.days
+    end
   end
 end
 
