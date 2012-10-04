@@ -29,7 +29,7 @@ class InvoiceItem < ActiveRecord::Base
 ###
 # Scopes
 ###
-  scope :recurring, where{(is_recurring == true) & (is_prorated == false)}
+  scope :recurring, where(is_recurring: true)
 
 ###
 # Validators
@@ -40,10 +40,11 @@ class InvoiceItem < ActiveRecord::Base
   validates :quantity, presence: true
   validates :start_date, presence: true
   validates :end_date, presence: true
-#   validates :is_recurring, presence: true
-#   validates :is_prorated, presence: true
+  validates :is_recurring, presence: true
   validate :community_is_owned_by_user
   validate :is_recurring_and_is_prorated_not_both_true
+  validates_datetime :start_date, on_or_after: lambda {|ii| ii.period_start_date }, if: Proc.new{|ii| ii.is_prorated }
+  validates_datetime :end_date, is_at: lambda {|ii| ii.period_end_date }, if: Proc.new{|ii| ii.is_prorated }
 
 ###
 # Delegates
@@ -74,7 +75,7 @@ class InvoiceItem < ActiveRecord::Base
 
   # Title for this invoice item. If the item is prorated that will be denoted.
   def title
-    self.is_prorated ? "Pro Rated - #{self.item_title}" : self.item_title
+    self.is_prorated ? "Prorated - #{self.item_title}" : self.item_title
   end
 
 ###
@@ -111,8 +112,13 @@ protected
 
   def set_dates
     if self.invoice.present?
-      self.start_date = self.invoice.period_end_date
-      self.end_date = self.start_date + 30.days
+      if self.is_prorated
+        self.start_date = Time.now.beginning_of_day
+        self.end_date = self.period_end_date
+      else
+        self.start_date = self.period_end_date
+        self.end_date = self.start_date + 30.days
+      end
     end
   end
 end

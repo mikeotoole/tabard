@@ -230,7 +230,7 @@ protected
   ###
   def scrub_out_default_plans
     self.invoice_items.each do |invoice_item|
-      invoice_item.destroy if invoice_item.has_default_plan?
+      invoice_item.delete if invoice_item.has_default_plan?
     end
   end
 end
