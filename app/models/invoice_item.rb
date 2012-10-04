@@ -24,11 +24,7 @@ class InvoiceItem < ActiveRecord::Base
 ###
 # Callbacks
 ###
-  before_validation :set_is_recurring
-  before_save :copy_price
   before_save :set_dates
-
-#   before_validation :set_price_each
 
 ###
 # Scopes
@@ -41,12 +37,7 @@ class InvoiceItem < ActiveRecord::Base
   validates :invoice, presence: true
   validates :community, presence: true
   validates :item, presence: true
-  validates :price_each, presence: true
   validates :quantity, presence: true
-#   validates :discription, presence: true
-#   validates_date :add_date, between: [:period_start_date, :period_end_date],
-#                            after_message: "Must be after invoice start date",
-#                            before_message: "Must be before invoice end date"
   validate :community_is_owned_by_user
 
 
@@ -59,11 +50,17 @@ class InvoiceItem < ActiveRecord::Base
   delegate :title, to: :item, prefix: true
   delegate :description, to: :item, prefix: true
 
+###
+# Instance Methods
+###
+  # Returns the total price for this item (price each * quantity) in cents.
+  def total_price_in_cents
+    self.price_per_month_in_cents * self.quantity
+  end
 
-
-
+  # Returns the total price for this item (price each * quantity) in dollars.
   def total_price_in_dollars
-    self.price_each * self.quantity / 100
+    self.total_price_in_cents / 100
   end
 
 ###
@@ -72,41 +69,25 @@ class InvoiceItem < ActiveRecord::Base
 protected
 
 ###
+# Validator Mathods
+###
+  ###
+  # _Validator_
+  #
+  # COMMENTED OUT
+  ###
+  def community_is_owned_by_user
+#     self.errors.add(:base, "Broke!")
+#     return false
+  end
+
+###
 # Callback Methods
 ###
-
-  def copy_price
-    self.price_each = item.price_per_month_in_cents unless item.blank?
-  end
 
   def set_dates
     self.start_date = self.invoice.period_end_date
     self.end_date = self.start_date + 30.days
-  end
-
-  ###
-  # _before_validation_
-  #
-  #
-  ###
-  def set_is_recurring
-    self.is_recurring = true
-    self.is_prorated = false
-  end
-#
-#   ###
-#   # _before_validation_
-#   #
-#   #
-#   ###
-#   def set_price_each
-#     self.quantity = 1
-#     self.price_each = self.item.price_per_month_in_cents
-#   end
-
-  def community_is_owned_by_user
-    self.errors.add(:base, "Broke!")
-    return false
   end
 end
 
@@ -115,12 +96,9 @@ end
 # Table name: invoice_items
 #
 #  id           :integer          not null, primary key
-#  price_each   :integer
 #  quantity     :integer
-#  add_date     :datetime
 #  start_date   :datetime
 #  end_date     :datetime
-#  discription  :string(255)
 #  item_type    :string(255)
 #  item_id      :integer
 #  community_id :integer

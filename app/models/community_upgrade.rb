@@ -40,10 +40,33 @@ class CommunityUpgrade < ActiveRecord::Base
   validates :max_number_of_upgrades,
       presence: true,
       numericality: { only_integer: true, greater_than_or_equal_to: 0}
+  validate :no_changing_price
 
+###
+# Instance Methods
+###
   # Cost per month for upgrade in dollars.
   def price_per_month_in_dollars
     self.price_per_month_in_cents/100.0
+  end
+
+###
+# Protected Methods
+###
+protected
+
+###
+# Validator Mathods
+###
+  ###
+  # _Validator_
+  #
+  # Validates plan upgrade can not change price. Invoice items rely on this price.
+  ###
+  def no_changing_price
+    if self.price_per_month_in_cents_changed?
+      self.errors.add(:base, "The plan upgrade price can not be changed.")
+    end
   end
 end
 

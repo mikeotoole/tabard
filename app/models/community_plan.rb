@@ -23,6 +23,7 @@ class CommunityPlan < ActiveRecord::Base
   validates :title, presence: true
   validates :description, presence: true
   validates :price_per_month_in_cents, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0}
+  validate :no_changing_price
 
 ###
 # Scopes
@@ -60,6 +61,25 @@ class CommunityPlan < ActiveRecord::Base
   # Returns true if this is a free plan, false otherwise.
   def is_free_plan?
     return self.title == FREE_PLAN_TITLE
+  end
+
+###
+# Protected Methods
+###
+protected
+
+###
+# Validator Mathods
+###
+  ###
+  # _Validator_
+  #
+  # Validates plan can not change price. Invoice items rely on this price.
+  ###
+  def no_changing_price
+    if self.price_per_month_in_cents_changed?
+      self.errors.add(:base, "The plan price can not be changed.")
+    end
   end
 end
 

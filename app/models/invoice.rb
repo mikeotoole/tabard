@@ -51,8 +51,12 @@ class Invoice < ActiveRecord::Base
 ###
   after_save :create_next_invoice_when_closed
 
+###
+# Instance Methods
+###
+
   def total_price_in_cents
-    invoice_items.empty? ? 0 : invoice_items.map{|ii| ii.price_per_month_in_cents * ii.quantity}.inject(0,:+)
+    invoice_items.empty? ? 0 : invoice_items.map{|ii| ii.total_price_in_cents}.inject(0,:+)
   end
 
   def total_price_in_dollars
@@ -70,7 +74,7 @@ class Invoice < ActiveRecord::Base
     else
       invoice_items = self.invoice_items.recurring.where(community_id: community.id)
     end
-    price = invoice_items.map{|u| u.price_each * u.quantity}.inject(0,:+) unless invoice_items.empty?
+    price = invoice_items.map{|ii| ii.total_price_in_cents}.inject(0,:+) unless invoice_items.empty?
     return price
   end
 
@@ -90,7 +94,7 @@ class Invoice < ActiveRecord::Base
     price = 0
     recurring_invoice_items = self.invoice_items.select(&:is_recurring)
     recurring_invoice_items.each do |invoice_item|
-      price = price + (invoice_item.price_per_month_in_cents * invoice_item.quantity)
+      price = price + (invoice_item.total_price_in_cents)
     end
     return price
   end
@@ -170,7 +174,7 @@ protected
   ###
   # _Validator_
   #
-  #
+  # COMMENTED OUT
   ###
   def invoice_items_are_valid
     no_failures = true

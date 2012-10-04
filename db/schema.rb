@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121002181729) do
+ActiveRecord::Schema.define(:version => 20121003230119) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -421,12 +421,9 @@ ActiveRecord::Schema.define(:version => 20121002181729) do
   add_index "invites", ["user_profile_id"], :name => "index_invites_on_user_profile_id"
 
   create_table "invoice_items", :force => true do |t|
-    t.integer  "price_each"
     t.integer  "quantity"
-    t.datetime "add_date"
     t.datetime "start_date"
     t.datetime "end_date"
-    t.string   "discription"
     t.string   "item_type"
     t.integer  "item_id"
     t.integer  "community_id"

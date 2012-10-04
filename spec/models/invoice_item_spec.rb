@@ -3,12 +3,9 @@
 # Table name: invoice_items
 #
 #  id           :integer          not null, primary key
-#  price_each   :integer
 #  quantity     :integer
-#  add_date     :datetime
 #  start_date   :datetime
 #  end_date     :datetime
-#  discription  :string(255)
 #  item_type    :string(255)
 #  item_id      :integer
 #  community_id :integer
