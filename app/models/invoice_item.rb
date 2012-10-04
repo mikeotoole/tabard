@@ -39,6 +39,7 @@ class InvoiceItem < ActiveRecord::Base
   validates :item, presence: true
   validates :quantity, presence: true
   validate :community_is_owned_by_user
+  validate :only_one_community_plan_item_per_period
 
 
 ###
@@ -84,6 +85,18 @@ protected
   def community_is_owned_by_user
 #     self.errors.add(:base, "Broke!")
 #     return false
+  end
+
+  ###
+  # _Validator_
+  #
+  # Validates that plan dont overlap.
+  ###
+  def only_one_community_plan_item_per_period
+    com_id = self.community_id
+    start_d = self.start_date
+    end_d = self.end_date
+    self.errors.add(:base, "a plan already exists in that date range.") if self.item_type == "CommunityPlan" and InvoiceItem.where{(community_id == com_id) & (start_date > end_d) & (end_date < start_d)}.exists?
   end
 
 ###
