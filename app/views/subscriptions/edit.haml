@@ -11,7 +11,12 @@
 #body
   %h1= "Subscription for \"#{shorten_words @community.name}\""
 
-  = simple_form_for @current_invoice, url: subscription_url(@community, subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), method: :put, html: {novalidate: true, id: "form_with_subscription"} do |f|
+  - if @invoice.errors.any?
+    = @invoice.errors.messages.to_yaml
+    - @invoice.invoice_items.each do |ii|
+      = ii.errors.messages.to_yaml if ii.errors.any?
+
+  = simple_form_for @invoice, url: subscription_url(@community, subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), method: :put, html: {novalidate: true, id: "form_with_subscription"} do |f|
     %fieldset
       = hidden_field_tag :stripe_card_token
       %ol
