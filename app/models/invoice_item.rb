@@ -142,7 +142,7 @@ protected
     start_d = self.start_date
     end_d = self.end_date
     some_id = self.id
-    if self.item_type == "CommunityPlan" and InvoiceItem.where{(community_id == com_id) & ((start_date > end_d) | (end_date < start_d) | ((start_date == start_d) & (end_date == end_d) & (id != some_id)))}.exists?
+    if self.item_type == "CommunityPlan" and InvoiceItem.where{(item_type == "CommunityPlan") & (community_id == com_id) & ((start_date > end_d) | (end_date < start_d) | ((start_date == start_d) & (end_date == end_d) & (id != some_id)))}.exists?
       self.errors.add(:base, "a plan already exists in that date range.")
     end
   end
