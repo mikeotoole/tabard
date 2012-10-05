@@ -16,7 +16,7 @@
           %th quantity
           %th Total
       %tbody
-        - @invoice.invoice_items.group_by(&:community).each do |community, invoice_items|
+        - @invoice.invoice_items.order(:start_date).group_by(&:community).each do |community, invoice_items|
           %tr
             %td.l{ colspan: 6 }=link_to_unless @invoice.is_closed, community.name, edit_subscription_path(community)
           - invoice_items.each do |invoice_item|
