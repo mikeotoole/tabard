@@ -222,21 +222,19 @@ protected
   #
   ###
   def add_prorated_items
-    self.invoice_items.each do |ii|
-      if ii.is_recurring
-        today = Time.now
-        unless (ii.start_date <= today and ii.end_date >= today)
-          com_id = ii.community_id
-          type = ii.item_type
-          invoice_items = InvoiceItem.where{(community_id == com_id) & (item_type == type) & (start_date <= today) & (end_date >= today)}
-          if invoice_items.empty?
-            new_ii = self.invoice_items.new(community: ii.community, quantity: ii.quantity, item: ii.item)
-            new_ii.is_recurring = false
-            new_ii.is_prorated = true
-            new_ii.save!
-          elsif ii.has_community_upgrade?
-            # TODO: Need to add prorated item for upgrade. This needs to look at the quantites of this ii and the existing ones.
-          end
+    self.invoice_items.select(&:is_recurring).each do |ii|
+      today = Time.now
+      unless (ii.start_date <= today and ii.end_date >= today)
+        com_id = ii.community_id
+        type = ii.item_type
+        invoice_items = InvoiceItem.where{(community_id == com_id) & (item_type == type) & (start_date <= today) & (end_date >= today)}
+        if invoice_items.empty?
+          new_ii = self.invoice_items.new(community: ii.community, quantity: ii.quantity, item: ii.item)
+          new_ii.is_recurring = false
+          new_ii.is_prorated = true
+          new_ii.save!
+        elsif ii.has_community_upgrade?
+          # TODO: Need to add prorated item for upgrade. This needs to look at the quantites of this ii and the existing ones.
         end
       end
     end

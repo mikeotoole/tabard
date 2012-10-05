@@ -158,7 +158,7 @@ protected
   def set_dates
     if self.invoice.present? and not self.frozen?
       if self.is_prorated
-        self.start_date = Time.now
+        self.start_date = Time.now.beginning_of_day
         self.end_date = self.period_end_date
       else
         self.start_date = self.period_end_date
