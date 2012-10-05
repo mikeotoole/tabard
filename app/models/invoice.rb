@@ -19,6 +19,7 @@ class Invoice < ActiveRecord::Base
 ###
   belongs_to :user
   has_many :invoice_items, dependent: :destroy, inverse_of: :invoice
+  accepts_nested_attributes_for :invoice_items, allow_destroy: true
 
 ###
 # Delegates
@@ -42,7 +43,6 @@ class Invoice < ActiveRecord::Base
   validate :invoice_items_are_valid
   validates_date :period_start_date, on_or_after: :today, on: :create
   validates_date :period_end_date, on_or_after: :period_start_date, on: :create
-  accepts_nested_attributes_for :invoice_items, allow_destroy: true
   validate :no_reopening_closed_invoice
   validate :cant_be_edited_after_closed
 
@@ -234,7 +234,15 @@ protected
           new_ii.is_prorated = true
           new_ii.save!
         elsif ii.has_community_upgrade?
-          # TODO: Need to add prorated item for upgrade. This needs to look at the quantites of this ii and the existing ones.
+          # Add prorated item for upgrade. This looks at the quantites of this ii and the existing ones.
+          total_quantity = invoice_items.map(&:quantity).inject(0,:+)
+          number_added = ii.quantity - total_quantity
+          if number_added > 0
+            new_ii = self.invoice_items.new(community: ii.community, quantity: number_added, item: ii.item)
+            new_ii.is_recurring = false
+            new_ii.is_prorated = true
+            new_ii.save!
+          end
         end
       end
     end

@@ -90,7 +90,7 @@ class InvoiceItem < ActiveRecord::Base
   end
 
   def has_community_upgrade?
-    self.item_type == "CommunityUserPackUpgrade"
+    (self.item_type == "CommunityUserPackUpgrade") or (self.item_type == "CommunityUpgrade")
   end
 
   def number_of_days
