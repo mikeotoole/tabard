@@ -29,16 +29,15 @@
           %hr
 
       = render "communities/population", community: @community
-      - if false
-        #upgrades.section
-          %h1 Upgrades
-          %ol
-            =f.simple_fields_for :invoice_items, @all_upgrades_invoice_items do |sf|
-              =sf.input :community_id, as: :hidden
-              =sf.input :item_type, as: :hidden
-              =sf.input :item_id, as: :hidden
-              =sf.input :quantity
-            %hr
+      #upgrades.section
+        %h1 Upgrades
+        %ol
+          =f.simple_fields_for :invoice_items, @all_upgrades_invoice_items do |sf|
+            =sf.input :community_id, as: :hidden
+            =sf.input :item_type, as: :hidden
+            =sf.input :item_id, as: :hidden
+            =sf.input :quantity
+          %hr
 
       #cc_input.section{ class: card_is_present ? '' : 'show_fields' }
         %h1 Payment
