@@ -37,6 +37,7 @@
             =sf.input :item_type, as: :hidden
             =sf.input :item_id, as: :hidden
             =sf.input :quantity
+            =sf.input :_destroy, as: :boolean, default: true
           %hr
 
       #cc_input.section{ class: card_is_present ? '' : 'show_fields' }
