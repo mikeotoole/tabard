@@ -10,25 +10,29 @@
       %thead
         %tr
           %th item
+          %th start_date
+          %th end_date
           %th price_each
           %th quantity
           %th Total
       %tbody
         - @invoice.invoice_items.group_by(&:community).each do |community, invoice_items|
           %tr
-            %td.l{ colspan: 4 }=link_to_unless @invoice.is_closed, community.name, edit_subscription_path(community)
+            %td.l{ colspan: 6 }=link_to_unless @invoice.is_closed, community.name, edit_subscription_path(community)
           - invoice_items.each do |invoice_item|
             %tr
               %td
                 %span= invoice_item.title
                 %hr
                 %span= invoice_item.item_description
+              %td= invoice_item.start_date.strftime("%m/%d/%Y")
+              %td= invoice_item.end_date.strftime("%m/%d/%Y")
               %td= number_to_currency(invoice_item.price_per_month_in_cents/100.0)
               %td= invoice_item.quantity
               %td= number_to_currency(invoice_item.total_price_in_dollars)
       %tfoot
         %tr
-          %td.r{ colspan: 3 } Invoice Total
+          %td.r{ colspan: 5 } Invoice Total
           %td.r= number_to_currency(@invoice.total_price_in_dollars)
   - else
     %p You don't have any invoices.
