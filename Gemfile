@@ -42,9 +42,6 @@ ruby '1.9.3'
 # Memory Usage
   gem 'oink'#                                                                               MIT - https://github.com/noahd1/oink
 
-# Metrics
-  gem "restful_metrics"#                                                                    MIT - https://github.com/restful-labs/restful_metrics-ruby
-
 # Filtering
   gem 'profanalyzer'#                                                                       MIT - http://profanalyzer.rubyforge.org
 
@@ -82,6 +79,7 @@ ruby '1.9.3'
     gem 'thin'#                                                                             Ruby - https://github.com/macournoyer/thin/
     gem 'pg'#                                                                               Ruby - https://bitbucket.org/ged/ruby-pg/wiki/Home
     gem 'newrelic_rpm'#                                                                     MIT - https://github.com/newrelic/rpm
+    gem 'restful_metrics'#                                                                  MIT - https://github.com/restful-labs/restful_metrics-rub
   end
 
 # Development Specific Gems
