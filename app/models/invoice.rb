@@ -161,6 +161,45 @@ class Invoice < ActiveRecord::Base
     end
   end
 
+  ###
+  # Used to update a community plan and bill the community admin using Stripe.
+  # [Args]
+  #   * +stripe_card_token+ A Stripe card token. This is not required if the user has a Stripe customer id.
+  # [Returns] True if the Stripe subscription was updated, false otherwise
+  ###
+  def charge_customer
+#     if self.stripe_customer_token.present?
+#       c = Stripe::Customer.retrieve(self.stripe_customer_token)
+#
+#       # TODO: Look if customer has a current plan.
+#       # If no new_payment = false
+#
+#       # If yes
+#       new_payment = false
+#       is_prorated = current_total_price < new_total_price
+#       if stripe_card_token.present?
+#         # Update credit card info and subscription
+#         c.update_subscription(plan: plan.strip_id, prorate: is_prorated, card: stripe_card_token)
+#       else
+#         # Update subscription
+#         c.update_subscription(plan: plan.strip_id, prorate: is_prorated)
+#       end
+#     elsif stripe_card_token.present?
+#       # Create new Stripe customer for community admin and subscribe to Stripe plan.
+#       customer = Stripe::Customer.create(description: "User ID: #{self.id}",
+#                                                email: self.email,
+#                                                 plan: plan.strip_id,
+#                                                 card: stripe_card_token)
+#       self.stripe_customer_token = customer.id
+#       new_payment = true
+#       self.save!
+#     else
+#       #TODO: ERROR
+#     end
+#
+#     return true
+  end
+
 ###
 # Protected Methods
 ###
