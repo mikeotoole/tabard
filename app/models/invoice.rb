@@ -143,22 +143,22 @@ class Invoice < ActiveRecord::Base
   # [Returns] True if the Stripe subscription was updated and the invoice was updated, false otherwise
   ###
   def update_attributes_with_payment(invoice_attributes, stripe_card_token)
-    if stripe_card_token.blank? and self.user_stripe_customer_token.blank?
+    success = false
+    self.attributes = invoice_attributes
+    if self.user_stripe_customer_token.blank? and stripe_card_token.blank?
+      #ERROR: Need payment info.
       self.errors.add :base, "Payment information is required"
-      return false
     else
-      self.attributes = invoice_attributes
       if self.valid?
-        if self.user.update_stripe(stripe_card_token, self)
-          return self.save!
+        success = stripe_card_token.present? ? self.user.update_stripe(stripe_card_token) : true
+        if success
+          success = self.save
         else
           self.errors.add :base, "There was a problem with your credit card"
-          return false
         end
-      else
-        return false
       end
     end
+    return success
   end
 
   ###
@@ -168,36 +168,25 @@ class Invoice < ActiveRecord::Base
   # [Returns] True if the Stripe subscription was updated, false otherwise
   ###
   def charge_customer
-#     if self.stripe_customer_token.present?
-#       c = Stripe::Customer.retrieve(self.stripe_customer_token)
-#
-#       # TODO: Look if customer has a current plan.
-#       # If no new_payment = false
-#
-#       # If yes
-#       new_payment = false
-#       is_prorated = current_total_price < new_total_price
-#       if stripe_card_token.present?
-#         # Update credit card info and subscription
-#         c.update_subscription(plan: plan.strip_id, prorate: is_prorated, card: stripe_card_token)
-#       else
-#         # Update subscription
-#         c.update_subscription(plan: plan.strip_id, prorate: is_prorated)
-#       end
-#     elsif stripe_card_token.present?
-#       # Create new Stripe customer for community admin and subscribe to Stripe plan.
-#       customer = Stripe::Customer.create(description: "User ID: #{self.id}",
-#                                                email: self.email,
-#                                                 plan: plan.strip_id,
-#                                                 card: stripe_card_token)
-#       self.stripe_customer_token = customer.id
-#       new_payment = true
-#       self.save!
-#     else
-#       #TODO: ERROR
-#     end
-#
-#     return true
+    success = false
+    if self.user_stripe_customer_token.present?
+      if self.total_price_in_cents > 100
+        Stripe::Charge.create(
+          amount: self.total_price_in_cents,
+          currency: "usd",
+          customer: self.stripe_customer_token
+          description: "Charge for invoice id:#{self.id}"
+        )
+        success = true
+      else
+        #TODO: Invice cost is less then $1.00. Just mark as paid. Log that this happend for later review.
+        success = true
+      end
+    else
+      #TODO: ERROR Invoice owner has no payment information.
+      success = false
+    end
+    return success
   end
 
 ###
