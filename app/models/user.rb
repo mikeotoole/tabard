@@ -230,7 +230,8 @@ class User < ActiveRecord::Base
     invoice = nil
     if invoices.any?
       invoices.each do |invoice|
-        invoice.update_attributes({is_closed: true}, without_protection: false) if invoice.period_end_date < today
+        invoice.update_attributes({is_closed: true}, without_protection: true) if invoice.period_end_date < today
+        puts invoice.errors.to_yaml
       end
       invoice = self.invoices.where{(period_start_date <= today) & (period_end_date >= today)}.limit(1).first
     end
