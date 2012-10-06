@@ -54,6 +54,13 @@ class Invoice < ActiveRecord::Base
   before_save :make_free_non_recurring
 
 ###
+# Class Methods
+###
+  def bill_customers
+    #invoices_to_bill = Invoice.where{(is_closed == false) & ()}
+  end
+
+###
 # Instance Methods
 ###
 
@@ -272,5 +279,6 @@ end
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #  is_closed            :boolean          default(FALSE)
+#  processing_payment   :boolean          default(FALSE)
 #
 

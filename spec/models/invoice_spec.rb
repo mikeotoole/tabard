@@ -15,6 +15,7 @@
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #  is_closed            :boolean          default(FALSE)
+#  processing_payment   :boolean          default(FALSE)
 #
 
 require 'spec_helper'

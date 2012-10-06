@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121003230119) do
+ActiveRecord::Schema.define(:version => 20121006171544) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -448,6 +448,7 @@ ActiveRecord::Schema.define(:version => 20121003230119) do
     t.datetime "created_at",                              :null => false
     t.datetime "updated_at",                              :null => false
     t.boolean  "is_closed",            :default => false
+    t.boolean  "processing_payment",   :default => false
   end
 
   create_table "message_associations", :force => true do |t|
