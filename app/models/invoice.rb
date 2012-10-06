@@ -174,7 +174,7 @@ class Invoice < ActiveRecord::Base
         Stripe::Charge.create(
           amount: self.total_price_in_cents,
           currency: "usd",
-          customer: self.stripe_customer_token
+          customer: self.stripe_customer_token,
           description: "Charge for invoice id:#{self.id}"
         )
         success = true
