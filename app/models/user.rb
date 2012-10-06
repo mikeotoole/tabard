@@ -191,11 +191,16 @@ class User < ActiveRecord::Base
 
   def current_invoice
     today = Time.now
-    invoice = self.invoices.where{(period_start_date <= today) & (period_end_date >= today)}.limit(1).first
-    # If no invoice, create a new one.
-    if invoice.blank?
-      invoice = self.invoices.new({period_start_date: Time.now.beginning_of_day, period_end_date: Time.now.beginning_of_day + 30.days}, without_protection: true)
+    invoices = self.invoices.where{(is_closed == false)}
+    invoice = nil
+    if invoices.any?
+      invoices.each do |invoice|
+        invoice.update_attributes({is_closed: true}, without_protection: true) if invoice.period_end_date < today
+        puts invoice.errors.to_yaml
+      end
+      invoice = self.invoices.where{(period_start_date <= today) & (period_end_date >= today)}.limit(1).first
     end
+    invoice = self.invoices.new({period_start_date: Time.now.beginning_of_day, period_end_date: Time.now.beginning_of_day + 30.days}, without_protection: true) if invoice.blank?
     return invoice
   end
 

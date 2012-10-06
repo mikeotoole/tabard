@@ -56,8 +56,12 @@ class Invoice < ActiveRecord::Base
 ###
 # Class Methods
 ###
-  def bill_customers
-    #invoices_to_bill = Invoice.where{(is_closed == false) & ()}
+  def self.bill_customers
+    invoices_to_bill = Invoice.where{(period_end_date <= Time.now.end_of_day) & (processing_payment == false)}
+    invocies_to_bill.each do |invoice|
+      invoice.update_attributes({is_closed: true}, without_protection: true)
+      invoice.charge_customer
+    end
   end
 
 ###
