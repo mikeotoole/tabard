@@ -57,6 +57,7 @@ class InvoiceItem < ActiveRecord::Base
   delegate :price_per_month_in_cents, to: :item
   delegate :title, to: :item, prefix: true
   delegate :description, to: :item, prefix: true
+  delegate :user, to: :invoice
 
 ###
 # Instance Methods
@@ -109,11 +110,10 @@ protected
   ###
   # _Validator_
   #
-  # COMMENTED OUT
+  # Validates that the community is owned by the invoice user.
   ###
   def community_is_owned_by_user
-#     self.errors.add(:base, "Broke!")
-#     return false
+    self.errors.add(:base, "Community is not owned by user") unless self.user.owns_community?(self.community)
   end
 
   ###
