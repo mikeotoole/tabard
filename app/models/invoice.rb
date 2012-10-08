@@ -144,7 +144,7 @@ class Invoice < ActiveRecord::Base
   # [Args]
   #   * +invoice_attributes+ An attributes hash for the invoice.
   #   * +stripe_card_token+ A Stripe card token. This is not required if the community admin has a Stripe customer id.
-  # [Returns] True if the Stripe subscription was updated and the invoice was updated, false otherwise
+  # [Returns] True if the Stripe was updated and the invoice was updated, false otherwise
   ###
   def update_attributes_with_payment(invoice_attributes, stripe_card_token)
     success = false
@@ -166,10 +166,9 @@ class Invoice < ActiveRecord::Base
   end
 
   ###
-  # Used to update a community plan and bill the community admin using Stripe.
-  # [Args]
-  #   * +stripe_card_token+ A Stripe card token. This is not required if the user has a Stripe customer id.
-  # [Returns] True if the Stripe subscription was updated, false otherwise
+  #
+  #
+  # [Returns] True if the charge was submitted to Stripe, false otherwise
   ###
   def charge_customer
     success = false
@@ -181,13 +180,14 @@ class Invoice < ActiveRecord::Base
           customer: self.stripe_customer_token,
           description: "Charge for invoice id:#{self.id}"
         )
+        #TODO: Set processing_payment true.
         success = true
       else
         #TODO: Invice cost is less then $1.00. Just mark as paid. Log that this happend for later review.
         success = true
       end
     else
-      #TODO: ERROR Invoice owner has no payment information.
+      #TODO: ERROR Invoice owner has no payment information. Log this error.
       success = false
     end
     return success
