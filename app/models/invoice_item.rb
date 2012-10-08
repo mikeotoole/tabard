@@ -25,6 +25,7 @@ class InvoiceItem < ActiveRecord::Base
 # Callbacks
 ###
   before_validation :set_dates
+  before_save :make_free_non_recurring
 
 ###
 # Scopes
@@ -165,6 +166,16 @@ protected
         self.end_date = self.start_date + 30.days
       end
     end
+  end
+
+  ###
+  # _before_save_
+  #
+  # This will make any free items non_recurring
+  ###
+  def make_free_non_recurring
+    self.is_recurring = false if self.has_default_plan?
+    return true
   end
 end
 
