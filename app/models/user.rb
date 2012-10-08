@@ -200,7 +200,7 @@ class User < ActiveRecord::Base
       end
       invoice = self.invoices.where{(period_start_date <= today) & (period_end_date >= today)}.limit(1).first
     end
-    invoice = self.invoices.new({period_start_date: Time.now.beginning_of_day, period_end_date: Time.now.beginning_of_day + 30.days}, without_protection: true) if invoice.blank?
+    invoice = self.invoices.new({period_start_date: Time.now.beginning_of_day, period_end_date: Time.now.beginning_of_day}, without_protection: true) if invoice.blank?
     return invoice
   end
 
