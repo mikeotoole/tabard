@@ -204,10 +204,6 @@ class User < ActiveRecord::Base
     return invoice
   end
 
-  def previous_invoice
-    self.invoices.closed.limit(1).first
-  end
-
 ###
 # Doc Acceptance
 ###

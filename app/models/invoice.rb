@@ -26,7 +26,6 @@ class Invoice < ActiveRecord::Base
 ###
   delegate :id, to: :user, prefix: true
   delegate :stripe_customer_token, to: :user, prefix: true
-  delegate :previous_invoice, to: :user, allow_nil: true
 
 ###
 # Scopes
