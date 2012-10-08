@@ -95,7 +95,7 @@ class InvoiceItem < ActiveRecord::Base
 
   def number_of_days
     distance_in_seconds = ((self.end_date - self.start_date).abs)
-    distance_in_seconds / 1.day
+    (distance_in_seconds / 1.day).round
   end
 
 ###

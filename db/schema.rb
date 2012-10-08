@@ -614,6 +614,12 @@ ActiveRecord::Schema.define(:version => 20121006194335) do
     t.datetime "updated_at",                        :null => false
   end
 
+  create_table "stripe_plans", :force => true do |t|
+    t.integer  "amount"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "submissions", :force => true do |t|
     t.integer  "custom_form_id"
     t.integer  "user_profile_id"
