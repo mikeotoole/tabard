@@ -55,6 +55,7 @@ class Invoice < ActiveRecord::Base
 ###
 # Class Methods
 ###
+  # This will call charge_customer on all invoices that have an end_date before today.
   def self.bill_customers
     invoices_to_bill = Invoice.where{(period_end_date <= Time.now.end_of_day) & (processing_payment == false)}
     invocies_to_bill.each do |invoice|
@@ -65,7 +66,7 @@ class Invoice < ActiveRecord::Base
 ###
 # Instance Methods
 ###
-
+  # [Returns] the total cost of all invoice items in cents.
   def total_price_in_cents
     if charged_total_price_in_cents.present?
       self.charged_total_price_in_cents
@@ -74,6 +75,7 @@ class Invoice < ActiveRecord::Base
     end
   end
 
+  # [Returns] the total cost of all invoice items in dollars.
   def total_price_in_dollars
     self.total_price_in_cents/100.0
   end
@@ -168,7 +170,8 @@ class Invoice < ActiveRecord::Base
   end
 
   ###
-  #
+  # Used to submit a charge to Stripe with this invoice cost.
+  # If the invoice is still it will first be closed.
   #
   # [Returns] True if the charge was submitted to Stripe, false otherwise
   ###
@@ -232,6 +235,11 @@ protected
     end
   end
 
+  ###
+  # _Validator_
+  #
+  # Once an invoice is closed it can't be edited.
+  ###
   def cant_be_edited_after_closed
     if is_closed and is_closed_was
       self.errors.add(:base, "A closed invoice can't be edited.")
@@ -241,7 +249,7 @@ protected
   ###
   # _Validator_
   #
-  # Validates child items
+  # Validates all invoice items.
   ###
   def invoice_items_are_valid
     no_failures = true
@@ -289,7 +297,7 @@ protected
   ###
   # _after_save_
   #
-  #
+  # This will determine if any prorated invoice items should be added to the invoice.
   ###
   def add_prorated_items
     self.invoice_items.select(&:is_recurring).each do |ii|

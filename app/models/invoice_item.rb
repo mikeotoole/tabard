@@ -87,14 +87,17 @@ class InvoiceItem < ActiveRecord::Base
     self.item == CommunityPlan.default_plan
   end
 
+  # Returns true if the item is a CommunityPlan.
   def has_community_plan?
     self.item_type == "CommunityPlan"
   end
 
+  # Returns true if the item is a CommunityUpgrade.
   def has_community_upgrade?
     (self.item_type == "CommunityUserPackUpgrade") or (self.item_type == "CommunityUpgrade")
   end
 
+  # The number of days this invoice item is in effect for.
   def number_of_days
     distance_in_seconds = ((self.end_date - self.start_date).abs)
     (distance_in_seconds / 1.day).round
