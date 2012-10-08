@@ -49,7 +49,7 @@ class Invoice < ActiveRecord::Base
 ###
 # Callbacks
 ###
-  before_save: :set_charged_total_price_in_cents_when_closed
+  before_save :set_charged_total_price_in_cents_when_closed
   after_save :create_next_invoice_when_closed
   after_save :add_prorated_items
 
