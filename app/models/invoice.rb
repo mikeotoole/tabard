@@ -40,8 +40,7 @@ class Invoice < ActiveRecord::Base
   validates :period_start_date, presence: true
   validates :period_end_date, presence: true
   validate :invoice_items_are_valid
-  validates_date :period_start_date, on_or_after: :today, on: :create
-  validates_date :period_end_date, on_or_after: :period_start_date, on: :create
+  validates_date :period_end_date, on_or_after: :period_start_date, on_or_after_message: 'must be after start date'
   validate :no_reopening_closed_invoice
   validate :cant_be_edited_after_closed
 
@@ -58,7 +57,7 @@ class Invoice < ActiveRecord::Base
   # This will call charge_customer on all invoices that have an end_date before today.
   def self.bill_customers
     invoices_to_bill = Invoice.where{(period_end_date <= Time.now.end_of_day) & (processing_payment == false)}
-    invocies_to_bill.each do |invoice|
+    invoices_to_bill.each do |invoice|
       invoice.charge_customer
     end
   end
@@ -186,7 +185,7 @@ class Invoice < ActiveRecord::Base
               Stripe::Charge.create(
                 amount: self.total_price_in_cents,
                 currency: "usd",
-                customer: self.stripe_customer_token,
+                customer: self.user_stripe_customer_token,
                 description: "Charge for invoice id:#{self.id}"
               )
               success = self.update_attributes({processing_payment: true}, without_protection: true)
@@ -271,6 +270,7 @@ protected
     if is_closed and not is_closed_was
       self.charged_total_price_in_cents = self.total_price_in_cents
     end
+    return true
   end
 
   ###
@@ -292,6 +292,7 @@ protected
         invoice.save!
       end
     end
+    return true
   end
 
   ###
@@ -324,6 +325,7 @@ protected
         end
       end
     end
+    return true
   end
 end
 

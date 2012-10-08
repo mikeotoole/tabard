@@ -46,8 +46,11 @@ class InvoiceItem < ActiveRecord::Base
   validate :community_is_owned_by_user
   validate :is_recurring_and_is_prorated_not_both_true
   validate :only_one_community_plan_item_per_period
-  validates_datetime :start_date, on_or_after: lambda {|ii| ii.period_start_date }, if: Proc.new{|ii| ii.is_prorated }
+  validates_datetime :start_date, on_or_after: lambda {|ii| ii.period_start_date },
+                                  on_or_after_message: 'must be after invoice start date',
+                                  if: Proc.new{|ii| ii.is_prorated }
   validates_datetime :end_date, is_at: lambda {|ii| ii.period_end_date }, if: Proc.new{|ii| ii.is_prorated }
+  validates_date :end_date, on_or_after: :start_date, on_or_after_message: 'must be after start date'
   validate :cant_be_edited_after_closed
 
 ###
@@ -142,12 +145,17 @@ protected
   # Validates that plan dont overlap.
   ###
   def only_one_community_plan_item_per_period
-    com_id = self.community_id
-    start_d = self.start_date
-    end_d = self.end_date
-    some_id = self.id
-    if self.item_type == "CommunityPlan" and InvoiceItem.where{(item_type == "CommunityPlan") & (community_id == com_id) & ((start_date > end_d) | (end_date < start_d) | ((start_date == start_d) & (end_date == end_d) & (id != some_id)))}.exists?
-      self.errors.add(:base, "a plan already exists in that date range.")
+    if self.item_type == "CommunityPlan"
+      com_id = self.community_id
+      start_d = self.start_date
+      end_d = self.end_date
+      some_id = self.id
+      iis = InvoiceItem.where{(id != some_id) &
+                              (item_type == "CommunityPlan") &
+                              (community_id == com_id) &
+                              (((start_date < end_d) & (end_date > start_d)) |
+                              ((start_date == start_d) | (end_date == end_d)))}
+      self.errors.add(:base, "a plan already exists in that date range.") unless iis.blank?
     end
   end
 
@@ -169,6 +177,7 @@ protected
         self.end_date = self.start_date + 30.days
       end
     end
+    return true
   end
 
   ###
