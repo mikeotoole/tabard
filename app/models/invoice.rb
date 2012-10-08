@@ -52,7 +52,6 @@ class Invoice < ActiveRecord::Base
   before_save: :set_charged_total_price_in_cents_when_closed
   after_save :create_next_invoice_when_closed
   after_save :add_prorated_items
-  before_save :make_free_non_recurring
 
 ###
 # Class Methods
@@ -317,12 +316,6 @@ protected
           end
         end
       end
-    end
-  end
-
-  def make_free_non_recurring
-    self.invoice_items.each do |invoice_item|
-      invoice_item.is_recurring = false if invoice_item.has_default_plan?
     end
   end
 end

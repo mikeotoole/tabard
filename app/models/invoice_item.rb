@@ -25,6 +25,7 @@ class InvoiceItem < ActiveRecord::Base
 # Callbacks
 ###
   before_validation :set_dates
+  before_save :make_free_non_recurring
 
 ###
 # Scopes
@@ -57,6 +58,7 @@ class InvoiceItem < ActiveRecord::Base
   delegate :price_per_month_in_cents, to: :item
   delegate :title, to: :item, prefix: true
   delegate :description, to: :item, prefix: true
+  delegate :user, to: :invoice
 
 ###
 # Instance Methods
@@ -109,11 +111,10 @@ protected
   ###
   # _Validator_
   #
-  # COMMENTED OUT
+  # Validates that the community is owned by the invoice user.
   ###
   def community_is_owned_by_user
-#     self.errors.add(:base, "Broke!")
-#     return false
+    self.errors.add(:base, "Community is not owned by user") unless self.user.owns_community?(self.community)
   end
 
   ###
@@ -165,6 +166,16 @@ protected
         self.end_date = self.start_date + 30.days
       end
     end
+  end
+
+  ###
+  # _before_save_
+  #
+  # This will make any free items non_recurring
+  ###
+  def make_free_non_recurring
+    self.is_recurring = false if self.has_default_plan?
+    return true
   end
 end
 
