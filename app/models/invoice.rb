@@ -49,6 +49,7 @@ class Invoice < ActiveRecord::Base
 ###
 # Callbacks
 ###
+  before_save: :set_charged_total_price_in_cents_when_closed
   after_save :create_next_invoice_when_closed
   after_save :add_prorated_items
   before_save :make_free_non_recurring
@@ -59,7 +60,6 @@ class Invoice < ActiveRecord::Base
   def self.bill_customers
     invoices_to_bill = Invoice.where{(period_end_date <= Time.now.end_of_day) & (processing_payment == false)}
     invocies_to_bill.each do |invoice|
-      invoice.update_attributes({is_closed: true}, without_protection: true)
       invoice.charge_customer
     end
   end
@@ -69,7 +69,11 @@ class Invoice < ActiveRecord::Base
 ###
 
   def total_price_in_cents
-    invoice_items.empty? ? 0 : invoice_items.map{|ii| ii.total_price_in_cents}.inject(0,:+)
+    if charged_total_price_in_cents.present?
+      self.charged_total_price_in_cents
+    else
+      invoice_items.empty? ? 0 : invoice_items.map{|ii| ii.total_price_in_cents}.inject(0,:+)
+    end
   end
 
   def total_price_in_dollars
@@ -172,22 +176,40 @@ class Invoice < ActiveRecord::Base
   ###
   def charge_customer
     success = false
-    if self.user_stripe_customer_token.present?
-      if self.total_price_in_cents > 100
-        Stripe::Charge.create(
-          amount: self.total_price_in_cents,
-          currency: "usd",
-          customer: self.stripe_customer_token,
-          description: "Charge for invoice id:#{self.id}"
-        )
-        #TODO: Set processing_payment true.
-        success = true
+    begin
+      self.update_attributes({is_closed: true}, without_protection: true) unless self.is_closed
+      if self.is_closed
+        if self.user_stripe_customer_token.present?
+          if self.total_price_in_cents > 100
+            begin
+              Stripe::Charge.create(
+                amount: self.total_price_in_cents,
+                currency: "usd",
+                customer: self.stripe_customer_token,
+                description: "Charge for invoice id:#{self.id}"
+              )
+              success = self.update_attributes({processing_payment: true}, without_protection: true)
+            rescue Stripe::StripeError => e
+              logger.error "StripeError charge_customer: #{e.message}"
+              success = false
+            end
+          else
+            #Invice cost is less then $1.00. Just mark as paid. Log that this happend for later review.
+            logger.error "ERROR charge_customer: Invoice was less then $1: #{self.to_yaml}"
+            success = self.update_attributes({processing_payment: true, paid_date: Time.now}, without_protection: true)
+          end
+        else
+          #ERROR Invoice owner has no payment information.
+          logger.error "ERROR charge_customer: Invoice owner had no payment info: #{self.to_yaml}"
+          success = false
+        end
       else
-        #TODO: Invice cost is less then $1.00. Just mark as paid. Log that this happend for later review.
-        success = true
+        #ERROR Could not close invoice.
+        logger.error "ERROR charge_customer: Could not close invoice: #{self.to_yaml} errors: #{self.errors}"
+        success = false
       end
-    else
-      #TODO: ERROR Invoice owner has no payment information. Log this error.
+    rescue Exception => e
+      logger.error "ERROR charge_customer: #{e.message}"
       success = false
     end
     return success
@@ -234,6 +256,17 @@ protected
 ###
 # Callback Methods
 ###
+  ###
+  # _before_save_
+  #
+  # If this invoice was just closed the calculated price from invoice items will be used to save the price charged.
+  ###
+  def set_charged_total_price_in_cents_when_closed
+    if is_closed and not is_closed_was
+      self.charged_total_price_in_cents = self.total_price_in_cents
+    end
+  end
+
   ###
   # _after_save_
   #
@@ -298,19 +331,20 @@ end
 #
 # Table name: invoices
 #
-#  id                   :integer          not null, primary key
-#  user_id              :integer
-#  stripe_invoice_id    :string(255)
-#  period_start_date    :datetime
-#  period_end_date      :datetime
-#  paid_date            :datetime
-#  stripe_customer_id   :string(255)
-#  discount_percent_off :integer
-#  discount_discription :string(255)
-#  deleted_at           :datetime
-#  created_at           :datetime         not null
-#  updated_at           :datetime         not null
-#  is_closed            :boolean          default(FALSE)
-#  processing_payment   :boolean          default(FALSE)
+#  id                           :integer          not null, primary key
+#  user_id                      :integer
+#  stripe_invoice_id            :string(255)
+#  period_start_date            :datetime
+#  period_end_date              :datetime
+#  paid_date                    :datetime
+#  stripe_customer_id           :string(255)
+#  discount_percent_off         :integer
+#  discount_discription         :string(255)
+#  deleted_at                   :datetime
+#  created_at                   :datetime         not null
+#  updated_at                   :datetime         not null
+#  is_closed                    :boolean          default(FALSE)
+#  processing_payment           :boolean          default(FALSE)
+#  charged_total_price_in_cents :integer
 #
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121006194335) do
+ActiveRecord::Schema.define(:version => 20121008184959) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -445,10 +445,11 @@ ActiveRecord::Schema.define(:version => 20121006194335) do
     t.integer  "discount_percent_off"
     t.string   "discount_discription"
     t.datetime "deleted_at"
-    t.datetime "created_at",                              :null => false
-    t.datetime "updated_at",                              :null => false
-    t.boolean  "is_closed",            :default => false
-    t.boolean  "processing_payment",   :default => false
+    t.datetime "created_at",                                      :null => false
+    t.datetime "updated_at",                                      :null => false
+    t.boolean  "is_closed",                    :default => false
+    t.boolean  "processing_payment",           :default => false
+    t.integer  "charged_total_price_in_cents"
   end
 
   create_table "message_associations", :force => true do |t|
@@ -612,12 +613,6 @@ ActiveRecord::Schema.define(:version => 20121006194335) do
     t.boolean  "is_maintenance", :default => false
     t.datetime "created_at",                        :null => false
     t.datetime "updated_at",                        :null => false
-  end
-
-  create_table "stripe_plans", :force => true do |t|
-    t.integer  "amount"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
   end
 
   create_table "submissions", :force => true do |t|
