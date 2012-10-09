@@ -14,11 +14,13 @@
           %th end_date
           %th price_each
           %th quantity
-          %th Total
+          %th Subtotal
+          %th
       %tbody
         - @invoice.invoice_items.order(:start_date).group_by(&:community).each do |community, invoice_items|
+          -subtotal_price = 0
           %tr
-            %td.l{ colspan: 6 }=link_to_unless @invoice.is_closed, community.name, edit_subscription_path(community)
+            %td.l{ colspan: 7 }=link_to_unless @invoice.is_closed, community.name, edit_subscription_path(community)
           - invoice_items.each do |invoice_item|
             %tr
               %td
@@ -30,9 +32,14 @@
               %td= number_to_currency(invoice_item.price_per_month_in_cents/100.0)
               %td= invoice_item.quantity
               %td= number_to_currency(invoice_item.total_price_in_dollars)
+              %td
+              - subtotal_price = subtotal_price + invoice_item.total_price_in_dollars
+          %tr
+            %td.r{ colspan: 6 }=link_to_unless @invoice.is_closed, "#{community.name} Cost", edit_subscription_path(community)
+            %td=number_to_currency(subtotal_price)
       %tfoot
         %tr
-          %td.r{ colspan: 5 } Invoice Total
+          %td.r{ colspan: 6 } Invoice Total
           %td.r= number_to_currency(@invoice.total_price_in_dollars)
   - else
     %p You don't have any invoices.
