@@ -20,6 +20,7 @@ class InvoiceItem < ActiveRecord::Base
   belongs_to :invoice, inverse_of: :invoice_items
   belongs_to :community
   belongs_to :item, polymorphic: true
+  belongs_to :community_user_pack_items, foreign_key: :item_id, class_name: "CommunityUserPackUpgrade"
 
 ###
 # Callbacks

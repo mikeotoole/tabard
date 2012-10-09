@@ -65,7 +65,7 @@ protected
   end
 
   def load_invoice_items
-    @current_plan_invoice_item = @invoice.recurring_plan_invoice_item_for_community(@community)
+    @current_plan_invoice_item = @invoice.plan_invoice_item_for_community(@community)
 
     current_plan = @current_plan_invoice_item.item
 

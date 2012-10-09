@@ -6,7 +6,6 @@
 # An upgrade that gives a community more allowed users.
 ###
 class CommunityUserPackUpgrade < CommunityUpgrade
-  has_many :invoice_items, as: :item
 ###
 # Public Methods
 ###

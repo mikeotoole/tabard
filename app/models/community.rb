@@ -66,7 +66,6 @@ attr_accessor :new_community_plan_id
 
   # Plans and upgrades
   has_many :invoice_items
-  #has_many :community_upgrades, through: :invoice_items, as: :item, conditions: {}
 
   accepts_nested_attributes_for :theme
 
@@ -137,17 +136,55 @@ attr_accessor :new_community_plan_id
 ###
 # Instance Methods
 ###
+  # Returns all games that this community supports
+  def games
+    self.supported_games.collect{|sg| sg.game}.uniq{|g| g.short_name}
+  end
+
   ###
-  # This method checks if a given user can apply to the community
+  # This method attempts to apply default permissions for an item by calling apply_default_permissions for each role in the community.
   # [Args]
-  #   * +user+ The user to check
-  # [Returns] True if the community can receive an application from the user, false otherwise
-  def can_receive_application_from?(user)
-    if user
-      self.is_accepting_members and !user.is_member? self and !user.application_pending? self
-    else
-      true
+  #   * +some_thing+ -> The object to apply default permissions on.
+  ###
+  def apply_default_permissions(some_thing)
+    self.roles.each do |role|
+      role.apply_default_permissions(some_thing)
     end
+  end
+
+  # This will force community and its comments and discussions to be fully removed.
+  def nuke
+    self.community_applications.each{|application| application.comments.each{|comment| comment.nuke}}
+    self.discussions.each{|discussion| discussion.nuke}
+    self.destroy!
+  end
+
+###
+# Invoice and Payment
+###
+  # If the community is disabled for not paying or being over capacity.
+  def is_disabled?
+    # TODO: add no pay here
+    self.is_over_max_capacity?
+  end
+
+###
+# Plan
+###
+  ###
+  # The will return the communties current plan.
+  #
+  # OPTIMIZE: We may want to cache the current plan.
+  ###
+  def current_community_plan
+    today = Time.now
+    invoiceitem = self.invoice_items.where{(item_type == "CommunityPlan") & (start_date <= today) & (end_date >= today)}.limit(1).first
+    invoiceitem.present? ? invoiceitem.item : CommunityPlan.default_plan
+  end
+
+  # This will return the community plan set to be recurring.
+  def recurring_community_plan
+    self.current_invoice.plan_invoice_item_for_community(self).item
   end
 
   ###
@@ -158,30 +195,51 @@ attr_accessor :new_community_plan_id
     not self.current_community_plan.is_free_plan?
   end
 
+  # This will return the current community plan title.
+  def current_community_plan_title
+    self.current_community_plan.title
+  end
+
+  # This will return the recurring community plan title.
+  def recurring_community_plan_title
+    self.recurring_community_plan.title
+  end
+
+###
+# Upgrades
+###
+  ###
+  # This will return all of community upgrades for the community.
+  ###
+  def current_upgrades
+    today = Time.now
+    self.invoice_items.where{(item_type != "CommunityPlan") & (start_date <= today) & (end_date >= today)}
+  end
+
+###
+# Members
+###
   ###
   # The max number of users allowed in this community.
   # This includes plan and upgrade amounts.
+  #
+  # OPTIMIZE: We may want to cache.
   ###
   def max_number_of_users
-    # TODO This has the potential to be very slow....
-    plan_total = self.current_community_plan.max_number_of_users
-    # TODO Fix this
-    #upgrade_total = self.invoice_items.where{(item_type @= "CommunityUserPackUpgrade") & (start_date <= DateTime.now) & (end_date >= DateTime.now)}
-    my_id = self.id
-    correct_invoice_items = CommunityUserPackUpgrade.joins{invoice_items}.where{invoice_items.community_id == my_id}
-    upgrade_total = InvoiceItem.where{item_id.in(correct_invoice_items) & (item_type == "CommunityUpgrade")}.map{|u| u.item.number_of_bonus_users * u.quantity}.inject(0,:+)
-    return plan_total + upgrade_total
+    plan_users_total = self.current_community_plan.max_number_of_users
+    user_pack_upgrades_ii = current_upgrades.joins{community_user_pack_items}
+    upgrade_users_total = user_pack_upgrades_ii.map{|u| u.item.number_of_bonus_users * u.quantity}.inject(0,:+)
+
+    return plan_users_total + upgrade_users_total
   end
 
+  ###
   # The current number of community members.
+  #
+  # OPTIMIZE: We may want to cache.
+  ###
   def current_number_of_users
     self.community_profiles.count
-  end
-
-  # If the community is disabled for not paying or being over capacity.
-  def is_disabled?
-    # TODO add no pay here
-    self.is_over_max_capacity?
   end
 
   # If the community is over capacity.
@@ -199,76 +257,22 @@ attr_accessor :new_community_plan_id
     self.current_number_of_users >= self.max_number_of_users * 0.9 and self.current_number_of_users < self.max_number_of_users
   end
 
-  def current_community_plan_title
-    self.current_community_plan.title
-  end
-
-  def recurring_community_plan_title
-    self.recurring_community_plan.title
-  end
-
-  def current_community_plan
-    today = Time.now
-    invoiceitem = self.invoice_items.where{(item_type == "CommunityPlan") & (start_date <= today) & (end_date >= today)}.limit(1).first
-    invoiceitem ? invoiceitem.item : CommunityPlan.default_plan
-  end
-
-  def recurring_community_plan
-    self.current_invoice.recurring_plan_invoice_item_for_community(self).item
-  end
-
-  def community_upgrades
-    today = Time.now
-    invoiceitems = self.invoice_items.where{(item_type != "CommunityPlan") & (start_date <= today) & (end_date >= today)}
-    return invoiceitems
-  end
-
-  def current_invoice_end_date
-    # TODO: Need to return real date.
-    DateTime.now
-  end
-
-  ###
-  # Used to update a community plan and bill the community admin using Stripe.
-  # [Args]
-  #   * +community_attributes+ An attributes hash for the community.
-  #   * +stripe_card_token+ A Stripe card token. This is not required if the community admin has a Stripe customer id.
-  # [Returns] True if the Stripe subscription was updated and the community was updated, false otherwise
-  ###
-  def update_attributes_with_payment(community_attributes, stripe_card_token)
-    if stripe_card_token.blank? and self.admin_profile_user.stripe_customer_token.blank?
-      self.errors.add :base, "Payment information is required"
-      return false
-    else
-
-      # Get the admins current invoice (create if it does not exist).
-      # Get current recuring plan invoice item (to be charged next month).
-      # Edit current recuring plan invoice item with new_community_plan_id
-      # invoice.invoice_items.create()
-
-      self.attributes = community_attributes
-      if self.valid?
-        new_total_price = self.admin_profile_user.new_total_price_per_month_in_cents(self)
-        if self.admin_profile_user.update_stripe(stripe_card_token, new_total_price)
-          return self.save!
-        else
-          self.errors.add :base, "There was a problem with your credit card"
-          return false
-        end
-      else
-        return false
-      end
-    end
-  end
-
-  # Returns all games that this community supports
-  def games
-    self.supported_games.collect{|sg| sg.game}.uniq{|g| g.short_name}
-  end
-
   # This will return a collection of community profiles ordered by the users display name.
   def ordered_community_profiles
     self.community_profiles.includes(:user_profile).order('LOWER(user_profiles.display_name)')
+  end
+
+  ###
+  # This method checks if a given user can apply to the community
+  # [Args]
+  #   * +user+ The user to check
+  # [Returns] True if the community can receive an application from the user, false otherwise
+  def can_receive_application_from?(user)
+    if user
+      self.is_accepting_members and !user.is_member? self and !user.application_pending? self
+    else
+      true
+    end
   end
 
   ###
@@ -309,24 +313,6 @@ attr_accessor :new_community_plan_id
   ###
   def member_profiles_for_supported_game(supported_game)
     self.approved_roster_assignments.includes(:user_profile).where(supported_game_id: supported_game.id).collect{|ra| ra.user_profile }.uniq.sort_by(&:display_name)
-  end
-
-  ###
-  # This method attempts to apply default permissions for an item by calling apply_default_permissions for each role in the community.
-  # [Args]
-  #   * +some_thing+ -> The object to apply default permissions on.
-  ###
-  def apply_default_permissions(some_thing)
-    self.roles.each do |role|
-      role.apply_default_permissions(some_thing)
-    end
-  end
-
-  # This will force community and its comments and discussions to be fully removed.
-  def nuke
-    self.community_applications.each{|application| application.comments.each{|comment| comment.nuke}}
-    self.discussions.each{|discussion| discussion.nuke}
-    self.destroy!
   end
 
 ###

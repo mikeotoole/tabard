@@ -40,7 +40,7 @@ class Invoice < ActiveRecord::Base
   validates :period_start_date, presence: true
   validates :period_end_date, presence: true
   validate :invoice_items_are_valid
-  validates_date :period_end_date, on_or_after: :period_start_date, on_or_after_message: 'must be after start date'
+  validates_date :period_end_date, on_or_after: :period_start_date, on_or_after_message: 'must be on or after start date'
   validate :no_reopening_closed_invoice
   validate :cant_be_edited_after_closed
 
@@ -103,31 +103,11 @@ class Invoice < ActiveRecord::Base
   end
 
   ###
-  # Gets the total price per month in cents for all recurring plans and upgrades.
-  # This will include unsaved invoice items.
-  ###
-  def new_total_recurring_price_per_month_in_cents
-    price = 0
-    recurring_invoice_items = self.invoice_items.select(&:is_recurring)
-    recurring_invoice_items.each do |invoice_item|
-      price = price + (invoice_item.total_price_in_cents)
-    end
-    return price
-  end
-
-  ###
-  # Gets the total price per month in dollars for all recurring plans and upgrades.
-  # This will include unsaved invoice items.
-  ###
-  def new_total_recurring_price_per_month_in_dollars
-    self.new_total_recurring_price_per_month_in_cents/100.0
-  end
-
-  ###
-  # Returns all recurring plan invoice items for a community.
+  # Gets the community plan invoice item for a community that is not prorated.
   # If the community does not have one a new one is created with the default plan.
+  # [Returns] an invoice item with a plan ALWAYS
   ###
-  def recurring_plan_invoice_item_for_community(community)
+  def plan_invoice_item_for_community(community)
     com_id = community.id
     invoice_item = self.invoice_items.not_prorated.where{(item_type == "CommunityPlan") & (community_id == com_id)}.limit(1).first
     if invoice_item.blank?
@@ -136,20 +116,23 @@ class Invoice < ActiveRecord::Base
     return invoice_item
   end
 
+  ###
   # Returns all recurring upgrade invoice items for a community.
+  # [Returns] invoice items with community upgrades OR empty
+  ###
   def recurring_upgrade_invoice_items_for_community(community)
     com_id = community.id
     return self.invoice_items.recurring.where{(item_type != "CommunityPlan") & (community_id == com_id)}
   end
 
   ###
-  # Used to update a community plan/upgrades and bill the community admin using Stripe.
+  # Used to update a community plan/upgrades and set or update the community admin's credit card using Stripe.
   # [Args]
   #   * +invoice_attributes+ An attributes hash for the invoice.
   #   * +stripe_card_token+ A Stripe card token. This is not required if the community admin has a Stripe customer id.
-  # [Returns] True if the Stripe was updated and the invoice was updated, false otherwise
+  # [Returns] True if Stripe was updated and the invoice was updated, false otherwise
   ###
-  def update_attributes_with_payment(invoice_attributes, stripe_card_token)
+  def update_attributes_with_payment(invoice_attributes, stripe_card_token=nil)
     success = false
     self.attributes = invoice_attributes
     if self.user_stripe_customer_token.blank? and stripe_card_token.blank?
@@ -170,7 +153,7 @@ class Invoice < ActiveRecord::Base
 
   ###
   # Used to submit a charge to Stripe with this invoice cost.
-  # If the invoice is still it will first be closed.
+  # If the invoice is still open it will first be closed.
   #
   # [Returns] True if the charge was submitted to Stripe, false otherwise
   ###
@@ -280,8 +263,8 @@ protected
   ###
   def create_next_invoice_when_closed
     if is_closed and not is_closed_was
-      today = Time.now
-      invoice = self.user.invoices.where{(period_start_date <= today) & (period_end_date >= today)}.limit(1).first
+      valid_next_invoice_date = self.period_end_date + 1.day
+      invoice = self.user.invoices.where{(period_start_date <= valid_next_invoice_date) & (period_end_date >= valid_next_invoice_date)}.limit(1).first
       if invoice.blank? and self.invoice_items.recurring.any?
         invoice = self.user.invoices.new
         invoice.period_start_date = self.period_end_date
