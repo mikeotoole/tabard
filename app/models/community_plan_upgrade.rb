@@ -16,6 +16,8 @@ class CommunityPlanUpgrade < ActiveRecord::Base
 # Validators
 ###
   validates :community_plan_id, uniqueness: {scope: [:community_upgrade_id]}
+  validates :community_plan, presence: true
+  validates :community_upgrade, presence: true
 end
 
 # == Schema Information

@@ -8,8 +8,8 @@ class InvoicesController < ApplicationController
   def index
     @invoices = current_user.invoices.historical
   end
-  
+
   def show
-    @invoice = current_user.invoices.find_by_id(params[:id])
+    @invoice = current_user.invoices.find(params[:id])
   end
 end

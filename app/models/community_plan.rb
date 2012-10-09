@@ -23,6 +23,7 @@ class CommunityPlan < ActiveRecord::Base
   validates :title, presence: true
   validates :description, presence: true
   validates :price_per_month_in_cents, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0}
+  validates :max_number_of_users, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0}
   validate :no_changing_price, on: :update
 
 ###
@@ -43,16 +44,15 @@ class CommunityPlan < ActiveRecord::Base
   def self.default_plan
     plan = CommunityPlan.find_by_title(FREE_PLAN_TITLE)
     if plan == nil
-      return CommunityPlan.create({
+      plan = CommunityPlan.create({
         title: FREE_PLAN_TITLE,
         description: "This is the default free plan.",
         price_per_month_in_cents: 0,
         is_available: true,
         max_number_of_users: 20
         }, without_protection: true)
-    else
-      return plan
     end
+    return plan
   end
 
 ###
@@ -78,7 +78,7 @@ protected
   ###
   def no_changing_price
     if self.price_per_month_in_cents_changed?
-      self.errors.add(:base, "The plan price can not be changed.")
+      self.errors.add(:base, "price can not be changed")
     end
   end
 end

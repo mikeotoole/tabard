@@ -44,14 +44,14 @@ class InvoiceItem < ActiveRecord::Base
   validates :quantity, numericality: { less_than_or_equal_to: 1, only_integer: true}, if: Proc.new{|ii| ii.item_type == "CommunityPlan"}
   validates :start_date, presence: true
   validates :end_date, presence: true
-  validate :community_is_owned_by_user
-  validate :is_recurring_and_is_prorated_not_both_true
-  validate :only_one_community_plan_item_per_period
   validates_datetime :start_date, on_or_after: lambda {|ii| ii.period_start_date },
                                   on_or_after_message: 'must be after invoice start date',
                                   if: Proc.new{|ii| ii.is_prorated }
   validates_datetime :end_date, is_at: lambda {|ii| ii.period_end_date }, if: Proc.new{|ii| ii.is_prorated }
   validates_date :end_date, on_or_after: :start_date, on_or_after_message: 'must be after start date'
+  validate :community_is_owned_by_user
+  validate :is_recurring_and_is_prorated_not_both_true
+  validate :only_one_community_plan_item_per_period
   validate :cant_be_edited_after_closed
 
 ###
@@ -98,12 +98,12 @@ class InvoiceItem < ActiveRecord::Base
 
   # Returns true if the item is a CommunityUpgrade.
   def has_community_upgrade?
-    (self.item_type == "CommunityUserPackUpgrade") or (self.item_type == "CommunityUpgrade")
+    (self.item_type == "CommunityUpgrade") or (self.item_type == "CommunityUserPackUpgrade")
   end
 
   # The number of days this invoice item is in effect for.
   def number_of_days
-    distance_in_seconds = ((self.end_date - self.start_date).abs)
+    distance_in_seconds = (self.end_date - self.start_date).abs
     (distance_in_seconds / 1.day).round
   end
 
@@ -131,19 +131,24 @@ protected
   # An item can be both not recurring and not prorated.
   ###
   def is_recurring_and_is_prorated_not_both_true
-    self.errors.add(:base, "Prorated items can't be recurring.") if self.is_recurring and self.is_prorated
+    self.errors.add(:base, "prorated items can't be recurring.") if self.is_recurring and self.is_prorated
   end
 
+  ###
+  # _Validator_
+  #
+  # When the invoice is closed its items can't be updated.
+  ###
   def cant_be_edited_after_closed
     if self.invoice.is_closed and self.invoice.is_closed_was
-      self.errors.add(:base, "A closed invoice's invoice items can't be edited.")
+      self.errors.add(:base, "can't be edited when invoice is closed.")
     end
   end
 
   ###
   # _Validator_
   #
-  # Validates that plan dont overlap.
+  # Validates that plans don't overlap.
   ###
   def only_one_community_plan_item_per_period
     if self.item_type == "CommunityPlan"
@@ -156,7 +161,7 @@ protected
                               (community_id == com_id) &
                               (((start_date < end_d) & (end_date > start_d)) |
                               ((start_date == start_d) | (end_date == end_d)))}
-      self.errors.add(:base, "a plan already exists in that date range.") unless iis.blank?
+      self.errors.add(:base, "plan already exists in that date range.") unless iis.blank?
     end
   end
 

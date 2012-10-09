@@ -65,7 +65,7 @@ protected
   ###
   def no_changing_price
     if self.price_per_month_in_cents_changed?
-      self.errors.add(:base, "The plan upgrade price can not be changed.")
+      self.errors.add(:base, "price can not be changed.")
     end
   end
 end
