@@ -1,6 +1,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
+//= require 'chosen.jquery.min.js'
 
 
 # global var access
@@ -21,7 +22,7 @@ root = exports ? this
     $('#modal').prepend('<h1>' + title + '</h1>') if title
     $('#mask').remove() if $('.wmd-prompt-background').length
     $('#mask, .wmd-prompt-background')
-      .css({ opacity: 0 })
+      .css(opacity: 0)
       .animate({ opacity: .7 }, 400, 'linear')
     $('#modal')
       .css({ opacity: 0, marginLeft: -500 })
@@ -116,21 +117,6 @@ adjustHeaderByFlash = (speed,rowOffset=0) ->
 
 jQuery(document).ready ($) ->
 
-  # Improved select box functionality
-  $('body')
-    .on 'mouseenter mouseleave', '.select', ->
-      $(@).scrollTop 0
-      $(@).find('ul').scrollTop 0
-    .on 'scroll', '.select, .select ul', ->
-      $(@).scrollLeft 0
-    .on 'click', '.select ul label, form .profile label', ->
-      select = $(@).closest '.select'
-      select.scrollTop 0
-      ul = $(@).closest 'ul'
-      ul.scrollTop(0).animate opacity: 0, 200, ->
-        ul.hide().animate opacity: 0, 50, ->
-          ul.show().css opacity: 1
-  
   # dynamic loaded content after page load
   $('body')
     .on 'ajax:before', '.dynload', ->
@@ -142,7 +128,7 @@ jQuery(document).ready ($) ->
         .removeClass('busy')
         .html(xhr.responseText)
   $('.dynload:not(.wait)').trigger 'click'
-  
+
   # replace derp avatars with default
   $('.avatar img, img.avatar').bind 'error', ->
     if $(@).css('width')
@@ -154,7 +140,7 @@ jQuery(document).ready ($) ->
     $(@)
       .attr('src', avatar)
       .unbind 'error'
-  
+
   # Override rails allow action (for data-confirm)
   $.rails.allowAction = (element) ->
     message = element.data("confirm")
@@ -170,7 +156,7 @@ jQuery(document).ready ($) ->
           element.click()
           $('#modal button.cancel').trigger 'click'
       false
-  
+
   # Batch actions
   $('form .batch button, form button.batch')
     .click ->    
@@ -220,7 +206,7 @@ jQuery(document).ready ($) ->
             setTimeout adjustHeaderByFlash, 50
             $(@).remove()
   $('#flash li').trigger 'init'
-  
+
   # Tiered form field selection
   $('form .select[affects] input')
     .change ->
@@ -254,7 +240,7 @@ jQuery(document).ready ($) ->
         if affected.find('.select[affects]:visible').length
           affected.find('.select[affects]:visible input:first').trigger 'change'
   $('form .select[affects] input:checked').trigger 'change'
-  
+
   # Tabs
   $('dl.tabs >dt').click ->
     $(@).closest('dl.tabs').find('>dt').removeClass('current')
@@ -267,26 +253,24 @@ jQuery(document).ready ($) ->
     if(tab.length)
       tab.trigger 'click'
       return false
-  
+
   # Slider input fields
   $('body').on 'init', '.slider', -> $(@).css('width', $(@).find('label').length * 70)
   $('.slider').trigger 'init'
-  
+
   # Inputs that affect the hidden _destroy field
   $('input[toggle_destroy="true"]').change ->
     $(@).prevAll('input[name*="_destroy"]:first').attr('checked', !$(@).prop('checked'))
-  
+
   # Fluid sidebar menu
   $('.sidemenu')
     .find('a, button, .wmd-button')
     .filter('[title]')
     .each ->
-      $(@)
-        .attr('meta',$(@).attr('title'))
-        .removeAttr 'title'
-            
-  adjustHeaderByFlash(600)
-  
+      $(@).attr('meta',$(@).attr 'title').removeAttr 'title'
+
+  adjustHeaderByFlash 600
+
   # Global checkbox
   $('body')
     .on 'init', 'thead th.check:not(:has(a))', ->
