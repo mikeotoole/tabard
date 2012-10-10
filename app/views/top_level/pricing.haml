@@ -1,30 +1,41 @@
 - title 'Pricing'
 
 #body
-  %h1 Pricing
-  %blockquote
-    %strong Tabard&trade; is currently free of charge!
-  %h3
-    Why launch for free? 
-  %p
-    We want an opportunity to get as much feedback from as many gamers as possible so that we can make Tabard the best choice for gaming communities.
-    Also, our team has not settled on a payment model yet. However, rest easy in knowing that all options we are considering do include a level of free access.
-  %p
-    Whether we decide to charge based on community size, feature set, or other factor will largely depend on the information and feedback we gather during this free period.
-  %h3
-    When is this going to happen?
-  %p
-    We haven't set a date yet, but you can expect an early heads up from us when the time comes near.
-    Our priority is on improving Tabard&trade; every day so that when this takes place, you can feel confident this is a service worth supporting.
-  %h3
-    How will this impact existing communities?
-  %p
-    %strong As little as possible.
-    Our plan is to always have a free option for using the service.
-    This isn't a bait and switch scheme; the last thing we want is to bring in a user base just to later chase them away.
-    Our early adopters mean a lot to us, and we intend to do right by you all.
-    Thank you for supporting Tabard.
-  = render 'salutation'
-
-#sidebar
-  = image_tag 'main/sidebar-pricing.jpg', class: 'alignright', width: 200, height: 400
+  %h1 Community Pricing
+  .col3
+    %article.basic
+      %h2 Basic Communities
+      .price
+        %strong Free
+        %em We're cool like that
+      %p Everything you'd expect in a Pro Community, with only 2 limitations:
+      %blockquote
+        %p
+          %strong
+            &middot; Maxium of 20 members
+            %br
+            &middot; No custom member roles
+    %article.pro
+      %h2 Pro Communities
+      .price
+        %strong $9
+        %em monthly
+      %p For serious guilds that need space for members and flexible permission sets.
+      %blockquote
+        %p
+          %strong
+            Enjoy all of our
+            = link_to 'features', top_level_features_url
+            for up to 100 members.
+          
+    %article.upgrade
+      %h2 Pay as you Grow
+      .price
+        %strong +$2
+        %em monthly*
+      %p Has your Pro Community grown to epic proportions?
+      %blockquote
+        %p
+          %strong Add as many packs of 20 members as you need.
+      %p
+        %em *Pro Communities only

@@ -544,30 +544,29 @@ end
 #
 # Table name: communities
 #
-#  id                                :integer          not null, primary key
-#  name                              :string(255)
-#  slogan                            :string(255)
-#  is_accepting_members              :boolean          default(TRUE)
-#  email_notice_on_application       :boolean          default(TRUE)
-#  subdomain                         :string(255)
-#  created_at                        :datetime         not null
-#  updated_at                        :datetime         not null
-#  admin_profile_id                  :integer
-#  member_role_id                    :integer
-#  is_protected_roster               :boolean          default(FALSE)
-#  community_application_form_id     :integer
-#  community_announcement_space_id   :integer
-#  is_public_roster                  :boolean          default(TRUE)
-#  deleted_at                        :datetime
-#  background_image                  :string(255)
-#  background_color                  :string(255)
-#  theme_id                          :integer
-#  title_color                       :string(255)
-#  home_page_id                      :integer
-#  pending_removal                   :boolean          default(FALSE)
-#  action_items                      :text
-#  pitch                             :string(255)
-#  current_subscription_package_id   :integer
-#  recurring_subscription_package_id :integer
+#  id                              :integer          not null, primary key
+#  name                            :string(255)
+#  slogan                          :string(255)
+#  is_accepting_members            :boolean          default(TRUE)
+#  email_notice_on_application     :boolean          default(TRUE)
+#  subdomain                       :string(255)
+#  created_at                      :datetime         not null
+#  updated_at                      :datetime         not null
+#  admin_profile_id                :integer
+#  member_role_id                  :integer
+#  is_protected_roster             :boolean          default(FALSE)
+#  community_application_form_id   :integer
+#  community_announcement_space_id :integer
+#  is_public_roster                :boolean          default(TRUE)
+#  deleted_at                      :datetime
+#  background_image                :string(255)
+#  background_color                :string(255)
+#  theme_id                        :integer
+#  title_color                     :string(255)
+#  home_page_id                    :integer
+#  pending_removal                 :boolean          default(FALSE)
+#  action_items                    :text
+#  pitch                           :string(255)
+#  community_plan_id               :integer
 #
 
