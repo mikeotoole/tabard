@@ -7,7 +7,7 @@
 ###
 class CommunityPlan < ActiveRecord::Base
   # What the free plan is called.
-  FREE_PLAN_TITLE = "Free"
+  FREE_PLAN_TITLE = "Free Community"
 
 ###
 # Associations

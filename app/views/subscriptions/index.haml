@@ -3,8 +3,7 @@
 #body
   %h1 Subscriptions
 
-  #submenu
-    = link_to 'Add a Community', new_community_url, class: 'button'
+  = render 'shared/subscriptions_submenu', current: 'subscriptions'
 
   - if @owned_communities.size > 0
     %table
@@ -25,7 +24,6 @@
             %td.actions
               %div
                 = link_to 'View', root_url(subdomain: community.subdomain), meta: 'View Community', class: 'view'
-                = link_to 'Edit', edit_subscription_path(community), meta: 'Edit Subscription', class: 'edit'
       %tfoot
         %tr
           %td.r{ colspan: 3 } Monthly Total

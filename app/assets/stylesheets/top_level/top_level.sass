@@ -66,16 +66,26 @@ button,
   position: absolute
   top: 0
   right: 0
-  
-  .button
+  a
+    background: #999
     +border_radius(2)
-    display: inline-block
+    color: #fff !important
+    display: block
+    float: left
     font-family: inherit
-    font-size: 1em
-    height: auto
-    line-height: 1em
+    font-size: 13px
+    height: 20px
+    line-height: 20px
     margin: 0 0 0 5px
     padding: 0 10px
+    text-decoration: none !important
+    text-shadow: 0 1px 1px #666
+    &:hover,
+    &:focus
+      background: #333
+    &.current
+      background: #ccc
+      cursor: default
   
 body.index.communities #submenu .all,
 body.index.wows #submenu .wow,
@@ -377,7 +387,7 @@ body.index.minecrafts #submenu .minecraft
             background: #A13A30 !important
   
     tbody
-    
+
       tr th
         background: #bbb
         +bg_gradient(#cccccc,#aaaaaa)
@@ -494,6 +504,18 @@ body.index.minecrafts #submenu .minecraft
         ul
           padding-bottom: 0
           padding-top: 0
+
+      tr.heading td
+        background: #b7d1e4
+        border-bottom: 3px solid #8cb5d2
+        color: #000
+        font-size: 20px
+        padding-top: 30px
+
+      tr.subtotal td
+        background: #666
+        border-bottom: 3px solid #000
+        color: #eee
       
       &.read
       
@@ -1079,6 +1101,15 @@ form.edit_wow_character
         left: 0
         position: absolute
         top: 0
+
+#invoice
+  .heading .button
+    float: left
+    font-size: 13px
+    height: 20px
+    line-height: 20px !important
+    margin: -2px 10px 0 0
+    padding: 0 10px
 
 
 @import application/footer

@@ -39,11 +39,11 @@
                 - if invite.try 'status'
                   = link_to invite.status, edit_invite_url(invite)
             %td
-              %time= event.start_time.strftime("%a - %b %d, %Y")
+              %time= event.start_time.strftime("%a - %b %e, %Y")
             %td
               %time= event.start_time.strftime("%l:%M %p")
             %td
-              %time= event.end_time.strftime("%a - %b %d, %Y")
+              %time= event.end_time.strftime("%a - %b %e, %Y")
             %td
               %time= event.end_time.strftime("%l:%M %p")
             %td.actions

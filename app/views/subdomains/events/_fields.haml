@@ -10,14 +10,14 @@
       %label Start
       %span= f.input :start_time_date, as: :hidden, wrapper: :none
       %span
-        %input{ type: 'text', class: 'nicedate', readonly: 'readonly', value: event.start_time_date.to_s != '' ? event.start_time_date.to_date.strftime("%A, %B %d, %Y") : '' }
+        %input{ type: 'text', class: 'nicedate', readonly: 'readonly', value: event.start_time_date.to_s != '' ? event.start_time_date.to_date.strftime("%A, %B %e, %Y") : '' }
       = f.input :start_time_hm, as: :string, label: false, placeholder: 'Time', wrapper_tag: :span, wrapper_html: { class: 'time' }
       %mark.error= f.object.errors[:start_time].first
     %li{ class: "datetime #{f.object.errors[:start_time].any? ? 'with-errors' : ''}" }
       %label End
       %span= f.input :end_time_date, as: :hidden, wrapper: :none
       %span
-        %input{ type: 'text', class: 'nicedate', readonly: 'readonly', value: event.end_time_date.to_s != '' ? event.end_time_date.to_date.strftime("%A, %B %d, %Y") : '' }
+        %input{ type: 'text', class: 'nicedate', readonly: 'readonly', value: event.end_time_date.to_s != '' ? event.end_time_date.to_date.strftime("%A, %B %e, %Y") : '' }
       = f.input :end_time_hm, as: :string, label: false, placeholder: 'Time', wrapper_tag: :span, wrapper_html: { class: 'time' }
       %mark.error= f.object.errors[:end_time].first
     = f.input :supported_game_id, label: 'Game', collection: [['— None —','']].concat(current_community.supported_games.includes(:community, :game).collect {|c| c = [c.smart_name, c.id]}), as: :radio, wrapper_html: { class: 'select' }

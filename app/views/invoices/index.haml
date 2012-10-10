@@ -3,29 +3,26 @@
 #body
   %h1 Invoices
 
-  #submenu
+  = render 'shared/subscriptions_submenu', current: 'invoices'
 
-  - if @invoices.size > 0
+  - if @invoices.any?
     %table
       %thead
         %tr
-          %th period_start_date
-          %th period_end_date
-          %th paid_date
-          %th Cost
-          %th is_closed
-          %th.actions
+          %th Invoice Date
+          %th Amount
+          %th Status
       %tbody
         - @invoices.each do |invoice|
           %tr
-            %td= invoice.period_start_date.strftime("%m/%d/%Y")
-            %td= invoice.period_end_date.strftime("%m/%d/%Y")
-            %td= invoice.paid_date
+            %td
+              = link_to invoice do
+                = invoice.period_end_date.strftime("%B %e, %Y")
             %td.r= number_to_currency(invoice.total_price_in_dollars)
-            %td= invoice.is_closed
-            %td.actions
-              %div
-                = link_to 'Details', invoice, meta: 'View Details', class: 'view'
+            %td= invoice_status invoice
       %tfoot
+        %tr
+          %td{ colspan: 3 }
+
   - else
     %p You don't have any invoices.
