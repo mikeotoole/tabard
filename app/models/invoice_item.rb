@@ -53,6 +53,8 @@ class InvoiceItem < ActiveRecord::Base
   validate :is_recurring_and_is_prorated_not_both_true
   validate :only_one_community_plan_item_per_period
   validate :cant_be_edited_after_closed
+  validate :item_is_avaliable, if: Proc.new{|ii| ii.item_type == "CommunityPlan"}
+  validate :upgrade_is_compatable, if: Proc.new{|ii| ii.item_type != "CommunityPlan"}
 
 ###
 # Delegates
@@ -162,6 +164,28 @@ protected
                               (((start_date < end_d) & (end_date > start_d)) |
                               ((start_date == start_d) | (end_date == end_d)))}
       self.errors.add(:base, "plan already exists in that date range.") unless iis.blank?
+    end
+  end
+
+  ###
+  # _Validator_
+  #
+  # Validates the community plan is avaliable.
+  ###
+  def item_is_avaliable
+    self.errors.add(:item, "is not avaliable.") unless self.item.is_available
+  end
+
+  ###
+  # _Validator_
+  #
+  # Validates the community upgrade is compatable with the plan.
+  ###
+  def upgrade_is_compatable
+    plan_invoice_item = self.invoice.plan_invoice_item_for_community(self.community)
+    plan = plan_invoice_item.item
+    unless plan.is_compatable_with_upgrade? self.item
+      self.errors.add(:item, "is not compatable with the invoice's plan.")
     end
   end
 

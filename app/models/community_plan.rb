@@ -63,6 +63,11 @@ class CommunityPlan < ActiveRecord::Base
     return self.title == FREE_PLAN_TITLE
   end
 
+  # Determines if an upgrade is compatable
+  def is_compatable_with_upgrade?(upgrade)
+    self.community_upgrades.include? upgrade
+  end
+
 ###
 # Protected Methods
 ###
