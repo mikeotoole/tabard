@@ -152,6 +152,16 @@ class Invoice < ActiveRecord::Base
     return success
   end
 
+  # This sets processing payment true.
+  def set_processing_payment
+    self.update_column(:processing_payment, true)
+  end
+
+  # This sets paid date.
+  def set_paid_date(date)
+    self.update_column(:paid_date, date)
+  end
+
   ###
   # Used to submit a charge to Stripe with this invoice cost.
   # If the invoice is still open it will first be closed.
@@ -166,13 +176,36 @@ class Invoice < ActiveRecord::Base
         if self.user_stripe_customer_token.present?
           if self.total_price_in_cents > 100
             begin
-              Stripe::Charge.create(
+              charge = Stripe::Charge.create(
                 amount: self.total_price_in_cents,
                 currency: "usd",
                 customer: self.user_stripe_customer_token,
                 description: "Charge for invoice id:#{self.id}"
               )
-              success = self.update_attributes({processing_payment: true}, without_protection: true)
+              # TODO: use self.set_processing_payment
+              success = self.update_attributes({processing_payment: true, stripe_charge_id: charge.id}, without_protection: true)
+            rescue Stripe::CardError => e
+              # TODO: Need to handle card invalid errors.
+              case e.code
+                when "incorrect_number", "invalid_number", "invalid_expiry_month", "invalid_expiry_year", "invalid_cvc"
+                  # Tell customer card on file is invalid and they need to reenter card info.
+                when "expired_card"
+                  # Tell customer card on file is expired and they need to reenter card info.
+                when "incorrect_cvc"
+                  # Tell customer card on file has invalid and they need to reenter card info.
+                when "card_declined"
+                  # Tell customer card on file has been declined.
+                when "missing"
+                  # ERROR: This should not happen! Log error. What to do...
+                  logger.error "CardError charge_customer: #{e.message}"
+                when "processing_error"
+                  # Log error and retry tomorrow.
+                  logger.error "CardError charge_customer: #{e.message}"
+                else
+                  # ERROR: This should not happen! Log error.
+                  logger.error "CardError charge_customer: #{e.message}"
+              end
+              success = false
             rescue Stripe::StripeError => e
               logger.error "StripeError charge_customer: #{e.message}"
               success = false
@@ -180,7 +213,7 @@ class Invoice < ActiveRecord::Base
           else
             #Invice cost is less then $1.00. Just mark as paid. Log that this happend for later review.
             logger.error "ERROR charge_customer: Invoice was less then $1: #{self.to_yaml}"
-            success = self.update_attributes({processing_payment: true, paid_date: Time.now}, without_protection: true)
+            success = self.set_processing_payment and self.set_paid_date(Time.now)
           end
         else
           #ERROR Invoice owner has no payment information.
