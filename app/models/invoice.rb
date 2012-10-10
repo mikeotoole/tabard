@@ -152,6 +152,16 @@ class Invoice < ActiveRecord::Base
     return success
   end
 
+  # This sets processing payment true.
+  def set_processing_payment
+    self.update_column(:processing_payment, true)
+  end
+
+  # This sets paid date.
+  def set_paid_date(date)
+    self.update_column(:paid_date, date)
+  end
+
   ###
   # Used to submit a charge to Stripe with this invoice cost.
   # If the invoice is still open it will first be closed.
@@ -172,7 +182,7 @@ class Invoice < ActiveRecord::Base
                 customer: self.user_stripe_customer_token,
                 description: "Charge for invoice id:#{self.id}"
               )
-              success = self.update_attributes({processing_payment: true}, without_protection: true)
+              success = self.set_processing_payment
             rescue Stripe::StripeError => e
               logger.error "StripeError charge_customer: #{e.message}"
               success = false
@@ -180,7 +190,7 @@ class Invoice < ActiveRecord::Base
           else
             #Invice cost is less then $1.00. Just mark as paid. Log that this happend for later review.
             logger.error "ERROR charge_customer: Invoice was less then $1: #{self.to_yaml}"
-            success = self.update_attributes({processing_payment: true, paid_date: Time.now}, without_protection: true)
+            success = self.set_processing_payment and self.set_paid_date(Time.now)
           end
         else
           #ERROR Invoice owner has no payment information.
