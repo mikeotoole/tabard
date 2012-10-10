@@ -6,6 +6,13 @@
   .plans
     height: 170px
     padding: 20px 0 0
+    ul
+      padding: 0
+      li
+        display: inline
+        padding: 0
+        &:before
+          display: none
     label
       background: #333
       +bg_gradient(#555555,#333333)
@@ -123,7 +130,6 @@
     >ol
       margin: -20px 20px 20px
       position: relative
-      z-index: 2
 
 #cc_input
   >p

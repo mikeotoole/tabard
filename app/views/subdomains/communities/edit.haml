@@ -1,6 +1,9 @@
 - title "Community Settings | #{@community.name}"
+
 - content_for :header do
   = stylesheet_link_tag "application/colorpicker"
+
+- content_for :footer do
   = javascript_include_tag "colorpicker"
   = javascript_include_tag "community_settings"
 

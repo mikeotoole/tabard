@@ -1,8 +1,12 @@
 - is_my_profile = (user_signed_in? and @user_profile == current_user.user_profile)
 - is_private = !(@user_profile.publicly_viewable or (user_signed_in? and @user_profile.id == current_user.user_profile_id))
+
 - title "Profile: #{@user_profile.display_name}"
+
 - content_for :header do
   = stylesheet_link_tag "top_level/user_profiles"
+
+- content_for :footer do
   = javascript_include_tag "user_profiles"
   = javascript_include_tag "activities"
 

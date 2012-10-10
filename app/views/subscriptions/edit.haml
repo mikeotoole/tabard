@@ -4,9 +4,11 @@
 
 - content_for :header do
   %meta{ name: "stripe-key", content: STRIPE_PUBLIC_KEY }
+  = stylesheet_link_tag "top_level/subscriptions"
+
+- content_for :footer do
   = javascript_include_tag "https://js.stripe.com/v1/"
   = javascript_include_tag "subscriptions"
-  = stylesheet_link_tag "top_level/subscriptions"
 
 #body
   %h1= "Subscription for \"#{shorten_words @community.name}\""
@@ -21,24 +23,38 @@
       = hidden_field_tag :stripe_card_token
       %ol
         %li.plans
-          =f.simple_fields_for :invoice_items, @current_plan_invoice_item do |sf|
-            =sf.input :community_id, as: :hidden
-            =sf.input :item_type, as: :hidden
-            =sf.input :quantity, as: :hidden
-            =sf.input :item_id, as: :radio, collection: @available_plans, label: "Plan"
-          %hr
+          = f.simple_fields_for :invoice_items, @current_plan_invoice_item do |sf|
+            = sf.input :community_id, as: :hidden
+            = sf.input :item_type, as: :hidden
+            = sf.input :quantity, as: :hidden
+
+          - @available_plans.each do |plan|
+            - is_current = plan.id == @current_plan_invoice_item.item_id
+            %input{ id: "community_plan_#{plan.id}", type: :radio, name: 'invoice[invoice_items_attributes][0][item_id]', data: {price: plan.price_per_month_in_cents, members: plan.max_number_of_users}, value: plan.id, checked: is_current ? 'checked' : nil }
+            %label{ for: "community_plan_#{plan.id}", title: plan.description }
+              %span.title= plan.title.gsub(/\s*community\s*/i, '')
+              %span.price
+                - if plan.price_per_month_in_cents > 0
+                  = "$#{plan.price_per_month_in_cents/100}/month"
+                - else
+                  This one is on us
+              - if is_current
+                %span.date= "Renews #{@invoice.period_end_date.strftime '%b %e'}"
 
       = render "communities/population", community: @community
+
       #upgrades.section
-        %h1 Upgrades
+        %h1 Add Members
+        %p Scale your community by adding packs of 20 additional users.
         %ol
-          =f.simple_fields_for :invoice_items, @all_upgrades_invoice_items do |sf|
-            =sf.input :community_id, as: :hidden
-            =sf.input :item_type, as: :hidden
-            =sf.input :item_id, as: :hidden
-            =sf.input :quantity
-            =sf.input :_destroy, as: :boolean, default: true
-          %hr
+          = f.simple_fields_for :invoice_items, @all_upgrades_invoice_items do |sf|
+            = sf.input :community_id, as: :hidden
+            = sf.input :item_type, as: :hidden
+            = sf.input :item_id, as: :hidden
+            - collection = (1..CommunityUserPackUpgrade::MAX_PER_COMMUNITY).collect {|u| ["#{number_with_delimiter(u * sf.object.item.number_of_bonus_users)} additional members — #{number_to_currency(u * sf.object.price_per_month_in_dollars, precision: 0)}/mo", u]}
+            - collection.unshift(['None',0])
+            = sf.input :quantity, as: :radio, collection: collection, include_blank: false, label: false, wrapper_html: {class: 'select members_package', data: sf.object.persisted? ? {destroy: 'upgrade_pack'} : {}}
+            = sf.input :_destroy, as: :hidden, default: true
 
       #cc_input.section{ class: card_is_present ? '' : 'show_fields' }
         %h1 Payment

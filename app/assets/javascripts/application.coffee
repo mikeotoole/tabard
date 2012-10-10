@@ -129,6 +129,21 @@ jQuery(document).ready ($) ->
         .html(xhr.responseText)
   $('.dynload:not(.wait)').trigger 'click'
 
+  # Improved select box functionality
+  $('body')
+    .on 'mouseenter mouseleave', '.select', ->
+      $(@).scrollTop 0
+      $(@).find('ul').scrollTop 0
+    .on 'scroll', '.select, .select ul', ->
+      $(@).scrollLeft 0
+    .on 'click', '.select ul label, form .profile label', ->
+      select = $(@).closest '.select'
+      select.scrollTop 0
+      ul = $(@).closest 'ul'
+      ul.scrollTop(0).animate opacity: 0, 200, ->
+        ul.hide().animate opacity: 0, 50, ->
+          ul.show().css opacity: 1
+
   # replace derp avatars with default
   $('.avatar img, img.avatar').bind 'error', ->
     if $(@).css('width')

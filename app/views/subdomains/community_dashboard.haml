@@ -1,4 +1,4 @@
-- content_for :header do
+- content_for :footer do
   = javascript_include_tag "activities"
 
 - if current_user.user_profile == current_community.admin_profile and !Page.find_by_id(current_community.home_page_id)

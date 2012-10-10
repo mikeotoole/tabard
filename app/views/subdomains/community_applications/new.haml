@@ -1,5 +1,6 @@
 - title "New Application | #{current_community.name}"
-- content_for :header do
+
+- content_for :footer do
   = javascript_include_tag "community_application"
 
 = render 'form', community_application: @community_application

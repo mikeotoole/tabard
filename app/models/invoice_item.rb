@@ -62,6 +62,7 @@ class InvoiceItem < ActiveRecord::Base
   delegate :period_start_date, to: :invoice
   delegate :period_end_date, to: :invoice
   delegate :price_per_month_in_cents, to: :item
+  delegate :price_per_month_in_dollars, to: :item
   delegate :title, to: :item, prefix: true
   delegate :description, to: :item, prefix: true
   delegate :user, to: :invoice

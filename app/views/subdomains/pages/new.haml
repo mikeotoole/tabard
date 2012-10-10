@@ -1,8 +1,11 @@
 - title "New Page | #{@community.name}"
+
 - content_for :header do
+  = stylesheet_link_tag "application/fluid"
+
+- content_for :footer do
   = javascript_include_tag "Markdown.Converter","Markdown.Sanitizer","Markdown.Editor"
   = javascript_include_tag "pages"
-  = stylesheet_link_tag "application/fluid"
 
 %h1 New Page
 

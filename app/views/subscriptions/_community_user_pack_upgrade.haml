@@ -1,8 +1,0 @@
-= cf.input :community_upgrade_id, as: :hidden
-- label = 'Additional Member Packs'
-- hint = upgrade[:description].blank? ? upgrade.description : false
-- collection = (1..upgrade.max_number_of_upgrades).collect {|u| ["#{number_with_delimiter(u * upgrade.number_of_bonus_users)} additional members — #{number_to_currency(u * upgrade.price_per_month_in_dollars, precision: 0)}/mo", u]}
-- collection.unshift(['None',0])
-- data = current_community_upgrade.persisted? ? {destroy: 'upgrade_pack'} : {}
-= cf.input :number_in_use, as: :radio, collection: collection, include_blank: false, label: label, hint: hint, wrapper_html: {class: 'select with-label members_package', data: data}
-= cf.input :_destroy, as: :hidden, input_html: {data: data} if current_community_upgrade.persisted?
