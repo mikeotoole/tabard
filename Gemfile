@@ -26,6 +26,7 @@ ruby '1.9.3'
 
 # Caching
   gem 'dalli'#                                                                              MIT - https://github.com/mperham/dalli
+  gem 'memcachier'#                                                                         No License
 
 # Form Handling
   gem 'simple_form', git: 'git://github.com/dw2/simple_form.git'#                           MIT - https://github.com/plataformatec/simple_form
