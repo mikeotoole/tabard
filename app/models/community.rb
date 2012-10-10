@@ -235,11 +235,9 @@ attr_accessor :new_community_plan_id
 
   ###
   # The current number of community members.
-  #
-  # OPTIMIZE: We may want to cache.
   ###
   def current_number_of_users
-    self.community_profiles.count
+    self.community_profiles_count
   end
 
   # If the community is over capacity.

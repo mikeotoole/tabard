@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121008184959) do
+ActiveRecord::Schema.define(:version => 20121010204632) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -195,6 +195,7 @@ ActiveRecord::Schema.define(:version => 20121008184959) do
     t.string   "pitch"
     t.integer  "current_subscription_package_id"
     t.integer  "recurring_subscription_package_id"
+    t.integer  "community_profiles_count",          :default => 0
   end
 
   add_index "communities", ["admin_profile_id"], :name => "index_communities_on_admin_profile_id"
@@ -613,6 +614,12 @@ ActiveRecord::Schema.define(:version => 20121008184959) do
     t.boolean  "is_maintenance", :default => false
     t.datetime "created_at",                        :null => false
     t.datetime "updated_at",                        :null => false
+  end
+
+  create_table "stripe_plans", :force => true do |t|
+    t.integer  "amount"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "submissions", :force => true do |t|
