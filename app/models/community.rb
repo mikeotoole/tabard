@@ -567,5 +567,6 @@ end
 #  pitch                             :string(255)
 #  current_subscription_package_id   :integer
 #  recurring_subscription_package_id :integer
+#  community_profiles_count          :integer          default(0)
 #
 
