@@ -285,17 +285,6 @@ ActiveRecord::Schema.define(:version => 20121010212733) do
     t.text     "upgrade_options"
   end
 
-  create_table "current_community_upgrades", :force => true do |t|
-    t.integer  "community_upgrade_id"
-    t.integer  "number_in_use"
-    t.datetime "created_at",              :null => false
-    t.datetime "updated_at",              :null => false
-    t.integer  "subscription_package_id"
-  end
-
-  add_index "current_community_upgrades", ["community_upgrade_id"], :name => "index_current_community_upgrades_on_community_upgrade_id"
-  add_index "current_community_upgrades", ["subscription_package_id"], :name => "index_current_community_upgrades_on_subscription_package_id"
-
   create_table "custom_forms", :force => true do |t|
     t.string   "name"
     t.text     "instructions"
@@ -611,12 +600,6 @@ ActiveRecord::Schema.define(:version => 20121010212733) do
     t.datetime "updated_at",                        :null => false
   end
 
-  create_table "stripe_plans", :force => true do |t|
-    t.integer  "amount"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
   create_table "submissions", :force => true do |t|
     t.integer  "custom_form_id"
     t.integer  "user_profile_id"
@@ -627,12 +610,6 @@ ActiveRecord::Schema.define(:version => 20121010212733) do
 
   add_index "submissions", ["custom_form_id"], :name => "index_submissions_on_custom_form_id"
   add_index "submissions", ["user_profile_id"], :name => "index_submissions_on_user_profile_id"
-
-  create_table "subscription_packages", :force => true do |t|
-    t.integer  "community_plan_id"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
-  end
 
   create_table "support_comments", :force => true do |t|
     t.integer  "support_ticket_id"

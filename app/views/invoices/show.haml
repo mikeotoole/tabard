@@ -1,45 +1,48 @@
 - title 'Invoices'
 
 #body
-  %h1 Invoices
+  %h1= "Invoice: #{@invoice.period_end_date.strftime("%b %e, %Y")}"
 
-  #submenu
-    = link_to 'All Invoices', invoices_url, class: 'button'
+  = render 'shared/subscriptions_submenu'
+
   - if @invoice.invoice_items.size > 0
-    %table
-      %thead
-        %tr
-          %th item
-          %th start_date
-          %th end_date
-          %th price_each
-          %th quantity
-          %th Subtotal
-          %th
-      %tbody
-        - @invoice.invoice_items.order(:start_date).group_by(&:community).each do |community, invoice_items|
-          -subtotal_price = 0
+    #invoice
+      %table
+        %thead
           %tr
-            %td.l{ colspan: 7 }=link_to_unless @invoice.is_closed, community.name, edit_subscription_path(community)
-          - invoice_items.each do |invoice_item|
-            %tr
-              %td
-                %span= invoice_item.title
-                %hr
-                %span= invoice_item.item_description
-              %td= invoice_item.start_date.strftime("%m/%d/%Y")
-              %td= invoice_item.end_date.strftime("%m/%d/%Y")
-              %td= number_to_currency(invoice_item.price_per_month_in_cents/100.0)
-              %td= invoice_item.quantity
-              %td= number_to_currency(invoice_item.total_price_in_dollars)
-              %td
-              - subtotal_price = subtotal_price + invoice_item.total_price_in_dollars
+            %th
+            %th Period
+            %th Price
+            %th Qty
+            %th Subtotal
+        %tbody
+          - @invoice.invoice_items.order(:start_date).group_by(&:community).each do |community, invoice_items|
+            - subtotal = 0
+            %tr.heading
+              %td{ colspan: 5 }
+                = link_to 'Manage', edit_subscription_path(community), class: 'button', title: 'Edit subscription plan'
+                = community.name
+            - invoice_items.each do |invoice_item|
+              - subtotal = subtotal + invoice_item.total_price_in_dollars
+              %tr
+                %td
+                  %strong= invoice_item.title
+                  %br
+                  = invoice_item.item_description
+                %td
+                  %time
+                    = invoice_item.start_date.strftime("%b %e, %Y")
+                    &mdash;
+                    = invoice_item.end_date.strftime("%b %e, %Y")
+                %td.r= number_to_currency(invoice_item.price_per_month_in_cents/100.0)
+                %td= invoice_item.quantity
+                %td.r= number_to_currency(invoice_item.total_price_in_dollars)
+            %tr.subtotal
+              %td.r{ colspan: 4 } Community Subtotal
+              %td.r= number_to_currency(subtotal)
+        %tfoot
           %tr
-            %td.r{ colspan: 6 }=link_to_unless @invoice.is_closed, "#{community.name} Cost", edit_subscription_path(community)
-            %td=number_to_currency(subtotal_price)
-      %tfoot
-        %tr
-          %td.r{ colspan: 6 } Invoice Total
-          %td.r= number_to_currency(@invoice.total_price_in_dollars)
+            %td.r{ colspan: 4 } Invoice Total
+            %td.r= number_to_currency(@invoice.total_price_in_dollars)
   - else
     %p You don't have any invoices.

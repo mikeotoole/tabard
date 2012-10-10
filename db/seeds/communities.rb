@@ -112,7 +112,7 @@ unless @dont_run
   billy = UserProfile.find_by_last_name('Billy')
 
   puts "#### Headshot is going PRO ####"
-  community_plan = CommunityPlan.find_by_title("Pro")
+  community_plan = CommunityPlan.find_by_title("Pro Community")
   token = Stripe::Token.create(
       :card => {
       :number => "4242424242424242",

@@ -1,0 +1,5 @@
+- current = '' unless !!current
+#submenu
+  = link_to 'Subscriptions', subscriptions_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), class: (current == 'subscriptions' ? 'current' : '')
+  = link_to 'Invoices', invoices_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), class: (current == 'invoices' ? 'current' : '')
+  = link_to 'Update Card', '#', class: (current == 'card' ? 'current' : '')
