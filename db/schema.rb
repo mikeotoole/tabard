@@ -193,11 +193,12 @@ ActiveRecord::Schema.define(:version => 20121010212733) do
     t.boolean  "pending_removal",                 :default => false
     t.text     "action_items"
     t.string   "pitch"
+    t.integer  "community_plan_id"
     t.integer  "community_profiles_count",        :default => 0
   end
 
   add_index "communities", ["admin_profile_id"], :name => "index_communities_on_admin_profile_id"
-  add_index "communities", ["community_announcement_space_id"], :name => "index_comm_on_comm_announcement_space_id"
+  add_index "communities", ["community_announcement_space_id"], :name => "index_communities_on_community_announcement_space_id"
   add_index "communities", ["community_application_form_id"], :name => "index_communities_on_community_application_form_id", :unique => true
   add_index "communities", ["home_page_id"], :name => "index_communities_on_home_page_id"
   add_index "communities", ["member_role_id"], :name => "index_communities_on_member_role_id", :unique => true
