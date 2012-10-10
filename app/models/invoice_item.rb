@@ -103,6 +103,14 @@ class InvoiceItem < ActiveRecord::Base
     (self.item_type == "CommunityUpgrade") or (self.item_type == "CommunityUserPackUpgrade")
   end
 
+  # Determines if this invoice item is compatable with the plan.
+  def is_compatable_with_plan?
+    return true unless self.item_type != "CommunityPlan"
+    plan_invoice_item = self.invoice.plan_invoice_item_for_community(self.community)
+    plan = plan_invoice_item.item
+    return plan.is_compatable_with_upgrade? self.item
+  end
+
   # The number of days this invoice item is in effect for.
   def number_of_days
     distance_in_seconds = (self.end_date - self.start_date).abs
@@ -182,11 +190,7 @@ protected
   # Validates the community upgrade is compatable with the plan.
   ###
   def upgrade_is_compatable
-    plan_invoice_item = self.invoice.plan_invoice_item_for_community(self.community)
-    plan = plan_invoice_item.item
-    unless plan.is_compatable_with_upgrade? self.item
-      self.errors.add(:item, "is not compatable with the invoice's plan.")
-    end
+    self.errors.add(:item, "is not compatable with the invoice's plan.") unless self.is_compatable_with_plan?
   end
 
 ###
