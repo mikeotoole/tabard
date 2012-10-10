@@ -117,6 +117,17 @@ class InvoiceItem < ActiveRecord::Base
     (distance_in_seconds / 1.day).round
   end
 
+  def number_of_users_each
+    case item.class.to_s
+      when "CommunityPlan"
+        item.max_number_of_users
+      when "CommunityUserPack"
+        item.number_of_bonus_users
+      else
+        0
+    end
+  end
+
 ###
 # Protected Methods
 ###

@@ -176,13 +176,36 @@ class Invoice < ActiveRecord::Base
         if self.user_stripe_customer_token.present?
           if self.total_price_in_cents > 100
             begin
-              Stripe::Charge.create(
+              charge = Stripe::Charge.create(
                 amount: self.total_price_in_cents,
                 currency: "usd",
                 customer: self.user_stripe_customer_token,
                 description: "Charge for invoice id:#{self.id}"
               )
-              success = self.set_processing_payment
+              # TODO: use self.set_processing_payment
+              success = self.update_attributes({processing_payment: true, stripe_charge_id: charge.id}, without_protection: true)
+            rescue Stripe::CardError => e
+              # TODO: Need to handle card invalid errors.
+              case e.code
+                when "incorrect_number", "invalid_number", "invalid_expiry_month", "invalid_expiry_year", "invalid_cvc"
+                  # Tell customer card on file is invalid and they need to reenter card info.
+                when "expired_card"
+                  # Tell customer card on file is expired and they need to reenter card info.
+                when "incorrect_cvc"
+                  # Tell customer card on file has invalid and they need to reenter card info.
+                when "card_declined"
+                  # Tell customer card on file has been declined.
+                when "missing"
+                  # ERROR: This should not happen! Log error. What to do...
+                  logger.error "CardError charge_customer: #{e.message}"
+                when "processing_error"
+                  # Log error and retry tomorrow.
+                  logger.error "CardError charge_customer: #{e.message}"
+                else
+                  # ERROR: This should not happen! Log error.
+                  logger.error "CardError charge_customer: #{e.message}"
+              end
+              success = false
             rescue Stripe::StripeError => e
               logger.error "StripeError charge_customer: #{e.message}"
               success = false
