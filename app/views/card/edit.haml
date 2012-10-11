@@ -1,0 +1,25 @@
+- title 'Update Card'
+
+- content_for :header do
+  %meta{ name: "stripe-key", content: STRIPE_PUBLIC_KEY }
+
+- content_for :footer do
+  = javascript_include_tag "https://js.stripe.com/v1/"
+  = javascript_include_tag "card"
+
+- if !!@stripe
+  %h2 Card on File
+  %blockquote
+    %p
+      - nice_date = DateTime.new(@stripe.active_card.exp_year, @stripe.active_card.exp_month).strftime '%B, %Y'
+      %strong= "#{@stripe.active_card.type} ending in #{@stripe.active_card.last4}, expiring #{nice_date}"
+
+= render 'shared/subscriptions_submenu', current: 'card'
+
+= form_tag card_url, method: :put, id: 'card_form' do
+  = hidden_field_tag 'stripe_card_token'
+  %fieldset
+    %h1 Update Card
+    %ol= render 'card/fields'
+    %p.submit
+      = submit_tag 'Submit', class: 'button'
