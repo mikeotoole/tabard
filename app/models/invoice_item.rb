@@ -43,21 +43,21 @@ class InvoiceItem < ActiveRecord::Base
   validates :invoice, presence: true
   validates :community, presence: true
   validates :item, presence: true
-#   validates :quantity, presence: true, numericality: { greater_than_or_equal_to: 1, only_integer: true}#, unless: :marked_for_destruction?
-#   validates :quantity, numericality: { less_than_or_equal_to: 1, only_integer: true}, if: :has_community_plan?
+  validates :quantity, presence: true, numericality: { greater_than_or_equal_to: 1, only_integer: true}, unless: :marked_for_destruction?
+  validates :quantity, numericality: { less_than_or_equal_to: 1, only_integer: true}, if: :has_community_plan?
   validates :start_date, presence: true
   validates :end_date, presence: true
-#   validates_datetime :start_date, on_or_after: lambda {|ii| ii.period_start_date },
-#                                   on_or_after_message: 'must be after invoice start date',
-#                                   if: :is_prorated
-#   validates_datetime :end_date, is_at: lambda {|ii| ii.period_end_date }, if: :is_prorated
+  validates_datetime :start_date, on_or_after: lambda {|ii| ii.period_start_date },
+                                  on_or_after_message: 'must be after invoice start date',
+                                  if: :is_prorated
+  validates_datetime :end_date, is_at: lambda {|ii| ii.period_end_date }, if: :is_prorated
   validates_date :end_date, on_or_after: :start_date, on_or_after_message: 'must be after start date'
   validate :community_is_owned_by_user
   validate :is_recurring_and_is_prorated_not_both_true
   validate :only_one_community_plan_item_per_period
   validate :cant_be_edited_after_closed
-#   validate :item_is_avaliable, if: :has_community_plan?
-#   validate :upgrade_is_compatable, if: :has_community_upgrade?
+  validate :cant_be_edited_when_prorated
+  validate :item_is_avaliable, if: :has_community_plan?
 
 ###
 # Delegates
@@ -110,9 +110,10 @@ class InvoiceItem < ActiveRecord::Base
   # Determines if this invoice item is compatable with the plan.
   def is_compatable_with_plan?
     return true unless self.item_type != "CommunityPlan"
-    plan_invoice_item = self.invoice.invoice_items.select(&:has_community_plan?).first
+    plan_invoice_item = self.invoice.invoice_items.select{|ii| ii.has_community_plan?}.first
     plan = plan_invoice_item.item
     return plan.is_compatable_with_upgrade? self.item
+    return true
   end
 
   # The number of days this invoice item is in effect for.
@@ -156,7 +157,7 @@ protected
   # An item can be both not recurring and not prorated.
   ###
   def is_recurring_and_is_prorated_not_both_true
-    self.errors.add(:base, "prorated items can't be recurring.") if self.is_recurring and self.is_prorated
+    self.errors.add(:base, "prorated items can't be recurring") if self.is_recurring and self.is_prorated
   end
 
   ###
@@ -166,7 +167,18 @@ protected
   ###
   def cant_be_edited_after_closed
     if self.invoice.is_closed and self.invoice.is_closed_was
-      self.errors.add(:base, "can't be edited when invoice is closed.")
+      self.errors.add(:base, "can't be edited when invoice is closed")
+    end
+  end
+
+  ###
+  # _Validator_
+  #
+  # Insure prorated invoice items are not updated.
+  ###
+  def cant_be_edited_when_prorated
+    if self.is_prorated and self.persisted? and self.changed?
+      self.errors.add(:base, "prorated can't be changed")
     end
   end
 
@@ -197,17 +209,6 @@ protected
   ###
   def item_is_avaliable
     self.errors.add(:item, "is not avaliable.") unless self.item.is_available
-  end
-
-  ###
-  # _Validator_
-  #
-  # Validates the community upgrade is compatable with the plan.
-  ###
-  def upgrade_is_compatable
-    unless self.marked_for_destruction?
-      self.errors.add(:item, "is not compatable with the invoice's plan.") unless self.is_compatable_with_plan?
-    end
   end
 
 ###
