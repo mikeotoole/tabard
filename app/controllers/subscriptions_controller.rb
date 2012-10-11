@@ -29,7 +29,7 @@ class SubscriptionsController < ApplicationController
     current_plan = @current_plan_invoice_item.item
     existing_upgrades_invoice_items = @invoice.recurring_upgrade_invoice_items_for_community(@community)
     existing_upgrades = existing_upgrades_invoice_items.map{|ii| ii.item}
-    new_upgrades = current_plan.community_upgrades.delete_if{|upgrade| existing_upgrades.include?(upgrade) }
+    new_upgrades = CommunityUpgrade.all.delete_if{|upgrade| existing_upgrades.include?(upgrade) }
     new_upgrades_invoice_items = new_upgrades.map{ |item| @invoice.invoice_items.new({item: item, quantity: 0, community_id: @community.id}, without_protection: true)}
 
     @all_upgrades_invoice_items = existing_upgrades_invoice_items + new_upgrades_invoice_items
