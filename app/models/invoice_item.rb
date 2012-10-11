@@ -26,7 +26,7 @@ class InvoiceItem < ActiveRecord::Base
 # Callbacks
 ###
   before_validation :set_as_recurring
-  before_validation :set_dates
+  before_validation :set_dates, on: :create
   before_validation :set_destruction_when_quantity_is_zero_or_incompatable
   before_save :make_free_non_recurring
 
