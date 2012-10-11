@@ -27,6 +27,7 @@ class Invoice < ActiveRecord::Base
 # Delegates
 ###
   delegate :id, to: :user, prefix: true
+  delegate :user_profile, to: :user
   delegate :stripe_customer_token, to: :user, prefix: true
 
 ###
@@ -228,6 +229,7 @@ class Invoice < ActiveRecord::Base
     success = false
     success = self.update_column(:paid_date, Time.now)
     success = self.update_column(:stripe_charge_id, charge_id) if charge_id.present?
+    InvoiceMailer.payment_successful(self.id)
     return success
   end
 
