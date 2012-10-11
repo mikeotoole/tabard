@@ -3,6 +3,9 @@ DaBvRails::Application.routes.draw do
   # Stripe Callbacks
   mount StripeEvent::Engine => '/stripe-sentry'
 
+  get "card" => 'card#edit'
+  put "card" => 'card#update'
+
   resources :subscriptions, only: :index
   get '/subscriptions/:community_id/edit' => 'subscriptions#edit', as: :edit_subscription
   put '/subscriptions/:community_id' => 'subscriptions#update', as: :subscription
