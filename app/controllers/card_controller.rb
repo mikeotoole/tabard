@@ -16,7 +16,7 @@ class CardController < ApplicationController
   before_filter :ensure_secure_subdomain
 
   def edit
-    @stripe = Stripe::Customer.retrieve(current_user.stripe_customer_token)
+    @stripe = Stripe::Customer.retrieve(current_user.stripe_customer_token) unless current_user.stripe_customer_token.blank?
   end
 
   def update
@@ -31,7 +31,7 @@ class CardController < ApplicationController
       flash[:error] = "There was a problem with your credit card"
       @stripe_card_token = nil
     end
-    @stripe = Stripe::Customer.retrieve(current_user.stripe_customer_token)
+    @stripe = Stripe::Customer.retrieve(current_user.stripe_customer_token) unless current_user.stripe_customer_token.blank?
     render :edit
   end
 end
