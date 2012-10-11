@@ -20,5 +20,18 @@ class CardController < ApplicationController
   end
 
   def update
+    @stripe_card_token = params[:stripe_card_token]
+    begin
+      if current_user.update_stripe(@stripe_card_token)
+        flash[:success] = "Your card has been updated"
+        # TODO add handing for delinquent accounts.
+      end
+    rescue Stripe::StripeError => e
+      logger.error "StripeError: #{e.message}"
+      flash[:error] = "There was a problem with your credit card"
+      @stripe_card_token = nil
+    end
+    @stripe = Stripe::Customer.retrieve(current_user.stripe_customer_token)
+    render :edit
   end
 end
