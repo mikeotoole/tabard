@@ -229,7 +229,7 @@ class Invoice < ActiveRecord::Base
     success = false
     success = self.update_column(:paid_date, Time.now)
     success = self.update_column(:stripe_charge_id, charge_id) if charge_id.present?
-    InvoiceMailer.payment_successful(self.id)
+    InvoiceMailer.delay.payment_successful(self.id)
     return success
   end
 
