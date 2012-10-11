@@ -5,7 +5,7 @@ jQuery ->
 subscription =
   setupForm: ->
     $('#form_with_subscription').submit ->
-      if $('#card_number').length
+      if $('#cc_fields:visible').length
         $(@).find('input[type=submit]').prop 'disabled', true
         subscription.processCard()
         false
@@ -37,7 +37,6 @@ subscription =
 
     else
       # Show message in DOM
-      console.log response.error
       if response.error.param.match /exp_year|exp_month/
         errorMsg = 'Invalid expiration date.'
       else
@@ -85,9 +84,10 @@ jQuery(document).ready ($) ->
     else
       $('#upgrades, #cc_input').hide()
     updatePopulationBar()
+  $('#form_with_subscription .plans input:checked').trigger 'change'
 
   # Toggling new/onfile card
-  $('#cc_input > p')
+  $('#cc_input menu')
     .on 'click', '.onfile', ->
       $('#cc_input').removeClass 'show_fields'
       $('#cc_fields').hide()

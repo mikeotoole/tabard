@@ -15,13 +15,10 @@
           = "body, #content { background-image: url(#{current_community.background_image_url(:standard)}) !important; }"
     = yield :controller_css
     = render 'layouts/set_timezone' unless !!cookies[:timezone]
-    = javascript_include_tag "application"
-    = javascript_include_tag "community"
     = csrf_meta_tags
     = favicon_link_tag asset_path 'favicon.png'
     = yield :header
     = render 'layouts/ie'
-    = render 'layouts/analytics'
 
   %body{ class: [body_classes,'theme'].flatten.join(' ') }
     #bar= render "layouts/bar_#{user_signed_in? ? 'in' : 'out'}"
@@ -96,4 +93,7 @@
         = yield
         = render 'layouts/footer', current_layout: 'community'
 
+    = javascript_include_tag "application"
+    = javascript_include_tag "community"
     = yield :footer
+    = render 'layouts/analytics'

@@ -1,35 +1,37 @@
 !!!
 %html
   %head
-    %title= yield_for(:title, 'Tabard™')
+    %title= yield_for :title, 'Tabard™'
     %link{ href: "/stylesheets/fonts.css", media: "screen", rel: "stylesheet", type: "text/css" }
     = stylesheet_link_tag "top_level/top_level"
     = stylesheet_link_tag "top_level/calendar"
     = render 'layouts/set_timezone' unless !!cookies[:timezone]
-    = javascript_include_tag "application"
-    /= javascript_include_tag "moment.min"
-    = javascript_include_tag "calendar"
     = csrf_meta_tags
     = favicon_link_tag asset_path 'favicon.png'
     = yield :header
     = render 'layouts/ie'
-    = render 'layouts/analytics'
 
   %body{ class: [body_classes,'fluid'].flatten.join(' ') }
     #bar= render "layouts/bar_in"
+
     = render "layouts/flash_messages"
-
-  #calendar-menu.sidemenu
-    %dl
-      %dt View
-      %dd.list=link_to 'List', events_url, meta: 'Return to list view'
-      - unless params[:action] == 'week_index'
-        %dd.week=link_to 'Week', week_events_url(year: @date.year, week: @date.beginning_of_month.cweek), meta: 'Switch to week view'
-      - unless params[:action] == 'month_index'
-        %dd.month=link_to 'Week', month_events_url(year: @date.year, month: @date.end_of_week.month), meta: 'Switch to month view'
-      - if can? :create, Event
-        %dt Actions
-        %dd.new= link_to 'New', new_event_url, meta: "Create a new event in #{shorten_words(current_community.name)}"
-
-  = yield
-  = yield :footer
+  
+    #calendar-menu.sidemenu
+      %dl
+        %dt View
+        %dd.list=link_to 'List', events_url, meta: 'Return to list view'
+        - unless params[:action] == 'week_index'
+          %dd.week=link_to 'Week', week_events_url(year: @date.year, week: @date.beginning_of_month.cweek), meta: 'Switch to week view'
+        - unless params[:action] == 'month_index'
+          %dd.month=link_to 'Week', month_events_url(year: @date.year, month: @date.end_of_week.month), meta: 'Switch to month view'
+        - if can? :create, Event
+          %dt Actions
+          %dd.new= link_to 'New', new_event_url, meta: "Create a new event in #{shorten_words(current_community.name)}"
+  
+    = yield
+  
+    = javascript_include_tag "application"
+    /= javascript_include_tag "moment.min"
+    = javascript_include_tag "calendar"
+    = yield :footer
+    = render 'layouts/analytics'

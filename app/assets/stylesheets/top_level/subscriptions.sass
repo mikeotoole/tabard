@@ -113,8 +113,8 @@
         top: 90px
 
   .members_package
-    margin: 0 0 40px
-    width: 320px !important
+    margin: 0
+    width: 250px !important
 
   .section
     +border_radius(3,3,0,0)
@@ -131,20 +131,28 @@
       margin: -20px 20px 20px
       position: relative
 
+  .submit
+    margin-top: 0 !important
+
 #cc_input
-  >p
+  padding-bottom: 15px
+  menu
+    padding: 0 20px 20px
     .onfile,
     .newcard
-      background: #777
+      background: #999
       +border_radius(3)
       color: #eee
       display: block
+      height: 30px
       float: left
-      padding: 3px 6px
+      font-size: 14px
+      line-height: 30px
+      padding: 0 10px
       text-decoration: none
-      text-shadow: 0 -1px 1px #000
+      text-shadow: 0 1px 1px #666
       &:hover
-        background: #B33E1E
+        background: #666
         color: #fff
     .onfile
       display: none
@@ -160,7 +168,7 @@
     margin: 0 20px
     display: none
   &.show_fields
-    >p
+    menu
       .onfile
         display: block
       .newcard
