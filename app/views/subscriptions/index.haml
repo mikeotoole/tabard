@@ -23,13 +23,16 @@
           %td.nowrap
             = community.recurring_community_plan_title
             %time
-              = recurring.start_date.strftime '%b %e, %Y'
-              &mdash;
-              = recurring.end_date.strftime '%b %e, %Y'
+              - if recurring.persisted?
+                = recurring.start_date.strftime '%b %e, %Y'
+                &mdash;
+                = recurring.end_date.strftime '%b %e, %Y'
+              - else
+                = "Forever"
           %td.r= number_to_currency(@invoice.total_recurring_price_per_month_in_dollars(community))
           %td.actions
             %div
-              = link_to 'Statement', root_url(subdomain: community.subdomain), meta: 'Current statement', class: 'statement'
+              = link_to 'Statement', community.current_invoice, meta: 'Current statement', class: 'statement'
     %tfoot
       %tr
         %td.r{ colspan: 3 } Monthly Total
