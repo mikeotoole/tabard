@@ -3,6 +3,6 @@
 - content_for :footer do
   = javascript_include_tag 'documents'
 
-#body
-  %h1 Terms of Service and User Agreement
-  .document.plain= render 'document', document: @document
+%h1 Terms of Service and User Agreement
+
+.document.plain= render 'document', document: @document

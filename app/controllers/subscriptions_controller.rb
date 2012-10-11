@@ -14,7 +14,8 @@ class SubscriptionsController < ApplicationController
   skip_before_filter :ensure_not_ssl_mode
   skip_before_filter :limit_subdomain_access
   before_filter :ensure_secure_subdomain
-  before_filter :load_variables, only: [:edit, :update]
+  before_filter :load_community, only: [:edit, :update]
+  before_filter :load_variables
 
   # GET /subscriptions(.:format)
   def index
@@ -61,10 +62,18 @@ protected
   ###
   # _before_filter_
   #
-  # Loads variables used by edit and update.
+  # Loads community used by edit and update.
+  ###
+  def load_community
+    @community = current_user.owned_communities.find(params[:community_id])
+  end
+
+  ###
+  # _before_filter_
+  #
+  # Loads variables
   ###
   def load_variables
-    @community = current_user.owned_communities.find(params[:community_id])
     @available_plans = CommunityPlan.available
     @invoice = current_user.current_invoice
   end

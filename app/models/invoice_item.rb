@@ -32,6 +32,7 @@ class InvoiceItem < ActiveRecord::Base
 # Scopes
 ###
   scope :recurring, where(is_recurring: true)
+  scope :prorated, where(is_prorated: true)
   scope :not_prorated, where(is_prorated: false)
 
 ###

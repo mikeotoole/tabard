@@ -3,31 +3,30 @@
 - content_for :footer do
   = javascript_include_tag 'documents'
 
-#body
-  %h1 Reactivate Account
+%h1 Reactivate Account
 
-  = simple_form_for(resource, as: resource_name, url: reinstate_account_url, html: { method: :put }) do |f|
-    %p Please select a new password to reactivate your account.
-    %fieldset
-      %ol
-        = f.input :password
-        = f.input :password_confirmation
-    = f.hidden_field :reset_password_token
-    %h2 Terms of Service and User Agreement
-    .document
-      .scroll
-        :markdown
-          #{TermsOfService.current.body}
-      %p.accept
-        = f.input :accepted_current_terms_of_service, as: :boolean, label: 'I have read and accept the "Terms of Service"', wrapper: false
-    %h2 Privacy Policy
-    .document
-      .scroll
-        :markdown
-          #{PrivacyPolicy.current.body}
-      %p.accept
-        = f.input :accepted_current_privacy_policy, as: :boolean, label: 'I have read and accept the "Terms of Service"', wrapper: false
-    %p
-      %button{ type: 'submit' } Reactivate account
+= simple_form_for(resource, as: resource_name, url: reinstate_account_url, html: { method: :put }) do |f|
+  %p Please select a new password to reactivate your account.
+  %fieldset
+    %ol
+      = f.input :password
+      = f.input :password_confirmation
+  = f.hidden_field :reset_password_token
+  %h2 Terms of Service and User Agreement
+  .document
+    .scroll
+      :markdown
+        #{TermsOfService.current.body}
+    %p.accept
+      = f.input :accepted_current_terms_of_service, as: :boolean, label: 'I have read and accept the "Terms of Service"', wrapper: false
+  %h2 Privacy Policy
+  .document
+    .scroll
+      :markdown
+        #{PrivacyPolicy.current.body}
+    %p.accept
+      = f.input :accepted_current_privacy_policy, as: :boolean, label: 'I have read and accept the "Terms of Service"', wrapper: false
+  %p
+    %button{ type: 'submit' } Reactivate account
 
-  = render "devise/shared/links"
+= render "devise/shared/links"

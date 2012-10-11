@@ -19,10 +19,10 @@
     = render 'layouts/flash_messages' unless @page_caching
 
     #content
-      = yield
-      = render 'layouts/footer', current_layout: 'application'
+      #body
+        = yield
+        = render 'layouts/footer', current_layout: 'application'
 
     = javascript_include_tag "application"
-    = javascript_include_tag "top_level"
     = yield :footer
     = render 'layouts/analytics'

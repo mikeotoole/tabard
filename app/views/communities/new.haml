@@ -7,16 +7,15 @@
   = javascript_include_tag "https://js.stripe.com/v1/"
   = javascript_include_tag "subscriptions"
 
-#body
-  %h1 Create a community
+%h1 Create a community
 
-  = simple_form_for @community, html: {novalidate: true, id: "form_with_subscription"} do |f|
-    %fieldset
-      %ol
-        = f.input :name, hint: 'This can never be changed.', input_html: { maxlength: Community::MAX_NAME_LENGTH }
-        = f.input :slogan, input_html: { maxlength: Community::MAX_SLOGAN_LENGTH }
-        = render 'subscriptions/fields', f: f, community: @community, available_plans: @available_plans, stripe_card_token: @stripe_card_token
-      %p
-        %button{ type: 'submit' } Create Community
+= simple_form_for @community, html: {novalidate: true, id: "form_with_subscription"} do |f|
+  %fieldset
+    %ol
+      = f.input :name, hint: 'This can never be changed.', input_html: { maxlength: Community::MAX_NAME_LENGTH }
+      = f.input :slogan, input_html: { maxlength: Community::MAX_SLOGAN_LENGTH }
+      = render 'subscriptions/fields', f: f, community: @community, available_plans: @available_plans, stripe_card_token: @stripe_card_token
+    %p
+      %button{ type: 'submit' } Create Community
 
-  = render 'shared/user_account_links'
+= render 'shared/user_account_links'

@@ -1,13 +1,12 @@
 - title 'Unlock Instructions'
 
-#body
-  %h1 Resend unlock instructions
+%h1 Resend unlock instructions
 
-  = simple_form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f|
-    %fieldset
-      %ol
-        = f.input :email
-        %li
-          %button{ type: 'submit' } Resend instructions
+= simple_form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f|
+  %fieldset
+    %ol
+      = f.input :email
+      %li
+        %button{ type: 'submit' } Resend instructions
 
-  = render "devise/shared/links"
+= render "devise/shared/links"

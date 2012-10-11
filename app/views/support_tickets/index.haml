@@ -3,53 +3,52 @@
 - content_for :header do
   = stylesheet_link_tag 'top_level/support'
 
-#body
-  %h1 Tabard Support
+%h1 Tabard Support
 
-  - unless user_signed_in?
-    %p
-      Please
-      = link_to 'log into Tabard', new_user_session_url
-      to create or update your support tickets.
+- unless user_signed_in?
+  %p
+    Please
+    = link_to 'log into Tabard', new_user_session_url
+    to create or update your support tickets.
 
-  - else
-    #submenu
-      = link_to '+ New issue', 'javascript:;', class: 'button', onclick: "$('#new_support_ticket').slideDown(200,function(){$('#body').trigger('DOMNodeInserted');}).find('textarea').focus();$(this).hide();return false;"
+- else
+  #submenu
+    = link_to '+ New issue', 'javascript:;', class: 'button', onclick: "$('#new_support_ticket').slideDown(200,function(){$('#body').trigger('DOMNodeInserted');}).find('textarea').focus();$(this).hide();return false;"
 
-    = simple_form_for @support_ticket, url: {action: :create}, html: {novalidate: true} do |f|
-      = f.input :body, wrapper_tag: :p, label: 'Describe your issue in detail'
-      %p.submit
-        %button{ type: 'submit' } Create Support Ticket
+  = simple_form_for @support_ticket, url: {action: :create}, html: {novalidate: true} do |f|
+    = f.input :body, wrapper_tag: :p, label: 'Describe your issue in detail'
+    %p.submit
+      %button{ type: 'submit' } Create Support Ticket
 
-    - if current_user.support_tickets.any?
-      %table.tickets
-        %thead
-          %tr
-            %th Issue
-            %th Status
-            %th
-        %tbody
-          - @support_tickets.each do |ticket|
-            %tr{ class: ticket.status.downcase().gsub(/[^a-z]/, '') }
-              %td
-                = link_to truncate(ticket.body, length: 80, separator: ' ', omission: '…'), support_url(ticket)
-                - if ticket.support_comments.any? and ticket.status != 'Closed'
-                  - comment = ticket.support_comments.last
-                  %blockquote
-                    = image_tag comment.avatar_url(:icon)
-                    = truncate(comment.body, length: 80, separator: ' ', omission: '…')
-                    = link_to 'reply', support_url(ticket, anchor: 'new_support_comment')
-              %td
-                - case ticket.status
-                - when 'Pending Review'
-                  %time= "Opened #{time_ago_in_words(ticket.created_at)} ago"
-                - when 'In Progress'
-                  %time= "Updated #{time_ago_in_words(ticket.updated_at)} ago"
-                - when 'Closed'
-                  %time= "Closed #{time_ago_in_words(ticket.updated_at)} ago"
-              %td.actions
-                - unless ticket.status == 'Closed'
-                  %div
-                    = link_to 'Add a comment', support_url(ticket, anchor: 'new_support_comment'), class: 'comment'
-                    = link_to 'Close ticket', support_status_url(ticket, 'Closed'), class: 'close', method: :put, confirm: 'Really close this ticket?'
-      = paginate @support_tickets
+  - if current_user.support_tickets.any?
+    %table.tickets
+      %thead
+        %tr
+          %th Issue
+          %th Status
+          %th
+      %tbody
+        - @support_tickets.each do |ticket|
+          %tr{ class: ticket.status.downcase().gsub(/[^a-z]/, '') }
+            %td
+              = link_to truncate(ticket.body, length: 80, separator: ' ', omission: '…'), support_url(ticket)
+              - if ticket.support_comments.any? and ticket.status != 'Closed'
+                - comment = ticket.support_comments.last
+                %blockquote
+                  = image_tag comment.avatar_url(:icon)
+                  = truncate(comment.body, length: 80, separator: ' ', omission: '…')
+                  = link_to 'reply', support_url(ticket, anchor: 'new_support_comment')
+            %td
+              - case ticket.status
+              - when 'Pending Review'
+                %time= "Opened #{time_ago_in_words(ticket.created_at)} ago"
+              - when 'In Progress'
+                %time= "Updated #{time_ago_in_words(ticket.updated_at)} ago"
+              - when 'Closed'
+                %time= "Closed #{time_ago_in_words(ticket.updated_at)} ago"
+            %td.actions
+              - unless ticket.status == 'Closed'
+                %div
+                  = link_to 'Add a comment', support_url(ticket, anchor: 'new_support_comment'), class: 'comment'
+                  = link_to 'Close ticket', support_status_url(ticket, 'Closed'), class: 'close', method: :put, confirm: 'Really close this ticket?'
+    = paginate @support_tickets

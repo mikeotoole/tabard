@@ -1,33 +1,39 @@
 - title 'Subscriptions'
 
-#body
-  %h1 Subscriptions
+%h1 Subscriptions
 
-  = render 'shared/subscriptions_submenu', current: 'subscriptions'
+= render 'shared/subscriptions_submenu', current: 'subscriptions'
 
-  - if @owned_communities.size > 0
-    %table
-      %thead
+- if @owned_communities.size > 0
+  %table
+    %thead
+      %tr
+        %th Community Name
+        %th Current Plan
+        %th Next Cycle
+        %th Cost
+        %th.actions
+    %tbody
+      - @owned_communities.each do |community|
+        - recurring = @invoice.plan_invoice_item_for_community(community)
         %tr
-          %th Community Name
-          %th Current Plan
-          %th Recurring Plan
-          %th Cost
-          %th.actions
-      %tbody
-        - @owned_communities.each do |community|
-          %tr
-            %td= link_to shorten_words(community.name, 21), edit_subscription_path(community)
-            %td= community.current_community_plan_title
-            %td= community.recurring_community_plan_title
-            %td.r= number_to_currency(current_user.total_recurring_price_per_month_in_dollars(community))
-            %td.actions
-              %div
-                = link_to 'View', root_url(subdomain: community.subdomain), meta: 'View Community', class: 'view'
-      %tfoot
-        %tr
-          %td.r{ colspan: 3 } Monthly Total
-          %td.r= number_to_currency(current_user.total_recurring_price_per_month_in_dollars)
-          %td
-  - else
-    %p You don't have any active subscriptions.
+          %td= link_to shorten_words(community.name, 21), edit_subscription_path(community)
+          %td.nowrap
+            = community.current_community_plan_title
+          %td.nowrap
+            = community.recurring_community_plan_title
+            %time
+              = recurring.start_date.strftime '%b %e, %Y'
+              &mdash;
+              = recurring.end_date.strftime '%b %e, %Y'
+          %td.r= number_to_currency(@invoice.total_recurring_price_per_month_in_dollars(community))
+          %td.actions
+            %div
+              = link_to 'Statement', root_url(subdomain: community.subdomain), meta: 'Current statement', class: 'statement'
+    %tfoot
+      %tr
+        %td.r{ colspan: 3 } Monthly Total
+        %td.r= number_to_currency(current_user.total_recurring_price_per_month_in_dollars)
+        %td
+- else
+  %p You don't have any active subscriptions.

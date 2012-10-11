@@ -1,13 +1,12 @@
 - title "New Star Wars: The Old Republic Character"
 
-#body
-  %h1 New Star Wars: The Old Republic Character
+%h1 New Star Wars: The Old Republic Character
 
-  = simple_form_for @swtor_character, html: {novalidate: true} do |f|
-    %fieldset
-      %ol
-        = render 'fields', f: f, swtor_character: @swtor_character
-        %li
-          %button{ type: 'submit' } Create character
+= simple_form_for @swtor_character, html: {novalidate: true} do |f|
+  %fieldset
+    %ol
+      = render 'fields', f: f, swtor_character: @swtor_character
+      %li
+        %button{ type: 'submit' } Create character
 
-  = render 'shared/user_account_links'
+= render 'shared/user_account_links'

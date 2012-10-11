@@ -7,24 +7,23 @@
   = javascript_include_tag 'endless_scrolling'
   = javascript_include_tag 'search'
 
-#body
-  %h1 Find Communities & Players
+%h1 Find Communities & Players
 
+- if @results.any?
+  = render 'submenu'
+
+#searchbox
+  = form_tag search_url(subdomain: false), method: 'get' do
+    %p
+      = text_field_tag :term, params[:term], id: 'search', placeholder: 'Community, Game, Character, or Player', autocomplete: 'off', data: {url: search_autocomplete_url(subdomain: false)}
+      %button{ type: 'submit' } Search
+
+- unless params[:term].blank?
+  %h2 Search Results
   - if @results.any?
-    = render 'submenu'
-
-  #searchbox
-    = form_tag search_url(subdomain: false), method: 'get' do
-      %p
-        = text_field_tag :term, params[:term], id: 'search', placeholder: 'Community, Game, Character, or Player', autocomplete: 'off', data: {url: search_autocomplete_url(subdomain: false)}
-        %button{ type: 'submit' } Search
-
-  - unless params[:term].blank?
-    %h2 Search Results
-    - if @results.any?
-      .endless_scrolling{ action: request.fullpath, target: 'ol.results', current_page: @results.current_page, last_page: @results.num_pages }
-        %ol.results
-          = render 'results', results: @results
-        = paginate @results
-    - else
-      %p We did not find any players or communities that matched your request.
+    .endless_scrolling{ action: request.fullpath, target: 'ol.results', current_page: @results.current_page, last_page: @results.num_pages }
+      %ol.results
+        = render 'results', results: @results
+      = paginate @results
+  - else
+    %p We did not find any players or communities that matched your request.

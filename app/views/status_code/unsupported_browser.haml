@@ -1,33 +1,34 @@
 - title 'Unsupported Browser'
 
-#body
-  :markdown
-    # Your browser isn't supported by Tabard&trade;
-    **Our server seems to think that your browser is either too old, or flat out not supported by our system. Bummer!**
-    We've detected that you're using **#{browser.name} #{browser.full_version}**
-    ## What's this mean?
-    Well, the easiest solution is to upgrade your browser or use a different one. Here are some popular choices:
-  .col3.browsers
-    %article
-      %h2
-        Chrome
-        %span Recommended
-      %dfn Version 17+
-      = link_to image_tag('application/browser-chrome.png'), 'http://www.google.com/chrome/', target: '_blank'
-    %article
-      %h2
-        Safari
-        %span Supported
-      %dfn Version 5+
-      = link_to image_tag('application/browser-safari.png'), 'http://www.apple.com/safari/', target: '_blank'
-    %article
-      %h2
-        Firefox
-        %span Supported
-      %dfn Version 10+
-      = link_to image_tag('application/browser-firefox.png'), 'http://www.mozilla.org/firefox/new/', target: '_blank'
-  :markdown
-    ---
-    If you absolutely must access Tabard&trade; using an unsupported browser,
-    you can still [skip this message](#{ignore_browser_url}), but be warned:
-    **Many features will probably not look or work as intended.**
+:markdown
+  # Your browser isn't supported by Tabard&trade;
+  **Our server seems to think that your browser is either too old, or flat out not supported by our system. Bummer!**
+  We've detected that you're using **#{browser.name} #{browser.full_version}**
+  ## What's this mean?
+  Well, the easiest solution is to upgrade your browser or use a different one. Here are some popular choices:
+
+.col3.browsers
+  %article
+    %h2
+      Chrome
+      %span Recommended
+    %dfn Version 17+
+    = link_to image_tag('application/browser-chrome.png'), 'http://www.google.com/chrome/', target: '_blank'
+  %article
+    %h2
+      Safari
+      %span Supported
+    %dfn Version 5+
+    = link_to image_tag('application/browser-safari.png'), 'http://www.apple.com/safari/', target: '_blank'
+  %article
+    %h2
+      Firefox
+      %span Supported
+    %dfn Version 10+
+    = link_to image_tag('application/browser-firefox.png'), 'http://www.mozilla.org/firefox/new/', target: '_blank'
+
+:markdown
+  ---
+  If you absolutely must access Tabard&trade; using an unsupported browser,
+  you can still [skip this message](#{ignore_browser_url}), but be warned:
+  **Many features will probably not look or work as intended.**

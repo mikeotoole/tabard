@@ -3,32 +3,31 @@
 - content_for :header do
   = stylesheet_link_tag 'top_level/support'
 
-#body
-  %h1
-    = link_to "Tabard Support", support_index_url(subdomain: false)
-    = " / Ticket ##{@support_ticket.id}"
-  %p.status{ class: @support_ticket.status.downcase().gsub(/[^a-z]/, '') }= @support_ticket.status
+%h1
+  = link_to "Tabard Support", support_index_url(subdomain: false)
+  = " / Ticket ##{@support_ticket.id}"
+%p.status{ class: @support_ticket.status.downcase().gsub(/[^a-z]/, '') }= @support_ticket.status
 
-  %blockquote= simple_format @support_ticket.body
+%blockquote= simple_format @support_ticket.body
 
-  - if @support_ticket.support_comments.keep_if{|c| c.valid?}.any?
-    .comments
-      %h2 Comments
-      %ol
-        - @support_ticket.support_comments.each do |comment|
-          - next unless comment.valid?
-          %li.comment{ id: "comment_#{comment.id}", class: comment.admin_created? ? 'admin' : 'user' }
-            %blockquote
-              .avatar= image_tag comment.avatar_url(:small)
-              %span.meta
-                Posted
-                = raw("by <strong>#{comment.author_name}</strong>") if comment.admin_created?
-                %time= "#{time_ago_in_words(comment.updated_at)} ago"
-              %p
-                %span.body= shorten_words(comment.body)
+- if @support_ticket.support_comments.keep_if{|c| c.valid?}.any?
+  .comments
+    %h2 Comments
+    %ol
+      - @support_ticket.support_comments.each do |comment|
+        - next unless comment.valid?
+        %li.comment{ id: "comment_#{comment.id}", class: comment.admin_created? ? 'admin' : 'user' }
+          %blockquote
+            .avatar= image_tag comment.avatar_url(:small)
+            %span.meta
+              Posted
+              = raw("by <strong>#{comment.author_name}</strong>") if comment.admin_created?
+              %time= "#{time_ago_in_words(comment.updated_at)} ago"
+            %p
+              %span.body= shorten_words(comment.body)
 
-  %h2 Add a comment
-  = simple_form_for [@support_ticket, @support_comment], method: :post, as: :support_comment, url: support_comment_index_url(@support_ticket), html: {novalidate: true} do |f|
-    = f.input :body, wrapper_tag: :p, label: false
-    %p.submit
-      %button{ type: :submit } Add comment
+%h2 Add a comment
+= simple_form_for [@support_ticket, @support_comment], method: :post, as: :support_comment, url: support_comment_index_url(@support_ticket), html: {novalidate: true} do |f|
+  = f.input :body, wrapper_tag: :p, label: false
+  %p.submit
+    %button{ type: :submit } Add comment

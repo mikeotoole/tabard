@@ -8,18 +8,15 @@ jQuery(document).ready ($) ->
     .on 'ajax:complete', 'dt.announcements + dd form', (event, data, status, xhr) ->
       $('#tabs dt.announcements a').trigger 'click'
   
-  if $('#body.myprofile').length
+  if $('#body:has(header.myprofile)').length
     $('#bar')
-      .on 'click', '.avatar .activities a', ->
-        $('#tabs dt.activities a').trigger 'click'
-        false
-      .on 'click','.dashboard .calendar a',  ->
-        $('#tabs dt.invites a').trigger 'click'
-        false
       .on 'click','.dashboard .notice a', ->
         $('#tabs dt.announcements a').trigger 'click'
         false
-      .on 'click','.logo, .avatar > a, .avatar .characters a', ->
+      .on 'click','.dashboard .calendar a', ->
+        $('#tabs dt.invites a').trigger 'click'
+        false
+      .on 'click','.avatar > a, .characters a', ->
         $('#tabs dt.characters a').trigger 'click'
         false
 

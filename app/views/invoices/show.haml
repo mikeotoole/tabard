@@ -1,56 +1,60 @@
-- title 'Invoices'
+- title 'Statement'
 
-#body
-  %h1= "Invoice: #{@invoice.period_end_date.strftime("%b %e, %Y")}"
+%h1
+  Statement:
+  = @invoice.period_start_date.strftime("%b %e, %Y")
+  - if @invoice.period_start_date != @invoice.period_end_date
+    &mdash;
+    = @invoice.period_end_date.strftime("%b %e, %Y")
 
-  = render 'shared/subscriptions_submenu'
+= render 'shared/subscriptions_submenu'
 
-  - if @invoice.invoice_items.size > 0
-    #invoice
-      %table
-        %thead
-          %tr
-            %th
-            %th Period
-            %th Price
-            %th
-            %th Qty
-            %th Subtotal
-        %tbody
-          - @invoice.invoice_items.order(:start_date).group_by(&:community).each do |community, invoice_items|
-            - subtotal = 0
-            %tr.heading
-              %td{ colspan: 6 }
-                = link_to 'Manage', edit_subscription_path(community), class: 'button', title: 'Edit subscription plan'
-                = community.name
-            - invoice_items.each do |invoice_item|
-              - subtotal = subtotal + invoice_item.total_price_in_dollars
-              %tr
-                %td
-                  %strong= invoice_item.item_title
-                  %br
-                  = invoice_item.item_description
-                %td
-                  %time
-                    = invoice_item.start_date.strftime("%b %e, %Y")
-                    &mdash;
-                    = invoice_item.end_date.strftime("%b %e, %Y")
-                    - if invoice_item.is_prorated
-                      %br
-                      = 'Prorated'
-                %td.r= number_to_currency(invoice_item.price_per_month_in_cents/100.0)
-                %td &times;
-                %td= invoice_item.quantity
-                %td.r
+- if @invoice.invoice_items.size > 0
+  #invoice
+    %table
+      %thead
+        %tr
+          %th Description
+          %th Period
+          %th Price
+          %th
+          %th Qty
+          %th Subtotal
+      %tbody
+        - @invoice.invoice_items.order(:start_date).group_by(&:community).each do |community, invoice_items|
+          - subtotal = 0
+          %tr.heading
+            %td{ colspan: 6 }
+              = link_to 'Manage', edit_subscription_path(community), class: 'button', title: 'Edit subscription plan'
+              = community.name
+          - invoice_items.each do |invoice_item|
+            - subtotal = subtotal + invoice_item.total_price_in_dollars
+            %tr
+              %td
+                %strong= invoice_item.item_title
+                %br
+                = invoice_item.item_description
+              %td
+                %time
+                  = invoice_item.start_date.strftime("%b %e, %Y")
+                  &mdash;
+                  = invoice_item.end_date.strftime("%b %e, %Y")
                   - if invoice_item.is_prorated
-                    %strike= number_to_currency(invoice_item.price_per_month_in_cents/100.0*invoice_item.quantity)
-                  %strong= number_to_currency(invoice_item.total_price_in_dollars)
-            %tr.subtotal
-              %td.r{ colspan: 5 } Community Subtotal
-              %td.r= number_to_currency(subtotal)
-        %tfoot
-          %tr
-            %td.r{ colspan: 5 } Invoice Total
-            %td.r= number_to_currency(@invoice.total_price_in_dollars)
-  - else
-    %p You don't have any invoices.
+                    %br
+                    = 'Prorated'
+              %td.r= number_to_currency(invoice_item.price_per_month_in_cents/100.0)
+              %td &times;
+              %td= invoice_item.quantity
+              %td.r
+                - if invoice_item.is_prorated
+                  %strike= number_to_currency(invoice_item.price_per_month_in_cents/100.0*invoice_item.quantity)
+                %strong= number_to_currency(invoice_item.total_price_in_dollars)
+          %tr.subtotal
+            %td.r{ colspan: 5 } Community Subtotal
+            %td.r= number_to_currency(subtotal)
+      %tfoot
+        %tr
+          %td.r{ colspan: 5 } Invoice Total
+          %td.r= number_to_currency(@invoice.total_price_in_dollars)
+- else
+  %p You don't have any invoices.

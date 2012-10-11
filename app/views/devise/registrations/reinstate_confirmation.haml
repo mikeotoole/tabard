@@ -1,17 +1,17 @@
 - title 'Reactivate Account'
 
-#body
-  %h1 Reactivate Account
-  %p
-    An email will be sent with instructions on how
-    %br
-    to reactivate your deactivated account.
+%h1 Reactivate Account
 
-  = simple_form_for(@user, url: send_reinstate_url, html: { method: :put }) do |f|
-    %fieldset
-      %ol
-        = f.input :email, as: :email
-      %p
-        %button{ type: 'submit' } Send instructions
+%p
+  An email will be sent with instructions on how
+  %br
+  to reactivate your deactivated account.
 
-  = render "devise/shared/links"
+= simple_form_for(@user, url: send_reinstate_url, html: { method: :put }) do |f|
+  %fieldset
+    %ol
+      = f.input :email, as: :email
+    %p
+      %button{ type: 'submit' } Send instructions
+
+= render "devise/shared/links"
