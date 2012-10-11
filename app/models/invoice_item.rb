@@ -26,7 +26,7 @@ class InvoiceItem < ActiveRecord::Base
 # Callbacks
 ###
   before_validation :set_dates
-  before_validation :set_destruction_for_zero
+  before_validation :set_destruction_when_quantity_is_zero_or_incompatable
   before_save :make_free_non_recurring
 
 ###
@@ -42,21 +42,21 @@ class InvoiceItem < ActiveRecord::Base
   validates :invoice, presence: true
   validates :community, presence: true
   validates :item, presence: true
-  validates :quantity, presence: true, numericality: { greater_than_or_equal_to: 1, only_integer: true}
-  validates :quantity, numericality: { less_than_or_equal_to: 1, only_integer: true}, if: Proc.new{|ii| ii.item_type == "CommunityPlan"}
+#   validates :quantity, presence: true, numericality: { greater_than_or_equal_to: 1, only_integer: true}#, unless: :marked_for_destruction?
+#   validates :quantity, numericality: { less_than_or_equal_to: 1, only_integer: true}, if: :has_community_plan?
   validates :start_date, presence: true
   validates :end_date, presence: true
-  validates_datetime :start_date, on_or_after: lambda {|ii| ii.period_start_date },
-                                  on_or_after_message: 'must be after invoice start date',
-                                  if: Proc.new{|ii| ii.is_prorated }
-  validates_datetime :end_date, is_at: lambda {|ii| ii.period_end_date }, if: Proc.new{|ii| ii.is_prorated }
+#   validates_datetime :start_date, on_or_after: lambda {|ii| ii.period_start_date },
+#                                   on_or_after_message: 'must be after invoice start date',
+#                                   if: :is_prorated
+#   validates_datetime :end_date, is_at: lambda {|ii| ii.period_end_date }, if: :is_prorated
   validates_date :end_date, on_or_after: :start_date, on_or_after_message: 'must be after start date'
   validate :community_is_owned_by_user
   validate :is_recurring_and_is_prorated_not_both_true
   validate :only_one_community_plan_item_per_period
   validate :cant_be_edited_after_closed
-  validate :item_is_avaliable, if: Proc.new{|ii| ii.item_type == "CommunityPlan"}
-  validate :upgrade_is_compatable, if: Proc.new{|ii| ii.item_type != "CommunityPlan"}
+#   validate :item_is_avaliable, if: :has_community_plan?
+#   validate :upgrade_is_compatable, if: :has_community_upgrade?
 
 ###
 # Delegates
@@ -109,7 +109,7 @@ class InvoiceItem < ActiveRecord::Base
   # Determines if this invoice item is compatable with the plan.
   def is_compatable_with_plan?
     return true unless self.item_type != "CommunityPlan"
-    plan_invoice_item = self.invoice.plan_invoice_item_for_community(self.community)
+    plan_invoice_item = self.invoice.invoice_items.select(&:has_community_plan?).first
     plan = plan_invoice_item.item
     return plan.is_compatable_with_upgrade? self.item
   end
@@ -204,7 +204,9 @@ protected
   # Validates the community upgrade is compatable with the plan.
   ###
   def upgrade_is_compatable
-    self.errors.add(:item, "is not compatable with the invoice's plan.") unless self.is_compatable_with_plan?
+    unless self.marked_for_destruction?
+      self.errors.add(:item, "is not compatable with the invoice's plan.") unless self.is_compatable_with_plan?
+    end
   end
 
 ###
@@ -217,10 +219,10 @@ protected
   ###
   def set_dates
     if self.invoice.present? and not self.frozen?
-      if self.is_prorated
+      if self.is_prorated and not self.persisted?
         self.start_date = Time.now.beginning_of_day
         self.end_date = self.period_end_date
-      else
+      elsif not self.is_prorated
         self.start_date = self.period_end_date
         self.end_date = self.start_date + 30.days
       end
@@ -233,11 +235,11 @@ protected
   #
   # This will set the model for destruction if the quantity is 0.
   ###
-  def set_destruction_for_zero
-    if self.quantity == 0 and self.quantity_was != 0
+  def set_destruction_when_quantity_is_zero_or_incompatable
+    if not self.is_prorated and (self.quantity.blank? or self.quantity == 0 or not self.is_compatable_with_plan?)
       self.mark_for_destruction
-      self.quantity = self.quantity_was
     end
+    return true
   end
 
   ###

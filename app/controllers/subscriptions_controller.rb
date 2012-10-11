@@ -27,13 +27,10 @@ class SubscriptionsController < ApplicationController
     # Get invoice item for current plan.
     @current_plan_invoice_item = @invoice.plan_invoice_item_for_community(@community)
 
-    current_plan = @current_plan_invoice_item.item
-    existing_upgrades_invoice_items = @invoice.recurring_upgrade_invoice_items_for_community(@community)
-    existing_upgrades = existing_upgrades_invoice_items.map{|ii| ii.item}
-    new_upgrades = current_plan.community_upgrades.all.delete_if{|upgrade| existing_upgrades.include?(upgrade) }
-    new_upgrades_invoice_items = new_upgrades.map{ |item| @invoice.invoice_items.new({item: item, quantity: 0, community_id: @community.id}, without_protection: true)}
-
-    @all_upgrades_invoice_items = existing_upgrades_invoice_items + new_upgrades_invoice_items
+    @all_upgrades_invoice_items = @invoice.recurring_upgrade_invoice_items_for_community(@community)
+    if @all_upgrades_invoice_items.blank?
+      @all_upgrades_invoice_items = @invoice.invoice_items.new({item: CommunityUpgrade.first, quantity: 0, community_id: @community.id}, without_protection: true)
+    end
   end
 
   # PUT /subscriptions/:community_id
@@ -43,8 +40,8 @@ class SubscriptionsController < ApplicationController
       if @invoice.update_attributes_with_payment(params[:invoice], @stripe_card_token)
         flash[:success] = "Your plan has been changed"
       else
-        @current_plan_invoice_item = @invoice.invoice_items.select(&:has_community_plan?).first
-        @all_upgrades_invoice_items = @invoice.invoice_items.select(&:has_community_upgrade?)
+        @current_plan_invoice_item = @invoice.invoice_items.recurring.select(&:has_community_plan?).first
+        @all_upgrades_invoice_items = @invoice.invoice_items.recurring.select(&:has_community_upgrade?)
       end
     rescue Stripe::StripeError => e
       logger.error "StripeError: #{e.message}"

@@ -9,6 +9,8 @@ class Invoice < ActiveRecord::Base
   # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
   acts_as_paranoid
 
+  MINIMUM_CHARGE_AMOUNT=100
+
 ###
 # Attribute accessible
 ###
@@ -18,7 +20,7 @@ class Invoice < ActiveRecord::Base
 # Associations
 ###
   belongs_to :user
-  has_many :invoice_items, dependent: :destroy, inverse_of: :invoice
+  has_many :invoice_items, dependent: :destroy, inverse_of: :invoice#, autosave: true
   accepts_nested_attributes_for :invoice_items, allow_destroy: true
 
 ###
@@ -50,15 +52,16 @@ class Invoice < ActiveRecord::Base
   before_save :set_charged_total_price_in_cents_when_closed
   after_save :create_next_invoice_when_closed
   after_save :add_prorated_items
-  after_save :remove_incompatable_upgrades
+#   after_save :remove_incompatable_upgrades
 
 ###
 # Class Methods
 ###
   # This will call charge_customer on all invoices that have an end_date before today.
   def self.bill_customers
-    invoices_to_bill = Invoice.where{(period_end_date <= Time.now.end_of_day) & (processing_payment == false)}
+    invoices_to_bill = Invoice.where{(period_end_date <= Time.now.end_of_day) & (paid_date == nil)}
     invoices_to_bill.each do |invoice|
+      # TODO: Make each of these run in a delayed job.
       invoice.charge_customer
     end
   end
@@ -152,16 +155,6 @@ class Invoice < ActiveRecord::Base
     return success
   end
 
-  # This sets processing payment true.
-  def set_processing_payment
-    self.update_column(:processing_payment, true)
-  end
-
-  # This sets paid date.
-  def set_paid_date(date)
-    self.update_column(:paid_date, date)
-  end
-
   ###
   # Used to submit a charge to Stripe with this invoice cost.
   # If the invoice is still open it will first be closed.
@@ -171,10 +164,11 @@ class Invoice < ActiveRecord::Base
   def charge_customer
     success = false
     begin
+      # TODO: Only close after charge is complete.
       self.update_attributes({is_closed: true}, without_protection: true) unless self.is_closed
       if self.is_closed
         if self.user_stripe_customer_token.present?
-          if self.total_price_in_cents > 100
+          if self.total_price_in_cents > MINIMUM_CHARGE_AMOUNT
             begin
               charge = Stripe::Charge.create(
                 amount: self.total_price_in_cents,
@@ -182,24 +176,23 @@ class Invoice < ActiveRecord::Base
                 customer: self.user_stripe_customer_token,
                 description: "Charge for invoice id:#{self.id}"
               )
-              # TODO: use self.set_processing_payment
-              success = self.update_attributes({processing_payment: true, stripe_charge_id: charge.id}, without_protection: true)
+              success = self.mark_paid(charge.id)
             rescue Stripe::CardError => e
-              # TODO: Need to handle card invalid errors.
               case e.code
                 when "incorrect_number", "invalid_number", "invalid_expiry_month", "invalid_expiry_year", "invalid_cvc"
-                  # Tell customer card on file is invalid and they need to reenter card info.
+                  # TODO: Tell customer card on file is invalid and they need to reenter card info.
                 when "expired_card"
-                  # Tell customer card on file is expired and they need to reenter card info.
+                  # TODO: Tell customer card on file is expired and they need to reenter card info.
                 when "incorrect_cvc"
-                  # Tell customer card on file has invalid and they need to reenter card info.
+                  # TODO: Tell customer card on file has invalid and they need to reenter card info.
                 when "card_declined"
-                  # Tell customer card on file has been declined.
+                  # TODO: Tell customer card on file has been declined.
                 when "missing"
                   # ERROR: This should not happen! Log error. What to do...
+                  # TODO: Tell customer that card must be updated.
                   logger.error "CardError charge_customer: #{e.message}"
                 when "processing_error"
-                  # Log error and retry tomorrow.
+                  # ERROR: Log error and retry tomorrow.
                   logger.error "CardError charge_customer: #{e.message}"
                 else
                   # ERROR: This should not happen! Log error.
@@ -213,7 +206,7 @@ class Invoice < ActiveRecord::Base
           else
             #Invice cost is less then $1.00. Just mark as paid. Log that this happend for later review.
             logger.error "ERROR charge_customer: Invoice was less then $1: #{self.to_yaml}"
-            success = self.set_processing_payment and self.set_paid_date(Time.now)
+            success = self.mark_paid
           end
         else
           #ERROR Invoice owner has no payment information.
@@ -229,6 +222,13 @@ class Invoice < ActiveRecord::Base
       logger.error "ERROR charge_customer: #{e.message}"
       success = false
     end
+    return success
+  end
+
+  def mark_paid(charge_id=nil)
+    success = false
+    success = self.update_column(:paid_date, Time.now)
+    success = self.update_column(:stripe_charge_id, charge_id) if charge_id.present?
     return success
   end
 
@@ -290,16 +290,16 @@ protected
     return true
   end
 
-  ###
-  # _after_save_
-  #
-  # This removes any incompatable upgrades that may be lingering due to a plan change.
-  ###
-  def remove_incompatable_upgrades
-    self.invoice_items.each do |ii|
-      ii.destroy unless ii.is_compatable_with_plan?
-    end
-  end
+#   ###
+#   # _after_save_
+#   #
+#   # This removes any incompatable upgrades that may be lingering due to a plan change.
+#   ###
+#   def remove_incompatable_upgrades
+#     self.invoice_items.each do |ii|
+#       ii.destroy unless ii.is_compatable_with_plan?
+#     end
+#   end
 
   ###
   # _after_save_
@@ -330,25 +330,27 @@ protected
   ###
   def add_prorated_items
     self.invoice_items.select(&:is_recurring).each do |ii|
-      today = Time.now
-      unless (ii.start_date <= today and ii.end_date >= today)
-        com_id = ii.community_id
-        type = ii.item_type
-        invoice_items = InvoiceItem.where{(community_id == com_id) & (item_type == type) & (start_date <= today) & (end_date >= today)}
-        if invoice_items.empty?
-          new_ii = self.invoice_items.new(community: ii.community, quantity: ii.quantity, item: ii.item)
-          new_ii.is_recurring = false
-          new_ii.is_prorated = true
-          new_ii.save!
-        elsif ii.has_community_upgrade?
-          # Add prorated item for upgrade. This looks at the quantites of this ii and the existing ones.
-          total_quantity = invoice_items.map(&:quantity).inject(0,:+)
-          number_added = ii.quantity - total_quantity
-          if number_added > 0
-            new_ii = self.invoice_items.new(community: ii.community, quantity: number_added, item: ii.item)
+      unless ii.marked_for_destruction?
+        today = Time.now
+        unless (ii.start_date <= today and ii.end_date >= today)
+          com_id = ii.community_id
+          type = ii.item_type
+          invoice_items = InvoiceItem.where{(community_id == com_id) & (item_type == type) & (start_date <= today) & (end_date >= today)}
+          if invoice_items.empty?
+            new_ii = self.invoice_items.new(community: ii.community, quantity: ii.quantity, item: ii.item)
             new_ii.is_recurring = false
             new_ii.is_prorated = true
             new_ii.save!
+          elsif ii.has_community_upgrade?
+            # Add prorated item for upgrade. This looks at the quantites of this ii and the existing ones.
+            total_quantity = invoice_items.map(&:quantity).inject(0,:+)
+            number_added = ii.quantity - total_quantity
+            if number_added > 0
+              new_ii = self.invoice_items.new(community: ii.community, quantity: number_added, item: ii.item)
+              new_ii.is_recurring = false
+              new_ii.is_prorated = true
+              new_ii.save!
+            end
           end
         end
       end
