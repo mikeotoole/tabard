@@ -29,9 +29,6 @@
               - else
                 = "Forever"
           %td.r= number_to_currency(@invoice.total_recurring_price_per_month_in_dollars(community))
-          %td.actions
-            %div
-              = link_to 'Statement', community.current_invoice, meta: 'Current statement', class: 'statement'
     %tfoot
       %tr
         %td.r{ colspan: 3 }
@@ -41,7 +38,7 @@
         %td.r
           = number_to_currency(current_user.total_recurring_price_per_month_in_dollars)
           %br
-          = $x
+          = number_to_currency(current_user.current_invoice.total_price_in_dollars)
   %p.r
     = link_to 'View Statement', current_user.invoices.last, meta: 'Current statement', class: 'button'
 
