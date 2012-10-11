@@ -7,20 +7,20 @@ subscription =
     $('#form_with_subscription').submit ->
       if $('#cc_fields:visible').length
         $(@).find('input[type=submit]').prop 'disabled', true
-        subscription.processCard()
+        @processCard()
         false
       else
         true
 
   processCard: ->
-    card =
+    data =
       name: $('#card_name').val()
       number: $('#card_number').val()
       cvc: $('#card_cvc').val()
       expMonth: $('#card_exp_month input:checked').val()
       expYear: $('#card_exp_year input:checked').val()
       addressZip: $('#card_address_zip').val()
-    Stripe.createToken card, @handleStripeResponse
+    Stripe.createToken data, @handleStripeResponse
 
   handleStripeResponse: (status, response) ->
     # Remove old error messages
@@ -47,7 +47,7 @@ subscription =
       $('<mark class="error">').appendTo(li).text errorMsg
 
       # Re-enable submit button
-      $('input[type=submit]').removeAttr 'disabled'
+      $('#form_with_subscription input[type=submit]').removeAttr 'disabled'
 
 
 jQuery(document).ready ($) ->
