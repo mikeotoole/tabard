@@ -23,5 +23,12 @@ class InvoiceMailer < ActionMailer::Base
 
   # Tell user payment failed
   def payment_failed(invoice_id)
+    @invoice = Invoice.find_by_id(invoice_id)
+    @url = invoice_url(@invoice)
+    @user_profile = @invoice.user_profile
+    # TODO add subject message
+    mail(to: @user_profile.email, subject: "DOUG CHANGE ME") do |format|
+       format.html { render "mailers/payment_failed" }
+    end
   end
 end
