@@ -26,6 +26,7 @@ class InvoiceItem < ActiveRecord::Base
 # Callbacks
 ###
   before_validation :set_dates
+  before_validation :set_destruction_for_zero
   before_save :make_free_non_recurring
 
 ###
@@ -225,6 +226,18 @@ protected
       end
     end
     return true
+  end
+
+  ###
+  # _before_validation_
+  #
+  # This will set the model for destruction if the quantity is 0.
+  ###
+  def set_destruction_for_zero
+    if self.quantity == 0 and self.quantity_was != 0
+      self.mark_for_destruction
+      self.quantity = self.quantity_was
+    end
   end
 
   ###
