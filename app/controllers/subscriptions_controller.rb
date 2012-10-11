@@ -40,8 +40,11 @@ class SubscriptionsController < ApplicationController
       if @invoice.update_attributes_with_payment(params[:invoice], @stripe_card_token)
         flash[:success] = "Your plan has been changed"
       else
-        @current_plan_invoice_item = @invoice.invoice_items.recurring.select(&:has_community_plan?).first
-        @all_upgrades_invoice_items = @invoice.invoice_items.recurring.select(&:has_community_upgrade?)
+        @current_plan_invoice_item = @invoice.invoice_items.select{|ii| ii.has_community_plan?}.first
+        @all_upgrades_invoice_items = @invoice.invoice_items.recurring.select{|ii| ii.has_community_upgrade?}
+        puts "##########"
+        puts @invoice.errors.full_messages
+        @invoice.invoice_items.each{|ii| puts ii.errors.full_messages}
       end
     rescue Stripe::StripeError => e
       logger.error "StripeError: #{e.message}"
