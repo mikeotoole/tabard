@@ -12,6 +12,13 @@ class InvoiceMailer < ActionMailer::Base
 
   # Tell user payment was successful
   def payment_successful(invoice_id)
+    @invoice = Invoice.find_by_id(invoice_id)
+    @url = invoice_url(@invoice)
+    @user_profile = @invoice.user_profile
+    # TODO add subject message
+    mail(to: @user_profile.email, subject: "DOUG CHANGE ME") do |format|
+       format.html { render "mailers/payment_successful" }
+    end
   end
 
   # Tell user payment failed

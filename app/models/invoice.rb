@@ -27,6 +27,7 @@ class Invoice < ActiveRecord::Base
 # Delegates
 ###
   delegate :id, to: :user, prefix: true
+  delegate :user_profile, to: :user
   delegate :stripe_customer_token, to: :user, prefix: true
 
 ###
@@ -232,6 +233,7 @@ class Invoice < ActiveRecord::Base
 
   def mark_paid_and_close(charge_id=nil)
     success = self.update_attributes({is_closed: true, paid_date: Time.now, stripe_charge_id: charge_id}, without_protection: true)
+    InvoiceMailer.delay.payment_successful(self.id)
     return success
   end
 
