@@ -16,11 +16,12 @@
       - @owned_communities.each do |community|
         - recurring = @invoice.plan_invoice_item_for_community(community)
         %tr
-          %td= link_to shorten_words(community.name, 21), edit_subscription_path(community)
+          %td
+            %h3= link_to shorten_words(community.name, 21), edit_subscription_path(community)
           %td.nowrap
-            = community.current_community_plan_title
+            %strong= community.current_community_plan_title
           %td.nowrap
-            = community.recurring_community_plan_title
+            %strong= community.recurring_community_plan_title
             %time
               - if recurring.persisted?
                 = recurring.start_date.strftime '%b %e, %Y'
@@ -28,7 +29,8 @@
                 = recurring.end_date.strftime '%b %e, %Y'
               - else
                 = "Forever"
-          %td.r= number_to_currency(@invoice.total_recurring_price_per_month_in_dollars(community))
+          %td.r
+            %strong= number_to_currency(@invoice.total_recurring_price_per_month_in_dollars(community))
     %tfoot
       %tr
         %td.r{ colspan: 3 }
