@@ -25,6 +25,7 @@ class InvoiceItem < ActiveRecord::Base
 ###
 # Callbacks
 ###
+  before_validation :set_as_recurring
   before_validation :set_dates
   before_validation :set_destruction_when_quantity_is_zero_or_incompatable
   before_save :make_free_non_recurring
@@ -212,6 +213,15 @@ protected
 ###
 # Callback Methods
 ###
+  ###
+  # _before_validation_
+  #
+  # If invoice item is not prorated, is_recurring will be set to its deafult of true.
+  ###
+  def set_as_recurring
+    self.is_recurring = true unless self.is_prorated
+  end
+
   ###
   # _before_validation_
   #

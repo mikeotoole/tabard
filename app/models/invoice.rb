@@ -52,7 +52,6 @@ class Invoice < ActiveRecord::Base
   before_save :set_charged_total_price_in_cents_when_closed
   after_save :create_next_invoice_when_closed
   after_save :add_prorated_items
-#   after_save :remove_incompatable_upgrades
 
 ###
 # Class Methods
@@ -289,17 +288,6 @@ protected
     end
     return true
   end
-
-#   ###
-#   # _after_save_
-#   #
-#   # This removes any incompatable upgrades that may be lingering due to a plan change.
-#   ###
-#   def remove_incompatable_upgrades
-#     self.invoice_items.each do |ii|
-#       ii.destroy unless ii.is_compatable_with_plan?
-#     end
-#   end
 
   ###
   # _after_save_
