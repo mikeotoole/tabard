@@ -16,6 +16,7 @@ class CardController < ApplicationController
   before_filter :ensure_secure_subdomain
 
   def edit
+    @stripe = Stripe::Customer.retrieve(current_user.stripe_customer_token)
   end
 
   def update
