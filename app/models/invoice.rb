@@ -297,7 +297,7 @@ protected
   ###
   def remove_incompatable_upgrades
     self.invoice_items.each do |ii|
-      ii.destroy unless ii.is_compatable_with_plan?
+      ii.destroy unless ii.is_compatable_with_plan? or ii.is_prorated
     end
   end
 
