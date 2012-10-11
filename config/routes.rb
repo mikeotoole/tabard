@@ -7,7 +7,7 @@ DaBvRails::Application.routes.draw do
   get '/subscriptions/:community_id/edit' => 'subscriptions#edit', as: :edit_subscription
   put '/subscriptions/:community_id' => 'subscriptions#update', as: :subscription
 
-  resources :invoices, only: [:index, :show]
+  resources :invoices, only: [:index, :show], path: 'statements'
 
   resources :minecraft_characters
 

@@ -12,7 +12,6 @@
         %th Current Plan
         %th Next Cycle
         %th Cost
-        %th.actions
     %tbody
       - @owned_communities.each do |community|
         - recurring = @invoice.plan_invoice_item_for_community(community)
@@ -35,8 +34,16 @@
               = link_to 'Statement', community.current_invoice, meta: 'Current statement', class: 'statement'
     %tfoot
       %tr
-        %td.r{ colspan: 3 } Monthly Total
-        %td.r= number_to_currency(current_user.total_recurring_price_per_month_in_dollars)
-        %td
+        %td.r{ colspan: 3 }
+          Recurring Monthly Cost:
+          %br
+          Your Next Bill:
+        %td.r
+          = number_to_currency(current_user.total_recurring_price_per_month_in_dollars)
+          %br
+          = $x
+  %p.r
+    = link_to 'View Statement', current_user.invoices.last, meta: 'Current statement', class: 'button'
+
 - else
   %p You don't have any active subscriptions.
