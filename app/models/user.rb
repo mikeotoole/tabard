@@ -193,20 +193,23 @@ class User < ActiveRecord::Base
   # This will return the users current open invoice.
   ###
   def current_invoice
-    invoices = self.invoices.where{(is_closed == false)}
-    invoice = nil
-    if invoices.any?
-      today = Time.now
-      # First close any invoices that should be closed
-      invoices.each do |this_invoice|
-        if this_invoice.period_end_date < today
-          this_invoice.is_closed = true
-          this_invoice.save!
-        end
-      end
-      # Then get the current open invoice if it exists.
-      invoice = self.invoices.where{(period_start_date <= today) & (period_end_date >= today) & (is_closed == false)}.limit(1).first
-    end
+#     invoices = self.invoices.where{(is_closed == false)}
+#     invoice = nil
+#     if invoices.any?
+#       today = Time.now
+#       # First close any invoices that should be closed
+#       invoices.each do |this_invoice|
+#         if this_invoice.period_end_date < today
+#           this_invoice.is_closed = true
+#           this_invoice.save!
+#         end
+#       end
+#       # Then get the current open invoice if it exists.
+#       invoice = self.invoices.where{(period_start_date <= today) & (period_end_date >= today) & (is_closed == false)}.limit(1).first
+#     end
+
+    today = Time.now
+    invoice = self.invoices.historical.where{(period_start_date <= today) & (is_closed == false)}.limit(1).first
     invoice = self.invoices.new({period_start_date: Time.now.beginning_of_day, period_end_date: Time.now.beginning_of_day}, without_protection: true) if invoice.blank?
     return invoice
   end

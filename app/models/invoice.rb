@@ -149,6 +149,10 @@ class Invoice < ActiveRecord::Base
         else
           self.errors.add :base, "There was a problem with your credit card"
         end
+        if self.period_end_date < Time.now
+          # charge customer now.
+          success = self.charge_customer
+        end
       end
     end
     return success
@@ -163,71 +167,71 @@ class Invoice < ActiveRecord::Base
   def charge_customer
     success = false
     begin
-      # TODO: Only close after charge is complete.
-      self.update_attributes({is_closed: true}, without_protection: true) unless self.is_closed
-      if self.is_closed
-        if self.user_stripe_customer_token.present?
-          if self.total_price_in_cents > MINIMUM_CHARGE_AMOUNT
-            begin
-              charge = Stripe::Charge.create(
-                amount: self.total_price_in_cents,
-                currency: "usd",
-                customer: self.user_stripe_customer_token,
-                description: "Charge for invoice id:#{self.id}"
-              )
-              success = self.mark_paid(charge.id)
-            rescue Stripe::CardError => e
-              case e.code
-                when "incorrect_number", "invalid_number", "invalid_expiry_month", "invalid_expiry_year", "invalid_cvc"
-                  # TODO: Tell customer card on file is invalid and they need to reenter card info.
-                when "expired_card"
-                  # TODO: Tell customer card on file is expired and they need to reenter card info.
-                when "incorrect_cvc"
-                  # TODO: Tell customer card on file has invalid and they need to reenter card info.
-                when "card_declined"
-                  # TODO: Tell customer card on file has been declined.
-                when "missing"
-                  # ERROR: This should not happen! Log error. What to do...
-                  # TODO: Tell customer that card must be updated.
-                  logger.error "CardError charge_customer: #{e.message}"
-                when "processing_error"
-                  # ERROR: Log error and retry tomorrow.
-                  logger.error "CardError charge_customer: #{e.message}"
-                else
-                  # ERROR: This should not happen! Log error.
-                  logger.error "CardError charge_customer: #{e.message}"
-              end
-              success = false
-            rescue Stripe::StripeError => e
-              logger.error "StripeError charge_customer: #{e.message}"
-              success = false
+      if self.user_stripe_customer_token.present?
+        if self.total_price_in_cents > MINIMUM_CHARGE_AMOUNT
+          begin
+            charge = Stripe::Charge.create(
+              amount: self.total_price_in_cents,
+              currency: "usd",
+              customer: self.user_stripe_customer_token,
+              description: "Charge for invoice id:#{self.id}"
+            )
+            success = self.mark_paid_and_close(charge.id)
+          rescue Stripe::CardError => e
+            case e.code
+              when "incorrect_number", "invalid_number", "invalid_expiry_month", "invalid_expiry_year", "invalid_cvc"
+                # TODO: Tell customer card on file is invalid and they need to reenter card info.
+                # Add error to invoice.
+              when "expired_card"
+                # TODO: Tell customer card on file is expired and they need to reenter card info.
+                # Add error to invoice.
+              when "incorrect_cvc"
+                # TODO: Tell customer card on file has invalid and they need to reenter card info.
+                # Add error to invoice.
+              when "card_declined"
+                # TODO: Tell customer card on file has been declined.
+                # Add error to invoice.
+              when "missing"
+                # ERROR: This should not happen! Log error. What to do...
+                # TODO: Tell customer that card must be updated.
+                # Add error to invoice.
+                logger.error "CardError charge_customer: #{e.message}"
+              when "processing_error"
+                # ERROR: Log error and retry tomorrow.
+                # Add error to invoice.
+                logger.error "CardError charge_customer: #{e.message}"
+              else
+                # ERROR: This should not happen! Log error.
+                # Add error to invoice.
+                logger.error "CardError charge_customer: #{e.message}"
             end
-          else
-            #Invice cost is less then $1.00. Just mark as paid. Log that this happend for later review.
-            logger.error "ERROR charge_customer: Invoice was less then $1: #{self.to_yaml}"
-            success = self.mark_paid
+            success = false
+          rescue Stripe::StripeError => e
+            logger.error "StripeError charge_customer: #{e.message}"
+            # Add error to invoice.
+            success = false
           end
         else
-          #ERROR Invoice owner has no payment information.
-          logger.error "ERROR charge_customer: Invoice owner had no payment info: #{self.to_yaml}"
-          success = false
+          #Invice cost is less then $1.00. Just mark as paid. Log that this happend for later review.
+          logger.error "ERROR charge_customer: Invoice was less then $1: #{self.to_yaml}"
+          success = self.mark_paid_and_close
         end
       else
-        #ERROR Could not close invoice.
-        logger.error "ERROR charge_customer: Could not close invoice: #{self.to_yaml} errors: #{self.errors}"
+        #ERROR Invoice owner has no payment information.
+        logger.error "ERROR charge_customer: Invoice owner had no payment info: #{self.to_yaml}"
+        # Add error to invoice.
         success = false
       end
     rescue Exception => e
       logger.error "ERROR charge_customer: #{e.message}"
+      # Add error to invoice.
       success = false
     end
     return success
   end
 
-  def mark_paid(charge_id=nil)
-    success = false
-    success = self.update_column(:paid_date, Time.now)
-    success = self.update_column(:stripe_charge_id, charge_id) if charge_id.present?
+  def mark_paid_and_close(charge_id=nil)
+    success = self.update_attributes({is_closed: true, paid_date: Time.now, stripe_charge_id: charge_id}, without_protection: true)
     return success
   end
 
