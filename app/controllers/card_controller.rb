@@ -28,7 +28,7 @@ class CardController < ApplicationController
         @invoice = current_user.current_invoice
         if @invoice.period_end_date < Time.now and @invoice.total_price_in_cents > 0
           # TODO: View should handle any errors on invoice.
-          @invoice.charge_customer
+          @invoice.charge_customer(false)
         end
       end
     rescue Stripe::StripeError => e
