@@ -59,7 +59,11 @@ class Invoice < ActiveRecord::Base
 ###
   # This will call charge_customer on all invoices that have an end_date before today.
   def self.bill_customers
-    invoices_to_bill = Invoice.where{(period_end_date <= Time.now.end_of_day) & (paid_date == nil)}
+    today = Time.now.end_of_day
+    seven_days_ago = today - 7.days
+    invoices_to_bill = Invoice.where{(period_end_date <= today) &
+                                     (paid_date == nil) &
+                                     ((first_failed_attempt_date == nil) | (first_failed_attempt_date > seven_days_ago))}
     invoices_to_bill.each do |invoice|
       # TODO: Make each of these run in a delayed job.
       invoice.charge_customer
@@ -179,38 +183,57 @@ class Invoice < ActiveRecord::Base
               description: "Charge for invoice id:#{self.id}"
             )
             success = self.mark_paid_and_close(charge.id)
+            # TODO: Set boolean on user that payment ok.
           rescue Stripe::CardError => e
-            # TODO: Mark first failed attempt date and set boolean on user that payment failed (triggering a flash message for them).
-            # TODO: If over seven days since first failed attempt cancel users subscription.
-              # An invoice with no prorated items will have the plans turned to pro and the invoice closed.
-              # An invoice with prorated items will have the plan items removed and will stay.
-
-            case e.code
-              when "incorrect_number", "invalid_number", "invalid_expiry_month", "invalid_expiry_year", "invalid_cvc"
-                # TODO: Tell customer card on file is invalid and they need to reenter card info.
-                # Add error to invoice.
-              when "expired_card"
-                # TODO: Tell customer card on file is expired and they need to reenter card info.
-                # Add error to invoice.
-              when "incorrect_cvc"
-                # TODO: Tell customer card on file has invalid CSV and they need to reenter card info.
-                # Add error to invoice.
-              when "card_declined"
-                # TODO: Tell customer card on file has been declined.
-                # Add error to invoice.
-              when "missing"
-                # ERROR: This should not happen! Log error. What to do...
-                # TODO: Tell customer that card must be updated.
-                # Add error to invoice.
-                logger.error "CardError charge_customer: #{e.message}"
-              when "processing_error"
-                # ERROR: Log error and retry tomorrow.
-                # Add error to invoice.
-                logger.error "CardError charge_customer: #{e.message}"
+            # Mark first failed attempt date.
+            self.first_failed_attempt_date = Time.now if self.first_failed_attempt_date.blank?
+            # TODO: Set boolean on user that payment failed (triggering a flash message for them).
+            if send_fail_email and (Time.now - self.first_failed_attempt_date) > 604800 # Seconds in 7 days.
+              # If over seven days since first failed attempt cancel users subscription.
+              if self.invoice_items.prorated.empty?
+                # An invoice with no prorated items will have the plans turned to free and the invoice closed.
+                self.invoice_items.select(&:has_community_plan?).each do |ii|
+                  ii.item = CommunityPlan.default_plan
+                end
+                self.save!
+                self.mark_paid_and_close
+                #TODO: Send user email about subscription being canceled.
               else
-                # ERROR: This should not happen! Log error.
-                # Add error to invoice.
-                logger.error "CardError charge_customer: #{e.message}"
+                # An invoice with prorated items will have the recurring items removed and will stay.
+                self.invoice_items.recurring.each do |ii|
+                  ii.mark_for_destruction
+                end
+                self.save!
+                #TODO: Send user email about subscription being canceled and them having an outstanding balance for prorated items.
+              end
+            else
+              case e.code
+                when "incorrect_number", "invalid_number", "invalid_expiry_month", "invalid_expiry_year", "invalid_cvc"
+                  # TODO: Tell customer card on file is invalid and they need to reenter card info.
+                  # Add error to invoice.
+                when "expired_card"
+                  # TODO: Tell customer card on file is expired and they need to reenter card info.
+                  # Add error to invoice.
+                when "incorrect_cvc"
+                  # TODO: Tell customer card on file has invalid CSV and they need to reenter card info.
+                  # Add error to invoice.
+                when "card_declined"
+                  # TODO: Tell customer card on file has been declined.
+                  # Add error to invoice.
+                when "missing"
+                  # ERROR: This should not happen! Log error. What to do...
+                  # TODO: Tell customer that card must be updated.
+                  # Add error to invoice.
+                  logger.error "CardError charge_customer: #{e.message}"
+                when "processing_error"
+                  # ERROR: Log error and retry tomorrow.
+                  # Add error to invoice.
+                  logger.error "CardError charge_customer: #{e.message}"
+                else
+                  # ERROR: This should not happen! Log error.
+                  # Add error to invoice.
+                  logger.error "CardError charge_customer: #{e.message}"
+              end
             end
             success = false
           rescue Stripe::StripeError => e
@@ -242,7 +265,7 @@ class Invoice < ActiveRecord::Base
     success = self.update_attributes({is_closed: true, paid_date: Time.now, stripe_charge_id: charge_id}, without_protection: true)
     # TODO: Mark first failed attempt date nil and set boolean on user that payment failed to false.
 
-    InvoiceMailer.delay.payment_successful(self.id)
+    InvoiceMailer.delay.payment_successful(self.id) if charge_id.present?
     return success
   end
 
@@ -380,5 +403,6 @@ end
 #  is_closed                    :boolean          default(FALSE)
 #  processing_payment           :boolean          default(FALSE)
 #  charged_total_price_in_cents :integer
+#  first_failed_attempt_date    :datetime
 #
 

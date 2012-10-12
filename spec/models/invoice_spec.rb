@@ -16,6 +16,7 @@
 #  is_closed                    :boolean          default(FALSE)
 #  processing_payment           :boolean          default(FALSE)
 #  charged_total_price_in_cents :integer
+#  first_failed_attempt_date    :datetime
 #
 
 require 'spec_helper'
