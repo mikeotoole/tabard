@@ -152,7 +152,7 @@ class Invoice < ActiveRecord::Base
         end
         if self.period_end_date < Time.now
           # charge customer now.
-          success = self.charge_customer
+          success = self.charge_customer(false)
         end
       end
     end
@@ -165,7 +165,7 @@ class Invoice < ActiveRecord::Base
   #
   # [Returns] True if the charge was submitted to Stripe, false otherwise
   ###
-  def charge_customer
+  def charge_customer(send_fail_email=true)
     success = false
     begin
       if self.user_stripe_customer_token.present?
