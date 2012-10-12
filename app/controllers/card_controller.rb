@@ -17,6 +17,7 @@ class CardController < ApplicationController
 
   def edit
     @stripe = Stripe::Customer.retrieve(current_user.stripe_customer_token) unless current_user.stripe_customer_token.blank?
+    # TODO: If there is an invoice pending charge we need to tell the user they will be chaged now for that amount.
   end
 
   def update
@@ -24,7 +25,11 @@ class CardController < ApplicationController
     begin
       if current_user.update_stripe(@stripe_card_token)
         flash[:success] = "Your card has been updated"
-        # TODO add handing for delinquent accounts.
+        @invoice = current_user.current_invoice
+        if @invoice.period_end_date < Time.now and @invoice.total_price_in_cents > 0
+          # TODO: View should handle any errors on invoice.
+          @invoice.charge_customer
+        end
       end
     rescue Stripe::StripeError => e
       logger.error "StripeError: #{e.message}"

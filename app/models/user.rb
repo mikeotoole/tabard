@@ -210,6 +210,9 @@ class User < ActiveRecord::Base
 
     today = Time.now
     invoice = self.invoices.historical.where{(period_start_date <= today) & (is_closed == false)}.limit(1).first
+
+    # TODO: This needs to handle a user with an invoice more then 7 days past due that has prorated items. Set end date to today.
+
     invoice = self.invoices.new({period_start_date: Time.now.beginning_of_day, period_end_date: Time.now.beginning_of_day}, without_protection: true) if invoice.blank?
     return invoice
   end

@@ -171,6 +171,7 @@ class Invoice < ActiveRecord::Base
       if self.user_stripe_customer_token.present?
         if self.total_price_in_cents > MINIMUM_CHARGE_AMOUNT
           begin
+            # TODO: need to check and lock?? and set processing_payment
             charge = Stripe::Charge.create(
               amount: self.total_price_in_cents,
               currency: "usd",
@@ -179,6 +180,11 @@ class Invoice < ActiveRecord::Base
             )
             success = self.mark_paid_and_close(charge.id)
           rescue Stripe::CardError => e
+            # TODO: Mark first failed attempt date and set boolean on user that payment failed (triggering a flash message for them).
+            # TODO: If over seven days since first failed attempt cancel users subscription.
+              # An invoice with no prorated items will have the plans turned to pro and the invoice closed.
+              # An invoice with prorated items will have the plan items removed and will stay.
+
             case e.code
               when "incorrect_number", "invalid_number", "invalid_expiry_month", "invalid_expiry_year", "invalid_cvc"
                 # TODO: Tell customer card on file is invalid and they need to reenter card info.
@@ -187,7 +193,7 @@ class Invoice < ActiveRecord::Base
                 # TODO: Tell customer card on file is expired and they need to reenter card info.
                 # Add error to invoice.
               when "incorrect_cvc"
-                # TODO: Tell customer card on file has invalid and they need to reenter card info.
+                # TODO: Tell customer card on file has invalid CSV and they need to reenter card info.
                 # Add error to invoice.
               when "card_declined"
                 # TODO: Tell customer card on file has been declined.
@@ -228,11 +234,14 @@ class Invoice < ActiveRecord::Base
       # Add error to invoice.
       success = false
     end
+    self.update_column(:processing_payment, false) unless success
     return success
   end
 
   def mark_paid_and_close(charge_id=nil)
     success = self.update_attributes({is_closed: true, paid_date: Time.now, stripe_charge_id: charge_id}, without_protection: true)
+    # TODO: Mark first failed attempt date nil and set boolean on user that payment failed to false.
+
     InvoiceMailer.delay.payment_successful(self.id)
     return success
   end
