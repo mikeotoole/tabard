@@ -188,15 +188,19 @@ class Invoice < ActiveRecord::Base
             case e.code
               when "incorrect_number", "invalid_number", "invalid_expiry_month", "invalid_expiry_year", "invalid_cvc"
                 # TODO: Tell customer card on file is invalid and they need to reenter card info.
+                InvoiceMailer.delay.payment_failed(self.id, "Message") if send_fail_email
                 # Add error to invoice.
               when "expired_card"
                 # TODO: Tell customer card on file is expired and they need to reenter card info.
+                InvoiceMailer.delay.payment_failed(self.id, "Message") if send_fail_email
                 # Add error to invoice.
               when "incorrect_cvc"
                 # TODO: Tell customer card on file has invalid CSV and they need to reenter card info.
+                InvoiceMailer.delay.payment_failed(self.id, "Message") if send_fail_email
                 # Add error to invoice.
               when "card_declined"
                 # TODO: Tell customer card on file has been declined.
+                InvoiceMailer.delay.payment_failed(self.id, "Message") if send_fail_email
                 # Add error to invoice.
               when "missing"
                 # ERROR: This should not happen! Log error. What to do...
