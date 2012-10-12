@@ -323,7 +323,6 @@ class Ability
       community_member_rules(user, current_community) if user.is_member?(current_community)
       community_admin_rules(user) if current_community.admin_profile_id == user.user_profile_id
       community_subscription_level_rules(user, current_community)
-      # TODO add create + destroy to role if pro community
     end
 
     # Special context rules
