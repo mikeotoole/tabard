@@ -183,7 +183,6 @@ class Invoice < ActiveRecord::Base
               description: "Charge for invoice id:#{self.id}"
             )
             success = self.mark_paid_and_close(charge.id)
-            # TODO: Set boolean on user that payment ok.
           rescue Stripe::CardError => e
             # Mark first failed attempt date.
             self.first_failed_attempt_date = Time.now if self.first_failed_attempt_date.blank?
@@ -210,15 +209,19 @@ class Invoice < ActiveRecord::Base
               case e.code
                 when "incorrect_number", "invalid_number", "invalid_expiry_month", "invalid_expiry_year", "invalid_cvc"
                   # TODO: Tell customer card on file is invalid and they need to reenter card info.
+                  InvoiceMailer.delay.payment_failed(self.id, "Message") if send_fail_email
                   # Add error to invoice.
                 when "expired_card"
                   # TODO: Tell customer card on file is expired and they need to reenter card info.
+                  InvoiceMailer.delay.payment_failed(self.id, "Message") if send_fail_email
                   # Add error to invoice.
                 when "incorrect_cvc"
                   # TODO: Tell customer card on file has invalid CSV and they need to reenter card info.
+                  InvoiceMailer.delay.payment_failed(self.id, "Message") if send_fail_email
                   # Add error to invoice.
                 when "card_declined"
                   # TODO: Tell customer card on file has been declined.
+                  InvoiceMailer.delay.payment_failed(self.id, "Message") if send_fail_email
                   # Add error to invoice.
                 when "missing"
                   # ERROR: This should not happen! Log error. What to do...
@@ -263,7 +266,7 @@ class Invoice < ActiveRecord::Base
 
   def mark_paid_and_close(charge_id=nil)
     success = self.update_attributes({is_closed: true, paid_date: Time.now, stripe_charge_id: charge_id}, without_protection: true)
-    # TODO: Mark first failed attempt date nil and set boolean on user that payment failed to false.
+    # TODO: Set boolean on user that payment failed to false.
 
     InvoiceMailer.delay.payment_successful(self.id) if charge_id.present?
     return success
