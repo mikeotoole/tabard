@@ -882,21 +882,12 @@ body.pricing
       padding-top: 40px
 
 body.pricing
-  #body .col3 article.basic,
-  #body .col3 article.upgrade
-    margin-top: 40px
-    position: relative
-    &:before
-      border-top: 3px double #ddd
-      content: ''
-      left: 0
-      position: absolute
-      right: 0
-      top: -33px
-  #body .col3 article.basic:before
-    right: -30px
-  #body .col3 article.upgrade:before
-    left: -30px
+  #body .col3
+    padding-top: 10px
+    article.basic:before
+      right: -30px
+    article.upgrade:before
+      left: -30px
   .price
     border-bottom: 1px solid #ccc
     height: 60px
