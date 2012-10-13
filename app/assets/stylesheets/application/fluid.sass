@@ -1,6 +1,6 @@
 @import mixins
 
-.fluid
+body.fluid
   background: #fff !important
   min-width: 0
   overflow-x: hidden
@@ -32,8 +32,10 @@
       margin: 0
     .menu
       left: auto
-      margin: 0
+      margin: 0 !important
       right: 230px
+      ul
+        right: 5px
     >ul.dashboard
       margin: -2px 0 0
       right: 79px
