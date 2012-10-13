@@ -1,11 +1,10 @@
 - title 'Statement'
 
 %h1
-  Statement:
-  = @invoice.period_start_date.strftime("%b %e, %Y")
-  - if @invoice.period_start_date != @invoice.period_end_date
-    &mdash;
-    = @invoice.period_end_date.strftime("%b %e, %Y")
+  - if @invoice.is_closed?
+    = "Statement: #{@invoice.period_end_date.strftime("%b %e, %Y")}"
+  - else
+    Current Statement
 
 = render 'shared/subscriptions_submenu'
 
