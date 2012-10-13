@@ -8,7 +8,7 @@
   %table
     %thead
       %tr
-        %th Statement Date Range
+        %th Date
         %th Amount
         %th Status
     %tbody
@@ -16,9 +16,9 @@
         %tr
           %td
             = link_to invoice do
-              = invoice.period_start_date.strftime("%b %e, %Y")
-              - if invoice.period_start_date != invoice.period_end_date
-                &mdash;
+              - if invoice_status(invoice).match /open/i
+                Current
+              - else
                 = invoice.period_end_date.strftime("%b %e, %Y")
           %td.r
             %strong= number_to_currency(invoice.total_price_in_dollars)
