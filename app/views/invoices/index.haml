@@ -22,7 +22,7 @@
                 = invoice.period_end_date.strftime("%b %e, %Y")
           %td.r
             %strong= number_to_currency(invoice.total_price_in_dollars)
-          %td= invoice_status invoice
+          %td.nowrap= invoice_status invoice
     %tfoot
       %tr
         %td{ colspan: 3 }
