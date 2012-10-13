@@ -11,7 +11,9 @@
   = javascript_include_tag "subscriptions"
 
 
-%h1= "Subscription for \"#{shorten_words @community.name}\""
+%h1= shorten_words @community.name
+
+= render 'shared/subscriptions_submenu'
 
 = simple_form_for @invoice, url: subscription_url(@community, subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), method: :put, html: {novalidate: true, id: "form_with_subscription"} do |f|
   %fieldset
