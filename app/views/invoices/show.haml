@@ -10,59 +10,60 @@
 
 - if @invoice.invoice_items.size > 0
   #invoice
-    %table
-      %thead
-        %tr
-          %th Description
-          %th Period
-          %th Price
-          %th
-          %th Qty
-          %th Subtotal
-      %tbody
-        - @invoice.invoice_items.order(:start_date).group_by(&:community).each do |community, invoice_items|
-          - subtotal = 0
-          %tr.heading
-            %td{ colspan: 6 }
-              = link_to 'Manage', edit_subscription_path(community), class: 'button', title: 'Edit subscription plan'
-              = community.name
-          - invoice_items.each do |invoice_item|
-            - subtotal = subtotal + invoice_item.total_price_in_dollars
-            - normal_price = number_to_currency(invoice_item.price_per_month_in_cents/100.0*invoice_item.quantity)
-            - actual_price = number_to_currency(invoice_item.total_price_in_dollars)
-            - show_prorated = (invoice_item.is_prorated and normal_price != actual_price)
-            %tr
-              %td
-                %strong
-                  = invoice_item.item_title
-                  &mdash;
-                  - if invoice_item.is_prorated
-                    Current Month
-                  - else
-                    Recurring Subscription
-                %br
-                = invoice_item.item_description
-              %td
-                %time
-                  = invoice_item.start_date.strftime("%b %e, %Y")
-                  &mdash;
-                  = invoice_item.end_date.strftime("%b %e, %Y")
+    - @invoice.invoice_items.order(:start_date).sort_by{|item| item.has_community_plan? ? 0 : 1}.group_by(&:community).each do |community, invoice_items|
+      %table
+        %thead
+          %tr
+            %th{ colspan: 4 }
+              %h2= community.name
+        %tbody
+          - community_subtotal = 0
+          - invoice_items.group_by(&:start_date).each do |start_date, invoice_items|
+            - end_date = invoice_items.first.end_date
+            - period_subtotal = 0
+            %tr.heading
+              %th
+                = start_date.strftime '%b %e, %Y'
+                &mdash;
+                = end_date.strftime '%b %e, %Y'
+              %th Price
+              %th Qty
+              %th.r Amount
+                
+            - invoice_items.each do |invoice_item|
+              - period_subtotal = period_subtotal + invoice_item.total_price_in_dollars
+              - normal_price = number_to_currency(invoice_item.price_per_month_in_cents/100.0*invoice_item.quantity)
+              - actual_price = number_to_currency(invoice_item.total_price_in_dollars)
+              - show_prorated = (invoice_item.is_prorated and normal_price != actual_price)
+              %tr
+                %td
+                  %strong
+                    = invoice_item.item_title
+                    &mdash;
+                    - if invoice_item.is_prorated
+                      Current Month
+                    - else
+                      Recurring Subscription
+                  %br
+                  = invoice_item.item_description
+                %td.r= number_to_currency(invoice_item.price_per_month_in_cents/100.0)
+                %td
+                  &times;
+                  = invoice_item.quantity
+                %td.r
                   - if show_prorated
-                    %br
-                    = 'Prorated'
-              %td.r= number_to_currency(invoice_item.price_per_month_in_cents/100.0)
-              %td &times;
-              %td= invoice_item.quantity
-              %td.r
-                - if show_prorated
-                  %strike= normal_price
-                %strong= actual_price
-          %tr.subtotal
-            %td.r{ colspan: 5 } Community Subtotal
-            %td.r= number_to_currency(subtotal)
-      %tfoot
-        %tr
-          %td.r{ colspan: 5 } Invoice Total
-          %td.r= number_to_currency(@invoice.total_price_in_dollars)
+                    %strike= normal_price
+                  %strong= actual_price
+            %tr.subtotal
+              %td.r{ colspan: 3 } Subtotal
+              %td.r= number_to_currency(period_subtotal)
+            - community_subtotal = community_subtotal + period_subtotal
+        %tfoot
+          %tr
+            %td.r{ colspan: 3 } Community Subtotal
+            %td.r= number_to_currency(community_subtotal)
+
+    %h2= number_to_currency(@invoice.total_price_in_dollars)
+
 - else
   %p You don't have any invoices.
