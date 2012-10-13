@@ -1,7 +1,8 @@
 %li.community
   %h3
     = link_to community.name, root_url(subdomain: community.subdomain)
-    = " — #{pluralize community.community_profiles.size, 'member', 'members'}"
+    &mdash;
+    = pluralize community.community_profiles.size, 'member', 'members'
   - if community.games
     %span.games
       %strong Games
