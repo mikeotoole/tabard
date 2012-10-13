@@ -34,7 +34,13 @@
             - show_prorated = (invoice_item.is_prorated and normal_price != actual_price)
             %tr
               %td
-                %strong= invoice_item.item_title
+                %strong
+                  = invoice_item.item_title
+                  &mdash;
+                  - if invoice_item.is_prorated
+                    Current Month
+                  - else
+                    Recurring Subscription
                 %br
                 = invoice_item.item_description
               %td
