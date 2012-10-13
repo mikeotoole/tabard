@@ -8,9 +8,9 @@
 
 = render 'shared/subscriptions_submenu'
 
-- if @invoice.invoice_items.size > 0
+- if @invoice.uniqued_invoice_items.size > 0
   #invoice
-    - @invoice.invoice_items.order(:start_date).sort_by{|item| item.has_community_plan? ? 0 : 1}.group_by(&:community).each do |community, invoice_items|
+    - @invoice.uniqued_invoice_items.sort_by{|item| item.has_community_plan? ? 0 : 1}.group_by(&:community).each do |community, invoice_items|
       %table
         %thead
           %tr
@@ -29,7 +29,7 @@
               %th Price
               %th Qty
               %th.r Amount
-                
+
             - invoice_items.each do |invoice_item|
               - period_subtotal = period_subtotal + invoice_item.total_price_in_dollars
               - normal_price = number_to_currency(invoice_item.price_per_month_in_cents/100.0*invoice_item.quantity)

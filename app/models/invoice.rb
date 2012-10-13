@@ -70,6 +70,29 @@ class Invoice < ActiveRecord::Base
     end
   end
 
+  # Custom helper for views to help users read invoice items that look similar.
+  def uniqued_invoice_items
+    uniqued_ii = Array.new
+    self.invoice_items.order(:start_date).each do |invoice_item|
+      match = false
+      collision_item = nil
+      uniqued_ii.each do |inner_item|
+        if invoice_item.item == inner_item.item and invoice_item.start_date == inner_item.start_date and invoice_item.end_date == inner_item.end_date and invoice_item.community == inner_item.community and invoice_item.is_prorated == inner_item.is_prorated and invoice_item.is_recurring == inner_item.is_recurring
+          match = true
+          collision_item = inner_item
+          break
+        end
+      end
+      if match
+        uniqued_ii.push InvoiceItem.new({invoice: collision_item.invoice, community: collision_item.community, item: collision_item.item, start_date: collision_item.start_date, end_date: collision_item.end_date, quantity: collision_item.quantity + invoice_item.quantity, is_prorated: collision_item.is_prorated, is_recurring: collision_item.is_recurring}, without_protection: true)
+        uniqued_ii.delete collision_item
+      else
+        uniqued_ii.push invoice_item
+      end
+    end
+    return uniqued_ii
+  end
+
 ###
 # Instance Methods
 ###
