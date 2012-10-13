@@ -347,7 +347,7 @@ body.index.minecrafts #submenu .minecraft
         text-align: left
         white-space: nowrap
         
-        h2
+        h2, h3
           color: #fff
           padding: 0
         
@@ -522,12 +522,16 @@ body.index.minecrafts #submenu .minecraft
         border: 0
         border-bottom: 3px solid #8cb5d2
         color: #000
+        padding-top: 30px
+        h3
+          color: #000
+          padding: 0
 
       tr.subtotal th,
       tr.subtotal td
-        background: #666
+        background: #ccc
         border-bottom: 3px solid #000
-        color: #eee
+        color: #000
       
       &.read
       
@@ -577,6 +581,10 @@ body.index.minecrafts #submenu .minecraft
         button:hover,
         .button:hover
           +box_shadow(0 0 10px #000)
+        
+        h2, h3
+          color: #fff
+          padding: 0
     
     + table
       margin-top: 30px

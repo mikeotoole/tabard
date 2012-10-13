@@ -10,7 +10,7 @@
   = javascript_include_tag "card"
 
 - if card_on_file
-  %h2 Card on File
+  %h1 Card on File
   %blockquote
     %p
       = image_tag "application/card-#{@stripe.active_card.type.gsub(/[^a-z]/i,'').downcase}@48.png"

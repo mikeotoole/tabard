@@ -10,22 +10,25 @@
 
 - if @invoice.uniqued_invoice_items.size > 0
   #invoice
-    - @invoice.uniqued_invoice_items.sort_by{|item| item.has_community_plan? ? 0 : 1}.group_by(&:community).each do |community, invoice_items|
+    - items_by_community = @invoice.uniqued_invoice_items.sort_by{|item| item.has_community_plan? ? 0 : 1}.group_by(&:community)
+    - community_subtotals = {}
+    - items_by_community.each do |community, invoice_items|
       %table
         %thead
           %tr
             %th{ colspan: 4 }
               %h2= community.name
         %tbody
-          - community_subtotal = 0
+          - community_subtotals[community.id] = {name: community.name, subtotal: 0}
           - invoice_items.group_by(&:start_date).each do |start_date, invoice_items|
             - end_date = invoice_items.first.end_date
             - period_subtotal = 0
             %tr.heading
               %th
-                = start_date.strftime '%b %e, %Y'
-                &mdash;
-                = end_date.strftime '%b %e, %Y'
+                %h3
+                  = start_date.strftime '%b %e, %Y'
+                  &mdash;
+                  = end_date.strftime '%b %e, %Y'
               %th Price
               %th Qty
               %th.r Amount
@@ -57,13 +60,28 @@
             %tr.subtotal
               %td.r{ colspan: 3 } Subtotal
               %td.r= number_to_currency(period_subtotal)
-            - community_subtotal = community_subtotal + period_subtotal
+            - community_subtotals[community.id][:subtotal] = community_subtotals[community.id][:subtotal] + period_subtotal
         %tfoot
           %tr
-            %td.r{ colspan: 3 } Community Subtotal
-            %td.r= number_to_currency(community_subtotal)
+            %td.r{ colspan: 3 }= items_by_community.size > 1 ? 'Community Subtotal' : 'Total'
+            %td.r
+              %h2= number_to_currency(community_subtotals[community.id][:subtotal])
 
-    %h2= number_to_currency(@invoice.total_price_in_dollars)
+    - if items_by_community.size > 1
+      %table
+        %thead
+          %tr
+            %th{ colspan: 2 }
+              %h2 Totals
+        %tbody
+          - community_subtotals.each do |key,community|
+            %tr
+              %td= community[:name]
+              %td.r= number_to_currency(community[:subtotal])
+        %tfoot
+          %td.r Total
+          %td.r
+            %h2= number_to_currency(@invoice.total_price_in_dollars)
 
 - else
-  %p You don't have any invoices.
+  %p You don't have any statements.
