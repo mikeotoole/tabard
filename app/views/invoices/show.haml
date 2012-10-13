@@ -29,6 +29,9 @@
               = community.name
           - invoice_items.each do |invoice_item|
             - subtotal = subtotal + invoice_item.total_price_in_dollars
+            - normal_price = number_to_currency(invoice_item.price_per_month_in_cents/100.0*invoice_item.quantity)
+            - actual_price = number_to_currency(invoice_item.total_price_in_dollars)
+            - show_prorated = (invoice_item.is_prorated and normal_price != actual_price)
             %tr
               %td
                 %strong= invoice_item.item_title
@@ -39,16 +42,16 @@
                   = invoice_item.start_date.strftime("%b %e, %Y")
                   &mdash;
                   = invoice_item.end_date.strftime("%b %e, %Y")
-                  - if invoice_item.is_prorated
+                  - if show_prorated
                     %br
                     = 'Prorated'
               %td.r= number_to_currency(invoice_item.price_per_month_in_cents/100.0)
               %td &times;
               %td= invoice_item.quantity
               %td.r
-                - if invoice_item.is_prorated
-                  %strike= number_to_currency(invoice_item.price_per_month_in_cents/100.0*invoice_item.quantity)
-                %strong= number_to_currency(invoice_item.total_price_in_dollars)
+                - if show_prorated
+                  %strike= normal_price
+                %strong= actual_price
           %tr.subtotal
             %td.r{ colspan: 5 } Community Subtotal
             %td.r= number_to_currency(subtotal)
