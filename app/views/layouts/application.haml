@@ -19,9 +19,13 @@
     = render 'layouts/flash_messages' unless @page_caching
 
     #content
-      #body
+      - if current_page? root_url
         = yield
         = render 'layouts/footer', current_layout: 'application'
+      - else
+        #body
+          = yield
+          = render 'layouts/footer', current_layout: 'application'
 
     = javascript_include_tag "application"
     = yield :footer
