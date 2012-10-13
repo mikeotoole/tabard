@@ -16,9 +16,6 @@ jQuery(document).ready ($) ->
       .on 'click','.dashboard .calendar a', ->
         $('#tabs dt.invites a').trigger 'click'
         false
-      .on 'click','.avatar > a, .characters a', ->
-        $('#tabs dt.characters a').trigger 'click'
-        false
 
   hash = window.location.hash
   switch hash
