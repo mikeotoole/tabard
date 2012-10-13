@@ -7,6 +7,7 @@
     = render 'layouts/set_timezone' unless !!cookies[:timezone]
     = csrf_meta_tags unless @page_caching
     = favicon_link_tag asset_path 'favicon.png'
+    = javascript_include_tag "application"
     = yield :header
     = render 'layouts/ie'
 

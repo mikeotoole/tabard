@@ -8,6 +8,7 @@
     = render 'layouts/set_timezone' unless !!cookies[:timezone]
     = csrf_meta_tags
     = favicon_link_tag asset_path 'favicon.png'
+    = javascript_include_tag "application"
     = yield :header
     = render 'layouts/ie'
 
@@ -15,7 +16,7 @@
     #bar= render "layouts/bar_in"
 
     = render "layouts/flash_messages"
-  
+
     #calendar-menu.sidemenu
       %dl
         %dt View
@@ -27,10 +28,9 @@
         - if can? :create, Event
           %dt Actions
           %dd.new= link_to 'New', new_event_url, meta: "Create a new event in #{shorten_words(current_community.name)}"
-  
+
     = yield
-  
-    = javascript_include_tag "application"
+
     /= javascript_include_tag "moment.min"
     = javascript_include_tag "calendar"
     = yield :footer
