@@ -5,7 +5,7 @@
 # Create SWTOR Empire Character
 def create_empire_character(user_last_name, char_name, char_class, advanced_class, species, level, gender="Male", server=nil)
   user_profile = UserProfile.find_by_last_name(user_last_name)
-  server ||= "Atris"
+  server ||= "The Bastion"
   puts "Creating #{user_profile.name} SWTOR Empire Character #{char_name}"
   user_profile.character_proxies.create!({
       character: SwtorCharacter.create!({
