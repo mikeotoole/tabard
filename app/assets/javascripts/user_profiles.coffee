@@ -1,13 +1,21 @@
 jQuery(document).ready ($) ->
 
   $('#tabs')
+    # Clear tab before before loading new stuff
     .on 'ajax:before', 'dt > a', ->
       $(@).closest('dt').find('+ dd').html ''
+    # Announcements
     .on 'ajax:error', 'dt.announcements + dd form', (xhr, status, error) ->
       $.alert body: 'Unable to mark announcements as read.'
     .on 'ajax:complete', 'dt.announcements + dd form', (event, data, status, xhr) ->
       $('#tabs dt.announcements a').trigger 'click'
-  
+    # Update window history on tabl switching
+    .on 'ajax:success', 'dt > a', ->
+      if typeof(history.replaceState) is typeof(Function)
+        hash = $(@).closest('dt').prop('class').split(' ').shift()
+        history.replaceState {}, $(@).text(), "##{hash}"
+
+  # Links rom user bar that activate tabs instead of full page reloads
   if $('#body:has(header.myprofile)').length
     $('#bar')
       .on 'click','.dashboard .notice a', ->
