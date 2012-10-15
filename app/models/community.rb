@@ -6,7 +6,7 @@
 # This class represents a community.
 ###
 class Community < ActiveRecord::Base
-  validates_lengths_from_database except: [:name, :slogan, :pitch, :background_image]
+  validates_lengths_from_database except: [:name, :slogan, :background_image]
   # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
   acts_as_paranoid
 
@@ -22,8 +22,6 @@ class Community < ActiveRecord::Base
   MAX_SLOGAN_LENGTH = 50
   # Used by validator to limit number of communities a user can own
   MAX_OWNED_COMMUNITIES = 3
-  # Used by validator to limit restrict pitch length
-  MAX_PITCH_LENGTH = 100
 
 attr_accessor :new_community_plan_id
 
@@ -31,7 +29,7 @@ attr_accessor :new_community_plan_id
 # Attribute accessible
 ###
   attr_accessible :name, :slogan, :is_accepting_members, :email_notice_on_application, :is_protected_roster, :is_public_roster, :theme_id, :theme,
-    :background_color, :title_color, :background_image, :remove_background_image, :background_image_cache, :home_page_id, :pitch
+    :background_color, :title_color, :background_image, :remove_background_image, :background_image_cache, :home_page_id
 
 ###
 # Associations
@@ -72,7 +70,7 @@ attr_accessor :new_community_plan_id
 ###
 # Callbacks
 ###
-  nilify_blanks only: [:pitch, :slogan]
+  nilify_blanks only: [:slogan]
   before_create :update_subdomain
   before_create :setup_action_items
   after_create :setup_community_application_form
@@ -100,7 +98,6 @@ attr_accessor :new_community_plan_id
   validates :name, not_profanity: true
   validates :name, not_restricted_name: {all: true}
   validates :slogan, length: { maximum: MAX_SLOGAN_LENGTH }
-  validates :pitch, length: { maximum: MAX_PITCH_LENGTH }
   validates :admin_profile, presence: true
   validates :background_color, format: { with: /^[0-9a-fA-F]{6}$/, message: "Only valid HEX colors are allowed." },
             unless: Proc.new{|community| community.background_color.blank? }
@@ -342,7 +339,7 @@ protected
       corrected_game_type = SupportedGame.attempt_to_match_type(search)
       search = "%"+search+'%'
       correct_supported_games = SupportedGame.where{(name =~ search) | (game_type =~ corrected_game_type)}
-      return where{(name =~ search) | (slogan =~ search) | (pitch =~ search) | (id.in(correct_supported_games.select{community_id}))}
+      return where{(name =~ search) | (slogan =~ search) | (id.in(correct_supported_games.select{community_id}))}
     else
       return scoped
     end

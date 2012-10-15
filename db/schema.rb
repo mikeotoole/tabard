@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121015181727) do
+ActiveRecord::Schema.define(:version => 20121015223025) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -192,13 +192,12 @@ ActiveRecord::Schema.define(:version => 20121015181727) do
     t.integer  "home_page_id"
     t.boolean  "pending_removal",                 :default => false
     t.text     "action_items"
-    t.string   "pitch"
     t.integer  "community_plan_id"
     t.integer  "community_profiles_count",        :default => 0
   end
 
   add_index "communities", ["admin_profile_id"], :name => "index_communities_on_admin_profile_id"
-  add_index "communities", ["community_announcement_space_id"], :name => "index_communities_on_community_announcement_space_id"
+  add_index "communities", ["community_announcement_space_id"], :name => "short_com_announcement_id"
   add_index "communities", ["community_application_form_id"], :name => "index_communities_on_community_application_form_id", :unique => true
   add_index "communities", ["home_page_id"], :name => "index_communities_on_home_page_id"
   add_index "communities", ["member_role_id"], :name => "index_communities_on_member_role_id", :unique => true
