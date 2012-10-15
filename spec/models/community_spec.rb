@@ -192,16 +192,6 @@ describe Community do
     end
   end
 
-  describe "pitch" do
-    it "should be optional" do
-      build(:community, :pitch => nil).should be_valid
-    end
-    it "should be under 100 characters" do
-      build(:community, :pitch => "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").should be_valid
-      build(:community, :pitch => "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").should_not be_valid
-    end
-  end
-
   describe "subdomain" do
     it "should be created on save" do
       good_name_subdomain_hash = Hash[ "ALLUPPERCASENAME", "alluppercasename", "with space", "withspace", "with-dash", "withdash", "withnumber1", 'withnumber1'] # TESTING Valid community subdomain hash
