@@ -5,7 +5,7 @@ jQuery ->
 subscription =
   setupForm: ->
     $('#form_with_subscription').submit ->
-      return false unless $('#cc_fields:visible').length
+      return true unless $('#cc_fields:visible').length
       
       # Encourage all fields being filled out
       errCount = 0
@@ -31,12 +31,18 @@ subscription =
 
       # Disable submit and process request
       else
-        $('#flash .cardfields .dismiss').trigger 'click'
-        $(@).find('input[type=submit]').prop 'disabled', true
-        card.processCard()
+        if requireConfirmation
+          $.confirm
+            title: 'Confirm Charge'
+            body: 'This will submit a payment with the card you provided and setup a recurring monthly subscription.'
+            action: -> card.processCard()
+        else
+          card.processCard()
       false
 
   processCard: ->
+    $('#flash .cardfields .dismiss').trigger 'click'
+    $('#form_with_subscription input[type=submit]').prop 'disabled', true
     data =
       name: $('#card_name').val()
       number: $('#card_number').val()

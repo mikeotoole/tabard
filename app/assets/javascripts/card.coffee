@@ -29,12 +29,18 @@ card =
 
       # Disable submit and process request
       else
-        $('#flash .cardfields .dismiss').trigger 'click'
-        $(@).find('input[type=submit]').prop 'disabled', true
-        card.processCard()
+        if requireConfirmation
+          $.confirm
+            title: 'Confirm Charge'
+            body: 'Your current statement will be processed with this request.'
+            action: -> card.processCard()
+        else
+          card.processCard()
       false
 
   processCard: ->
+    $('#flash .cardfields .dismiss').trigger 'click'
+    $('#card_form input[type=submit]').prop 'disabled', true
     data =
       name: $('#card_name').val()
       number: $('#card_number').val()
