@@ -13,11 +13,7 @@
 
 - if card_on_file
   %h1 Card on File
-  %blockquote
-    %p
-      = image_tag "application/card-#{@stripe.active_card.type.gsub(/[^a-z]/i,'').downcase}@48.png"
-      - nice_date = DateTime.new(@stripe.active_card.exp_year, @stripe.active_card.exp_month).strftime '%B, %Y'
-      %strong= "#{@stripe.active_card.type} ending in #{@stripe.active_card.last4}, expiring #{nice_date}"
+  = render 'current', stripe: @stripe
 
 = render 'shared/subscriptions_submenu', current: 'card'
 
