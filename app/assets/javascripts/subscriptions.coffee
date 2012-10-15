@@ -5,12 +5,36 @@ jQuery ->
 subscription =
   setupForm: ->
     $('#form_with_subscription').submit ->
-      if $('#cc_fields:visible').length
-        $(@).find('input[type=submit]').prop 'disabled', true
-        @processCard()
-        false
+      return false unless $('#cc_fields:visible').length
+      
+      # Encourage all fields being filled out
+      errCount = 0
+      for field in $(@).find('input[type=text]')
+        $field = $(field)
+        $li = $field.closest 'li'
+        if $field.val()
+          $li.removeClass 'error'
+        else
+          errCount++
+          $li.addClass 'error'
+      for select in $(@).find('.select')
+        $select = $(select)
+        if $select.find('input:checked').length
+          $select.removeClass 'error'
+        else
+          errCount++
+          $select.addClass 'error'
+
+      # Errors present?
+      if errCount > 0
+        $.flash 'alert cardfields', 'Please fill out missing fields.' unless $('#flash .cardfields').length
+
+      # Disable submit and process request
       else
-        true
+        $('#flash .cardfields .dismiss').trigger 'click'
+        $(@).find('input[type=submit]').prop 'disabled', true
+        card.processCard()
+      false
 
   processCard: ->
     data =

@@ -198,7 +198,6 @@ class Invoice < ActiveRecord::Base
       if self.user_stripe_customer_token.present?
         if self.total_price_in_cents > MINIMUM_CHARGE_AMOUNT
           begin
-            # TODO: need to check and lock?? and set processing_payment
             raise ActiveRecord::StaleObjectError if self.processing_payment
             self.update_attributes({processing_payment: true}, without_protection: true)
             charge = Stripe::Charge.create(
@@ -259,11 +258,13 @@ class Invoice < ActiveRecord::Base
                 when "processing_error"
                   # ERROR: Log error and retry tomorrow.
                   # Add error to invoice.
+                  self.errors[:base] = ["There was an error processing your payment."]
                   logger.error "CardError charge_customer: #{e.message}"
 
                 else
                   # ERROR: This should not happen! Log error.
                   # Add error to invoice.
+                  self.errors[:base] = ["There was an error processing your payment."]
                   logger.error "CardError charge_customer: #{e.message}"
               end
             end
@@ -271,6 +272,7 @@ class Invoice < ActiveRecord::Base
           rescue Stripe::StripeError => e
             logger.error "StripeError charge_customer: #{e.message}"
             # Add error to invoice.
+            self.errors[:base] = ["There was an error processing your payment."]
             success = false
           end
         else
@@ -281,12 +283,13 @@ class Invoice < ActiveRecord::Base
       else
         # ERROR Invoice owner has no payment information.
         logger.error "ERROR charge_customer: Invoice owner had no payment info: #{self.to_yaml}"
-        # Add error to invoice.
+        self.errors[:base] = [I18n.t('card.errors.missing.full')]
         success = false
       end
     rescue Exception => e
       logger.error "ERROR charge_customer: #{e.message}"
       # Add error to invoice.
+      self.errors[:base] = ["There was an error processing your payment."]
       success = false
     end
     self.update_column(:processing_payment, false) unless success
