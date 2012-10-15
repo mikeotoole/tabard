@@ -10,6 +10,7 @@ en:
       date_short: "%b %e, %Y"
       date_monthday: "%b %e"
   hello: "Hello world"
+
   activerecord:
     attributes:
       announcement:
@@ -46,6 +47,25 @@ en:
           attributes:
             avatar:
               size_too_big: "image file size is too large (should be at most 2MB)"
+
+  card:
+    errors:
+      invalid:
+        short: 'Invalid Card'
+        full: 'The card you provided appears to be invalid.'
+      expired:
+        short: 'Expired Card'
+        full: 'The card you provided has expired.'
+      cvc:
+        short: 'Invalid Security Code'
+        full: 'The cvc (security) code for your card is incorrect.'
+      declined:
+        short: 'Card Declined'
+        full: 'The card you provided has been declined.'
+      missing:
+        short: 'Missing Card'
+        full: 'Your account does not have a card on file.'
+
   community:
     default:
       page_space:

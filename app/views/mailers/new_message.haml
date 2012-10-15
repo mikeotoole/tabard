@@ -1,11 +1,15 @@
 %p
   %strong Hello #{@user_profile.display_name},
 %p
-- if @message_association.is_system_sent
-  You have a new message on Tabard&trade;!
-- else
-  #{@message_association.author_name} sent you a message on Tabard&trade;!
-%h2
-  #{@message_association.subject}
+  - if @message_association.is_system_sent
+    You have a new message on Tabard&trade;!
+  - else
+    #{@message_association.author_name} sent you a message on Tabard&trade;!
+%hr
+
+%font{ color: '#333' }
+  %h2 #{@message_association.subject}
+
+%hr
 %p You can view your message at the link below:
 %p= link_to 'View Message', mail_url(@message_association), style: 'color: #BE4124'

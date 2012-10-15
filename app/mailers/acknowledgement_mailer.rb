@@ -16,7 +16,7 @@ class AcknowledgementMailer < ActionMailer::Base
     if !!@acknowledgement
       @user_profile = @acknowledgement.user_profile
       @url = announcement_url(@acknowledgement.announcement, subdomain: @acknowledgement.subdomain)
-      mail(to: @user_profile.email, subject: "Tabard - New #{@acknowledgement.community_name} Announcement") do |format|
+      mail(to: @user_profile.email, subject: "Tabard: New #{@acknowledgement.community_name} Announcement") do |format|
          format.html { render "mailers/new_announcement" }
       end
     end

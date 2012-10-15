@@ -4,40 +4,40 @@
     %style{ type: 'text/css' }
       :plain
         a { color: #BE4124 }
-  %body{ align: 'center', bgcolor: '#ddd', margin: 0, padding: 20, style: 'background:#ddd; color:#452A5D; margin:0; padding:20px; text-align:center' }
-    %div{ align: 'center', bgcolor: '#ddd', margin: 0, padding: 20, style: 'background:#ddd; color:#452A5D; margin:0; padding:20px; text-align:center' }
-      %font{ color: '#452A5D', face: 'Arial, Helvetica, Tahoma, sans-serif' }
+  %body{ align: 'center', bgcolor: '#e9e9e9', margin: 0, padding: 20, style: 'background:#e9e9e9; color:#1B6A98; margin:0; padding:20px; text-align:center' }
+    %div{ align: 'center', bgcolor: '#e9e9e9', margin: 0, padding: 20, style: 'background:#e9e9e9; color:#1B6A98; margin:0; padding:20px; text-align:center' }
+      %font{ color: '#1B6A98', face: 'Arial, Helvetica, Tahoma, sans-serif' }
         %center
           %p= raw '&nbsp;'
+          %p{ align: 'left', width: '600', style: 'text-align:left; width: 600px;' }
+            = image_tag "https://s3.amazonaws.com/tabard-public/images/tabard-logo.png"
           %table{ bgcolor: '#fff', border: 0, cellpadding: 0, cellspacing: 0, width: '600', style: 'background:#fff; border:0; width:600px' }
             %tr
-              %td{ bgcolor: '#fff', border: 1, bordercolor: '#aaa', width: '600', style: 'background:#fff; border:1px solid #aaa; width:600px' }
+              %td{ bgcolor: '#fff', border: 1, bordercolor: '#ccc', width: '600', style: 'background:#fff; border:1px solid #ccc; width:600px' }
                 %table{ bgcolor: '#fff', border: 0, cellpadding: 0, cellspacing: 0, width: '600', style: 'background:#fff; border:0; width:600px' }
                   %tr
                     %td{ colspan: 3, height: 40, style: 'height:40px' }= raw '&nbsp;'
                   %tr
                     %td{ width: 40, style: 'width:40px' }= raw '&nbsp;'
-                    %td{ width: 520, style: 'color:#452A5D; font-size:14px; width:520px' }
-                      %font{ color: '#452A5D', size: 3 }
-                        %p= image_tag "https://s3.amazonaws.com/tabard-public/images/tabard-logo.png"
-                        %hr{ noshade: 'noshade', size: 1, style: 'background: #fff; border: 0; border-top: 1px solid #ccc; height:10px;' }
+                    %td{ width: 520, style: 'color:#1B6A98; font-size:14px; width:520px' }
+                      %font{ color: '#1B6A98', size: 3 }
                         = yield
                     %td{ width: 40, style: 'width:40px' }= raw '&nbsp;'
                   %tr
                     %td{ colspan: 3, height: 40, style: 'height:40px' }= raw '&nbsp;'
           %br
-          %table{ bgcolor: '#ddd', border: 0, cellpadding: 0, cellspacing: 0, width: '600', style: 'background:#ddd; border:0; width:600px' }
+          %table{ bgcolor: '#e9e9e9', border: 0, cellpadding: 0, cellspacing: 0, width: '600', style: 'background:#e9e9e9; border:0; width:600px' }
             %tr
               %td{ align: 'center', style: 'text-align: center' }
                 %font{ color: '#777', size: 2, style: 'color: #777; font-size: 12px' }
                   %p{ align: 'left', style: 'text-align: left' }
                     You are receiving this message because your email address is linked with an active Tabard&trade; user account.
                     If you have previously deactivated your Tabard&trade; account or have never opened a Tabard&trade; account, please contact our
-                    = link_to 'Customer Support', support_index_url(subdomain: false), style: 'color: #BE4124'
+                    = link_to 'Customer Support', support_index_url(subdomain: false), style: 'color: #000'
                     team.
                   %p{ align: 'left', style: 'text-align: left' }
                     Remember, you can always go to your
-                    = link_to 'Account Settings', account_settings_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), target: '_blank', style: 'color: #BE4124'
+                    = link_to 'Account Settings', account_settings_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), target: '_blank', style: 'color: #000'
                     page to adjust your
                     %br
                     = raw('<strong>email notification preferences</strong>') + ','
@@ -45,14 +45,14 @@
                   %p{ align: 'left', style: 'text-align: left' }
                     Tabard&trade; is only for persons age 13 or older and in the U.S.
                     If you receive abusive messages, please contact
-                    = link_to 'abuse@tabard.co', 'mailto:abuse@tabard.co', style: 'color: #BE4124'
-                  %hr{ noshade: 'noshade', size: 1, style: 'background: #ddd; border: 0; border-top: 1px solid #bbb; height:10px;' }
+                    = link_to 'abuse@tabard.co', 'mailto:abuse@tabard.co', style: 'color: #000'
+                  %hr{ noshade: 'noshade', size: 1, style: 'background: #e9e9e9; border: 0; border-top: 1px solid #ccc; height:10px;' }
                   %p
-                    = link_to 'Privacy Policy', top_level_privacy_policy_url, target: '_blank', style: 'color: #BE4124'
+                    = link_to 'Privacy Policy', top_level_privacy_policy_url, target: '_blank', style: 'color: #000'
                     = raw '&nbsp;|&nbsp;'
-                    = link_to 'Terms of Service', top_level_terms_of_service_url, target: '_blank', style: 'color: #BE4124'
+                    = link_to 'Terms of Service', top_level_terms_of_service_url, target: '_blank', style: 'color: #000'
                     = raw '&nbsp;|&nbsp;'
-                    = link_to 'Customer Support', support_index_url(subdomain: false), target: '_blank', style: 'color: #BE4124'
+                    = link_to 'Customer Support', support_index_url(subdomain: false), target: '_blank', style: 'color: #000'
                   %p
                     &copy; Copyright 2012, DigitalAugment Inc., All rights reserved.
                     %br

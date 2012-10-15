@@ -15,21 +15,20 @@ class InvoiceMailer < ActionMailer::Base
     @invoice = Invoice.find_by_id(invoice_id)
     @url = invoice_url(@invoice)
     @user_profile = @invoice.user_profile
-    # TODO add subject message
-    mail(to: @user_profile.email, subject: "DOUG CHANGE ME") do |format|
-       format.html { render "mailers/payment_successful" }
+    mail(to: @user_profile.email, subject: "Tabard: Payment Receipt") do |format|
+      format.html { render "mailers/payment_successful" }
     end
   end
 
   # Tell user payment failed
-  def payment_failed(invoice_id, failure_message)
+  def payment_failed(invoice_id, message_short, message_full=nil)
     @invoice = Invoice.find_by_id(invoice_id)
     @url = invoice_url(@invoice)
     @user_profile = @invoice.user_profile
-    @failure_message = failure_message
-    # TODO add subject message
-    mail(to: @user_profile.email, subject: "DOUG CHANGE ME") do |format|
-       format.html { render "mailers/payment_failed" }
+    @message_short = message_short
+    @message_full = message_full
+    mail(to: @user_profile.email, subject: "Tabard: Payment Error") do |format|
+      format.html { render "mailers/payment_failed" }
     end
   end
 end

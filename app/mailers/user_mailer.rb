@@ -13,7 +13,7 @@ class UserMailer < ActionMailer::Base
   # Used for resetting a single users password.
   def password_reset(user, password=nil)
     @resource = user
-    mail(to: @resource.email, subject: 'Tabard - Password reset notification', tag: 'password-reset') do |format|
+    mail(to: @resource.email, subject: 'Tabard: Password Reset', tag: 'password-reset') do |format|
        format.html { render "devise/mailer/reset_password_by_admin_instructions" }
     end
   end
@@ -21,7 +21,7 @@ class UserMailer < ActionMailer::Base
   # Used for creating a new AdminUser.
   def setup_admin(user, password=nil)
     @resource = user
-    mail(to: @resource.email, subject: 'Tabard - New admin account', tag: 'password-reset') do |format|
+    mail(to: @resource.email, subject: 'Tabard: Admin Account', tag: 'password-reset') do |format|
        format.html { render "devise/mailer/new_admin_user_setup_instructions" }
     end
   end
@@ -29,7 +29,7 @@ class UserMailer < ActionMailer::Base
   # Used for reinstating an account.
   def reinstate_account(user, password=nil)
     @resource = user
-    mail(to: @resource.email, subject: 'Tabard - Reactivate Account Notification', tag: 'password-reset') do |format|
+    mail(to: @resource.email, subject: 'Tabard: Reactivation Notice', tag: 'password-reset') do |format|
        format.html { render "devise/mailer/reinstate_account_instructions" }
     end
   end
@@ -37,7 +37,7 @@ class UserMailer < ActionMailer::Base
   # Notifies the user that their password has changed.
   def password_changed(user_id)
     @resource = User.find_by_id(user_id)
-    mail(to: @resource.email, subject: 'Tabard - Password has been changed') do |format|
+    mail(to: @resource.email, subject: 'Tabard: Password Changed') do |format|
        format.html { render "devise/mailer/password_changed" }
     end
   end

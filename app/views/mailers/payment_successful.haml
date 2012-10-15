@@ -1,1 +1,39 @@
-%p default
+%p
+  %strong Hello #{@user_profile.full_name},
+%p
+  This is a receipt for your Tabard account.
+  This is simply for your record and NO payment is due.
+  If you have any questions, please contact us through our support system.
+%hr
+
+%font{ color: '#333' }
+  %h3 Tabard Receipt - #{@invoice.paid_date.strftime '%b %e, %Y - %l:%M %p'}
+  - @invoice.uniqued_invoice_items.sort_by{|item| item.has_community_plan? ? 0 : 1}.group_by(&:community).each do |community, invoice_items|
+    - invoice_items.group_by(&:start_date).each do |start_date, invoice_items|
+      - end_date = invoice_items.first.end_date
+      %p
+        %strong #{community.name}
+        &nbsp;[ #{start_date.strftime '%b %e, %Y'} &mdash; #{end_date.strftime '%b %e, %Y'} ]
+        - invoice_items.each do |invoice_item|
+          %br
+          %em
+            &nbsp;&nbsp;&middot;&nbsp;
+            #{invoice_item.title}:&nbsp;
+            = invoice_item.quantity
+            &nbsp;&times;&nbsp;
+            = number_to_currency(invoice_item.price_per_month_in_cents/100.0)
+            &nbsp;=&nbsp;
+            = number_to_currency(invoice_item.total_price_in_dollars)
+  %h3 Total: #{number_to_currency(@invoice.total_price_in_dollars)}
+  %p
+    DigitalAugment Inc.
+    %br
+    202 N. 3rd Ave.
+    %br
+    Pasco, WA 99301
+
+%hr
+%p
+  To view your statement online go to:
+%p
+  = link_to @url, @url, style: 'color: #BE4124'

@@ -231,30 +231,31 @@ class Invoice < ActiveRecord::Base
             else
               case e.code
                 when "incorrect_number", "invalid_number", "invalid_expiry_month", "invalid_expiry_year", "invalid_cvc"
-                  # TODO: Tell customer card on file is invalid and they need to reenter card info.
-                  InvoiceMailer.delay.payment_failed(self.id, "Message") if send_fail_email
-                  # Add error to invoice.
+                  InvoiceMailer.delay.payment_failed(self.id, I18n.t('card.errors.invalid.short'), I18n.t('card.errors.invalid.full')) if send_fail_email
+                  self.errors[:base] = [I18n.t('card.errors.invalid.full')]
+
                 when "expired_card"
-                  # TODO: Tell customer card on file is expired and they need to reenter card info.
-                  InvoiceMailer.delay.payment_failed(self.id, "Message") if send_fail_email
-                  # Add error to invoice.
+                  InvoiceMailer.delay.payment_failed(self.id, I18n.t('card.errors.expired.short'), I18n.t('card.errors.expired.full')) if send_fail_email
+                  self.errors[:base] = [I18n.t('card.errors.expired.full')]
+
                 when "incorrect_cvc"
-                  # TODO: Tell customer card on file has invalid CSV and they need to reenter card info.
-                  InvoiceMailer.delay.payment_failed(self.id, "Message") if send_fail_email
-                  # Add error to invoice.
+                  InvoiceMailer.delay.payment_failed(self.id, I18n.t('card.errors.cvc.short'), I18n.t('card.errors.cvc.full')) if send_fail_email
+                  self.errors[:base] = [I18n.t('card.errors.cvc.full')]
+
                 when "card_declined"
-                  # TODO: Tell customer card on file has been declined.
-                  InvoiceMailer.delay.payment_failed(self.id, "Message") if send_fail_email
-                  # Add error to invoice.
+                  InvoiceMailer.delay.payment_failed(self.id, I18n.t('card.errors.declined.short'), I18n.t('card.errors.declined.full')) if send_fail_email
+                  self.errors[:base] = [I18n.t('card.errors.declined.full')]
+
                 when "missing"
-                  # ERROR: This should not happen! Log error. What to do...
-                  # TODO: Tell customer that card must be updated.
-                  # Add error to invoice.
+                  InvoiceMailer.delay.payment_failed(self.id, I18n.t('card.errors.missing.short'), I18n.t('card.errors.missing.full')) if send_fail_email
+                  self.errors[:base] = [I18n.t('card.errors.missing.full')]
                   logger.error "CardError charge_customer: #{e.message}"
+
                 when "processing_error"
                   # ERROR: Log error and retry tomorrow.
                   # Add error to invoice.
                   logger.error "CardError charge_customer: #{e.message}"
+
                 else
                   # ERROR: This should not happen! Log error.
                   # Add error to invoice.
@@ -268,12 +269,12 @@ class Invoice < ActiveRecord::Base
             success = false
           end
         else
-          #Invice cost is less then $1.00. Just mark as paid. Log that this happend for later review.
+          # Invice cost is less then $1.00. Just mark as paid. Log that this happend for later review.
           logger.error "ERROR charge_customer: Invoice was less then $1: #{self.to_yaml}"
           success = self.mark_paid_and_close
         end
       else
-        #ERROR Invoice owner has no payment information.
+        # ERROR Invoice owner has no payment information.
         logger.error "ERROR charge_customer: Invoice owner had no payment info: #{self.to_yaml}"
         # Add error to invoice.
         success = false
