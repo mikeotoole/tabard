@@ -1,5 +1,6 @@
 - title 'Edit Subscription'
 
+- card_on_file = !!@stripe
 - card_is_present = (@stripe_card_token.present? or current_user.stripe_customer_token.present?)
 
 - content_for :header do
@@ -61,7 +62,13 @@
 
       - if card_is_present
         %p
-          Your credit card is on file and will be used for this subscription.
+          - if card_on_file
+            %h2 Card on File
+            %blockquote
+              %p
+                = image_tag "application/card-#{@stripe.active_card.type.gsub(/[^a-z]/i,'').downcase}@48.png"
+                - nice_date = DateTime.new(@stripe.active_card.exp_year, @stripe.active_card.exp_month).strftime '%B, %Y'
+                %strong= "#{@stripe.active_card.type} ending in #{@stripe.active_card.last4}, expiring #{nice_date}"
         %menu
           = link_to 'Change card', 'javascript:;', class: 'newcard'
           = link_to 'Use card on file', 'javascript:;', class: 'onfile'

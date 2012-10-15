@@ -66,6 +66,7 @@ protected
   ###
   def load_community
     @community = current_user.owned_communities.find(params[:community_id])
+     @stripe = Stripe::Customer.retrieve(current_user.stripe_customer_token) unless current_user.stripe_customer_token.blank?
     if @invoice.processing_payment
       flash[:notice] = "Your account is currently being processd and no changes can be made at this time."
       redirect_to subscriptions_url
