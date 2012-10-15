@@ -15,7 +15,8 @@
             - if @message.to
               %ul
                 - @message.to.each do |to|
-                  = render 'to', user_profile: user_profile if user_profile = UserProfile.find_by_id(to)
+                  - if user_profile = UserProfile.find_by_id(to)
+                    = render 'to', user_profile: user_profile
 
     = f.input :body, as: :text, label: false, wrapper_tag: :article, input_html: { tabindex: 3 }
     %button{ type: ':submit', tabindex: 4 } Send
