@@ -14,8 +14,8 @@ class SubscriptionsController < ApplicationController
   skip_before_filter :ensure_not_ssl_mode
   skip_before_filter :limit_subdomain_access
   before_filter :ensure_secure_subdomain
-  before_filter :load_community, only: [:edit, :update]
   before_filter :load_variables
+  before_filter :load_community, only: [:edit, :update]
 
   # GET /subscriptions(.:format)
   def index
@@ -66,6 +66,10 @@ protected
   ###
   def load_community
     @community = current_user.owned_communities.find(params[:community_id])
+    if @invoice.processing_payment
+      flash[:notice] = "Your account is currently being processd and no changes can be made at this time."
+      redirect_to subscriptions_url
+    end
   end
 
   ###

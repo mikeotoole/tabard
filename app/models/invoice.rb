@@ -199,6 +199,8 @@ class Invoice < ActiveRecord::Base
         if self.total_price_in_cents > MINIMUM_CHARGE_AMOUNT
           begin
             # TODO: need to check and lock?? and set processing_payment
+            raise ActiveRecord::StaleObjectError if self.processing_payment
+            self.update_attributes({processing_payment: true}, without_protection: true)
             charge = Stripe::Charge.create(
               amount: self.total_price_in_cents,
               currency: "usd",
@@ -206,6 +208,9 @@ class Invoice < ActiveRecord::Base
               description: "Charge for invoice id:#{self.id}"
             )
             success = self.mark_paid_and_close(charge.id)
+          rescue ActiveRecord::StaleObjectError
+            errors.add :base, "Payment is already being processed."
+            success = false
           rescue Stripe::CardError => e
             # Mark first failed attempt date.
             self.first_failed_attempt_date = Time.now if self.first_failed_attempt_date.blank?
@@ -431,5 +436,6 @@ end
 #  processing_payment           :boolean          default(FALSE)
 #  charged_total_price_in_cents :integer
 #  first_failed_attempt_date    :datetime
+#  lock_version                 :integer          default(0), not null
 #
 

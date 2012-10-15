@@ -28,7 +28,6 @@ class CommunitiesController < ApplicationController
   # GET /communities/new(.:format)
   def new
     @community.admin_profile = current_user.user_profile
-    @community.build_recurring_subsciption_package({community_plan: CommunityPlan.default_plan}, without_protection: true)
   end
 
   # POST /communities(.:format)
