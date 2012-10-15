@@ -10,7 +10,7 @@ DaBvRails::Application.routes.draw do
   get '/subscriptions/:community_id/edit' => 'subscriptions#edit', as: :edit_subscription
   put '/subscriptions/:community_id' => 'subscriptions#update', as: :subscription
 
-  resources :invoices, only: [:index, :show], path: 'statements'
+  resources :invoices, only: [:index, :show], path: :statements
 
   resources :minecraft_characters
 
@@ -47,7 +47,7 @@ DaBvRails::Application.routes.draw do
   post "users/accept_document/:id" => "document_acceptance#create", as: "accept_document_create"
 
   # User Profiles
-  resources :user_profiles, only: [:show, :edit, :update] do
+  resources :user_profiles, path: :profiles, only: [:show, :edit, :update] do
     member do
       get :activities
       get :announcements
