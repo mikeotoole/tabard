@@ -17,6 +17,7 @@
 #  processing_payment           :boolean          default(FALSE)
 #  charged_total_price_in_cents :integer
 #  first_failed_attempt_date    :datetime
+#  lock_version                 :integer          default(0), not null
 #
 
 require 'spec_helper'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121012183442) do
+ActiveRecord::Schema.define(:version => 20121015181727) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -437,6 +437,7 @@ ActiveRecord::Schema.define(:version => 20121012183442) do
     t.boolean  "processing_payment",           :default => false
     t.integer  "charged_total_price_in_cents"
     t.datetime "first_failed_attempt_date"
+    t.integer  "lock_version",                 :default => 0,     :null => false
   end
 
   create_table "message_associations", :force => true do |t|
