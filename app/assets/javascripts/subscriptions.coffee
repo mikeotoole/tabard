@@ -34,7 +34,7 @@ subscription =
         if requireConfirmation
           $.confirm
             title: 'Confirm Charge'
-            body: 'This will submit a payment with the card you provided and setup a recurring monthly subscription.'
+            body: 'This will submit a payment with the card you provided and configure your recurring monthly subscription.'
             action: -> card.processCard()
         else
           card.processCard()

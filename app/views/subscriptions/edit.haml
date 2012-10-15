@@ -9,7 +9,7 @@
 
 - content_for :footer do
   :javascript
-    var requireConfirmation = #{@invoice.persisted? ? 'false' : 'true'};
+    var requireConfirmation = #{(@invoice.persisted? or @invoice.period_end_date < Time.now) ? 'false' : 'true'};
   = javascript_include_tag "https://js.stripe.com/v1/"
   = javascript_include_tag "subscriptions"
 
