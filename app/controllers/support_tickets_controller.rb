@@ -28,7 +28,7 @@ class SupportTicketsController < ApplicationController
         flash.now[:notice] = "The next available Tabard agent will begin working to resolve your issue soon."
       end
     end
-    @support_comment = @support_ticket.support_comments.new
+    @support_comment = SupportComment.new
   end
 
   # Create
