@@ -31,4 +31,14 @@ class InvoiceMailer < ActionMailer::Base
       format.html { render "mailers/payment_failed" }
     end
   end
+
+  # Tell user subscription has been canceled for non-payment.
+  def subscription_canceled(invoice_id)
+    @invoice = Invoice.find_by_id(invoice_id)
+    @url = invoice_url(@invoice)
+    @user_profile = @invoice.user_profile
+    mail(to: @user_profile.email, subject: "Tabard: Subscription Canceled") do |format|
+      format.html { render "mailers/subscription_canceled" }
+    end
+  end
 end

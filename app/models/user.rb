@@ -197,10 +197,22 @@ class User < ActiveRecord::Base
     invoice = self.invoices.historical.where{(period_start_date <= today) & (is_closed == false)}.limit(1).first
 
     # A user with an invoice more then 7 days past due has end date set to today. This invoice should only have old prorated items on it.
-    invoice.period_end_date = Time.now.beginning_of_day if invoice.present? and ((Time.now - invoice.first_failed_attempt_date) > Invoice::SECONDS_OF_FAILED_ATTEMPTS)
+    unless invoice.first_failed_attempt_date.blank?
+      invoice.period_end_date = Time.now.beginning_of_day if invoice.present? and ((Time.now - invoice.first_failed_attempt_date) > Invoice::SECONDS_OF_FAILED_ATTEMPTS)
+    end
 
     invoice = self.invoices.new({period_start_date: Time.now.beginning_of_day, period_end_date: Time.now.beginning_of_day}, without_protection: true) if invoice.blank?
     return invoice
+  end
+
+  # This will flag this user as having a good (paid) account.
+  def mark_as_good_standing_account
+    self.update_column(:is_in_good_account_standing, true)
+  end
+
+  # This will flag this user as having a bad (unpaid) account.
+  def mark_as_delinquent_account
+    self.update_column(:is_in_good_account_standing, false)
   end
 
 ###
@@ -436,5 +448,6 @@ end
 #  is_email_on_message               :boolean          default(TRUE)
 #  is_email_on_announcement          :boolean          default(TRUE)
 #  stripe_customer_token             :string(255)
+#  is_in_good_account_standing       :boolean          default(TRUE)
 #
 

@@ -560,7 +560,6 @@ end
 #  home_page_id                    :integer
 #  pending_removal                 :boolean          default(FALSE)
 #  action_items                    :text
-#  pitch                           :string(255)
 #  community_plan_id               :integer
 #  community_profiles_count        :integer          default(0)
 #

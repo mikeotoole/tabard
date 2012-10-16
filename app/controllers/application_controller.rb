@@ -27,6 +27,9 @@ class ApplicationController < ActionController::Base
   # This before_filter ensures that a user has accepted legal documents.
   before_filter :ensure_accepted_most_recent_legal_documents
 
+  # This before_filter ensures that a user is in good payment standing
+  before_filter :ensure_user_is_in_good_payment_standing
+
   # This before_filter ensures that ssl mode is not running
   prepend_before_filter :ensure_not_ssl_mode
 
@@ -301,6 +304,18 @@ protected
       elsif not current_user.accepted_current_privacy_policy
         redirect_to accept_document_path(PrivacyPolicy.current)
       end
+    end
+  end
+
+  ###
+  # _before_filter_
+  #
+  # This method ensures that a profile is active, or it will default to the user_profile
+  ###
+  def ensure_user_is_in_good_payment_standing
+    if user_signed_in? and not current_user.is_in_good_account_standing
+      # card_url
+      flash[:notice] = "PAYMENT DELENQUENT. Doug fix this message. #{view_context.link_to("Click to fix", card_url)}" # TODO Fix this message
     end
   end
 

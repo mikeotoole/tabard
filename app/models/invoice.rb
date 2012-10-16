@@ -196,6 +196,7 @@ class Invoice < ActiveRecord::Base
           rescue Stripe::CardError => e
             # Mark first failed attempt date.
             self.first_failed_attempt_date = Time.now if self.first_failed_attempt_date.blank?
+            self.user.mark_as_delinquent_account
             # TODO: Set boolean on user that payment failed (triggering a flash message for them).
             if send_fail_email and (Time.now - self.first_failed_attempt_date) > SECONDS_OF_FAILED_ATTEMPTS
               # If over seven days since first failed attempt cancel users subscription.
@@ -206,7 +207,7 @@ class Invoice < ActiveRecord::Base
                 end
                 self.save!
                 self.mark_paid_and_close
-                #TODO: Send user email about subscription being canceled.
+                InvoiceMailer.delay.subscription_canceled(self.id)
               else
                 # An invoice with prorated items will have the recurring items removed and will stay.
                 self.invoice_items.recurring.each do |ii|
@@ -282,7 +283,7 @@ class Invoice < ActiveRecord::Base
   def mark_paid_and_close(charge_id=nil)
     success = self.update_attributes({is_closed: true, paid_date: Time.now, stripe_charge_id: charge_id}, without_protection: true)
     # TODO: Set boolean on user that payment failed to false.
-
+    self.user.mark_as_good_standing_account if success
     InvoiceMailer.delay.payment_successful(self.id) if charge_id.present?
     return success
   end

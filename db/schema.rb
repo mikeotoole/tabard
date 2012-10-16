@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121015223025) do
+ActiveRecord::Schema.define(:version => 20121016172830) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -729,6 +729,7 @@ ActiveRecord::Schema.define(:version => 20121015223025) do
     t.boolean  "is_email_on_message",                              :default => true
     t.boolean  "is_email_on_announcement",                         :default => true
     t.string   "stripe_customer_token"
+    t.boolean  "is_in_good_account_standing",                      :default => true
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
