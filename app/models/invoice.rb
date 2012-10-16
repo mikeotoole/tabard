@@ -207,14 +207,14 @@ class Invoice < ActiveRecord::Base
                 end
                 self.save!
                 self.mark_paid_and_close
-                InvoiceMailer.delay.subscription_canceled(self.id)
+                InvoiceMailer.delay.subscription_canceled(self.id, false)
               else
                 # An invoice with prorated items will have the recurring items removed and will stay.
                 self.invoice_items.recurring.each do |ii|
                   ii.mark_for_destruction
                 end
                 self.save!
-                #TODO: Send user email about subscription being canceled and them having an outstanding balance for prorated items.
+                InvoiceMailer.delay.subscription_canceled(self.id, true)
               end
             else
               case e.code

@@ -1,0 +1,23 @@
+%p
+  %strong Hello #{@user_profile.full_name},
+%p
+  We have been unsuccessful in billing your card on file.
+  This usually happens when a card expires.
+  We also have not received new card information from you and regret this bad news:
+%hr
+
+%font{ color: '#333' }
+  %h3 Your subscription to Tabard has been canceled.
+  - if @payment_due
+    %hr
+    %h3
+      Overdue balance:
+      = number_to_currency(@invoice.total_price_in_dollars)
+
+%hr
+%p
+  We would love to see you stick around, so
+  %br
+  %strong Please update your card and Tabard subscription here:
+%p
+  = link_to @url, @url, style: 'color: #BE4124'
