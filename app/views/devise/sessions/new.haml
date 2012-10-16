@@ -19,5 +19,6 @@
   %a.close{ onclick: "javascript:$('#body').removeClass('with-help');" } Close
   = render "devise/shared/links"
 
-:javascript
-  jQuery(document).ready(function($){ $('#user_email').focus(); });
+%script{ type: 'text/javascript' }
+  :plain
+    jQuery(document).ready(function($){ $('#user_email').focus(); });
