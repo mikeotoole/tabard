@@ -13,7 +13,6 @@
   = javascript_include_tag "https://js.stripe.com/v1/"
   = javascript_include_tag "subscriptions"
 
-
 %h1= shorten_words @community.name
 
 = render 'shared/subscriptions_submenu'
@@ -38,8 +37,11 @@
                 = "$#{plan.price_per_month_in_cents/100}/month"
               - else
                 This one is on us
-            - if is_current
-              %span.date= "Renews #{@invoice.period_end_date.strftime '%b %e'}"
+            %span.meta
+              - if plan.price_per_month_in_cents > 0
+                100 members + custom roles
+              - else
+                Up to 20 members
 
     = render "communities/population", community: @community
 

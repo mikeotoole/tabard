@@ -325,7 +325,7 @@ protected
   ###
   def self.convert_to_subdomain(name)
     return false if name.blank?
-    name.downcase.gsub(/[\s\-]/,"")
+    name.downcase.gsub(/[^a-z]/,"")
   end
 
   ###
