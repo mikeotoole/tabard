@@ -31,4 +31,9 @@ class StatusCodeController < ApplicationController
     robots = File.read(Rails.root + filename)
     render text: robots, layout: false, content_type: "text/plain"
   end
+
+  # Used for blitz API
+  def blitz
+    render text: "42"
+  end
 end
