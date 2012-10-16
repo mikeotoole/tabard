@@ -15,7 +15,7 @@ class CommunitiesController < ApplicationController
   skip_before_filter :limit_subdomain_access, only: [:destroy]
   before_filter :ensure_secure_subdomain, only: [:destroy]
   load_and_authorize_resource except: [:create, :index]
-  before_filter :load_plans, only: [:new, :create]
+  before_filter :load_plans_and_stripe, only: [:new, :create]
 
 ###
 # REST Actions
@@ -69,8 +69,9 @@ class CommunitiesController < ApplicationController
 protected
 
   # Loads all available plans.
-  def load_plans
+  def load_plans_and_stripe
     @available_plans = CommunityPlan.available
+    @stripe = Stripe::Customer.retrieve(current_user.stripe_customer_token) unless current_user.stripe_customer_token.blank?
   end
 
 ###
