@@ -38,20 +38,16 @@ class CommunitiesController < ApplicationController
     @community.admin_profile = current_user.user_profile
     authorize! :create, @community
 
-    plan = CommunityPlan.available.find_by_id(params[:plan_id])
-    success = @community.save
-    if success and plan.present? and not plan.is_free_plan?
+    Community.transaction do
       begin
         invoice = current_user.current_invoice
-        invoice.invoice_items.new({community: @community, item: plan, quantity: 1}, without_protection: true)
-        unless invoice.update_attributes_with_payment(nil, @stripe_card_token)
-          # TODO: Need to delete community and add error.
-        end
+        success = @community.save_with_plan(params[:plan_id], @stripe_card_token, invoice)
       rescue Stripe::StripeError => e
-        # TODO: Need to delete community and add error.
         @community.errors.add :base, "There was a problem with your credit card"
         @stripe_card_token = nil
+        raise ActiveRecord::Rollback
       end
+      raise ActiveRecord::Rollback unless success
     end
 
     flash[:success] = "Your community has been created." if success

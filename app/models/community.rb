@@ -201,6 +201,32 @@ attr_accessor :new_community_plan_id
     self.recurring_community_plan.title
   end
 
+  ###
+  #
+  # This should be wrapped in a Community.transaction do block
+  ###
+  def save_with_plan(plan_id, stripe_card_token, invoice)
+    success = false
+    plan = CommunityPlan.available.find_by_id(plan_id)
+    if plan.present?
+      if invoice.present?
+        success = self.save
+        if success and not plan.is_free_plan?
+          invoice.invoice_items.new({community: self, item: plan, quantity: 1}, without_protection: true)
+          unless invoice.update_attributes_with_payment(nil, stripe_card_token)
+            self.errors[:base] = invoice.errors[:base]
+            success = false
+          end
+        end
+      else
+        self.errors.add(:base, "current invoice not found. Please try again. If the issue continues open a support ticket.")
+      end
+    else
+      self.errors.add(:base, "plan not found")
+    end
+    return success
+  end
+
 ###
 # Upgrades
 ###
