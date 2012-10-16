@@ -1,6 +1,7 @@
 - title 'Sign in'
 
 %h1 Login to Tabard
+
 = simple_form_for(resource, as: resource_name, url: session_url(resource_name, subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"))) do |f|
   %fieldset
     %ol
@@ -8,13 +9,15 @@
       = f.input :password, label: false, placeholder: 'Password'
       - if devise_mapping.rememberable?
         = f.input :remember_me, as: :boolean
-      %li
+      %li.submit
         %button{ type: 'submit' } Login
-  %a.help{ onclick: "javascript:$('#body').addClass('with-help');" } Need help?
+  %p.help
+    %a.help{ onclick: "javascript:$('#body').addClass('with-help');" } Need help?
+
 .help
   %h1 Account Assitance
   %a.close{ onclick: "javascript:$('#body').removeClass('with-help');" } Close
   = render "devise/shared/links"
 
 :javascript
-jQuery(document).ready(function($){ $('#user_email').focus(); });
+  jQuery(document).ready(function($){ $('#user_email').focus(); });
