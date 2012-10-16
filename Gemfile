@@ -86,6 +86,7 @@ ruby '1.9.3'
     gem 'thin'#                                                                             Ruby - https://github.com/macournoyer/thin/
     gem 'pg'#                                                                               Ruby - https://bitbucket.org/ged/ruby-pg/wiki/Home
     gem 'newrelic_rpm'#                                                                     MIT - https://github.com/newrelic/rpm
+    gem 'hirefireapp'
   end
 
 # Development Specific Gems
