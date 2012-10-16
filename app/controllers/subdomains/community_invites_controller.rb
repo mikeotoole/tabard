@@ -25,7 +25,7 @@ class Subdomains::CommunityInvitesController < SubdomainsController
 
   # POST /community_invites/mass_create(.:format)
   def mass_create
-    @community_invite = current_community.community_invites.new
+    @community_invite = CommunityInvite.new(community_id: current_community.id)
     authorize! :create, @community_invite
     @number_created = 0
     @number_failed = 0
