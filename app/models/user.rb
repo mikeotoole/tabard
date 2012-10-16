@@ -193,25 +193,11 @@ class User < ActiveRecord::Base
   # This will return the users current open invoice.
   ###
   def current_invoice
-#     invoices = self.invoices.where{(is_closed == false)}
-#     invoice = nil
-#     if invoices.any?
-#       today = Time.now
-#       # First close any invoices that should be closed
-#       invoices.each do |this_invoice|
-#         if this_invoice.period_end_date < today
-#           this_invoice.is_closed = true
-#           this_invoice.save!
-#         end
-#       end
-#       # Then get the current open invoice if it exists.
-#       invoice = self.invoices.where{(period_start_date <= today) & (period_end_date >= today) & (is_closed == false)}.limit(1).first
-#     end
-
     today = Time.now
     invoice = self.invoices.historical.where{(period_start_date <= today) & (is_closed == false)}.limit(1).first
 
-    # TODO: This needs to handle a user with an invoice more then 7 days past due that has prorated items. Set end date to today.
+    # A user with an invoice more then 7 days past due has end date set to today. This invoice should only have old prorated items on it.
+    invoice.period_end_date = Time.now.beginning_of_day if invoice.present? and ((Time.now - invoice.first_failed_attempt_date) > Invoice::SECONDS_OF_FAILED_ATTEMPTS)
 
     invoice = self.invoices.new({period_start_date: Time.now.beginning_of_day, period_end_date: Time.now.beginning_of_day}, without_protection: true) if invoice.blank?
     return invoice

@@ -251,6 +251,10 @@ DaBvRails::Application.routes.draw do
   get "/search" => "search#index", as: 'search'
   get "/search/autocomplete" => "search#autocomplete", as: 'search_autocomplete'
 
+  get '/robots.txt' => 'status_code#robots'
+
+  get '/mu-966b75a4-895e39c0-a6d40536-f8b36f30' => "status_code#blitz"
+
   get "/unsupported_browser" => "status_code#unsupported_browser", as: 'unsupported_browser'
   match '/not_found' => 'status_code#not_found', as: 'not_found'
   match '/forbidden' => 'status_code#forbidden', as: 'forbidden'

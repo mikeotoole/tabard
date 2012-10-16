@@ -161,7 +161,6 @@ attr_accessor :new_community_plan_id
 ###
   # If the community is disabled for not paying or being over capacity.
   def is_disabled?
-    # TODO: add no pay here
     self.is_over_max_capacity?
   end
 
@@ -220,7 +219,7 @@ attr_accessor :new_community_plan_id
   # The max number of users allowed in this community.
   # This includes plan and upgrade amounts.
   #
-  # OPTIMIZE: We may want to cache.
+  # OPTIMIZE: We may want to cache max_number_of_users.
   ###
   def max_number_of_users
     plan_users_total = self.current_community_plan.max_number_of_users
