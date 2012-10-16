@@ -8,10 +8,10 @@
   %table
     %thead
       %tr
-        %th Community Name
-        %th Current Plan
-        %th Next Cycle
+        %th Community
+        %th Subscription
         %th Cost
+        %th
     %tbody
       - @owned_communities.each do |community|
         - recurring = @invoice.plan_invoice_item_for_community(community)
@@ -19,21 +19,27 @@
           %td
             %h3= link_to shorten_words(community.name, 21), edit_subscription_path(community)
           %td.nowrap
-            %strong= community.current_community_plan_title
-          %td.nowrap
-            %strong= community.recurring_community_plan_title
-            %time
-              - if recurring.persisted?
+            - if recurring.persisted? and community.current_community_plan_title != community.recurring_community_plan_title
+              %strike= community.current_community_plan_title
+              %br
+              %strong= community.recurring_community_plan_title
+              %time
                 = recurring.start_date.strftime '%b %e, %Y'
                 &mdash;
                 = recurring.end_date.strftime '%b %e, %Y'
-              - else
-                = "Forever"
+            - else
+              %strong= community.current_community_plan_title
           %td.r
             %strong= number_to_currency(@invoice.total_recurring_price_per_month_in_dollars(community))
+          %td.actions
+            %div
+              - if recurring.persisted?
+                = link_to 'Edit', edit_subscription_path(community), class: 'edit', meta: 'Edit subscription'
+              - else
+                = link_to 'Upgrade', edit_subscription_path(community), class: 'upgrade', meta: 'Upgrade to pro'
     %tfoot
       %tr
-        %td.r{ colspan: 3 }
+        %td.r{ colspan: 2 }
           Recurring Monthly Cost:
           %br
           Your Next Bill:
@@ -41,6 +47,7 @@
           = number_to_currency(current_user.total_recurring_price_per_month_in_dollars)
           %br
           = number_to_currency(current_user.current_invoice.total_price_in_dollars)
+        %td
   %p.r
     = link_to 'View Statement', current_user.invoices.last, meta: 'Current statement', class: 'button'
 
