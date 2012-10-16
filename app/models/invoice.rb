@@ -148,7 +148,7 @@ class Invoice < ActiveRecord::Base
   ###
   def update_attributes_with_payment(invoice_attributes, stripe_card_token=nil)
     success = false
-    self.attributes = invoice_attributes
+    self.attributes = invoice_attributes unless invoice_attributes.blank?
     if self.user_stripe_customer_token.blank? and stripe_card_token.blank?
       #ERROR: Need payment info.
       self.errors.add :base, "Payment information is required"

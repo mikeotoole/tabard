@@ -32,24 +32,29 @@ class CommunitiesController < ApplicationController
 
   # POST /communities(.:format)
   def create
-    begin
-      @stripe_card_token = params[:stripe_card_token]
-      @community = Community.new(params[:community])
-      @community.admin_profile = current_user.user_profile
-      authorize! :create, @community
-      if @community.is_paid_community?
-        success = @community.update_attributes_with_payment(params[:community], @stripe_card_token)
-      else
-        success = @community.save
+    success = false
+    @stripe_card_token = params[:stripe_card_token]
+    @community = Community.new(params[:community])
+    @community.admin_profile = current_user.user_profile
+    authorize! :create, @community
+
+    plan = CommunityPlan.available.find_by_id(params[:plan_id])
+    success = @community.save
+    if success and plan.present? and not plan.is_free_plan?
+      begin
+        invoice = current_user.current_invoice
+        invoice.invoice_items.new({community: @community, item: plan, quantity: 1}, without_protection: true)
+        unless invoice.update_attributes_with_payment(nil, @stripe_card_token)
+          # TODO: Need to delete community and add error.
+        end
+      rescue Stripe::StripeError => e
+        # TODO: Need to delete community and add error.
+        @community.errors.add :base, "There was a problem with your credit card"
+        @stripe_card_token = nil
       end
-      flash[:success] = "Your community has been created." if success
-    rescue Excon::Errors::HTTPStatusError, Excon::Errors::SocketError, Excon::Errors::Timeout, Excon::Errors::ProxyParseError, Excon::Errors::StubNotFound
-      logger.error "#{$!}"
-      @community.errors.add :base, "An error has occurred while processing the image."
-    rescue CarrierWave::UploadError, CarrierWave::DownloadError, CarrierWave::FormNotMultipart, CarrierWave::IntegrityError, CarrierWave::InvalidParameter, CarrierWave::ProcessingError
-      logger.error "#{$!}"
-      @community.errors.add :base, "Unable to upload your artwork due to an image uploading error."
     end
+
+    flash[:success] = "Your community has been created." if success
     respond_with(@community, location: edit_community_settings_url(subdomain: @community.subdomain))
   end
 
