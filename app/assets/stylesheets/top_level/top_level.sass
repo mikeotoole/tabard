@@ -943,7 +943,6 @@ body.sessions
     +border_radius(3)
     +box_shadow(0 0 30px #999)
     color: #C0DAEB
-    height: 200px
     margin: -130px 0 0 -200px
     overflow: hidden
     padding: 30px
@@ -960,6 +959,8 @@ body.sessions
     form
       width: auto
       fieldset li
+        clear: none
+        min-height: 32px
         padding: 5px 0 0
       input
         color: #444
@@ -969,6 +970,7 @@ body.sessions
         &::-webkit-input-placeholder
           color: #aaa
       .boolean
+        float: left
         margin-top: 3px
         input,
         label
@@ -980,22 +982,23 @@ body.sessions
       input,
       .boolean label:before
         +box_shadow(0 0 5px #000 !important)
+      .submit
+        float: right
       button
         +box_shadow(0 0 5px #504758)
-        bottom: 100%
-        position: absolute
-        right: -5px
-      a.help
-        background: transparent
-        bottom: 20px
-        color: #ccc1d4
-        font-size: 13px
-        position: absolute
-        right: 30px
-        text-decoration: underline
-        text-shadow: 0 -1px 1px #504758
-        &:hover
-          color: #fff
+        margin: 5px 0 0
+      p.help
+        clear: both
+        padding: 10px 0 0
+        text-align: right
+        a
+          background: transparent
+          color: #ccc1d4
+          font-size: 13px
+          text-decoration: underline
+          text-shadow: 0 -1px 1px #504758
+          &:hover
+            color: #fff
     div.help
       background: #fff
       +border_radius(2)
