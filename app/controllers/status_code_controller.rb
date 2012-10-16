@@ -25,4 +25,10 @@ class StatusCodeController < ApplicationController
     # TODO - remove this after the beta test
     flash[:notice] = "We recommend using Chrome for the best Tabard experience."
   end
+
+  def robots
+    filename = Rails.env.production? ? "config/robots.production.txt" : "config/robots.staging.txt"
+    robots = File.read(Rails.root + filename)
+    render text: robots, layout: false, content_type: "text/plain"
+  end
 end
