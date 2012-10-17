@@ -12,4 +12,4 @@
 %h1 Recent Activity
 
 .activities
-= link_to 'Recent Activity', community_activities_url(current_community, format: :js), remote: true, class: 'dynload', data: { type: :text, target: '#body div.activities' }
+= link_to 'Recent Activity', community_activities_url(format: :js), remote: true, class: 'dynload', data: { type: :text, target: '#body div.activities' }
