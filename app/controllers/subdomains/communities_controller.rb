@@ -54,10 +54,10 @@ class Subdomains::CommunitiesController < SubdomainsController
   # GET /activities(.:format)
   def activities
     raise CanCan::AccessDenied unless user_signed_in? and current_user.is_member? @community
-    unless params[:updated]
-      render partial: 'subdomains/communities/activities', locals: { community: @community, activities: @activities, activities_count_initial: @activities_count_initial, activities_count_increment: @activities_count_increment }
-    else
+    if params[:updated]
       render partial: "activities/activities", locals: { activities: @activities, community: @community }
+    else
+      render partial: 'subdomains/communities/activities', locals: { community: @community, activities: @activities, activities_count_initial: @activities_count_initial, activities_count_increment: @activities_count_increment }
     end
   end
 
