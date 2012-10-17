@@ -531,8 +531,8 @@ describe Community do
   it "should limit the number of communities a user can own during creation of community" do
     community = create(:community)
     admin_profile = community.admin_profile
-    create_list(:community, 2, :admin_profile => admin_profile)
-    admin_profile.reload.owned_communities.size.should eq 3
+    create_list(:community, 19, :admin_profile => admin_profile)
+    admin_profile.reload.owned_communities.size.should eq 20
     build(:community, :admin_profile => admin_profile).should_not be_valid
   end
 
@@ -540,8 +540,8 @@ describe Community do
     pending "Waiting on the admin change feature."
     community2 = create(:community)
     admin_profile = community.admin_profile
-    create_list(:community, 2, :admin_profile => admin_profile)
-    admin_profile.reload.owned_communities.size.should eq 3
+    create_list(:community, 19, :admin_profile => admin_profile)
+    admin_profile.reload.owned_communities.size.should eq 20
     community2 = create(:community)
     community2.admin_profile = admin_profile
     community2.save.should be_false

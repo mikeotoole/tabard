@@ -11,9 +11,9 @@
     = f.simple_fields_for :permission_defaults, defaults, child_index: child_index do |pf|
       = pf.input :object_class, as: :hidden
       %label The space itself
-      = pf.input :permission_level, as: :radio, wrapper: :slider, collection: [['×',''], ['View','View'], ['Edit','Update'], ['Delete','Delete']]
+      = pf.input :permission_level, as: :radio_buttons, wrapper: :slider, collection: [['×',''], ['View','View'], ['Edit','Update'], ['Delete','Delete']]
       %label Pages in the space
-      = pf.input :nested_permission_level, as: :radio, wrapper: :slider, collection: [['×',''], ['Edit','Update'], ['Add','Create'], ['Delete','Delete']]
+      = pf.input :nested_permission_level, as: :radio_buttons, wrapper: :slider, collection: [['×',''], ['Edit','Update'], ['Add','Create'], ['Delete','Delete']]
   - if current_community.page_spaces.any?
     %hr
     - current_community.page_spaces.each do |space|
@@ -24,10 +24,10 @@
           = pf.input :subject_class, as: :hidden
           = pf.input :id_of_subject, as: :hidden
           %label The space itself
-          = pf.input :permission_level, as: :radio, wrapper: :slider, collection: [['×',''], ['View','View'], ['Edit','Update'], ['Delete','Delete']]
+          = pf.input :permission_level, as: :radio_buttons, wrapper: :slider, collection: [['×',''], ['View','View'], ['Edit','Update'], ['Delete','Delete']]
         = f.simple_fields_for :permissions, role.nested_permissions_for_resource(space) do |pf|
           = pf.input :subject_class, as: :hidden
           = pf.input :id_of_parent, as: :hidden
           = pf.input :parent_association_for_subject, as: :hidden
           %label Pages in the space
-          = pf.input :permission_level, as: :radio, wrapper: :slider, collection: [['×',''], ['Edit','Update'], ['Add','Create'], ['Delete','Delete']]
+          = pf.input :permission_level, as: :radio_buttons, wrapper: :slider, collection: [['×',''], ['Edit','Update'], ['Add','Create'], ['Delete','Delete']]

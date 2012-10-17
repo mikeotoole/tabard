@@ -7,7 +7,11 @@
 ###
 class CommunityUserPackUpgrade < CommunityUpgrade
 
-MAX_PER_COMMUNITY = 45 # A value of 45 results in communities with 1,000 users max
+###
+# Constants
+###
+  # A value of 45 results in communities with 1,000 users max
+  MAX_PER_COMMUNITY = 45
 
 ###
 # Public Methods

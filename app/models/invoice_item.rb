@@ -122,6 +122,7 @@ class InvoiceItem < ActiveRecord::Base
     (distance_in_seconds / 1.day).round
   end
 
+  # This gets the number of users that the attached item.
   def number_of_users_each
     case item.class.to_s
       when "CommunityPlan"

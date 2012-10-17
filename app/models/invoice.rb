@@ -9,6 +9,10 @@ class Invoice < ActiveRecord::Base
   # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
   acts_as_paranoid
 
+###
+# Constants
+###
+  # This is the minimal charge amount
   MINIMUM_CHARGE_AMOUNT=100
   # How long till we cancel a users subscription for failure to pay.
   SECONDS_OF_FAILED_ATTEMPTS=604800 # Seconds in 7 days.
@@ -71,6 +75,7 @@ class Invoice < ActiveRecord::Base
     end
   end
 
+  # This will charge the specified invoice_id
   def self.charge(invoice_id)
     invoice = Invoice.find_by_id(invoice_id)
     invoice.charge_customer if invoice.present?
@@ -280,6 +285,7 @@ class Invoice < ActiveRecord::Base
     return success
   end
 
+  # This marks the invoice as paid and close.
   def mark_paid_and_close(charge_id=nil)
     success = self.update_attributes({is_closed: true, paid_date: Time.now, stripe_charge_id: charge_id}, without_protection: true)
     # TODO: Set boolean on user that payment failed to false.

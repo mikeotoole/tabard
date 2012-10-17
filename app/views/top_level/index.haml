@@ -29,9 +29,9 @@
         = f.input :email, as: :email, label: false, placeholder: 'Email', input_html: { tabindex: 2 }
         = f.input :email_confirmation, as: :email, label: false, placeholder: 'Re-enter Email', input_html: { tabindex: 3 }
         = f.input :password, as: :password, label: false, placeholder: 'New Password', input_html: { tabindex: 4 }
-        = f.input :birth_month, as: :radio, label: false, collection: (1..12).collect{|m| m = [Date::MONTHNAMES[m], m]}, wrapper_tag: 'div', wrapper_html: { class: 'select month', data: {placeholder: 'Birth Month'} }
-        = f.input :birth_day, as: :radio, label: false, collection: 1..31, wrapper_tag: 'div', wrapper_html: { class: 'select day', data: {placeholder: 'Day'} }
-        = f.input :birth_year, as: :radio, label: false, collection: Time.zone.now.year.downto(Time.zone.now.year-100), wrapper_tag: 'div', wrapper_html: { class: 'select year', data: {placeholder: 'Year'} }
+        = f.input :birth_month, as: :radio_buttons, label: false, collection: (1..12).collect{|m| m = [Date::MONTHNAMES[m], m]}, wrapper_tag: 'div', wrapper_html: { class: 'select month', data: {placeholder: 'Birth Month'} }
+        = f.input :birth_day, as: :radio_buttons, label: false, collection: 1..31, wrapper_tag: 'div', wrapper_html: { class: 'select day', data: {placeholder: 'Day'} }
+        = f.input :birth_year, as: :radio_buttons, label: false, collection: Time.zone.now.year.downto(Time.zone.now.year-100), wrapper_tag: 'div', wrapper_html: { class: 'select year', data: {placeholder: 'Year'} }
       %p.help{ href: 'javascript:;', onclick: '$.alert({title:"Your Birthday",body:"Tabard is a service exclusively for players 13 years of age and older. We need your birthday to make sure that you are eligible for an account."})' }
         Why is my birthday required?
       %p.terms

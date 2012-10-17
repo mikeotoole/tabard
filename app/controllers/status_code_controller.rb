@@ -26,6 +26,7 @@ class StatusCodeController < ApplicationController
     flash[:notice] = "We recommend using Chrome for the best Tabard experience."
   end
 
+  # This is for robots.
   def robots
     filename = Rails.env.production? ? "config/robots.production.txt" : "config/robots.staging.txt"
     robots = File.read(Rails.root + filename)

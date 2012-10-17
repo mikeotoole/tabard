@@ -11,7 +11,7 @@
           .left
             = qf.input :body, as: :string, wrapper_tag: :p, label: 'Question', input_html: { class: 'body', maxlength: Question::MAX_BODY_LENGTH }
             .select
-              = qf.input :style, as: :radio, label: false, wrapper: false, collection: Question.select_options
+              = qf.input :style, as: :radio_buttons, label: false, wrapper: false, collection: Question.select_options
             .optreq
               = qf.input :is_required, as: :boolean, label: 'Required?', wrapper: false
             .explanation

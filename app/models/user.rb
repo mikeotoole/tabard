@@ -368,6 +368,7 @@ class User < ActiveRecord::Base
     User.find(self).destroy
   end
 
+  # This determines if the user owns the specified community.
   def owns_community?(community)
     self.owned_communities.include?(community)
   end

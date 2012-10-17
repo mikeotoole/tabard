@@ -7,6 +7,7 @@
 ###
 module InvoiceHelper
 
+  # This gets the status for the specified invoice.
   def invoice_status(invoice)
     if invoice.paid_date.blank?
       invoice.is_closed ? 'Closed' : 'Open'

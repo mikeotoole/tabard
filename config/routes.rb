@@ -61,7 +61,7 @@ DaBvRails::Application.routes.draw do
   match "/account/update" => "user_profiles#update", as: "update_account", via: :put
 
   # Communities
-  resources :communities do
+  resources :communities, only: [:show, :new, :create, :destroy] do
     get 'page/:page', action: :index, on: :collection
     get 'check_name', action: :check_name, on: :collection
   end

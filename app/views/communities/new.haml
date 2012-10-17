@@ -21,7 +21,7 @@
       = f.input :name, label: 'Community name', input_html: {maxlength: Community::MAX_NAME_LENGTH}, wrapper_html: {class: 'community-name'}
       %li.plans
         - @available_plans.each do |plan|
-          %input{ id: "community_plan_#{plan.id}", type: :radio, name: 'plan_id', value: plan.id, data: {price: plan.price_per_month_in_cents}, checked: plan.price_per_month_in_cents == 0 ? 'checked' : nil }
+          %input{ id: "community_plan_#{plan.id}", type: :radio_buttons, name: 'plan_id', value: plan.id, data: {price: plan.price_per_month_in_cents}, checked: plan.price_per_month_in_cents == 0 ? 'checked' : nil }
           %label{ for: "community_plan_#{plan.id}", title: plan.description }
             %span.title= plan.title.gsub(/\s*community\s*/i, '')
             %span.price
@@ -37,7 +37,7 @@
 
     #cc_input.section{ class: card_is_present ? '' : 'show_fields' }
       %h1 Payment
-      
+
       - if card_is_present
         = render 'card/current', stripe: @stripe if card_on_file
         %menu

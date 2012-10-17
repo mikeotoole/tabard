@@ -221,6 +221,7 @@ class UserProfile < ActiveRecord::Base
     end
   end
 
+  # This gets the total price for the specified community.
   def total_price_per_month_in_cents(community)
     self.user.total_price_per_month_in_cents(community)
   end

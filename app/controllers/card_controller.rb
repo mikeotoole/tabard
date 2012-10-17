@@ -15,12 +15,14 @@ class CardController < ApplicationController
   skip_before_filter :limit_subdomain_access
   before_filter :ensure_secure_subdomain
 
+  # GET /card
   def edit
     @stripe = Stripe::Customer.retrieve(current_user.stripe_customer_token) unless current_user.stripe_customer_token.blank?
     @invoice = current_user.current_invoice
     @invoice = nil unless (@invoice.period_end_date < Time.now and @invoice.total_price_in_cents > 0)
   end
 
+  # PUT /card
   def update
     @stripe_card_token = params[:stripe_card_token]
     begin

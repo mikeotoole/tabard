@@ -14,7 +14,7 @@ describe CardController do
   describe "PUT 'update'" do
     it "returns http success" do
       sign_in user
-      put 'update',
+      put 'update'
       response.should be_success
     end
   end

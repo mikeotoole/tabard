@@ -23,7 +23,8 @@ class Community < ActiveRecord::Base
   # Used by validator to limit number of communities a user can own
   MAX_OWNED_COMMUNITIES = 20
 
-attr_accessor :new_community_plan_id
+# Attribute Accessors
+  attr_accessor :new_community_plan_id
 
 ###
 # Attribute accessible

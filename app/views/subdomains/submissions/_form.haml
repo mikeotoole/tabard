@@ -15,10 +15,10 @@
                   = af.input :body, as: :text, wrapper: false, label: (shorten_words answer.question_body), required: answer.question_is_required, hint: shorten_words(answer.question_explanation)
                 - when 'select_box_question'
                   - c = answer.question_predefined_answers.collect{|pa| pa = [shorten_words(pa.body), pa.body]}
-                  = af.input :body, as: :radio, wrapper_tag: :div, wrapper_class: 'select with-label', collection: c, label: (shorten_words answer.question_body), required: answer.question_is_required, hint: shorten_words(answer.question_explanation)
+                  = af.input :body, as: :radio_buttons, wrapper_tag: :div, wrapper_class: 'select with-label', collection: c, label: (shorten_words answer.question_body), required: answer.question_is_required, hint: shorten_words(answer.question_explanation)
                 - when 'radio_buttons_question'
                   - c = answer.question_predefined_answers.collect{|pa| pa = [shorten_words(pa.body), pa.body]}
-                  = af.input :body, as: :radio, wrapper: false, collection: c, label: shorten_words(answer.question_body), required: answer.question_is_required, hint: shorten_words(answer.question_explanation)
+                  = af.input :body, as: :radio_buttons, wrapper: false, collection: c, label: shorten_words(answer.question_body), required: answer.question_is_required, hint: shorten_words(answer.question_explanation)
                 - when 'check_box_question'
                   - c = answer.question_predefined_answers.collect{|pa| pa = [shorten_words(pa.body), pa.body]}
                   = af.input :body, as: :check_boxes, wrapper: false, collection: c, label: shorten_words(answer.question_body), required: answer.question_is_required, hint: shorten_words(answer.question_explanation)

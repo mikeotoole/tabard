@@ -25,26 +25,48 @@ class WowCharacter < BaseCharacter
   # All valid classes
   VALID_CLASSES = %w(Death\ Knight Druid Hunter Mage Paladin Priest Rogue Shaman Warlock Warrior)
 
-  # All valid races by faction
+###
+# All valid races by faction
+###
+  #Valid races
   VALID_ALLIANCE_RACES = %w(Draenei Dwarf Gnome Human Night\ Elf Worgen Pandaren)
+  #Valid races
   VALID_HORDE_RACES = %w(Blood\ Elf Goblin Orc Tauren Troll Pandaren Undead)
 
-  # All valid alliance classes by race
+###
+# All valid alliance classes by race
+###
+  #Valid Draenei
   VALID_ALLIANCE_DRAENEI_CLASSES = %w(Death\ Night Hunter Mage Monk Paladin Priest Shaman Warrior)
+  #Valid Dwarf
   VALID_ALLIANCE_DWARF_CLASSES = %w(Death\ Night Hunter Mage Monk Paladin Priest Rogue Shaman Warlock Warrior)
+  #Valid Gnome
   VALID_ALLIANCE_GNOME_CLASSES = %w(Death\ Night Mage Monk Priest Rogue Warlock Warrior)
+  #Valid Human
   VALID_ALLIANCE_HUMAN_CLASSES = %w(Death\ Night Hunter Mage Monk Paladin Priest Rogue Warlock Warrior)
+  #Valid Night Elf
   VALID_ALLIANCE_NIGHT_ELF_CLASSES = %w(Death\ Night Druid Hunter Mage Monk Priest Rogue Warrior)
+  #Valid Worgen
   VALID_ALLIANCE_WORGEN_CLASSES = %w(Death\ Night Druid Hunter Mage Priest Rogue Warlock Warrior)
+  #Valid Pandaren
   VALID_ALLIANCE_PANDAREN_CLASSES = %w(Death\ Night Hunter Mage Monk Priest Rogue Shaman Warrior)
 
-  # All valid horde classes by race
+###
+# All valid horde classes by race
+###
+  #Valid Blood Elf
   VALID_HORDE_BLOOD_ELF_CLASSES = %w(Death\ Night Hunter Mage Monk Paladin Priest Rogue Warlock Warrior)
+  #Valid Goblin
   VALID_HORDE_GOBLIN_CLASSES = %w(Death\ Night Hunter Mage Priest Rogue Shaman Warlock Warrior)
+  #Valid Orc
   VALID_HORDE_ORC_CLASSES = %w(Death\ Night Hunter Mage Monk Rogue Shaman Warlock Warrior)
+  #Valid Tauren
   VALID_HORDE_TAUREN_CLASSES = %w(Death\ Night Druid Hunter Monk Paladin Priest Shaman Warrior)
+  #Valid Troll
   VALID_HORDE_TROLL_CLASSES = %w(Death\ Night Druid Hunter Mage Monk Priest Rogue Shaman Warlock Warrior)
+  #Valid Pandaren
   VALID_HORDE_PANDAREN_CLASSES = %w(Hunter Mage Monk Priest Rogue Shaman Warrior)
+  #Valid Undead
   VALID_HORDE_UNDEAD_CLASSES = %w(Death\ Night Hunter Mage Monk Priest Rogue Warlock Warrior)
 
 ###
