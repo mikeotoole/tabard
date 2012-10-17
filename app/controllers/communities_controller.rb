@@ -10,11 +10,11 @@ class CommunitiesController < ApplicationController
   ###
   # Before Filters
   ###
-  before_filter :block_unauthorized_user!, except: [:show, :index]
+  before_filter :block_unauthorized_user!, except: [:show, :index, :check_name]
   skip_before_filter :ensure_not_ssl_mode, only: [:destroy]
   skip_before_filter :limit_subdomain_access, only: [:destroy]
   before_filter :ensure_secure_subdomain, only: [:destroy]
-  load_and_authorize_resource except: [:create, :index]
+  load_and_authorize_resource except: [:create, :index, :check_name]
   before_filter :load_plans_and_stripe, only: [:new, :create]
 
 ###
@@ -28,6 +28,20 @@ class CommunitiesController < ApplicationController
   # GET /communities/new(.:format)
   def new
     @community.admin_profile = current_user.user_profile
+  end
+
+  # GET /communities/check_name(.:format)
+  def check_name
+    name = params[:name]
+    testCommunity = Community.new name: name
+    testCommunity.valid?
+    errors = testCommunity.errors[:name]
+
+    if errors.any?
+      render json: {success: false, errors: errors}
+    else
+      render json: {success: true}
+    end
   end
 
   # POST /communities(.:format)

@@ -100,18 +100,39 @@ jQuery(document).ready ($) ->
       $('#cc_input').addClass 'show_fields'
       $('#cc_fields').slideDown()
 
+  # Preflight check on community name/subdomain
+  checkName = (name) ->
+    $this = $('#form_with_subscription .community-name')
+    $.ajax
+      url: '/communities/check_name.js'
+      data:
+        name: name
+      type: 'get'
+      dataType: 'json'
+      before: -> $this.addClass 'busy'
+      complete: -> $this.removeClass 'busy'
+      success: (data, status, xhr) ->
+        $this.find('mark.error').remove()
+        if !!data.success
+          $this.addClass 'valid'
+          $this.removeClass 'with-errors'
+        else
+          $this.removeClass 'valid'
+          $this.addClass 'with-errors'
+          $('<mark class="error">').text(data.errors[0]).appendTo $this
+
   # Preview the subdomain
   $('#form_with_subscription .community-name input').on 'change keyup', ->
     $this = $(@)
     $li = $this.closest 'li'
-    subdomain = $this.val().toLowerCase().replace(/[^a-z]/g, '')
+    name = $this.val()
+    subdomain = name.toLowerCase().replace(/[^a-z]/g, '')
     if subdomain
       url = "http://<span class='subdomain'>#{subdomain}</span>.tabard.co"
       if $li.find('mark.url').length is 0
-        console.log 'a'
         $('<mark class="url">').html(url).appendTo $li
       else
-        console.log 'b'
         $li.find('mark.url').html url
+      checkName name
     else
       $li.find('mark.url').remove()
