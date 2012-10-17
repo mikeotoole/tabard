@@ -1,7 +1,7 @@
 FactoryGirl.define do
   # Create a basic community.
   factory :community do
-    sequence(:name) {|n| "Community #{n}"}
+    sequence(:name) {|n| "Community #{n.to_i.to_s(27).tr("0-9a-q", "A-Z")}#{(n+1).to_i.to_s(27).tr("0-9a-q", "A-Z")}"}
     slogan "Default Community Slogan"
     admin_profile_id { FactoryGirl.create(:user_profile).id }
   end

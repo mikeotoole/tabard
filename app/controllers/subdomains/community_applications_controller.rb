@@ -31,8 +31,8 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   # GET /community_applications/1
   # GET /community_applications/1.json
   def show
-    flash[:alert] = "Your community is full and you will not be able to accept any more members." if current_community.is_at_max_capacity? and can? :edit, current_community 
-    flash[:notice] = "Your community is almost full. You will not be able to accept any more members if you are full." if current_community.is_at_almost_max_capacity? and can? :edit, current_community 
+    flash[:alert] = "Your community is full and you will not be able to accept any more members." if current_community.is_at_max_capacity? and can? :edit, current_community
+    flash[:notice] = "Your community is almost full. You will not be able to accept any more members if you are full." if current_community.is_at_almost_max_capacity? and can? :edit, current_community
     @supported_games = current_community.supported_games
     @comments = @community_application.comments.page params[:page]
     params[:proxy_hash] ||= Hash.new
@@ -81,13 +81,8 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   def accept
     params[:proxy_hash] ||= Hash.new
     if @community_application.accept_application(current_user.user_profile, params[:proxy_hash])
-      if can? :accept, Role
-        flash[:success] = "The application to \"#{@community_application.community_name}\" has been accepted. Assign roles to this user."
-        redirect_to user_profile_url(@community_application.user_profile, anchor: 'roles', subdomain: false)
-      else
-        flash[:success] = "The application to \"#{@community_application.community_name}\" has been accepted."
-        redirect_to @community_application
-      end
+      flash[:success] = "The application to \"#{@community_application.community_name}\" has been accepted."
+      redirect_to community_applications_url
     else
       flash[:alert] = "The application was unable to be accepted because your community is full." if current_community.is_at_max_capacity?
       @supported_games = current_community.supported_games

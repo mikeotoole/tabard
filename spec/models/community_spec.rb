@@ -175,7 +175,7 @@ describe Community do
 
   describe "subdomain" do
     it "should be created on save" do
-      good_name_subdomain_hash = Hash[ "ALLUPPERCASENAME", "alluppercasename", "with space", "withspace", "with-dash", "withdash", "withnumber1", 'withnumber1'] # TESTING Valid community subdomain hash
+      good_name_subdomain_hash = Hash[ "ALLUPPERCASENAME", "alluppercasename", "with space", "withspace", "with-dash", "withdash"] # TESTING Valid community subdomain hash
 
       good_name_subdomain_hash.each do |name, subdomain|
         create(:community, :name => name).subdomain.should eq(subdomain)

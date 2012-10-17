@@ -219,7 +219,7 @@ describe Subdomains::CommunityApplicationsController do
         applicant_user.reload
       end
       it "should be successful and redirect to application index" do
-        response.should redirect_to(user_profile_url(community_application.user_profile, anchor: 'roles', subdomain: false))
+        response.should redirect_to(community_applications_url)
       end
       it "should make the applicant a member" do
         applicant_user.is_member?(community).should be_true
