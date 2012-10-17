@@ -311,6 +311,11 @@ class Invoice < ActiveRecord::Base
     return uniqued_ii
   end
 
+  # Used in active admin
+  def name
+    "#{self.id}"
+  end
+
 ###
 # Protected Methods
 ###

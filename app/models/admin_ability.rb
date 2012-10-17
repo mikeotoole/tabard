@@ -65,6 +65,8 @@ class AdminAbility
       can :manage, ArtworkUpload
       can [:read, :update], SupportTicket
       can [:read, :create], SupportComment
+      can [:read], Invoice
+      can [:read], InvoiceItem
     end
 
     # Rules for superadmin user. (Inherits rules from admin).

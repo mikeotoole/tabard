@@ -4,13 +4,17 @@ ActiveAdmin.register Invoice do
 
   actions :index, :show
 
-  filter :status, as: :select, collection: SupportTicket::STATUSES
-  filter :admin_user
-  filter :user_profile_display_name, :as => :string, :label => "Creator Display Name"
-  filter :user_profile_user_email, :as => :string, :label => "Creator E-Mail"
-  filter :body
+  filter :user_email, as: :string, label: "User E-Mail"
+  filter :user_user_profile_display_name, as: :string, label: "User Display Name"
+  filter :charged_total_price_in_cents
+  filter :is_closed, as: :select
+  filter :processing_payment
+  filter :period_start_date
+  filter :period_end_date
+  filter :first_failed_attempt_date
   filter :created_at
   filter :updated_at
+  filter :deleted_at
   filter :id
 
   index do
@@ -18,7 +22,7 @@ ActiveAdmin.register Invoice do
       link_to "View", admin_invoice_path(invoice)
     end
     column :user, sortable: false
-    column :user_profile, sortable: false
+    column :total_price_in_dollars
     column :period_start_date
     column :period_end_date
     column :paid_date
@@ -27,28 +31,28 @@ ActiveAdmin.register Invoice do
   show do |invoice|
     attributes_table *default_attribute_table_rows
 
-#     if ticket.support_comments.any?
-#       div do
-#         h3 "Support Comments"
-#         ol class: 'comments' do
-#           ticket.support_comments.includes(:admin_user, :user_profile).each do |comment|
-#             li do
-#               blockquote do
-#                 cite comment.author_name
-#                 span class: 'avatar' do
-#                   image_tag(comment.avatar_url(:small), class: 'avatar')
-#                 end
-#                 span class: 'body' do
-#                   simple_format(comment.body)
-#                 end
-#               end
-#             end
-#           end
-#         end
-#       end
-#     else
-#       p "No comments yet"
-#     end
+    div do
+      panel("Invoice Items") do
+        table_for(invoice.invoice_items) do
+          column "View" do |ii|
+            link_to "View", admin_invoice_item_path(ii)
+          end
+          column :community
+          column :id
+          column :title
+          column "Price Each" do |ii|
+            ii.price_per_month_in_dollars
+          end
+          column :quantity
+          column :total_price_in_dollars
+          column :total_price_in_cents
+          column :start_date
+          column :end_date
+          column :is_recurring
+          column :is_prorated
+        end
+      end
+    end
 
     h3 "Active Admin Comments"
     active_admin_comments

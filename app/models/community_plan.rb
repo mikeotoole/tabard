@@ -68,6 +68,11 @@ class CommunityPlan < ActiveRecord::Base
     self.community_upgrades.include? upgrade
   end
 
+  # Cost per month for upgrade in dollars.
+  def price_per_month_in_dollars
+    self.price_per_month_in_cents/100.0
+  end
+
 ###
 # Protected Methods
 ###
