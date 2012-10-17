@@ -37,12 +37,6 @@ describe Community do
     community.should be_valid
   end
 
-  describe "Community Plan" do
-    it "should not be blank" do
-      build(:community, community_plan: nil).should_not be_valid
-    end
-  end
-
   describe "after creation" do
     it "should have a default member role" do
       community2 = build(:community, :member_role => nil)
@@ -93,20 +87,8 @@ describe Community do
       end
       add_a_user.accept_application(community.admin_profile).should eq false
     end
-    it "should be upto custom plan amount" do
-      pro_plan = CommunityPlan.create({
-        title: "Pro",
-        description: "This is the default Pro plan.",
-        price_per_month_in_cents: 1000,
-        is_available: true,
-        max_number_of_users: 88
-        }, without_protection: true)
-      community.community_plan = pro_plan
-      community.save!
-      while community.community_profiles.count < 88 do
-        add_a_user.accept_application(community.admin_profile).should eq true
-      end
-      add_a_user.accept_application(community.admin_profile).should eq false
+    it "should be up to custom plan amount" do
+      pending "Needs to be written"
     end
   end
 
