@@ -305,6 +305,80 @@ describe Invoice do
         pending
       end
     end
+
+    describe "when lock_version changes" do
+      it "should raise ActiveRecord::StaleObjectError" do
+        pending
+      end
+
+      it "should not close invoice" do
+        pending
+      end
+    end
+
+    describe "when charge customer is successful" do
+      it "should close invoice" do
+        pending
+      end
+
+      it "should mark paid date" do
+        pending
+      end
+
+      it "should mark paid date" do
+        pending
+      end
+
+      it "should set stripe_charge_id" do
+        pending
+      end
+
+      it "should mark user as_good_standing_account" do
+        pending
+      end
+    end
+
+    describe "when Stripe::CardError is raised" do
+      it "should make first_failed_attempt_date when nil" do
+        pending
+      end
+
+      it "should mark user as_delinquent_account" do
+        pending
+      end
+
+      describe "when send_fail_email is true and (Time.now - self.first_failed_attempt_date) > SECONDS_OF_FAILED_ATTEMPTS" do
+        describe "and no prorated invoice items are present" do
+          it "should set all plans to the default plan" do
+            pending
+          end
+
+          it "should close invoice" do
+            pending
+          end
+        end
+
+        describe "and prorated invoice items are present" do
+          it "should remove all recurring invoice items" do
+            pending
+          end
+
+          it "should not close invoice" do
+            pending
+          end
+        end
+      end
+    end
+
+    describe "when Stripe::StripeError is raised" do
+      it "should not close invoice" do
+        pending
+      end
+
+      it "should return false and set error" do
+        pending
+      end
+    end
   end
 
   describe "mark_paid_and_close" do
