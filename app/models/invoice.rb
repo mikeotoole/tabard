@@ -187,7 +187,7 @@ class Invoice < ActiveRecord::Base
         if self.total_price_in_cents > MINIMUM_CHARGE_AMOUNT
           begin
             raise ActiveRecord::StaleObjectError if self.processing_payment
-            self.update_attributes({processing_payment: true}, without_protection: true)
+            self.update_attributes({processing_payment: true, lock_version: self.lock_version}, without_protection: true)
             charge = Stripe::Charge.create(
               amount: self.total_price_in_cents,
               currency: "usd",
