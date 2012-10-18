@@ -272,6 +272,7 @@ class Invoice < ActiveRecord::Base
       else
         # ERROR Invoice owner has no payment information.
         logger.error "ERROR charge_customer: Invoice owner had no payment info: #{self.to_yaml}"
+        InvoiceMailer.delay.payment_failed(self.id, I18n.t('card.errors.missing.short'), I18n.t('card.errors.missing.full')) if send_fail_email
         self.errors[:base] = [I18n.t('card.errors.missing.full')]
         success = false
       end
@@ -281,7 +282,7 @@ class Invoice < ActiveRecord::Base
       self.errors[:base] = ["There was an error processing your payment."]
       success = false
     end
-    self.update_column(:processing_payment, false) unless success
+    self.update_column(:processing_payment, false)
     return success
   end
 

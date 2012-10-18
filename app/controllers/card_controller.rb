@@ -37,6 +37,9 @@ class CardController < ApplicationController
       logger.error "StripeError: #{e.message}"
       flash[:error] = "There was a problem with your credit card"
       @stripe_card_token = nil
+    rescue ActiveRecord::StaleObjectError => e
+      # ERROR invoice is currently being charged.
+      flash[:alert] = "Your invoice is currently being charged. You can't update your card at this time."
     end
     @stripe = Stripe::Customer.retrieve(current_user.stripe_customer_token) unless current_user.stripe_customer_token.blank?
     render :edit

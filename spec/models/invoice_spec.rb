@@ -272,7 +272,39 @@ describe Invoice do
   end
 
   describe "charge_customer" do
-    pending
+    describe "when customer has not payment info" do
+      it "should not close invoice" do
+        pending
+      end
+
+      it "should return false and set error" do
+        pending
+      end
+
+      it "should send email when send_fail_email is true" do
+        pending
+      end
+    end
+
+    describe "when total_price_in_cents is less then MINIMUM_CHARGE_AMOUNT" do
+      it "should close invoice" do
+        pending
+      end
+
+      it "should never email customer" do
+        pending
+      end
+    end
+
+    describe "when processing_payment is true" do
+      it "should raise ActiveRecord::StaleObjectError" do
+        pending
+      end
+
+      it "should not close invoice" do
+        pending
+      end
+    end
   end
 
   describe "mark_paid_and_close" do

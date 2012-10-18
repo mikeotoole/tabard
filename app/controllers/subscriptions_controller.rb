@@ -47,6 +47,11 @@ class SubscriptionsController < ApplicationController
     rescue Stripe::StripeError => e
       @invoice.errors.add :base, "There was a problem with your credit card"
       @stripe_card_token = nil
+    rescue ActiveRecord::StaleObjectError => e
+      # ERROR invoice is currently being charged.
+      flash[:alert] = "Your invoice is currently being charged."
+      redirect_to subscriptions_path
+      return true
     end
     respond_with(@invoice, location: edit_subscription_url(@community))
   end
