@@ -277,10 +277,14 @@ class Invoice < ActiveRecord::Base
         success = false
       end
     rescue Exception => e
-      logger.error "ERROR charge_customer: #{e.message}"
-      # Add error to invoice.
-      self.errors[:base] = ["There was an error processing your payment."]
-      success = false
+      if e.class == ActiveRecord::StaleObjectError
+        throw e
+      else
+        logger.error "ERROR charge_customer: #{e.message}"
+        # Add error to invoice.
+        self.errors[:base] = ["There was an error processing your payment."]
+        success = false
+      end
     end
     self.update_column(:processing_payment, false)
     return success
