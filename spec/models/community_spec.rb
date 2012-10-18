@@ -32,11 +32,13 @@ require 'spec_helper'
 
 describe Community do
   let(:community) { create(:community) }
-  let(:pro_community) { create(:community) }
+  let(:pro_community) { create(:pro_community) }
+  let(:pro_community_with_user_upgrade) { create(:pro_community_with_user_upgrade) }
 
   it "should create a new instance given valid attributes" do
     community.should be_valid
     pro_community.should be_valid
+    pro_community_with_user_upgrade.should be_valid
   end
 
   describe "after creation" do
@@ -56,8 +58,10 @@ describe Community do
       community2.member_role.should_not be_nil
     end
     it "should be pro" do
-      puts pro_community.invoice_items.to_yaml
       pro_community.is_paid_community?.should be_true
+    end
+    it "should have upgrade" do
+      pro_community_with_user_upgrade.max_number_of_users.should eq 120
     end
     it "should be free" do
       community.is_paid_community?.should be_false
@@ -65,12 +69,12 @@ describe Community do
   end
 
   describe "max number of users" do
-    def add_a_user
+    def add_a_user(some_community)
       user_profile = create(:user_profile)
-      app = community.community_applications.new
-      app.prep(user_profile, community.community_application_form)
+      app = some_community.community_applications.new
+      app.prep(user_profile, some_community.community_application_form)
       user_profile.character_proxies.each do |cp|
-        app.character_proxies << cp if cp.compatable_with_community?(community)
+        app.character_proxies << cp if cp.compatable_with_community?(some_community)
       end
       app.save!
       app.submission.custom_form.questions.each do |q|
@@ -86,18 +90,27 @@ describe Community do
     end
     it "should allow up to max number of users" do
       while community.community_profiles.count < community.max_number_of_users do
-        add_a_user.accept_application(community.admin_profile).should eq true
+        add_a_user(community).accept_application(community.admin_profile).should eq true
       end
-      add_a_user.accept_application(community.admin_profile).should eq false
+      add_a_user(community).accept_application(community.admin_profile).should eq false
     end
     it "should be 20 for free" do
       while community.community_profiles.count < 20 do
-        add_a_user.accept_application(community.admin_profile).should eq true
+        add_a_user(community).accept_application(community.admin_profile).should eq true
       end
-      add_a_user.accept_application(community.admin_profile).should eq false
+      add_a_user(community).accept_application(community.admin_profile).should eq false
     end
     it "should be up to custom plan amount" do
-      pending "Needs to be written"
+      while pro_community.community_profiles.count < 100 do
+        add_a_user(pro_community).accept_application(community.admin_profile).should eq true
+      end
+      add_a_user(pro_community).accept_application(community.admin_profile).should eq false
+    end
+    it "should be up to custom plan with packs amount" do
+      while pro_community_with_user_upgrade.community_profiles.count < 120 do
+        add_a_user(pro_community_with_user_upgrade).accept_application(community.admin_profile).should eq true
+      end
+      add_a_user(pro_community_with_user_upgrade).accept_application(community.admin_profile).should eq false
     end
   end
 
