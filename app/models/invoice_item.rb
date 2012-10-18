@@ -76,9 +76,9 @@ class InvoiceItem < ActiveRecord::Base
   # Returns the total price for this item (price each * quantity) in cents.
   def total_price_in_cents
     if self.is_prorated
-      ((self.price_per_month_in_cents / 30.0) * self.number_of_days * self.quantity).round(2)
+      ((self.price_per_month_in_cents / 30.0) * self.number_of_days * self.quantity).round(0)
     else
-      (self.price_per_month_in_cents * self.quantity).round(2)
+      (self.price_per_month_in_cents * self.quantity).round(0)
     end
   end
 

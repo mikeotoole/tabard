@@ -228,10 +228,38 @@ describe Invoice do
       it "should return false and add error when admin has no stripe customer id" do
         pending
       end
+
+      it "should save the invoice and invoice items" do
+        pending
+      end
     end
 
     describe "when stripe_card_token is given" do
-      pending
+      it "should update or create Stripe customer" do
+        pending
+      end
+
+      it "should save the invoice and invoice items" do
+        pending
+      end
+    end
+
+    describe "when invoice is not valid" do
+      it "should return false" do
+        pending
+      end
+
+      it "should not save invoice" do
+        pending
+      end
+
+      it "should not charge customer" do
+        pending
+      end
+
+      it "should not update or create Stripe customer" do
+        pending
+      end
     end
 
     it "should charge customer when invoice is past due" do

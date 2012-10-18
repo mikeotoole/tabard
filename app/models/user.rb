@@ -178,7 +178,7 @@ class User < ActiveRecord::Base
       cu = Stripe::Customer.retrieve(self.stripe_customer_token)
       cu.card = stripe_card_token # obtained with Stripe.js
       cu.email = self.email
-      cu.save
+      cu.save!
     else # Create new customer with card.
       customer = Stripe::Customer.create(description: "User ID: #{self.id}",
                                                email: self.email,

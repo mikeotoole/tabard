@@ -17,31 +17,16 @@ FactoryGirl.define do
           },
         )
         invoice = community.admin_profile.user.current_invoice
-        invoice_hash = { "invoice_items_attributes" => { "0" => { "community_id"=>"#{community.id}",
-                                                            "item_type"=>"CommunityPlan",
-                                                            "quantity"=>"1",
-                                                            "item_id"=>"#{community_plan.id}" }}}
-        invoice.update_attributes_with_payment(invoice_hash, token.id)
+        invoice.invoice_items.new({community: community, item: community_plan, quantity: 1}, without_protection: true)
+        invoice.update_attributes_with_payment(nil, token.id)
       end
 
       factory :pro_community_with_user_upgrade do
         after(:create) do |community|
           upgrade = community.current_community_plan.community_upgrades.first
-          token = Stripe::Token.create(
-              :card => {
-              :number => "4242424242424242",
-              :exp_month => 8,
-              :exp_year => 2023,
-              :cvc => 314
-            },
-          )
           invoice = community.admin_profile.user.current_invoice
-          invoice_hash = invoice.invoice_items_attributes
-          invoice_hash << { "community_id"=>"#{community.id}",
-                                                            "item_type"=>"#{upgrade.class}",
-                                                            "quantity"=>"1",
-                                                            "item_id"=>"#{upgrade.id}" }
-          invoice.update_attributes_with_payment(invoice_hash)
+          invoice.invoice_items.new({community: community, item: upgrade, quantity: 1}, without_protection: true)
+          invoice.update_attributes_with_payment(nil)
         end
       end
     end
