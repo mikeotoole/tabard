@@ -16,8 +16,15 @@ require 'spec_helper'
 
 describe CommunityPlan do
   let(:community_plan) { create(:community_plan) }
+  let(:pro_community_plan) {create(:pro_community_plan)}
   it "should create a new instance given valid attributes" do
     community_plan.should be_valid
+    pro_community_plan.should be_valid
+  end
+  it "should be pro when pro" do
+    pro_community_plan.is_free_plan?.should be_false
+    pro_community_plan.price_per_month_in_cents.should be > 0
+    pro_community_plan.max_number_of_users.should be > 20
   end
   describe "title" do
     it "should not be blank" do

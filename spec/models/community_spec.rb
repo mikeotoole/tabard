@@ -32,9 +32,11 @@ require 'spec_helper'
 
 describe Community do
   let(:community) { create(:community) }
+  let(:pro_community) { create(:community) }
 
   it "should create a new instance given valid attributes" do
     community.should be_valid
+    pro_community.should be_valid
   end
 
   describe "after creation" do
@@ -52,6 +54,13 @@ describe Community do
       community2 = build(:community, :theme => nil)
       community2.save.should be_true
       community2.member_role.should_not be_nil
+    end
+    it "should be pro" do
+      puts pro_community.invoice_items.to_yaml
+      pro_community.is_paid_community?.should be_true
+    end
+    it "should be free" do
+      community.is_paid_community?.should be_false
     end
   end
 

@@ -5,6 +5,8 @@ describe Subdomains::RolesController do
   let(:user) { user_profile.user }
   let(:admin_user) { create(:community_admin) }
   let(:community) { admin_user.user_profile.owned_communities.first }
+  let(:pro_community) {create(:pro_community)}
+  let(:pro_admin_user) {pro_community.admin_profile.user}
   let(:role) { create(:role, :community => community) }
   let(:role_att) { attributes_for(:role, :name => "TestName", :community_id => community.id) }
 
@@ -67,9 +69,14 @@ describe Subdomains::RolesController do
       response.response_code.should == 403
     end
 
-    it "should be successful when authenticated as a community admin" do
-      pending "Needs paid community"
+    it "should be unauthorized when authenticated as a free community admin" do
       sign_in admin_user
+      get 'new'
+      response.response_code.should == 403
+    end
+
+    it "should be successful when authenticated as a pro community admin" do
+      sign_in pro_admin_user
       get 'new'
       response.should be_success
     end
@@ -99,14 +106,13 @@ describe Subdomains::RolesController do
     end
   end
 
-  describe "POST 'create' authenticated as community admin" do
+  describe "POST 'create' authenticated as pro community admin" do
     before(:each) do
-      sign_in admin_user
+      sign_in pro_admin_user
       post 'create', :role => role_att
     end
 
     it "should create role" do
-      pending "Needs paid community"
       Role.exists?(role_att).should be_true
     end
 
@@ -115,8 +121,20 @@ describe Subdomains::RolesController do
     end
 
     it "should redirect to new role" do
-      pending "Needs paid community"
       response.should redirect_to(roles_url(subdomain: community.subdomain))
+    end
+  end
+
+  describe "POST 'create' authenticated as a free community admin" do
+    before(:each) do
+      sign_in admin_user
+      post 'create', :role => role_att
+    end
+    it "should not create new record" do
+      Role.exists?(role_att).should_not be_true
+    end
+    it "should be unauthorized" do
+      response.response_code.should == 403
     end
   end
 
@@ -197,12 +215,18 @@ describe Subdomains::RolesController do
       @role = create(:role, :community => community)
     end
 
-    it "should be successful when authenticated as a community admin" do
-      pending "Needs paid community"
-      sign_in admin_user
+    it "should be successful when authenticated as a pro community admin" do
+      sign_in pro_admin_user
       delete 'destroy', :id => @role
       response.should redirect_to(roles_url(subdomain: community.subdomain))
       Role.exists?(@role).should be_false
+    end
+
+    it "should be unauthorized when authenticated as a free community admin" do
+      sign_in admin_user
+      delete 'destroy', :id => @role
+      Role.exists?(@role).should be_true
+      response.response_code.should == 403
     end
 
     it "should be unauthorized when authenticated as a nonadmin user" do
