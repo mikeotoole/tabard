@@ -23,7 +23,7 @@
 require 'spec_helper'
 
 describe Invoice do
-  let(:invoice) { create(:invoice) }
+  let(:invoice) { create(:pro_community) }
 
   it "should create a new instance given valid attributes" do
     pending

@@ -3,13 +3,27 @@
 FactoryGirl.define do
   factory :invoice do
     user
-    stripe_invoice_id "MyString"
-    period_start_date "2012-09-15 09:54:11"
-    period_end_date "2012-09-15 09:54:11"
-    date_paid "2012-09-15 09:54:11"
-    stripe_customer_id "MyString"
-    discount_percent_off 1
-    discount_discription "MyString"
+    stripe_charge_id nil
+    period_start_date Time.now.beginning_of_day
+    period_end_date Time.now.beginning_of_day
+    paid_date nil
+    discount_percent_off 0
+    discount_discription nil
+    is_closed nil
+    processing_payment nil
+    first_failed_attempt_date nil
+
+    factory :invoice_with_pro_com_ii do
+
+    end
+
+    factory :invoice_with_user_pack_ii do
+
+    end
+
+    factory :invoice_with_prorated_ii do
+
+    end
   end
 end
 
