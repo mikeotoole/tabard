@@ -18,8 +18,7 @@ describe CardController do
   describe "PUT 'update'" do
     it "returns http success for logged in user" do
       sign_in user
-      put 'update'
-      pending "Update with args"
+      put 'update', stripe_card_token: "tok_jOq0M8vJprCUUU"
       response.should be_success
     end
     it "should redirected to new user session path when not authenticated as a user" do
