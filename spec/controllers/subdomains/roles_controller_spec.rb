@@ -8,7 +8,9 @@ describe Subdomains::RolesController do
   let(:pro_community) {create(:pro_community)}
   let(:pro_admin_user) {pro_community.admin_profile.user}
   let(:role) { create(:role, :community => community) }
-  let(:role_att) { attributes_for(:role, :name => "TestName", :community_id => community.id) }
+  let(:role_att) { attributes_for(:role, :name => "TestName", :community_id => pro_community.id) }
+  let(:pro_role) { create(:role, :community => community) }
+  let(:pro_role_att) { attributes_for(:role, :name => "TestName", :community_id => pro_community.id) }
 
   before(:each) do
     @request.host = "#{community.subdomain}.lvh.me"
@@ -76,6 +78,7 @@ describe Subdomains::RolesController do
     end
 
     it "should be successful when authenticated as a pro community admin" do
+      @request.host = "#{pro_community.subdomain}.lvh.me"
       sign_in pro_admin_user
       get 'new'
       response.should be_success
@@ -108,12 +111,13 @@ describe Subdomains::RolesController do
 
   describe "POST 'create' authenticated as pro community admin" do
     before(:each) do
+      @request.host = "#{pro_community.subdomain}.lvh.me"
       sign_in pro_admin_user
-      post 'create', :role => role_att
+      post 'create', :role => pro_role_att
     end
 
     it "should create role" do
-      Role.exists?(role_att).should be_true
+      Role.exists?(pro_role_att).should be_true
     end
 
     it "should pass params to role" do
@@ -121,7 +125,7 @@ describe Subdomains::RolesController do
     end
 
     it "should redirect to new role" do
-      response.should redirect_to(roles_url(subdomain: community.subdomain))
+      response.should redirect_to(roles_url(subdomain: pro_community.subdomain))
     end
   end
 
@@ -216,10 +220,12 @@ describe Subdomains::RolesController do
     end
 
     it "should be successful when authenticated as a pro community admin" do
+      @request.host = "#{pro_community.subdomain}.lvh.me"
+      some_role = create(:role, :community => pro_community)
       sign_in pro_admin_user
-      delete 'destroy', :id => @role
-      response.should redirect_to(roles_url(subdomain: community.subdomain))
-      Role.exists?(@role).should be_false
+      delete 'destroy', :id => some_role
+      response.should redirect_to(roles_url(subdomain: pro_community.subdomain))
+      Role.exists?(some_role).should be_false
     end
 
     it "should be unauthorized when authenticated as a free community admin" do
