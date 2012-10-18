@@ -26,7 +26,7 @@ class Invoice < ActiveRecord::Base
 # Associations
 ###
   belongs_to :user
-  has_many :invoice_items, dependent: :destroy, inverse_of: :invoice#, autosave: true
+  has_many :invoice_items, dependent: :destroy, inverse_of: :invoice
   accepts_nested_attributes_for :invoice_items, allow_destroy: true
 
 ###
@@ -315,11 +315,6 @@ class Invoice < ActiveRecord::Base
       end
     end
     return uniqued_ii
-  end
-
-  # Used in active admin
-  def name
-    "#{self.id}"
   end
 
 ###
