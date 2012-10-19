@@ -109,27 +109,30 @@ unless @dont_run
 
   # Just Another Headshot
   headshot = create_community('Billy', 'Just Another Headshot', 'Boom baby!', %w(Empire Horde Minecraft))
-  billy = UserProfile.find_by_last_name('Billy')
 
-  puts "#### Headshot is going PRO ####"
-  community_plan = CommunityPlan.find_by_title("Pro Community")
-  token = Stripe::Token.create(
-      :card => {
-      :number => "4242424242424242",
-      :exp_month => 8,
-      :exp_year => 2023,
-      :cvc => 314
-    },
-  )
-  invoice_hash = { "invoice_items_attributes" => { "0" => { "community_id"=>"#{headshot.id}",
-                                                            "item_type"=>"CommunityPlan",
-                                                            "quantity"=>"1",
-                                                            "item_id"=>"#{community_plan.id}" }}}
-  invoice = billy.current_invoice
-  unless invoice.update_attributes_with_payment(invoice_hash, token.id)
-    puts "Invoice Errors:"
-    puts invoice.errors.to_yaml
-    throw "ERROR creating invoice!"
+  if ENV["ENABLE_PAYMENT"]
+    puts "#### Headshot is going PRO ####"
+    billy = UserProfile.find_by_last_name('Billy')
+    community_plan = CommunityPlan.find_by_title("Pro Community")
+
+    token = Stripe::Token.create(
+        :card => {
+        :number => "4242424242424242",
+        :exp_month => 8,
+        :exp_year => 2023,
+        :cvc => 314
+      },
+    )
+    invoice_hash = { "invoice_items_attributes" => { "0" => { "community_id"=>"#{headshot.id}",
+                                                              "item_type"=>"CommunityPlan",
+                                                              "quantity"=>"1",
+                                                              "item_id"=>"#{community_plan.id}" }}}
+    invoice = billy.current_invoice
+    unless invoice.update_attributes_with_payment(invoice_hash, token.id)
+      puts "Invoice Errors:"
+      puts invoice.errors.to_yaml
+      throw "ERROR creating invoice!"
+    end
   end
 
   more_headshot = create_community('Billy', 'Even More Headshots', 'Ka Boom Baby!', %w(Empire Horde Minecraft))
