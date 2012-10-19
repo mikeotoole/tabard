@@ -19,33 +19,35 @@
     = hidden_field_tag :stripe_card_token
     %ol
       = f.input :name, label: 'Community name', input_html: {maxlength: Community::MAX_NAME_LENGTH}, wrapper_html: {class: 'community-name'}
-      %li.plans
-        - @available_plans.each do |plan|
-          %input{ id: "community_plan_#{plan.id}", type: :radio_buttons, name: 'plan_id', value: plan.id, data: {price: plan.price_per_month_in_cents}, checked: plan.price_per_month_in_cents == 0 ? 'checked' : nil }
-          %label{ for: "community_plan_#{plan.id}", title: plan.description }
-            %span.title= plan.title.gsub(/\s*community\s*/i, '')
-            %span.price
-              - if plan.price_per_month_in_cents > 0
-                = "$#{plan.price_per_month_in_cents/100}/month"
-              - else
-                This one is on us
-            %span.meta
-              - if plan.price_per_month_in_cents > 0
-                100 members + custom roles
-              - else
-                Up to 20 members
+      - if ENV["ENABLE_PAYMENT"]
+        %li.plans
+          - @available_plans.each do |plan|
+            %input{ id: "community_plan_#{plan.id}", type: :radio_buttons, name: 'plan_id', value: plan.id, data: {price: plan.price_per_month_in_cents}, checked: plan.price_per_month_in_cents == 0 ? 'checked' : nil }
+            %label{ for: "community_plan_#{plan.id}", title: plan.description }
+              %span.title= plan.title.gsub(/\s*community\s*/i, '')
+              %span.price
+                - if plan.price_per_month_in_cents > 0
+                  = "$#{plan.price_per_month_in_cents/100}/month"
+                - else
+                  This one is on us
+              %span.meta
+                - if plan.price_per_month_in_cents > 0
+                  100 members + custom roles
+                - else
+                  Up to 20 members
 
-    #cc_input.section{ class: card_is_present ? '' : 'show_fields' }
-      %h1 Payment
+    - if ENV["ENABLE_PAYMENT"]
+      #cc_input.section{ class: card_is_present ? '' : 'show_fields' }
+        %h1 Payment
 
-      - if card_is_present
-        = render 'card/current', stripe: @stripe if card_on_file
-        %menu
-          = link_to 'Change card', 'javascript:;', class: 'newcard'
-          = link_to 'Use card on file', 'javascript:;', class: 'onfile'
+        - if card_is_present
+          = render 'card/current', stripe: @stripe if card_on_file
+          %menu
+            = link_to 'Change card', 'javascript:;', class: 'newcard'
+            = link_to 'Use card on file', 'javascript:;', class: 'onfile'
 
-      %fieldset{ id: 'cc_fields', class: card_is_present ? 'hide' : '' }
-        %ol= render 'card/fields'
+        %fieldset{ id: 'cc_fields', class: card_is_present ? 'hide' : '' }
+          %ol= render 'card/fields'
 
     %p.submit
       = f.button :submit, 'Create Community'

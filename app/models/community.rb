@@ -209,6 +209,7 @@ class Community < ActiveRecord::Base
   def save_with_plan(plan_id, stripe_card_token, invoice)
     success = false
     plan = CommunityPlan.available.find_by_id(plan_id)
+    plan = CommunityPlan.default_plan unless ENV["ENABLE_PAYMENT"]
     if plan.present?
       if invoice.present?
         success = self.save
