@@ -62,54 +62,85 @@ describe Invoice do
 ###
   describe "user" do
     it "should be required" do
-      pending
+      build(:invoice, user_id: nil).should_not be_valid
     end
   end
 
   describe "period_start_date" do
     it "should be required" do
-      pending
+      build(:invoice, period_start_date: nil).should_not be_valid
     end
   end
 
   describe "period_end_date" do
     it "should be required" do
-      pending
+      build(:invoice, period_end_date: nil).should_not be_valid
     end
 
     it "should be on or after period start date" do
-      pending
+      build(:invoice, period_start_date: Time.now, period_end_date: 1.day.ago).should_not be_valid
     end
   end
 
   describe "is_closed" do
     it "should not be able to go from true to false or nil" do
-      pending
+      invoice.mark_paid_and_close.should eq true
+      invoice.is_closed.should eq true
+      invoice.is_closed = false
+      invoice.save.should eq false
+      invoice.reload
+      invoice.is_closed.should eq true
+      invoice.is_closed = nil
+      invoice.save.should eq false
+      invoice.reload
+      invoice.is_closed.should eq true
     end
   end
 
   describe "invoice_items" do
     it "should be valid" do
-      pending
+      ii = invoice.invoice_items.new({community: community, quantity: 1}, without_protection: true)
+      ii.should_not be_valid
+      invoice.should_not be_valid
     end
+
     it "should be deleted when invoice is" do
-      pending
+      iis = invoice.invoice_items.all.to_a
+      iis.should_not be_empty
+      invoice.destroy
+      Invoice.exists?(invoice).should eq false
+      iis.each do |ii|
+        InvoiceItem.exists?(ii).should eq false
+      end
     end
   end
 
   describe "scope closed" do
     it "should only return closed invoices" do
-      pending
+      invoice
+      closed_invoice = create(:invoice)
+      closed_invoice.mark_paid_and_close
+      Invoice.all.count.should eq 2
+      Invoice.closed.count.should eq 1
+      Invoice.closed.first.should eq closed_invoice
     end
 
     it "should have the newest invoice first" do
-      pending
+      closed_invoice2 = create(:invoice, period_start_date: 2.days.ago.beginning_of_day, period_end_date: 2.days.ago.beginning_of_day)
+      closed_invoice1 = create(:invoice)
+      closed_invoice1.mark_paid_and_close
+      closed_invoice2.mark_paid_and_close
+      Invoice.closed.first.should eq closed_invoice1
+      Invoice.closed.last.should eq closed_invoice2
     end
   end
 
   describe "scope historical" do
     it "should have the newest invoice first" do
-      pending
+      invoice2 = create(:invoice, period_start_date: 2.days.ago.beginning_of_day, period_end_date: 2.days.ago.beginning_of_day)
+      invoice
+      Invoice.historical.first.should eq invoice
+      Invoice.historical.last.should eq invoice2
     end
   end
 
@@ -117,21 +148,52 @@ describe Invoice do
 # Callbacks
 ###
   it "should set charged_total_price_in_cents when closed" do
-    pending
+    invoice.charged_total_price_in_cents.should be_nil
+    invoice.mark_paid_and_close
+    invoice.charged_total_price_in_cents.should eq invoice.invoice_items.first.price_per_month_in_cents
   end
 
   describe "creates next invoice when closed and" do
     it "has only requering invoice items" do
-      pending
+      invoice.invoice_items.should_not be_empty
+      invoice.invoice_items.each do |ii|
+        ii.is_recurring.should eq true
+      end
+      Invoice.all.count.should eq 1
+      invoice.mark_paid_and_close
+      Invoice.all.count.should eq 2
+      new_invoice = Invoice.last
+      new_invoice.id.should_not eq invoice.id
+      new_invoice.invoice_items.should_not be_empty
+      new_invoice.invoice_items.each do |ii|
+        ii.is_recurring.should eq true
+      end
     end
 
     it "is not created when no requring invoice items exist" do
-      pending
+      invoice.invoice_items.should_not be_empty
+      invoice.invoice_items.each do |ii|
+        ii.update_column(:is_recurring, false)
+      end
+      invoice.reload
+      invoice.invoice_items.each do |ii|
+        ii.is_recurring.should eq false
+      end
+      invoice.invoice_items.recurring.any?.should eq false
+      Invoice.all.count.should eq 1
+      invoice.mark_paid_and_close
+      Invoice.all.count.should eq 1
     end
   end
 
-  describe "after save creates prorated invoice items" do
-    pending
+  it "should create prorated invoice items after save" do
+    invoice.invoice_items.count.should eq 1
+    Timecop.travel 15.days
+    invoice.invoice_items.new({community: community, item: user_pack, quantity: 1}, without_protection: true)
+    invoice.save.should be_true
+    invoice.invoice_items.count.should eq 3
+    invoice.invoice_items.prorated.count.should eq 1
+    invoice.invoice_items.prorated.first.number_of_days.should eq 15
   end
 
 ###
@@ -403,7 +465,9 @@ describe Invoice do
 
   describe "mark_paid_and_close" do
     it "should set closed to true" do
-      pending
+      closed_invoice1 = create(:invoice)
+      closed_invoice1.mark_paid_and_close
+      closed_invoice1.is_closed.should eq true
     end
 
     it "should set paid_date to now" do

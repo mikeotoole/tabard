@@ -45,6 +45,7 @@ RSpec.configure do |config|
     FactoryGirl.create(:privacy_policy)
     FactoryGirl.create(:terms_of_service)
     Rails.cache.clear
+    Timecop.return
   end
   config.after(:each) do
     DatabaseCleaner.clean
@@ -57,7 +58,7 @@ RSpec.configure do |config|
   # Devise extenstions -JW
   config.include Devise::TestHelpers, :type => :controller
   config.extend ControllerMacros, :type => :controller
-  
+
   # Adds helpers for use in request tests
   config.include Warden::Test::Helpers
 

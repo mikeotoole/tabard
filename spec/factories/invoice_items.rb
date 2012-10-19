@@ -13,7 +13,7 @@ def set_invoice(ii)
     ii.community = DefaultObjects.community_admin_with_stripe.communities.first
   end
   if ii.invoice.blank? and ii.invoice_id.blank?
-    ii.invoice = FactoryGirl.build(:invoice, user: DefaultObjects.community_admin_with_stripe)
+    ii.invoice = FactoryGirl.build(:invoice, user_id: DefaultObjects.community_admin_with_stripe.id)
   end
 end
 
