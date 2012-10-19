@@ -437,7 +437,9 @@ ActiveRecord::Schema.define(:version => 20121019181657) do
     t.integer  "charged_total_price_in_cents"
     t.datetime "first_failed_attempt_date"
     t.integer  "lock_version",                 :default => 0,     :null => false
-    t.float    "charged_tax_rate",             :default => 0.0
+    t.float    "charged_state_tax_rate",       :default => 0.0
+    t.float    "charged_local_tax_rate",       :default => 0.0
+    t.string   "local_tax_code"
     t.string   "billing_address_state"
   end
 
@@ -732,7 +734,7 @@ ActiveRecord::Schema.define(:version => 20121019181657) do
     t.boolean  "is_email_on_announcement",                         :default => true
     t.string   "stripe_customer_token"
     t.boolean  "is_in_good_account_standing",                      :default => true
-    t.string   "billing_address_state"
+    t.string   "billing_address_zip"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
