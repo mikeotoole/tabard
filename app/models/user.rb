@@ -166,6 +166,15 @@ class User < ActiveRecord::Base
 ###
 # Invoicing
 ###
+
+  def should_be_taxed?
+    self.tax_rate == 0
+  end
+
+  def tax_rate
+    return 0
+  end
+
   ###
   # Used to create or update a users Stripe customer card.
   # [Args]
