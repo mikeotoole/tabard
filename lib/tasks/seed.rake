@@ -28,6 +28,7 @@ namespace :seed do
     end
 
     headshot = Community.find_by_name("Just Another Headshot")
+    more_headshot = Community.find_by_name("Even More Headshots")
     billy = UserProfile.find_by_last_name('Billy')
 
     ANIMAL_NAMES.each do |last_name|
@@ -37,6 +38,7 @@ namespace :seed do
       comm = create_community(last_name, "Sith #{last_name}s", "The #{ADJ_LIST[rand(ADJ_LIST.length)].capitalize} #{last_name}s will PWN you", %w(Empire))
       generate_application(comm, 'Fox').accept_application(UserProfile.find_by_last_name(last_name))
       generate_application(headshot, last_name).accept_application(billy)
+      generate_application(more_headshot, last_name)
     end
   end
 
