@@ -101,36 +101,32 @@ describe CommunitiesController do
     describe "with bad data" do
       before(:each) do
         sign_in billy
-        post 'create', :community => community_att
+        post 'create', :community => community_att, stripe_card_token: "AJKLHSDJKAHSDKJHASDHAKJDH", plan_id: 10000
       end
 
       it "should not be new record" do
-        pending "This needs updated."
-        assigns[:community].should_not be_new_record
+        Community.exists?(community_att).should_not be_true
       end
 
       it "should pass params to community" do
-        pending "This needs updated."
         assigns[:community].name.should == 'TestName'
       end
 
-      it "should redirect to new community" do
-        pending "This needs updated."
-        response.should redirect_to(edit_community_settings_url(:subdomain => assigns[:community].subdomain))
+      it "should render new" do
+        response.should render_template("new")
       end
     end
     describe "with good data" do
       it "should create an activity" do
-        pending "This needs updated."
         sign_in billy
 
         expect {
-          post 'create', :community => {:name => "New Community", :slogan => "My slogan", :community_plan_id => CommunityPlan.default_plan.id}
+          post 'create', :community => community_att, stripe_card_token: "AJKLHSDJKAHSDKJHASDHAKJDH", plan_id: create(:pro_community_plan).id
         }.to change(Activity, :count).by(1)
 
         activity = Activity.last
-        activity.target_type.should eql "Community"
-        activity.action.should eql 'created'
+        activity.target_type.should eql "UserProfile"
+        activity.action.should eql 'joined'
       end
     end
   end
