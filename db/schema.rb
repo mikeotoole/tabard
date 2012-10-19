@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121016172830) do
+ActiveRecord::Schema.define(:version => 20121019194723) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -437,6 +437,13 @@ ActiveRecord::Schema.define(:version => 20121016172830) do
     t.integer  "charged_total_price_in_cents"
     t.datetime "first_failed_attempt_date"
     t.integer  "lock_version",                 :default => 0,     :null => false
+    t.float    "charged_state_tax_rate",       :default => 0.0
+    t.float    "charged_local_tax_rate",       :default => 0.0
+    t.string   "local_tax_code"
+    t.string   "billing_address_state"
+    t.datetime "disputed_date"
+    t.datetime "refunded_date"
+    t.integer  "refunded_price_in_cents"
   end
 
   create_table "message_associations", :force => true do |t|
@@ -730,6 +737,7 @@ ActiveRecord::Schema.define(:version => 20121016172830) do
     t.boolean  "is_email_on_announcement",                         :default => true
     t.string   "stripe_customer_token"
     t.boolean  "is_in_good_account_standing",                      :default => true
+    t.string   "billing_address_zip"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
