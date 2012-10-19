@@ -23,37 +23,57 @@
 require 'spec_helper'
 
 describe Invoice do
-  let(:invoice) { create(:pro_community) }
+  let(:invoice_item) { create(:invoice_item) }
+  let(:invoice) { invoice_item.invoice.reload }
+  let(:community) { DefaultObjects.community_admin_with_stripe.communities.first }
+  let(:user_pack) { community.current_community_plan.community_upgrades.first }
+  let(:invoice_item_attributes) { { "invoice_items_attributes" => { "0" => { "community_id"=>"#{community.id}",
+                                                                             "item_type"=>"#{user_pack.class}",
+                                                                             "quantity"=>"1",
+                                                                             "item_id"=>"#{user_pack.id}" }}}}
 
   it "should create a new instance given valid attributes" do
-    pending
     invoice.should be_valid
   end
 
 ###
 # Custom Validators
 ###
+
+  it "should be editable when not closed" do
+    invoice.invoice_items.count.should eq 1
+    invoice.invoice_items.new({community: community, item: user_pack, quantity: 1}, without_protection: true)
+    invoice.save.should be_true
+    invoice.invoice_items.count.should eq 2
+  end
+
+
   it "should not be editable after closed" do
-    pending
+    invoice.mark_paid_and_close.should eq true
+    invoice.is_closed.should eq true
+    invoice.invoice_items.count.should eq 1
+    invoice.invoice_items.new({community: community, item: user_pack, quantity: 1}, without_protection: true)
+    invoice.save.should be_false
+    invoice.invoice_items.count.should eq 1
   end
 
 ###
 # Attributes
 ###
   describe "user" do
-    it "should be required"
+    it "should be required" do
       pending
     end
   end
 
   describe "period_start_date" do
-    it "should be required"
+    it "should be required" do
       pending
     end
   end
 
   describe "period_end_date" do
-    it "should be required"
+    it "should be required" do
       pending
     end
 

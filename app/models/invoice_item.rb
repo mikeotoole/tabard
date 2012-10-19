@@ -111,7 +111,11 @@ class InvoiceItem < ActiveRecord::Base
   def is_compatable_with_plan?
     return true unless self.item_type != "CommunityPlan"
     plan_invoice_item = self.invoice.invoice_items.select{|ii| ii.has_community_plan? and ii.community == self.community}.first
-    plan = plan_invoice_item.item
+    if plan_invoice_item.present?
+      plan = plan_invoice_item.item
+    else
+      return false
+    end
     return plan.is_compatable_with_upgrade? self.item
     return true
   end

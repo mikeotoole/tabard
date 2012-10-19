@@ -2,7 +2,6 @@
 
 FactoryGirl.define do
   factory :invoice do
-    user
     stripe_charge_id nil
     period_start_date Time.now.beginning_of_day
     period_end_date Time.now.beginning_of_day
@@ -12,18 +11,13 @@ FactoryGirl.define do
     is_closed nil
     processing_payment nil
     first_failed_attempt_date nil
+    after(:build)  { |invoice| add_user(invoice) }
+  end
+end
 
-    factory :invoice_with_pro_com_ii do
-
-    end
-
-    factory :invoice_with_user_pack_ii do
-
-    end
-
-    factory :invoice_with_prorated_ii do
-
-    end
+def add_user(invoice)
+  if invoice.user.blank?
+    invoice.user = DefaultObjects.community_admin_with_stripe
   end
 end
 
