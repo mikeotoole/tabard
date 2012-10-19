@@ -22,6 +22,9 @@
 #  charged_local_tax_rate       :float            default(0.0)
 #  local_tax_code               :string(255)
 #  billing_address_state        :string(255)
+#  disputed_date                :datetime
+#  refunded_date                :datetime
+#  refunded_price_in_cents      :integer
 #
 
 require 'spec_helper'
