@@ -15,5 +15,8 @@ FactoryGirl.define do
     price_per_month_in_cents 200
     upgrade_options Hash.new(number_of_users: 20)
     max_number_of_upgrades 100
+    after(:build) do |upgrade|
+      upgrade.upgrade_options = {number_of_users: 20}
+    end
   end
 end
