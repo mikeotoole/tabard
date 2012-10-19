@@ -26,7 +26,8 @@ describe Invoice do
   let(:invoice_item) { create(:invoice_item) }
   let(:invoice) { invoice_item.invoice.reload }
   let(:community) { DefaultObjects.community_admin_with_stripe.communities.first }
-  let(:user_pack) { community.current_community_plan.community_upgrades.first }
+  let(:pro_plan) { community.current_community_plan }
+  let(:user_pack) { pro_plan.community_upgrades.first }
   let(:invoice_item_attributes) { { "invoice_items_attributes" => { "0" => { "community_id"=>"#{community.id}",
                                                                              "item_type"=>"#{user_pack.class}",
                                                                              "quantity"=>"1",
@@ -170,30 +171,51 @@ describe Invoice do
       end
     end
 
-    it "is not created when no requring invoice items exist" do
-      invoice.invoice_items.should_not be_empty
-      invoice.invoice_items.each do |ii|
-        ii.update_column(:is_recurring, false)
-      end
-      invoice.reload
-      invoice.invoice_items.each do |ii|
-        ii.is_recurring.should eq false
-      end
-      invoice.invoice_items.recurring.any?.should eq false
-      Invoice.all.count.should eq 1
+    it "has requering and prorated invoice items" do
       invoice.mark_paid_and_close
-      Invoice.all.count.should eq 1
+      new_invoice = Invoice.historical.first
+      new_invoice.invoice_items.count.should eq 1
+      Timecop.travel 15.days
+      new_invoice.invoice_items.new({community: community, item: user_pack, quantity: 1}, without_protection: true)
+      new_invoice.save.should be_true
+      new_invoice.invoice_items.count.should eq 3
+      new_invoice.invoice_items.prorated.count.should eq 1
+      Invoice.all.count.should eq 2
+      new_invoice.mark_paid_and_close
+      Invoice.all.count.should eq 3
+      new_invoice = Invoice.last
+      new_invoice.invoice_items.should_not be_empty
+      new_invoice.invoice_items.each do |ii|
+        ii.is_recurring.should eq true
+      end
     end
   end
 
+  it "does not create next invoice when closed when no requring invoice items exist" do
+    invoice.invoice_items.should_not be_empty
+    invoice.invoice_items.each do |ii|
+      ii.update_column(:is_recurring, false)
+    end
+    invoice.reload
+    invoice.invoice_items.each do |ii|
+      ii.is_recurring.should eq false
+    end
+    invoice.invoice_items.recurring.any?.should eq false
+    Invoice.all.count.should eq 1
+    invoice.mark_paid_and_close
+    Invoice.all.count.should eq 1
+  end
+
   it "should create prorated invoice items after save" do
-    invoice.invoice_items.count.should eq 1
+    invoice.mark_paid_and_close
+    new_invoice = Invoice.historical.first
+    new_invoice.invoice_items.count.should eq 1
     Timecop.travel 15.days
-    invoice.invoice_items.new({community: community, item: user_pack, quantity: 1}, without_protection: true)
-    invoice.save.should be_true
-    invoice.invoice_items.count.should eq 3
-    invoice.invoice_items.prorated.count.should eq 1
-    invoice.invoice_items.prorated.first.number_of_days.should eq 15
+    new_invoice.invoice_items.new({community: community, item: user_pack, quantity: 1}, without_protection: true)
+    new_invoice.save.should be_true
+    new_invoice.invoice_items.count.should eq 3
+    new_invoice.invoice_items.prorated.count.should eq 1
+    new_invoice.invoice_items.prorated.first.number_of_days.should eq 15
   end
 
 ###
@@ -201,35 +223,38 @@ describe Invoice do
 ###
   describe "total_price_in_cents" do
     it "should return charged_total_price_in_cents when set" do
-      pending
+      invoice.update_column(:charged_total_price_in_cents, 555)
+      invoice.total_price_in_cents.should eq 555
     end
 
     it "should return zero when no invoice items are present" do
-      pending
+      invoice = create(:invoice)
+      invoice.invoice_items.should be_empty
+      invoice.total_price_in_cents.should eq 0
     end
 
     it "should calculate price using invoice items" do
-      pending
+      invoice.total_price_in_cents.should eq invoice.invoice_items.first.price_per_month_in_cents
     end
   end
 
   describe "total_price_in_dollars" do
     it "should return total_price_in_cents converted to dollars" do
-      pending
+      invoice.total_price_in_dollars.should eq invoice.total_price_in_cents / 100.0
     end
   end
 
   describe "total_recurring_price_per_month_in_cents" do
     describe "when community is given" do
       it "should return the cost for communities invoice items" do
-        pending
+        community2 = create(:community, admin_profile_id: invoice.user.user_profile.id)
+        invoice.invoice_items.new({community: community2, item: pro_plan, quantity: 1}, without_protection: true)
+        invoice.save.should be_true
+        invoice.invoice_items.count.should eq 2
+        invoice.total_recurring_price_per_month_in_cents(community2).should eq pro_plan.price_per_month_in_cents
       end
 
-      it "should only return the cost of given communities items" do
-        pending
-      end
-
-      it "should only return the cost of requring items" do
+      it "should only return the cost of recurring items" do
         pending
       end
     end
@@ -471,29 +496,37 @@ describe Invoice do
     end
 
     it "should set paid_date to now" do
-      pending
+      closed_invoice1 = create(:invoice)
+      Timecop.freeze
+      closed_invoice1.mark_paid_and_close
+      closed_invoice1.paid_date.should eq Time.now
     end
 
     it "should set charge_id" do
-      pending
+      closed_invoice1 = create(:invoice)
+      closed_invoice1.mark_paid_and_close("test-charge-id")
+      closed_invoice1.stripe_charge_id.should eq "test-charge-id"
     end
 
     it "should mark user as in good standing" do
-      pending
-    end
-
-    it "should email user when charge_id is present" do
-      pending
-    end
-
-    it "should not email user when charge_id is nil" do
-      pending
+      user = invoice.user
+      user.is_in_good_account_standing = false
+      user.save.should eq true
+      user.is_in_good_account_standing.should eq false
+      invoice.mark_paid_and_close
+      user.is_in_good_account_standing.should eq true
     end
   end
 
   describe "uniqued_invoice_items" do
     it "should return invoice items with the same start date, end date, community, is_prorated and is_recurring as new unsaved invoice items" do
-      pending
+      invoice.invoice_items.count.should eq 1
+      invoice.invoice_items.new({community: community, item: user_pack, quantity: 1}, without_protection: true)
+      invoice.invoice_items.new({community: community, item: user_pack, quantity: 1}, without_protection: true)
+      invoice.save.should be_true
+      invoice.invoice_items.count.should eq 3
+
+      invoice.uniqued_invoice_items.count.should eq 2
     end
   end
 end
