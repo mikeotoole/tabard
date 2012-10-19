@@ -458,5 +458,7 @@ end
 #  charged_total_price_in_cents :integer
 #  first_failed_attempt_date    :datetime
 #  lock_version                 :integer          default(0), not null
+#  charged_tax_rate             :float            default(0.0)
+#  billing_address_state        :string(255)
 #
 
