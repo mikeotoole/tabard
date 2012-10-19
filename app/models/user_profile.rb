@@ -83,6 +83,7 @@ class UserProfile < ActiveRecord::Base
   delegate :is_email_on_message, to: :user
   delegate :is_email_on_announcement, to: :user
   delegate :current_invoice, to: :user
+  delegate :is_in_good_account_standing, to: :user
 
 ###
 # Callbacks

@@ -5,7 +5,7 @@
 #
 # Controller used to manage community subscriptions.
 ###
-class SubscriptionsController < ApplicationController
+class SubscriptionsController < PaymentController
   respond_to :html, :js
 
 ###

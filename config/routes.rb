@@ -3,6 +3,10 @@ DaBvRails::Application.routes.draw do
   # Stripe Callbacks
   mount StripeEvent::Engine => '/stripe-sentry'
 
+
+###
+# Payment and Invoices
+###
   get "card" => 'card#edit'
   put "card" => 'card#update'
 

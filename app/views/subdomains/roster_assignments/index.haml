@@ -4,7 +4,7 @@
 
 - if can? :edit, current_community
   #submenu
-    = link_to 'Upgrade Subscription', edit_subscription_url(current_community), class: 'button'
+    = link_to 'Upgrade Subscription', edit_subscription_url(current_community), class: 'button' if can? :upgrade, current_community
 
 = render 'communities/population', community: current_community
 -#= render 'shared/searchbox', resource: @member_profiles, action: roster_assignments_url

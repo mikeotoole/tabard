@@ -308,7 +308,10 @@ class Ability
       can [:manage], Role
     else
       #FREE LEVEL
-      can [:read, :update, :pay_for], Role
+      can [:read, :update], Role
+      if ENV["ENABLE_PAYMENT"]
+        can [:upgrade], Community
+      end
     end
   end
 

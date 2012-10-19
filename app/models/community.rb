@@ -162,7 +162,7 @@ class Community < ActiveRecord::Base
 ###
   # If the community is disabled for not paying or being over capacity.
   def is_disabled?
-    self.is_over_max_capacity?
+    self.is_over_max_capacity? or not self.admin_profile.is_in_good_account_standing
   end
 
 ###

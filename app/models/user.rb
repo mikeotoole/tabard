@@ -166,6 +166,15 @@ class User < ActiveRecord::Base
 ###
 # Invoicing
 ###
+
+  def should_be_taxed?
+    self.tax_rate == 0
+  end
+
+  def tax_rate
+    return 0
+  end
+
   ###
   # Used to create or update a users Stripe customer card.
   # [Args]
@@ -450,6 +459,5 @@ end
 #  is_email_on_announcement          :boolean          default(TRUE)
 #  stripe_customer_token             :string(255)
 #  is_in_good_account_standing       :boolean          default(TRUE)
-#  billing_address_zip               :string(255)
 #
 

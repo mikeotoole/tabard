@@ -5,7 +5,7 @@
 #
 # Controller used to edit card information
 ###
-class CardController < ApplicationController
+class CardController < PaymentController
   respond_to :html, :js
 
 ###

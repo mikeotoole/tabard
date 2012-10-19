@@ -5,7 +5,7 @@
 #
 # This controller is handling all invoices for the current user.
 ###
-class InvoicesController < ApplicationController
+class InvoicesController < PaymentController
   respond_to :html, :js
 
   skip_before_filter :ensure_not_ssl_mode
