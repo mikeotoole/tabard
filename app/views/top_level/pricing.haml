@@ -16,8 +16,12 @@
       %p
         %strong
           Up to 20 members.
+
   %article.pro
-    %h2 Pro Communities
+    %h2
+      Pro Communities
+      - unless !!ENV['ENABLE_PAYMENT']
+        %mark Coming Soon!
     .price
       %strong $10
       %em monthly
@@ -28,9 +32,12 @@
           Starts at 100 members.
           %br
           Custom member roles.
-        
+
   %article.upgrade
-    %h2 Pay as you Grow
+    %h2
+      Pay as you Grow
+      - unless !!ENV['ENABLE_PAYMENT']
+        %mark Coming Soon!
     .price
       %strong +$2
       %em monthly*
