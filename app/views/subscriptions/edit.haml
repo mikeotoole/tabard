@@ -30,7 +30,7 @@
 
         - @available_plans.each do |plan|
           - is_current = plan.id == @current_plan_invoice_item.item_id
-          %input{ id: "community_plan_#{plan.id}", type: :radio_buttons, name: 'invoice[invoice_items_attributes][0][item_id]', data: {price: plan.price_per_month_in_cents, members: plan.max_number_of_users}, value: plan.id, checked: is_current ? 'checked' : nil }
+          %input{ id: "community_plan_#{plan.id}", type: 'radio', name: 'invoice[invoice_items_attributes][0][item_id]', data: {price: plan.price_per_month_in_cents, members: plan.max_number_of_users}, value: plan.id, checked: is_current ? 'checked' : nil }
           %label{ for: "community_plan_#{plan.id}", title: plan.description }
             %span.title= plan.title.gsub(/\s*community\s*/i, '')
             %span.price

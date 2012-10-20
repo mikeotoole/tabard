@@ -8,8 +8,11 @@
   = stylesheet_link_tag "top_level/subscriptions"
 
 - content_for :footer do
+  %script{ type: 'text/javascript' }
+    :plain
+      var requireConfirmation = true;
   = javascript_include_tag "https://js.stripe.com/v1/"
-  = javascript_include_tag "new_community"
+  = javascript_include_tag "community_new"
 
 %h1 Create a Community
 
@@ -22,7 +25,7 @@
       - if ENV["ENABLE_PAYMENT"]
         %li.plans
           - @available_plans.each do |plan|
-            %input{ id: "community_plan_#{plan.id}", type: :radio_buttons, name: 'plan_id', value: plan.id, data: {price: plan.price_per_month_in_cents}, checked: plan.price_per_month_in_cents == 0 ? 'checked' : nil }
+            %input{ id: "community_plan_#{plan.id}", type: 'radio', name: 'plan_id', value: plan.id, data: {price: plan.price_per_month_in_cents}, checked: plan.price_per_month_in_cents == 0 ? 'checked' : nil }
             %label{ for: "community_plan_#{plan.id}", title: plan.description }
               %span.title= plan.title.gsub(/\s*community\s*/i, '')
               %span.price

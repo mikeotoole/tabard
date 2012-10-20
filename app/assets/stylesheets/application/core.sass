@@ -1208,6 +1208,22 @@ strike
   text-decoration: line-through
 
 
+// Busy loading full page cover up
+body:before
+  background: image-url('application/busy.gif') center center no-repeat #fff
+  bottom: 0
+  content: ''
+  display: none
+  +opacity(.8)
+  left: 0
+  position: fixed
+  right: 0
+  top: 0
+  z-index: 90
+body.busy:before
+  display: block
+
+
 // Pop-up windows
 
 #mask,

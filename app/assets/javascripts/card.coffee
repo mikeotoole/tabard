@@ -1,9 +1,9 @@
 jQuery ->
   Stripe.setPublishableKey $('meta[name="stripe-key"]').attr 'content'
-  card.setupForm()
+  card.setup()
 
 card =
-  setupForm: ->
+  setup: ->
     $('#card_form').submit ->
       # Encourage all fields being filled out
       errCount = 0
@@ -33,12 +33,12 @@ card =
           $.confirm
             title: 'Confirm Charge'
             body: 'Your current statement will be processed with this request.'
-            action: -> card.processCard()
+            action: -> card.process()
         else
-          card.processCard()
+          card.process()
       false
 
-  processCard: ->
+  process: ->
     $('#flash .cardfields .dismiss').trigger 'click'
     $('#card_form input[type=submit]').prop 'disabled', true
     data =
@@ -48,9 +48,12 @@ card =
       expMonth: $('#card_exp_month input:checked').val()
       expYear: $('#card_exp_year input:checked').val()
       addressZip: $('#card_address_zip').val()
+    $('body').addClass 'busy'
     Stripe.createToken data, @handleStripeResponse
 
   handleStripeResponse: (status, response) ->
+    $('body').removeClass 'busy'
+
     # Remove old error messages
     $('#flash li').each -> $(@).find('.dismiss').trigger 'click'
     $('#form_with_subscription li').removeClass('with-errors').find('mark.error').remove()

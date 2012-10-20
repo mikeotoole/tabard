@@ -1,9 +1,9 @@
 jQuery ->
   Stripe.setPublishableKey $('meta[name="stripe-key"]').attr 'content'
-  subscription.setupForm()
+  card.setup()
 
-subscription =
-  setupForm: ->
+card =
+  setup: ->
     $('#form_with_subscription').submit ->
       return true unless $('#cc_fields:visible').length
       
@@ -35,12 +35,12 @@ subscription =
           $.confirm
             title: 'Confirm Charge'
             body: 'This will submit a payment with the card you provided and configure your recurring monthly subscription.'
-            action: -> card.processCard()
+            action: -> card.process()
         else
-          card.processCard()
+          card.process()
       false
 
-  processCard: ->
+  process: ->
     $('#flash .cardfields .dismiss').trigger 'click'
     $('#form_with_subscription input[type=submit]').prop 'disabled', true
     data =
@@ -50,9 +50,12 @@ subscription =
       expMonth: $('#card_exp_month input:checked').val()
       expYear: $('#card_exp_year input:checked').val()
       addressZip: $('#card_address_zip').val()
+    $('body').addClass 'busy'
     Stripe.createToken data, @handleStripeResponse
 
   handleStripeResponse: (status, response) ->
+    $('body').removeClass 'busy'
+
     # Remove old error messages
     $('#flash li').each -> $(@).find('.dismiss').trigger 'click'
     $('#form_with_subscription li').removeClass('with-errors').find('mark.error').remove()
