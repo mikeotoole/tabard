@@ -44,7 +44,7 @@ We will produce any requested data that is lawfully and properly requested by se
 
 We never sell or lend personal information We collect from or about you to any third-party for commercial purposes.  For purposes of this statement, We define "personal information" as information We possess from or about you, that can be readily correlated with you as an individual person.  For example, your address, your individual user habits, or your credit card information, would all constitute personal information.  In contrast, a geographical count of users residing in a certain geographical area (without providing names), aggregate data about how many users have certain user habits, and how many users purchased a certain service using credit cards, would not be personally identifiable with you individually, and therefore would not constitute personal information.
 
-In the case of credit card information necessary for a purchase transaction, We utilize a payment processor gateway that collects all of your information directly onto their secure servers.  None of Our servers or resources keep any of your credit card information at any time.
+In the case of credit card information necessary for a purchase transaction, We utilize a payment processor gateway that collects all of your information directly onto their secure servers.  None of Our servers or resources permanently store any of your credit card information at any time.
 
 **How We Use Information We Collect or Receive**
 

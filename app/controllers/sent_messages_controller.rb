@@ -44,7 +44,7 @@ class SentMessagesController < MailboxController
 
   # POST /sent(.:format)
   def create
-    params[:message][:to].uniq!
+    params[:message][:to].uniq! unless params[:message][:to].blank?
     @message = current_user.sent_messages.build(params[:message])
     authorize!(:create, @message)
     if @message.save
@@ -54,8 +54,9 @@ class SentMessagesController < MailboxController
       if @message.to.blank?
         errors = Array.new
         @message.errors.each{|attr,msg| errors << {attr: attr, msg: msg}}
-        @message = current_user.sent_messages.build(to: [-1])
+        @message = current_user.sent_messages.build(to: [-1], subject: @message.subject, body: @message.body)
         errors.each{ |error| @message.errors.add(error[:attr],error[:msg]) }
+        flash[:alert] = "You need at least one valid recipient"
       end
       render 'new'
     end

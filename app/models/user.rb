@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
 ###
 # Attribute accessors
 ###
-  attr_accessor :birth_month, :birth_day, :birth_year, :is_partial_request, :remember_password, :beta_code, :email_confirmation
+  attr_accessor :birth_month, :birth_day, :birth_year, :is_partial_request, :remember_password, :beta_code, :email_confirmation, :accept_terms
 
 ###
 # Attribute accessible
@@ -37,7 +37,7 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :email_confirmation, :password, :remember_me, :user_profile_attributes, :is_partial_request, :remember_password,
     :accepted_current_terms_of_service, :accepted_current_privacy_policy, :user_disabled_at, :date_of_birth, :birth_day, :birth_month, :birth_year,
-    :time_zone, :beta_code, :is_email_on_message, :is_email_on_announcement
+    :time_zone, :beta_code, :is_email_on_message, :is_email_on_announcement, :accept_terms
 
 ###
 # Associations
@@ -121,6 +121,8 @@ class User < ActiveRecord::Base
   with_options if: Proc.new{ BETA_CODE_REQUIRED and !Rails.env.test? } do |user|
     user.validates :beta_code, presence: {message: "is required for the closed beta"}, on: :create
     user.validate :valid_beta_key, on: :create
+  validates :accept_terms, acceptance: {allow_nil: false}, on: :create, unless: Proc.new {|u| u.accepted_current_terms_of_service and u.accepted_current_privacy_policy}
+
   end
 
 ###
@@ -411,8 +413,10 @@ protected
   # Markes documents as accepted when user is created.
   ###
   def accept_current_documents
-    self.accepted_current_terms_of_service = true
-    self.accepted_current_privacy_policy = true
+    if self.accept_terms
+      self.accepted_current_terms_of_service = true
+      self.accepted_current_privacy_policy = true
+    end
   end
 
 ###
