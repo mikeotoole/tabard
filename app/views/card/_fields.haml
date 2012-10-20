@@ -27,5 +27,23 @@
   %dfn.hint 3 or 4 digit number on the back of your card
 
 %li
-  = label_tag :card_address_zip, "Billing Zip/Postal Code"
-  = text_field_tag :card_address_zip, nil, name: nil, style: 'width: 150px'
+  = label_tag :card_address, "Billing Address"
+  = text_field_tag :card_address, nil, name: nil
+
+%li
+  = label_tag :card_city, "City"
+  = text_field_tag :card_city, nil, name: nil
+
+%li
+  = label_tag :card_zip, "State / Zip"
+
+  .select{ data: {placeholder: 'State'}, style: 'float: left; margin-right: 22px; width: 200px' }
+    %ul
+      - us_states.each do |state|
+        %li
+          = radio_button_tag "card_state", state[1], false
+          = label_tag "card_state_#{state[1]}", state[0]
+
+  = text_field_tag :card_zip, nil, name: nil, style: 'float: left; width: 150px', placeholder: 'Zip/Postal Code'
+
+  %br
