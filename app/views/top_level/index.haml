@@ -35,9 +35,11 @@
       %p.help{ href: 'javascript:;', onclick: '$.alert({title:"Your Birthday",body:"Tabard is a service exclusively for players 13 years of age and older. We need your birthday to make sure that you are eligible for an account."})' }
         Why is my birthday required?
       %p.terms
-        By clicking "Sign up", you agree to our
-        = link_to 'Terms', top_level_terms_of_service_url, target: '_blank'
-        and that you have read our
-        = (link_to 'Privacy Policy', top_level_privacy_policy_url, target: '_blank') + '.'
+        = check_box_tag :accept_terms, true
+        = label_tag :accept_terms do
+          I accept Tabard's
+          = link_to 'Terms of Use', top_level_terms_of_service_url, target: '_blank'
+          and have read and understand the
+          = (link_to 'Privacy Policy', top_level_privacy_policy_url, target: '_blank') + '.'
       %p.submit
         %button{ type: 'submit', tabindex: 8 } Sign up

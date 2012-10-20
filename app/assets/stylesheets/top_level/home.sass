@@ -245,11 +245,37 @@
         font-size: 12px
         left: 15px
         line-height: 16px
+        overflow: hidden
         position: absolute
         right: 15px
         a
           color: #000
           text-decoration: underline
+        input
+          left: -500em
+          position: absolute
+        label
+          display: block
+          padding: 0 0 0 30px
+        label:before
+          background: #eee
+          border: 1px solid #aaa
+          color: #5587A7
+          content: ''
+          font: 20px Picara
+          height: 20px
+          left: 0
+          line-height: 18px
+          position: absolute
+          text-align: center
+          top: 0
+          width: 20px
+        label:hover:before
+          background: #fff
+          border-color: #5488A8
+          color: #BD4028
+        input:checked + label:before
+          content: '\F000'
       p.submit
         background: #7f93a2
         border-top: 1px solid #657c8e

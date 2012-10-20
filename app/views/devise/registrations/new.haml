@@ -27,10 +27,12 @@
     - if !!cookies[:timezone]
       = f.input :time_zone, as: :hidden, input_html: { value: cookies[:timezone].to_s }
     %p.terms
-      By clicking "Sign up", you agree to our
-      = link_to 'Terms', top_level_terms_of_service_url, target: '_blank'
-      and that you have read our
-      = (link_to 'Privacy Policy', top_level_privacy_policy_url, target: '_blank') + '.'
+      = check_box_tag :accept_terms, true
+      = label_tag :accept_terms do
+        I accept Tabard's
+        = link_to 'Terms of Use', top_level_terms_of_service_url, target: '_blank'
+        and have read and understand the
+        = (link_to 'Privacy Policy', top_level_privacy_policy_url, target: '_blank') + '.'
     %p
       %button{ type: 'submit' } Sign up
 = render "devise/shared/links"
