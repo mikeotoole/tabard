@@ -86,7 +86,12 @@ protected
   # Loads all available plans.
   def load_plans_and_stripe
     @available_plans = CommunityPlan.available
-    @stripe = Stripe::Customer.retrieve(current_user.stripe_customer_token) unless current_user.stripe_customer_token.blank?
+    begin
+      @stripe = Stripe::Customer.retrieve(current_user.stripe_customer_token) unless current_user.stripe_customer_token.blank?
+    rescue
+    ensure
+      @stripe ||= nil
+    end
   end
 
 ###
