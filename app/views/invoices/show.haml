@@ -10,7 +10,7 @@
 
 - if @invoice.uniqued_invoice_items.size > 0
   #invoice
-    - items_by_community = @invoice.uniqued_invoice_items.sort_by{|item| item.has_community_plan? ? 0 : 1}.group_by(&:community)
+    - items_by_community = @invoice.uniqued_invoice_items.sort_by{|item| item.has_community_plan? ? 0 : 1}.group_by(&:magic_historical_community)
     - community_subtotals = {}
     - items_by_community.each do |community, invoice_items|
       %table
