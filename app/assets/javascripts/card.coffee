@@ -59,7 +59,7 @@ card =
 
     # Remove old error messages
     $('#flash li').each -> $(@).find('.dismiss').trigger 'click'
-    $('#form_with_subscription li').removeClass('with-errors').find('mark.error').remove()
+    $('#card_form li').removeClass('with-errors').find('mark.error').remove()
 
     # Success, so submit the data to Stripe
     if status is 200
