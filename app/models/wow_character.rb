@@ -20,7 +20,7 @@ class WowCharacter < BaseCharacter
   VALID_GENDERS = %w(Male Female)
 
   # All valid races
-  VALID_RACES = %w(Draenei Dwarf Gnome Human Night\ Elf Worgen Blood\ Elf Goblin Orc Tauren Troll Pandaren Undead)
+  VALID_RACES = %w(Draenei Dwarf Gnome Human Night\ Elf Worgen Blood\ Elf Goblin Orc Pandaren Tauren Troll Undead)
 
   # All valid classes
   VALID_CLASSES = %w(Death\ Knight Druid Hunter Mage Paladin Priest Rogue Shaman Warlock Warrior)
@@ -29,9 +29,9 @@ class WowCharacter < BaseCharacter
 # All valid races by faction
 ###
   #Valid races
-  VALID_ALLIANCE_RACES = %w(Draenei Dwarf Gnome Human Night\ Elf Worgen Pandaren)
+  VALID_ALLIANCE_RACES = %w(Draenei Dwarf Gnome Human Night\ Elf Pandaren Worgen)
   #Valid races
-  VALID_HORDE_RACES = %w(Blood\ Elf Goblin Orc Tauren Troll Pandaren Undead)
+  VALID_HORDE_RACES = %w(Blood\ Elf Goblin Orc Pandaren Tauren Troll Undead)
 
 ###
 # All valid alliance classes by race
