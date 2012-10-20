@@ -389,6 +389,7 @@ DEPENDENCIES
   rails_best_practices
   rb-fsevent
   rdiscount
+  rest-client
   rspec-rails
   sanitize
   sass-rails
