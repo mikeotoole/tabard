@@ -315,7 +315,7 @@ protected
   def ensure_user_is_in_good_payment_standing
     if user_signed_in? and not current_user.is_in_good_account_standing
       # card_url
-      flash[:notice] = "PAYMENT DELENQUENT. Doug fix this message. #{view_context.link_to("Click to fix", card_url)}" # TODO Fix this message
+      flash[:notice] = "Uh oh. Your subscription is overdue. Please #{view_context.link_to('update your card', card_url)} to keep your service active."
     end
   end
 
