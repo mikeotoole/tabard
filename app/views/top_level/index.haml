@@ -35,7 +35,7 @@
       %p.help{ href: 'javascript:;', onclick: '$.alert({title:"Your Birthday",body:"Tabard is a service exclusively for players 13 years of age and older. We need your birthday to make sure that you are eligible for an account."})' }
         Why is my birthday required?
       %p.terms
-        = check_box_tag :accept_terms, true
+        = f.input :accept_terms, as: :boolean
         = label_tag :accept_terms do
           I accept Tabard's
           = link_to 'Terms of Use', top_level_terms_of_service_url, target: '_blank'
