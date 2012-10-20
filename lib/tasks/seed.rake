@@ -79,24 +79,23 @@ namespace :seed do
     max3 = create_user("Max3", "Length3", create_w_string(UserProfile::MAX_NAME_LENGTH))
 
     puts "Creating characters with max length attributes"
-    create_empire_character("Length", create_w_string(SwtorCharacter::MAX_NAME_LENGTH), "Sith Warrior", "Juggernaut", "Sith Pureblood", 99, "Female", "Phateem Halls of Knowledge")
-    create_empire_character("Length", create_w_string(SwtorCharacter::MAX_NAME_LENGTH), "Sith Warrior", "Juggernaut", "Sith Pureblood", 99, "Female", "Phateem Halls of Knowledge")
+    create_empire_character("Length", create_w_string(SwtorCharacter::MAX_NAME_LENGTH), "Sith Warrior", "Juggernaut", "Sith Pureblood", 99, "Female", "The Bastion")
+    create_empire_character("Length", create_w_string(SwtorCharacter::MAX_NAME_LENGTH), "Sith Warrior", "Juggernaut", "Sith Pureblood", 99, "Female", "The Bastion")
     create_alliance_character("Length", create_w_string(WowCharacter::MAX_NAME_LENGTH), "Death Night", "Pandaren", 99, "Female", "Steamwheedle Cartel")
     create_alliance_character("Length", create_w_string(WowCharacter::MAX_NAME_LENGTH), "Death Night", "Pandaren", 99, "Female", "Steamwheedle Cartel")
 
-    create_empire_character("Length2", create_w_string(SwtorCharacter::MAX_NAME_LENGTH), "Sith Warrior", "Juggernaut", "Sith Pureblood", 99, "Female", "Phateem Halls of Knowledge")
-    create_empire_character("Length2", create_w_string(SwtorCharacter::MAX_NAME_LENGTH), "Sith Warrior", "Juggernaut", "Sith Pureblood", 99, "Female", "Phateem Halls of Knowledge")
+    create_empire_character("Length2", create_w_string(SwtorCharacter::MAX_NAME_LENGTH), "Sith Warrior", "Juggernaut", "Sith Pureblood", 99, "Female", "The Bastion")
+    create_empire_character("Length2", create_w_string(SwtorCharacter::MAX_NAME_LENGTH), "Sith Warrior", "Juggernaut", "Sith Pureblood", 99, "Female", "The Bastion")
     create_alliance_character("Length2", create_w_string(WowCharacter::MAX_NAME_LENGTH), "Death Night", "Pandaren", 99, "Female", "Steamwheedle Cartel")
     create_alliance_character("Length2", create_w_string(WowCharacter::MAX_NAME_LENGTH), "Death Night", "Pandaren", 99, "Female", "Steamwheedle Cartel")
 
-    create_empire_character("Length3", create_w_string(SwtorCharacter::MAX_NAME_LENGTH), "Sith Warrior", "Juggernaut", "Sith Pureblood", 99, "Female", "Phateem Halls of Knowledge")
-    create_empire_character("Length3", create_w_string(SwtorCharacter::MAX_NAME_LENGTH), "Sith Warrior", "Juggernaut", "Sith Pureblood", 99, "Female", "Phateem Halls of Knowledge")
+    create_empire_character("Length3", create_w_string(SwtorCharacter::MAX_NAME_LENGTH), "Sith Warrior", "Juggernaut", "Sith Pureblood", 99, "Female", "The Bastion")
+    create_empire_character("Length3", create_w_string(SwtorCharacter::MAX_NAME_LENGTH), "Sith Warrior", "Juggernaut", "Sith Pureblood", 99, "Female", "The Bastion")
     create_alliance_character("Length3", create_w_string(WowCharacter::MAX_NAME_LENGTH), "Death Night", "Pandaren", 99, "Female", "Steamwheedle Cartel")
     create_alliance_character("Length3", create_w_string(WowCharacter::MAX_NAME_LENGTH), "Death Night", "Pandaren", 99, "Female", "Steamwheedle Cartel")
 
     puts "Creating community with max length attributes"
     max_community = create_community("Length", create_w_string(Community::MAX_NAME_LENGTH), create_w_string(Community::MAX_SLOGAN_LENGTH), %w(Alliance Republic))
-    max_community.pitch = create_w_string(Community::MAX_PITCH_LENGTH)
     max_community.save!
     max_community.update_column(:is_public_roster, false)
 
