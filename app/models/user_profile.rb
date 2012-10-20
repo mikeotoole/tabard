@@ -90,6 +90,7 @@ class UserProfile < ActiveRecord::Base
 ###
   nilify_blanks only: [:first_name, :last_name, :description, :title, :location]
   after_create :create_mailboxes
+  after_create :check_for_invites
 
 ###
 # Scopes
@@ -425,6 +426,17 @@ protected
   def create_mailboxes
     self.folders.create!(name: "Inbox")
     self.folders.create!(name: "Trash")
+  end
+
+  ###
+  # _after_create_
+  #
+  # This method looks for CommunityInvites for this user and sends them a system message.
+  ###
+  def check_for_invites
+    CommunityInvite.where(email: self.email).each do |invite|
+      invite.update_attributes(applicant: self)
+    end
   end
 end
 

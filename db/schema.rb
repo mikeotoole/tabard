@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121020040743) do
+ActiveRecord::Schema.define(:version => 20121020211102) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -468,6 +468,7 @@ ActiveRecord::Schema.define(:version => 20121020040743) do
     t.boolean  "is_system_sent",    :default => false
     t.datetime "created_at",                           :null => false
     t.datetime "updated_at",                           :null => false
+    t.boolean  "dont_send_email",   :default => false
   end
 
   add_index "messages", ["author_id"], :name => "index_messages_on_author_id"

@@ -24,7 +24,7 @@ class Message < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :subject, :body, :to
+  attr_accessible :subject, :body, :to, :dont_send_email
 
 ###
 # Associations
@@ -111,5 +111,6 @@ end
 #  is_system_sent    :boolean          default(FALSE)
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  dont_send_email   :boolean          default(FALSE)
 #
 

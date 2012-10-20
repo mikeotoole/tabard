@@ -10,6 +10,7 @@
 #  is_system_sent    :boolean          default(FALSE)
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  dont_send_email   :boolean          default(FALSE)
 #
 
 require 'spec_helper'

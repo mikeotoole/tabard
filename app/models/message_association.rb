@@ -25,6 +25,7 @@ class MessageAssociation < ActiveRecord::Base
   delegate :author, :subject, :body, :recipients, :author_avatar_url, :is_system_sent, to: :message
   delegate :name, :id, to: :author, prefix: true, allow_nil: true
   delegate :name, to: :folder, prefix: true
+  delegate :dont_send_email, to: :message
 
 ###
 # Validators

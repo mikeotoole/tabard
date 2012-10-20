@@ -9,7 +9,7 @@ class CommunityInvite < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :applicant_id, :community_id, :sponsor_id, :email
+  attr_accessible :applicant, :applicant_id, :community_id, :sponsor_id, :email
 
 ###
 # Associations
@@ -32,7 +32,6 @@ class CommunityInvite < ActiveRecord::Base
   validates :sponsor, presence: true
   validates :community, presence: true
   validate :applicant_cant_be_the_same_as_sponsor
-  validate :applicant_and_email_cant_both_be_set
   validate :sponsor_must_be_member_of_community
 
 ###
@@ -46,7 +45,7 @@ class CommunityInvite < ActiveRecord::Base
 ###
 # Callbacks
 ###
-  before_save :try_to_find_user
+  before_create :try_to_find_user
   after_create :remove_action_item
 
   # Checks to see if this is a duplicate
@@ -77,13 +76,6 @@ protected
   end
 
   ###
-  # This method validates that the applicant can't also be the sponsor.
-  ###
-  def applicant_and_email_cant_both_be_set
-    self.errors.add(:base, "Email and applicant can't both be set") if not self.applicant.blank? and not self.email.blank?
-  end
-
-  ###
   # This method validates that sponsor must be in the community.
   ###
   def sponsor_must_be_member_of_community
@@ -107,7 +99,7 @@ protected
   end
 
   ###
-  # _before_save_
+  # _before_create_
   #
   # This method trys to find a user with the email
   ###
