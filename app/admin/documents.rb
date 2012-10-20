@@ -41,19 +41,19 @@ ActiveAdmin.register Document do
     column :created_at
   end
 
-  show title: :type do
+  show title: :type do |document|
     attributes_table *default_attribute_table_rows, :is_current?, :acceptance_count
     link_to "View Formatted", view_document_admin_document_path(document.id)
     active_admin_comments
   end
 
   form do |f|
-    f.inputs do
+    f.inputs "Details" do
       f.input :type, as: :select, collection: Document::VALID_TYPES
       f.input :version
       f.input :body
       f.input :is_published
     end
-    f.actions
+    f.buttons
   end
 end

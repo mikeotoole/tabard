@@ -8,7 +8,7 @@ FactoryGirl.define do
     date_of_birth 35.years.ago.to_date
     user_profile_attributes { FactoryGirl.attributes_for(:user_profile) }
     time_zone -8
-    accept_terms "1"
+    terms "1"
   end
 
   factory :disabled_user, :parent => :user do
@@ -26,7 +26,7 @@ FactoryGirl.define do
     email_confirmation "billy@robo.com"
     user_profile_attributes { FactoryGirl.attributes_for(:user_profile, :display_name => "Robobilly", :first_name => "Robo", :last_name => "Billy") }
     date_of_birth 35.years.ago.to_date
-    accept_terms "1"
+    terms "1"
     after(:create) do |u|
       FactoryGirl.create(:character_proxy_with_swtor_character, :user_profile => u.user_profile)
     end
