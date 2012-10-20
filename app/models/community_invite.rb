@@ -33,6 +33,7 @@ class CommunityInvite < ActiveRecord::Base
   validates :community, presence: true
   validate :applicant_cant_be_the_same_as_sponsor
   validate :sponsor_must_be_member_of_community
+  validate :applicant_cant_be_a_member_of_the_community
 
 ###
 # Delegates
@@ -81,6 +82,14 @@ protected
   def sponsor_must_be_member_of_community
     return false if sponsor.blank? or community.blank?
     self.errors.add(:base, "The sponsor must be a member of the community") unless self.sponsor.is_member?(self.community)
+  end
+
+  ###
+  # This method validates that applicant is not a member
+  ###
+  def applicant_cant_be_a_member_of_the_community
+    return false if applicant.blank? or community.blank?
+    self.errors.add(:base, "The applicant can't be a member of the community") if self.applicant.is_member?(self.community)
   end
 
 ###

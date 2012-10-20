@@ -41,12 +41,13 @@ describe CommunityInvite do
       user_profile = DefaultObjects.community.admin_profile
       build(:community_invite, applicant: user_profile, sponsor: user_profile, community: DefaultObjects.community).should_not be_valid
     end
+    it "can't be a member of the community" do
+      user_profile = DefaultObjects.additional_community_user_profile
+      build(:community_invite, applicant: user_profile, sponsor: user_profile, community: DefaultObjects.community).should_not be_valid
+    end
   end
 
   describe "email" do
-    it "should be not be allowed if applicant is set" do
-      build(:community_invite, email: "robobilly@digitalaugment.com").should_not be_valid
-    end
     it "should accept valid format and length" do
       ok_emails = %w{ a@b.us vaild@email.com } # TESTING Valid emails for testing.
       ok_emails.each do |email|

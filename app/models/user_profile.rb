@@ -78,7 +78,7 @@ class UserProfile < ActiveRecord::Base
 ###
 # Delegates
 ###
-  delegate :email, to: :user
+  delegate :email, to: :user, allow_nil: true
   delegate :is_disabled?, to: :user
   delegate :is_email_on_message, to: :user
   delegate :is_email_on_announcement, to: :user
