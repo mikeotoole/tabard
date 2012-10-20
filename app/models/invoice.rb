@@ -88,7 +88,11 @@ class Invoice < ActiveRecord::Base
 ###
   # [Returns] the total cost of all invoice items in cents.
   def total_price_in_cents
-    self.total_price_in_cents_without_tax + self.total_tax_in_cents
+    if charged_total_price_in_cents.present?
+      return charged_total_price_in_cents
+    else
+      return (self.total_price_in_cents_without_tax + self.total_tax_in_cents)
+    end
   end
 
   # [Returns] the total cost of all invoice items in dollars.
@@ -97,11 +101,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def total_price_in_cents_without_tax
-    if charged_total_price_in_cents.present?
-      self.charged_total_price_in_cents
-    else
       invoice_items.empty? ? 0 : invoice_items.map{|ii| ii.total_price_in_cents}.inject(0,:+)
-    end
   end
 
   def total_price_in_dollars_without_tax
