@@ -109,6 +109,17 @@ jQuery(document).ready ($) ->
       li2.find('form').trigger 'init'
       li.remove()
   
+  # Checks the length of the comment before allowing user to submit
+  $('.comments form[data-remote]').on 'submit', ->
+    comment = $(@).find('textarea').val()
+    crCount = comment.length - comment.replace(/[\r\n]/g, '').length
+    overrage = comment.length + crCount - 10000
+    if overrage > 0
+      $.alert
+        title: 'Woops!'
+        body: "Your comment is #{overrage} character#{if overrage > 1 then 's' else ''} too long."
+      return false
+  
   # Submits the comment and udpates the DOM
   $('.comments form[data-remote]')
     .live 'init', ->
