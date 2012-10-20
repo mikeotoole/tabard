@@ -92,6 +92,10 @@ class InvoiceItem < ActiveRecord::Base
     self.is_prorated ? "Prorated - #{self.item_title}" : self.item_title
   end
 
+  def magic_historical_community
+    Community.with_deleted.find_by_id(self.community_id)
+  end
+
   # Returns true if the item is the default plan.
   def has_default_plan?
     self.item == CommunityPlan.default_plan
