@@ -21,7 +21,7 @@ DaBvRails::Application.configure do
   config.assets.digest = true
 
   # Added to help with Heroku error -MO
-  config.assets.initialize_on_precompile = false
+  config.assets.initialize_on_precompile = true
 
   # Defaults to Rails.root.join("public/assets")
   # config.assets.manifest = YOUR_PATH
