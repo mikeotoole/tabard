@@ -166,15 +166,6 @@ class User < ActiveRecord::Base
 ###
 # Invoicing
 ###
-
-  def should_be_taxed?
-    self.tax_rate == 0
-  end
-
-  def tax_rate
-    return 0
-  end
-
   ###
   # Used to create or update a users Stripe customer card.
   # [Args]
@@ -184,15 +175,20 @@ class User < ActiveRecord::Base
   def update_stripe(stripe_card_token)
     return false if stripe_card_token.blank?
     if self.stripe_customer_token.present? # Update customers card.
-      cu = Stripe::Customer.retrieve(self.stripe_customer_token)
-      cu.card = stripe_card_token # obtained with Stripe.js
-      cu.email = self.email
-      cu.save!
+      customer = Stripe::Customer.retrieve(self.stripe_customer_token)
+      customer.card = stripe_card_token # obtained with Stripe.js
+      customer.email = self.email
+      customer.save!
+      # Retrive customer again and set billing_address_zip.
+      customer = Stripe::Customer.retrieve(self.stripe_customer_token)
+      self.billing_address_zip = customer.active_card.address_zip
+      self.save!
     else # Create new customer with card.
       customer = Stripe::Customer.create(description: "User ID: #{self.id}",
                                                email: self.email,
                                                 card: stripe_card_token)
       self.stripe_customer_token = customer.id
+      self.billing_address_zip = customer.active_card.address_zip
       self.save!
     end
     return true
@@ -459,5 +455,6 @@ end
 #  is_email_on_announcement          :boolean          default(TRUE)
 #  stripe_customer_token             :string(255)
 #  is_in_good_account_standing       :boolean          default(TRUE)
+#  billing_address_zip               :string(255)
 #
 

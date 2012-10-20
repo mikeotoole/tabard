@@ -35,6 +35,7 @@ class Invoice < ActiveRecord::Base
   delegate :id, to: :user, prefix: true
   delegate :user_profile, to: :user
   delegate :stripe_customer_token, to: :user, prefix: true
+  delegate :billing_address_zip, to: :user, prefix: true
 
 ###
 # Scopes
@@ -86,6 +87,15 @@ class Invoice < ActiveRecord::Base
 ###
   # [Returns] the total cost of all invoice items in cents.
   def total_price_in_cents
+    self.total_price_in_cents_without_tax + self.total_tax_in_cents
+  end
+
+  # [Returns] the total cost of all invoice items in dollars.
+  def total_price_in_dollars
+    self.total_price_in_cents/100.0
+  end
+
+  def total_price_in_cents_without_tax
     if charged_total_price_in_cents.present?
       self.charged_total_price_in_cents
     else
@@ -93,9 +103,36 @@ class Invoice < ActiveRecord::Base
     end
   end
 
-  # [Returns] the total cost of all invoice items in dollars.
-  def total_price_in_dollars
-    self.total_price_in_cents/100.0
+  def total_price_in_dollars_without_tax
+    self.total_price_in_cents_without_tax/100.0
+  end
+
+  def total_tax_in_cents
+    (self.total_price_in_cents_without_tax * self.tax_rate).round(0)
+  end
+
+  def total_tax_in_dollars
+    self.total_tax_in_cents/100.0
+  end
+
+  def should_be_taxed?
+    self.tax_rate == 0
+  end
+
+  def tax_rate
+    if self.user_billing_address_zip.blank?
+      return 0.0
+    else
+      # TODO: Make tax_rate work.
+      # Ask WA tax rate info for zip.
+      # set the following:
+      #  charged_state_tax_rate
+      #  charged_local_tax_rate
+      #  local_tax_code
+      #  billing_address_state
+      # return full tax rate
+      return 0.0
+    end
   end
 
   ###
