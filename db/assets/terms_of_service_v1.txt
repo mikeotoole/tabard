@@ -61,7 +61,7 @@ The security of the network through which the Service is provided, as well as th
 3. If We deactivate your Account you may not create another Account without our prior permission.
 4. Passwords must meet security guidelines and must not be shared with others in such a way that compromises or threatens the security of your Account or that of the Service.
 
-**BILLING FOR PRO COMMUNITY UPGRADES AND ADDITIONAL FEATURES OR USER PACKS**
+**BILLING FOR PRO COMMUNITY UPGRADES AND ADDITIONAL FEATURES OR MEMBER PACKS**
 
 Users may sign up for an Account and create a Community for free.  Users who create a Community are considered the Administrator for the Community and are responsible for all upgrades and billing for the Community.  Free Communities do not have access to certain advanced features that may be offered by the Company from time to time and also have limitations on number of members.
 
@@ -72,12 +72,12 @@ Administrators who purchase a recurring subscription based Pro upgrade, advanced
 
 For example: A user has been paying $10 per 30 day period for some time for a Pro Community.  Half way through the current 30 day period they decide to add a Member Pack, which is $2 per 30 day period.  On their next statement, they will see a one-time prorated charge of $1 for the Member Pack for the previous 30 day period, as well as a $2 charge for the Member Pack for the coming 30 day period in addition to the regular $10 per 30 day period charge for the Pro Community.
 
-**TERMINATION OF SUBSCRIPTION FOR PRO COMMUNITY, ADDITIONAL ADVANCED FEATURES, OR USER PACKS**
+**TERMINATION OF SUBSCRIPTION FOR PRO COMMUNITY, ADDITIONAL ADVANCED FEATURES, OR MEMBER PACKS**
 
 Administrators may terminate a subscription for any Subscription Services at any time by utilizing the functionality for doing so through their User Account.  If an Administrator does so, no pro-rated refunds will be due or owing.  Instead, the Subscription Services that are terminated will be available for the rest of the then-current billing cycle, after which no further charges will be made to the User's credit card, and access to the Subscription Services will end.
 
-If an Administrator terminates a subscription for a Subscription Service then decides to reactivate the feature during the same billing cycle, the billing for that Subscription Service will continue as if no cancelation had been initiated.  However, if an Administrator terminates a subscription for a Subscription Service and then reactivates it and adds additional Subscription Service at the same time during the same billing cycle, the billing for the additional Subscription Service will be added to the billing on the next billing cycle date including any pro-rated billing necessary.
-Pro upgrades, any additional advanced features, and User Packs are specific to the Community for which they were purchased and may not be transferred from one Community to another even within the same User Account.
+If an Administrator terminates a subscription for a Subscription Service then decides to reactivate the subscription during the same billing cycle, the billing for that Subscription Service will continue as if no cancelation had been initiated.  However, if an Administrator terminates a subscription for a Subscription Service and then reactivates it and adds additional Subscription Service at the same time during the same billing cycle, the billing for the additional Subscription Service will be added to the billing on the next billing date including any pro-rated billing necessary.
+Pro upgrades, any additional advanced features, and Member Packs are specific to the Community for which they were purchased and may not be transferred from one Community to another even within the same User Account.
 
 **GENERAL TERMS AND CONDITIONS**
 
