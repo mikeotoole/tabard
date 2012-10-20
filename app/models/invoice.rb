@@ -121,33 +121,46 @@ class Invoice < ActiveRecord::Base
   end
 
   def tax_rate
-    if self.user_billing_address_zip.blank?
+    if self.user_stripe_customer_token.blank?
       return 0.0
     else
       success = false
+      user_address = ""
+      user_city = ""
+      user_zipcode = ""
       begin
-        # TODO Update this with more info
-        response = RestClient.get "http://dor.wa.gov/AddressRates.aspx?output=xml&addr=&city=&zip=#{self.user_billing_address_zip}"
-        kickback_hash = Hash.from_xml(response.to_str)
-        case kickback_hash["response"]["code"]
-        when "0","1","2"
-          rate_info = kickback_hash["response"]["rate"].last
-          unless rate_info["code"].blank? or rate_info["staterate"].blank? or rate_info["localrate"].blank?
-            self.update_column(:charged_state_tax_rate, rate_info["staterate"])
-            self.update_column(:charged_local_tax_rate, rate_info["localrate"])
-            self.update_column(:local_tax_code, rate_info["code"])
-            self.update_column(:billing_address_zip, self.user_billing_address_zip)
-            success = true
+        stripe_customer = Stripe::Customer.retrieve(user_stripe_customer_token)
+        unless stripe_customer["active_card"].blank?
+          user_address = stripe_customer["active_card"]["address_line1"]
+          user_city = stripe_customer["active_card"]["address_city"]
+          user_zipcode = stripe_customer["active_card"]["address_zip"]
+        end
+        unless user_address.blank? or user_city.blank? or user_zipcode.blank?
+          begin
+            response = RestClient.get "http://dor.wa.gov/AddressRates.aspx?output=xml&addr=#{CGI::escape(user_address)}&city=#{CGI::escape(user_city)}&zip=#{CGI::escape(user_zipcode)}"
+            kickback_hash = Hash.from_xml(response.to_str)
+            case kickback_hash["response"]["code"]
+            when "0","1","2"
+              rate_info = kickback_hash["response"]["rate"].last
+              unless rate_info["code"].blank? or rate_info["staterate"].blank? or rate_info["localrate"].blank?
+                self.update_column(:charged_state_tax_rate, rate_info["staterate"])
+                self.update_column(:charged_local_tax_rate, rate_info["localrate"])
+                self.update_column(:local_tax_code, rate_info["code"])
+                self.update_column(:billing_address_zip, self.user_billing_address_zip)
+                success = true
+              end
+            else
+              "ERROR WITH WA #{response.to_yaml}"
+            end
+          rescue => e
+            logger.debug "ERROR WITH WA REQUEST #{e.to_yaml}"
           end
-        else
-          "ERROR WITH WA #{response.to_yaml}"
         end
       rescue => e
-        logger.debug "ERROR WITH WA REQUEST #{e.to_yaml}"
-      ensure
+        logger.debug "ERROR WITH Stripe #{e.to_yaml}"
       end
       if success
-        return self.charged_state_tax_rate + self.charged_local_tax_rate
+        return (self.charged_state_tax_rate + self.charged_local_tax_rate).round(5)
       else
         return 0.0
       end

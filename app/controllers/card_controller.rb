@@ -17,7 +17,12 @@ class CardController < PaymentController
 
   # GET /card
   def edit
-    @stripe = Stripe::Customer.retrieve(current_user.stripe_customer_token) unless current_user.stripe_customer_token.blank?
+    begin
+      @stripe = Stripe::Customer.retrieve(current_user.stripe_customer_token) unless current_user.stripe_customer_token.blank?
+    rescue
+    ensure
+      @stripe ||= nil
+    end
     @invoice = current_user.current_invoice
     @invoice = nil unless (@invoice.period_end_date < Time.now and @invoice.total_price_in_cents > 0)
   end
@@ -41,7 +46,12 @@ class CardController < PaymentController
       # ERROR invoice is currently being charged.
       flash[:alert] = "Your invoice is currently being charged. You can't update your card at this time."
     end
-    @stripe = Stripe::Customer.retrieve(current_user.stripe_customer_token) unless current_user.stripe_customer_token.blank?
+    begin
+      @stripe = Stripe::Customer.retrieve(current_user.stripe_customer_token) unless current_user.stripe_customer_token.blank?
+      rescue
+    ensure
+      @stripe ||= nil
+    end
     render :edit
   end
 end
