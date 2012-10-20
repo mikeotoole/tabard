@@ -216,7 +216,7 @@ class UserProfile < ActiveRecord::Base
   # [Returns] True if member of the community false otherwise.
   def is_member?(community)
     if community
-     self.roles.include?(community.member_role)
+     self.roles.map{|r| r.id}.include?(community.member_role_id)
     else
      false
     end

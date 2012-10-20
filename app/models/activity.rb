@@ -19,6 +19,10 @@ class Activity < ActiveRecord::Base
   belongs_to :user_profile, inverse_of: :activities
   belongs_to :community, inverse_of: :activities
   belongs_to :target, polymorphic: true
+  belongs_to :page, class_name: 'Page', foreign_key: :target_id
+  belongs_to :supported_game, class_name: 'SupportedGame', foreign_key: :target_id
+  belongs_to :comment, class_name: 'Comment', foreign_key: :target_id
+  belongs_to :discussion, class_name: 'Discussion', foreign_key: :target_id
 
 ###
 # Delegates
