@@ -306,7 +306,7 @@ class Invoice < ActiveRecord::Base
       match = false
       collision_item = nil
       uniqued_ii.each do |inner_item|
-        if invoice_item.item == inner_item.item and invoice_item.start_date == inner_item.start_date and invoice_item.end_date == inner_item.end_date and invoice_item.community == inner_item.community and invoice_item.is_prorated == inner_item.is_prorated and invoice_item.is_recurring == inner_item.is_recurring
+        if invoice_item.item == inner_item.item and invoice_item.start_date == inner_item.start_date and invoice_item.end_date == inner_item.end_date and invoice_item.community_id == inner_item.community_id and invoice_item.is_prorated == inner_item.is_prorated and invoice_item.is_recurring == inner_item.is_recurring
           match = true
           collision_item = inner_item
           break
