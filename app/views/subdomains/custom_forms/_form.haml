@@ -6,7 +6,7 @@
     %ol
       = f.input :name, input_html: { maxlength: CustomForm::MAX_NAME_LENGTH }
       = f.input :thankyou, as: :text, label: 'Thank you message', hint: "Displayed to applicants after they submit the form. Max #{CustomForm::MAX_THANKYOU_LENGTH} characters.", wrapper_html: { class: 'thankyou' }, input_html: { maxlength: CustomForm::MAX_THANKYOU_LENGTH }
-      = f.input :instructions, hint: "Displayed in the sidebar to the right of the form. Max #{CustomForm::MAX_THANKYOU_LENGTH} characters.", wrapper_html: { class: 'instructions' }, input_html: { maxlength: CustomForm::MAX_INSTRUCTIONS_LENGTH }
+      = f.input :instructions, hint: "Displayed in the sidebar to the right of the form. Max #{CustomForm::MAX_INSTRUCTIONS_LENGTH} characters.", wrapper_html: { class: 'instructions' }, input_html: { maxlength: CustomForm::MAX_INSTRUCTIONS_LENGTH }
       = f.input :is_published, label: 'Publish this form?' unless custom_form == current_community.community_application_form
     %h2 Questions
     %ul.questions

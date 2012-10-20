@@ -66,6 +66,11 @@ jQuery(document).ready ($) ->
     li.html html
     return li
 
+  $('#recruits').on 'submit', ->
+    e = $.Event 'keypress'
+    e.which = 13
+    $('#recruit_input').trigger e
+
   $('#recruits').on 'change', 'input[type="checkbox"]', ->
     return if $(@).filter(':checked').length
     val = $(@).val()
