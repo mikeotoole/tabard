@@ -6,6 +6,7 @@
 # This is a single invoice used for paid services.
 ###
 class Invoice < ActiveRecord::Base
+  require 'rest_client'
   # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
   acts_as_paranoid
 
@@ -123,15 +124,33 @@ class Invoice < ActiveRecord::Base
     if self.user_billing_address_zip.blank?
       return 0.0
     else
-      # TODO: Make tax_rate work.
-      # Ask WA tax rate info for zip.
-      # set the following:
-      #  charged_state_tax_rate
-      #  charged_local_tax_rate
-      #  local_tax_code
-      #  billing_address_state
-      # return full tax rate
-      return 0.0
+      success = false
+      begin
+        # TODO Update this with more info
+        response = RestClient.get "http://dor.wa.gov/AddressRates.aspx?output=xml&addr=&city=&zip=#{self.user_billing_address_zip}"
+        kickback_hash = Hash.from_xml(response.to_str)
+        case kickback_hash["response"]["code"]
+        when "0","1","2"
+          rate_info = kickback_hash["response"]["rate"].last
+          unless rate_info["code"].blank? or rate_info["staterate"].blank? or rate_info["localrate"].blank?
+            self.update_column(:charged_state_tax_rate, rate_info["staterate"])
+            self.update_column(:charged_local_tax_rate, rate_info["localrate"])
+            self.update_column(:local_tax_code, rate_info["code"])
+            self.update_column(:billing_address_zip, self.user_billing_address_zip)
+            success = true
+          end
+        else
+          "ERROR WITH WA #{response.to_yaml}"
+        end
+      rescue => e
+        logger.debug "ERROR WITH WA REQUEST #{e.to_yaml}"
+      ensure
+      end
+      if success
+        return self.charged_state_tax_rate + self.charged_local_tax_rate
+      else
+        return 0.0
+      end
     end
   end
 
@@ -498,7 +517,7 @@ end
 #  charged_state_tax_rate       :float            default(0.0)
 #  charged_local_tax_rate       :float            default(0.0)
 #  local_tax_code               :string(255)
-#  billing_address_state        :string(255)
+#  billing_address_zip          :string(255)
 #  disputed_date                :datetime
 #  refunded_date                :datetime
 #  refunded_price_in_cents      :integer

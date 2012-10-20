@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121019194723) do
+ActiveRecord::Schema.define(:version => 20121020040743) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -440,7 +440,7 @@ ActiveRecord::Schema.define(:version => 20121019194723) do
     t.float    "charged_state_tax_rate",       :default => 0.0
     t.float    "charged_local_tax_rate",       :default => 0.0
     t.string   "local_tax_code"
-    t.string   "billing_address_state"
+    t.string   "billing_address_zip"
     t.datetime "disputed_date"
     t.datetime "refunded_date"
     t.integer  "refunded_price_in_cents"
