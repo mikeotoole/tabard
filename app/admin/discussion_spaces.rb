@@ -19,11 +19,11 @@ ActiveAdmin.register DiscussionSpace do
 
   index do
     column "View" do |discussion_space|
-      link_to "View", admin_discussion_space_path(discussion_space)
+      link_to "View", alexandria_discussion_space_path(discussion_space)
     end
     column :id
     column "Community" do |discussion_space|
-      link_to discussion_space.community_name, [:admin, discussion_space.community]
+      link_to discussion_space.community_name, [:alexandria, discussion_space.community]
     end
     column :name
     column :supported_game, sortable: :supported_game_id
@@ -38,10 +38,10 @@ ActiveAdmin.register DiscussionSpace do
       panel("Discussions") do
         table_for(discussion_space.discussions) do
           column "Name" do |discussion|
-            link_to discussion.name, [:admin, discussion]
+            link_to discussion.name, [:alexandria, discussion]
           end
           column "Poster" do |discussion|
-            link_to discussion.poster.name, [:admin, discussion.poster]
+            link_to discussion.poster.name, [:alexandria, discussion.poster]
           end
           column :number_of_comments
         end

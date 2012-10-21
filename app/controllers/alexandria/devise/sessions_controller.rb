@@ -1,7 +1,7 @@
 ###
 # This is a custom session controller used to force custom view for active admin devise's session controller.
 ###
-class Admin::Devise::SessionsController < ActiveAdmin::Devise::SessionsController
+class Alexandria::Devise::SessionsController < ActiveAdmin::Devise::SessionsController
   skip_before_filter :block_unauthorized_user!
   skip_before_filter :check_maintenance_mode
   skip_before_filter :ensure_not_ssl_mode, :limit_subdomain_access

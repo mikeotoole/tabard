@@ -13,7 +13,7 @@ ActiveAdmin.register Wow, as: "Wow" do
 
   index title: "World of Warcraft" do
     column "View" do |wow|
-      link_to "View", admin_wow_path(wow)
+      link_to "View", alexandria_wow_path(wow)
     end
     column :id
     column :faction
@@ -21,7 +21,7 @@ ActiveAdmin.register Wow, as: "Wow" do
     column :server_type
     column "Edit" do |wow|
       if can? :edit, wow
-        link_to "Edit", edit_admin_wow_path(wow)
+        link_to "Edit", edit_alexandria_wow_path(wow)
       end
     end
   end
@@ -33,7 +33,7 @@ ActiveAdmin.register Wow, as: "Wow" do
       panel("Supported Games") do
         table_for(wow.supported_games) do
           column "Name" do |supported_game|
-            link_to supported_game.name, [:admin, supported_game]
+            link_to supported_game.name, [:alexandria, supported_game]
           end
           column :game_full_name
         end

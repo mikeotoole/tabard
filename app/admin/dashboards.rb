@@ -10,13 +10,13 @@ ActiveAdmin::Dashboards.build do
     end
     if can?(:sign_out_all_users, User)
       div do
-        button_to "Sign Out ALL Users", sign_out_all_users_admin_users_path, method: :post, data: { confirm: 'Are you sure you want to sign out ALL users?' }
+        button_to "Sign Out ALL Users", sign_out_all_users_alexandria_users_path, method: :post, data: { confirm: 'Are you sure you want to sign out ALL users?' }
       end
       div br
     end
     if can?(:update_account, current_admin_user)
       div do
-        link_to "Update My Account", edit_account_admin_admin_users_path, method: :get
+        link_to "Update My Account", edit_account_alexandria_admin_users_path, method: :get
       end
     end
   end
@@ -34,7 +34,7 @@ ActiveAdmin::Dashboards.build do
     if can?(:read, AdminUser)
       ul do
         AdminUser.order("current_sign_in_at desc").limit(5).collect do |admin_user|
-          li link_to "#{admin_user.email} - #{admin_user.current_sign_in_at ? admin_user.current_sign_in_at.strftime('%m/%d/%Y %I:%M%p') : 'Never Logged In'}", admin_admin_user_path(admin_user)
+          li link_to "#{admin_user.email} - #{admin_user.current_sign_in_at ? admin_user.current_sign_in_at.strftime('%m/%d/%Y %I:%M%p') : 'Never Logged In'}", alexandria_admin_user_path(admin_user)
         end
       end
     end
@@ -44,7 +44,7 @@ ActiveAdmin::Dashboards.build do
     if can?(:read, SwtorCharacter)
       ul do
         SwtorCharacter.order("created_at desc").limit(5).collect do |character|
-          li link_to "#{character.display_name} - #{character.created_at.strftime('%m/%d/%Y %I:%M%p')}", admin_swtor_character_path(character)
+          li link_to "#{character.display_name} - #{character.created_at.strftime('%m/%d/%Y %I:%M%p')}", alexandria_swtor_character_path(character)
         end
       end
     end
@@ -53,7 +53,7 @@ ActiveAdmin::Dashboards.build do
     if can?(:read, WowCharacter)
       ul do
         WowCharacter.order("created_at desc").limit(5).collect do |character|
-          li link_to "#{character.display_name} - #{character.created_at.strftime('%m/%d/%Y %I:%M%p')}", admin_wow_character_path(character)
+          li link_to "#{character.display_name} - #{character.created_at.strftime('%m/%d/%Y %I:%M%p')}", alexandria_wow_character_path(character)
         end
       end
     end
@@ -63,7 +63,7 @@ ActiveAdmin::Dashboards.build do
     if can?(:read, Community)
       ul do
         Community.order("created_at desc").limit(5).collect do |community|
-          li link_to "#{community.name} - #{community.created_at.strftime('%m/%d/%Y %I:%M%p')}", admin_community_path(community)
+          li link_to "#{community.name} - #{community.created_at.strftime('%m/%d/%Y %I:%M%p')}", alexandria_community_path(community)
         end
       end
     end
@@ -73,7 +73,7 @@ ActiveAdmin::Dashboards.build do
     if can?(:read, User)
       ul do
         User.order("created_at desc").includes(:user_profile).limit(5).collect do |user|
-          li link_to "#{user.display_name} - #{user.email} - #{user.created_at.strftime('%m/%d/%Y %I:%M%p')}", admin_user_path(user)
+          li link_to "#{user.display_name} - #{user.email} - #{user.created_at.strftime('%m/%d/%Y %I:%M%p')}", alexandria_user_path(user)
         end
       end
     end

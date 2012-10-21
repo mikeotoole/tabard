@@ -12,7 +12,7 @@ ActiveAdmin.register SupportComment do
       @support_comment = (@support_ticket.blank? ? nil : @support_ticket.support_comments.new(params[:support_comment]))
       @support_comment.admin_user = current_admin_user unless @support_comment.blank?
       if @support_comment.save
-        redirect_to [:admin, @support_ticket]
+        redirect_to [:alexandria, @support_ticket]
       else
         render :new
       end

@@ -16,11 +16,11 @@ ActiveAdmin.register UserProfile do
 
   index do
     column "View" do |user_profile|
-      link_to "View", [:admin, user_profile]
+      link_to "View", [:alexandria, user_profile]
     end
     column :display_name
     column "User" do |user_profile|
-      link_to user_profile.email, [:admin, user_profile.user]
+      link_to user_profile.email, [:alexandria, user_profile.user]
     end
     column :first_name
     column :last_name
@@ -34,7 +34,7 @@ ActiveAdmin.register UserProfile do
       panel("Characters") do
         table_for(user_profile.characters) do
           column "Name" do |character|
-            link_to character.name, [:admin, character]
+            link_to character.name, [:alexandria, character]
           end
           column :game_name
         end
@@ -46,15 +46,15 @@ ActiveAdmin.register UserProfile do
         table_for(user_profile.comments) do
           column :body
           column :poster do |comment|
-            link_to comment.poster.name, [:admin, comment.poster]
+            link_to comment.poster.name, [:alexandria, comment.poster]
           end
           column :number_of_comments
           column :is_removed
           column "Commentable Body" do |comment|
-            link_to comment.commentable_body, [:admin, comment.commentable]
+            link_to comment.commentable_body, [:alexandria, comment.commentable]
           end
           column "Destroy" do |comment|
-            link_to "Destroy", remove_comment_admin_discussion_path(comment), method: :put, confirm: 'Are you sure you want to delete this comment?'
+            link_to "Destroy", remove_comment_alexandria_discussion_path(comment), method: :put, confirm: 'Are you sure you want to delete this comment?'
           end
         end
       end
@@ -64,7 +64,7 @@ ActiveAdmin.register UserProfile do
       panel("Communities") do
         table_for(user_profile.communities) do
           column "Name" do |community|
-            link_to community.name, [:admin, community]
+            link_to community.name, [:alexandria, community]
           end
         end
       end
@@ -74,7 +74,7 @@ ActiveAdmin.register UserProfile do
       panel("Owned Communities") do
         table_for(user_profile.owned_communities) do
           column "Name" do |community|
-            link_to community.name, [:admin, community]
+            link_to community.name, [:alexandria, community]
           end
         end
       end
@@ -84,7 +84,7 @@ ActiveAdmin.register UserProfile do
       panel("Owned Discussions") do
         table_for(user_profile.discussions) do
           column "Name" do |discussion|
-            link_to discussion.name, [:admin, discussion]
+            link_to discussion.name, [:alexandria, discussion]
           end
         end
       end

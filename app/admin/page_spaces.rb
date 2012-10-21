@@ -10,11 +10,11 @@ ActiveAdmin.register PageSpace do
 
   index do
     column "View" do |page_space|
-      link_to "View", admin_page_space_path(page_space)
+      link_to "View", alexandria_page_space_path(page_space)
     end
     column :id
     column "Community" do |page_space|
-      link_to page_space.community_name, [:admin, page_space.community]
+      link_to page_space.community_name, [:alexandria, page_space.community]
     end
     column :name
     column :supported_game, sortable: :supported_game_id
@@ -27,7 +27,7 @@ ActiveAdmin.register PageSpace do
       panel("Pages") do
         table_for(page_space.pages) do
           column "Name" do |page|
-            link_to page.name, [:admin, page]
+            link_to page.name, [:alexandria, page]
           end
         end
       end

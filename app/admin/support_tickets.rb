@@ -10,7 +10,7 @@ ActiveAdmin.register SupportTicket do
     @support_ticket.update_attributes(admin_user_id: current_admin_user.id)
     redirect_to :action => :show
   end
-  
+
   action_item :only => :show do
     if can?(:update, resource) and resource.admin_user != current_admin_user
       link_to "Take", take_admin_support_ticket_path(resource), :method => :put
@@ -36,23 +36,23 @@ ActiveAdmin.register SupportTicket do
 
   index do
     column :body, sortable: :body do |support_ticket|
-      link_to support_ticket.body.truncate(50), admin_support_ticket_url(support_ticket)
+      link_to support_ticket.body.truncate(50), alexandria_support_ticket_url(support_ticket)
     end
     column :user_profile do |support_ticket|
-      link_to support_ticket.user_profile.full_name, [:admin, support_ticket.user_profile]
+      link_to support_ticket.user_profile.full_name, [:alexandria, support_ticket.user_profile]
     end
     column :admin_user, sortable: :admin_user_id   do |support_ticket|
-      link_to support_ticket.admin_user.display_name, [:admin, support_ticket.admin_user] if support_ticket.admin_user
+      link_to support_ticket.admin_user.display_name, [:alexandria, support_ticket.admin_user] if support_ticket.admin_user
     end
     column "Status" do |support_ticket|
       "#{support_ticket.status}"
     end
     column :created_at
     column "Edit" do |support_ticket|
-      link_to "Edit", edit_admin_support_ticket_url(support_ticket)
+      link_to "Edit", edit_alexandria_support_ticket_url(support_ticket)
     end
     column "Take" do |support_ticket|
-      link_to "Take", take_admin_support_ticket_path(support_ticket), :method => :put unless support_ticket.admin_user == current_admin_user
+      link_to "Take", take_alexandria_support_ticket_path(support_ticket), :method => :put unless support_ticket.admin_user == current_admin_user
     end
   end
 
@@ -83,7 +83,7 @@ ActiveAdmin.register SupportTicket do
     end
 
     panel('New Comment') do
-      active_admin_form_for [:admin, ticket, SupportComment.new] do |f|
+      active_admin_form_for [:alexandria, ticket, SupportComment.new] do |f|
         f.inputs do
           f.input :body, label: false
         end

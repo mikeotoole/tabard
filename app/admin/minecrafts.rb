@@ -11,13 +11,13 @@ ActiveAdmin.register Minecraft do
 
   index title: "Minecraft" do
     column "View" do |minecraft|
-      link_to "View", admin_minecraft_path(minecraft)
+      link_to "View", alexandria_minecraft_path(minecraft)
     end
     column :id
     column :server_type
     column "Edit" do |minecraft|
       if can? :edit, minecraft
-        link_to "Edit", edit_admin_minecraft_path(minecraft)
+        link_to "Edit", edit_alexandria_minecraft_path(minecraft)
       end
     end
   end
@@ -29,7 +29,7 @@ ActiveAdmin.register Minecraft do
       panel("Supported Games") do
         table_for(minecraft.supported_games) do
           column "Name" do |supported_game|
-            link_to supported_game.name, [:admin, supported_game]
+            link_to supported_game.name, [:alexandria, supported_game]
           end
           column :game_full_name
         end

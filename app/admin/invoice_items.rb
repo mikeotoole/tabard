@@ -16,11 +16,11 @@ ActiveAdmin.register InvoiceItem do
 
   index do
     column "View" do |ii|
-      link_to "View", admin_invoice_item_path(ii)
+      link_to "View", alexandria_invoice_item_path(ii)
     end
     column :user, sortable: false
     column :invoice_id, sortable: :invoice_id do |ii|
-      link_to "#{ii.id}", admin_invoice_path(ii)
+      link_to "#{ii.id}", alexandria_invoice_path(ii)
     end
     column :total_price_in_dollars, sortable: false
     column :start_date

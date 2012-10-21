@@ -20,11 +20,11 @@ ActiveAdmin.register CustomForm do
 
   index do
     column "View" do |custom_form|
-      link_to "View", admin_custom_form_path(custom_form)
+      link_to "View", alexandria_custom_form_path(custom_form)
     end
     column :id
     column :community do |custom_form|
-      link_to custom_form.community_name, [:admin, custom_form.community]
+      link_to custom_form.community_name, [:alexandria, custom_form.community]
     end
     column :name
     column :created_at
@@ -34,7 +34,7 @@ ActiveAdmin.register CustomForm do
     column :is_published
     column "Destroy" do |custom_form|
       if can? :destroy, custom_form
-        link_to "Destroy", [:admin, custom_form], method: :delete, confirm: 'Are you sure you want to delete this custom form?'
+        link_to "Destroy", [:alexandria, custom_form], method: :delete, confirm: 'Are you sure you want to delete this custom form?'
       end
     end
   end
@@ -45,7 +45,7 @@ ActiveAdmin.register CustomForm do
       panel("Questions") do
         table_for(custom_form.questions) do
           column "View" do |question|
-            link_to "View", admin_question_path(question)
+            link_to "View", alexandria_question_path(question)
           end
           column :body
           column :style
@@ -60,7 +60,7 @@ ActiveAdmin.register CustomForm do
           end
         column "Destroy" do |question|
           if can? :destroy, question
-            link_to "Destroy", delete_question_admin_custom_form_path(question), method: :put, confirm: 'Are you sure you want to delete this question?'
+            link_to "Destroy", delete_question_alexandria_custom_form_path(question), method: :put, confirm: 'Are you sure you want to delete this question?'
           end
         end
         end

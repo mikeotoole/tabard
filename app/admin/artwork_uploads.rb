@@ -18,7 +18,7 @@ ActiveAdmin.register ArtworkUpload do
 
   index do
     column "View" do |artwork_upload|
-      link_to "View", admin_artwork_upload_path(artwork_upload)
+      link_to "View", alexandria_artwork_upload_path(artwork_upload)
     end
     column :id
     column :email

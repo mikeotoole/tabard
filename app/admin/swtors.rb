@@ -13,7 +13,7 @@ ActiveAdmin.register Swtor, as: "Swtor" do
 
   index do
     column "View" do |swtor|
-      link_to "View", admin_swtor_path(swtor)
+      link_to "View", alexandria_swtor_path(swtor)
     end
     column :id
     column :faction
@@ -21,7 +21,7 @@ ActiveAdmin.register Swtor, as: "Swtor" do
     column :server_type
     column "Edit" do |swtor|
       if can? :edit, swtor
-        link_to "Edit", edit_admin_swtor_path(swtor)
+        link_to "Edit", edit_alexandria_swtor_path(swtor)
       end
     end
   end

@@ -19,7 +19,7 @@ ActiveAdmin.register Invoice do
 
   index do
     column "View" do |invoice|
-      link_to "View", admin_invoice_path(invoice)
+      link_to "View", alexandria_invoice_path(invoice)
     end
     column :user, sortable: false
     column :total_price_in_dollars
@@ -35,7 +35,7 @@ ActiveAdmin.register Invoice do
       panel("Invoice Items") do
         table_for(invoice.invoice_items) do
           column "View" do |ii|
-            link_to "View", admin_invoice_item_path(ii)
+            link_to "View", alexandria_invoice_item_path(ii)
           end
           column :community
           column :id

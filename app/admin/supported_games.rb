@@ -30,18 +30,18 @@ ActiveAdmin.register SupportedGame do
 
   index do
     column "View" do |supported_game|
-      link_to "View", admin_supported_game_path(supported_game)
+      link_to "View", alexandria_supported_game_path(supported_game)
     end
     column :id
     column "Community" do |supported_game|
-      link_to supported_game.community_name, [:admin, supported_game.community]
+      link_to supported_game.community_name, [:alexandria, supported_game.community]
     end
     column :name
     column :game, sortable: :game_id
     column :created_at
     column "Destroy" do |supported_game|
       if can? :destroy, supported_game
-        link_to "Destroy", [:admin, supported_game], method: :delete, confirm: 'Are you sure you want to delete this supported game?'
+        link_to "Destroy", [:alexandria, supported_game], method: :delete, confirm: 'Are you sure you want to delete this supported game?'
       end
     end
   end

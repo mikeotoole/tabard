@@ -6,31 +6,31 @@ ActiveAdmin.register User do
 
   action_item only: :show do
     if not user.admin_disabled_at and can? :disable, user
-      link_to "Disable User", disable_admin_user_path(user), method: :put, :data => { :confirm => 'Are you sure you want to deactivate this user?' }
+      link_to "Disable User", disable_alexandria_user_path(user), method: :put, :data => { :confirm => 'Are you sure you want to deactivate this user?' }
     end
   end
 
   action_item only: :show do
     if (user.admin_disabled_at or user.user_disabled_at) and can? :reinstate, user
-      link_to "Reactivate User", reinstate_admin_user_path(user), method: :put, :data => { :confirm => 'Are you sure you want to reactivate this user?' }
+      link_to "Reactivate User", reinstate_alexandria_user_path(user), method: :put, :data => { :confirm => 'Are you sure you want to reactivate this user?' }
     end
   end
 
   action_item only: :show do
     if can? :reset_password, user
-      link_to "Reset Password", reset_password_admin_user_path(user), method: :put, :data => { :confirm => 'Are you sure you want to reset user password?' }
+      link_to "Reset Password", reset_password_alexandria_user_path(user), method: :put, :data => { :confirm => 'Are you sure you want to reset user password?' }
     end
   end
 
   action_item only: :show do
     if can? :nuke, user
-      link_to "Nuke User", nuke_admin_user_path(user), method: :delete, :data => { :confirm => 'Are you sure you want to NUKE User?' }
+      link_to "Nuke User", nuke_alexandria_user_path(user), method: :delete, :data => { :confirm => 'Are you sure you want to NUKE User?' }
     end
   end
 
   action_item only: :index do
     if can? :reset_all_passwords, User.new
-      link_to "Reset All Passwords", reset_all_passwords_admin_users_path, method: :post, :data => { :confirm => 'Are you sure you want to reset ALL user passwords?' }
+      link_to "Reset All Passwords", reset_all_passwords_alexandria_users_path, method: :post, :data => { :confirm => 'Are you sure you want to reset ALL user passwords?' }
     end
   end
 
@@ -70,7 +70,7 @@ ActiveAdmin.register User do
   collection_action :sign_out_all_users, method: :post do
     User.force_active_users_to_sign_out
     flash[:notice] = "All Users Signed out."
-    redirect_to admin_dashboard_url
+    redirect_to alexandria_dashboard_url
   end
 
   filter :id
@@ -87,11 +87,11 @@ ActiveAdmin.register User do
 
   index do
     column "View" do |user|
-      link_to "View", admin_user_path(user)
+      link_to "View", alexandria_user_path(user)
     end
     column :email
     column "User Profile" do |user|
-      link_to user.display_name, [:admin, user.user_profile]
+      link_to user.display_name, [:alexandria, user.user_profile]
     end
     column :failed_attempts
     column :locked_at

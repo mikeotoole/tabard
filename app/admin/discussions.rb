@@ -18,19 +18,19 @@ ActiveAdmin.register Discussion do
 
   index do
     column "View" do |discussion|
-      link_to "View", admin_discussion_path(discussion)
+      link_to "View", alexandria_discussion_path(discussion)
     end
     column :id
     column :name
     column :discussion_space, sortable: :discussion_space_id
     column :poster do |discussion|
-      link_to discussion.poster.name, [:admin, discussion.poster]
+      link_to discussion.poster.name, [:alexandria, discussion.poster]
     end
     column :number_of_comments
     column :created_at
     column "Destroy" do |discussion|
       if can? :destroy, discussion
-        link_to "Destroy", [:admin, discussion], method: :delete, confirm: 'Are you sure you want to delete this discussion?'
+        link_to "Destroy", [:alexandria, discussion], method: :delete, confirm: 'Are you sure you want to delete this discussion?'
       end
     end
   end
@@ -44,7 +44,7 @@ ActiveAdmin.register Discussion do
         table_for(discussion.all_comments) do
           column :body
           column :poster do |comment|
-            link_to comment.poster.name, [:admin, comment.poster]
+            link_to comment.poster.name, [:alexandria, comment.poster]
           end
           column :number_of_comments
           column :is_removed
@@ -52,7 +52,7 @@ ActiveAdmin.register Discussion do
             comment.commentable_body
           end
           column "Destroy" do |comment|
-            link_to "Destroy", remove_comment_admin_discussion_path(comment), method: :put, confirm: 'Are you sure you want to delete this comment?'
+            link_to "Destroy", remove_comment_alexandria_discussion_path(comment), method: :put, confirm: 'Are you sure you want to delete this comment?'
           end
         end
       end

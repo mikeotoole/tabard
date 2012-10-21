@@ -11,17 +11,17 @@ ActiveAdmin.register Page do
 
   index do
     column "View" do |page|
-      link_to "View", admin_page_path(page)
+      link_to "View", alexandria_page_path(page)
     end
     column :id
     column :name
     column "Page Space" do |page|
-      link_to page.page_space_name, [:admin, page.page_space]
+      link_to page.page_space_name, [:alexandria, page.page_space]
     end
     column :created_at
     column "Destroy" do |page|
       if can? :destroy, page
-        link_to "Destroy", [:admin, page], method: :delete, confirm: 'Are you sure you want to delete this page?'
+        link_to "Destroy", [:alexandria, page], method: :delete, confirm: 'Are you sure you want to delete this page?'
       end
     end
   end

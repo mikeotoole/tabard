@@ -13,17 +13,17 @@ ActiveAdmin.register MinecraftCharacter do
 
   index do
     column "View" do |character|
-      link_to "View", admin_minecraft_character_path(character)
+      link_to "View", alexandria_minecraft_character_path(character)
     end
     column :id
     column :name
     column "User Profile" do |character|
-      link_to character.user_profile.display_name, [:admin, character.user_profile]
+      link_to character.user_profile.display_name, [:alexandria, character.user_profile]
     end
     column :created_at
     column "Destroy" do |character|
       if can? :destroy, character
-        link_to "Destroy", [:admin, character], method: :delete, confirm: 'Are you sure you want to delete this character?'
+        link_to "Destroy", [:alexandria, character], method: :delete, confirm: 'Are you sure you want to delete this character?'
       end
     end
   end

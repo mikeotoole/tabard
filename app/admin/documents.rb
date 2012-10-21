@@ -28,10 +28,10 @@ ActiveAdmin.register Document do
 
   index do
     column "View" do |document|
-      link_to "View", admin_document_path(document)
+      link_to "View", alexandria_document_path(document)
     end
     column "View Formatted" do |document|
-      link_to "View Formatted", view_document_admin_document_path(document)
+      link_to "View Formatted", view_document_alexandria_document_path(document)
     end
     column :id
     column :type
@@ -43,7 +43,7 @@ ActiveAdmin.register Document do
 
   show title: :type do |document|
     attributes_table *default_attribute_table_rows, :is_current?, :acceptance_count
-    link_to "View Formatted", view_document_admin_document_path(document.id)
+    link_to "View Formatted", view_document_alexandria_document_path(document.id)
     active_admin_comments
   end
 

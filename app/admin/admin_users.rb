@@ -4,13 +4,13 @@ ActiveAdmin.register AdminUser do
 
   action_item only: :show do
     if can? :reset_password, admin_user
-      link_to "Reset Password", reset_password_admin_admin_user_path(admin_user), method: :put, data: { confirm: 'Are you sure you want to reset user password?' }
+      link_to "Reset Password", reset_password_alexandria_admin_user_path(admin_user), method: :put, data: { confirm: 'Are you sure you want to reset user password?' }
     end
   end
 
   action_item only: :index do
     if can? :reset_all_passwords, AdminUser.new
-      link_to "Reset All Passwords", reset_all_passwords_admin_admin_users_path, method: :post, data: { confirm: 'Are you sure you want to reset ALL admin user passwords?' }
+      link_to "Reset All Passwords", reset_all_passwords_alexandria_admin_users_path, method: :post, data: { confirm: 'Are you sure you want to reset ALL admin user passwords?' }
     end
   end
 
@@ -54,7 +54,7 @@ ActiveAdmin.register AdminUser do
 
   index do
     column "View" do |admin_user|
-      link_to "View", admin_admin_user_path(admin_user)
+      link_to "View", alexandria_admin_user_path(admin_user)
     end
     column :display_name
     column :email
@@ -65,7 +65,7 @@ ActiveAdmin.register AdminUser do
     column :created_at
     column "Destroy" do |admin_user|
       if can? :destroy, admin_user
-        link_to "Destroy", [:admin, admin_user], method: :delete, data: { confirm: 'Are you sure you want to delete this user?' }
+        link_to "Destroy", [:alexandria, admin_user], method: :delete, data: { confirm: 'Are you sure you want to delete this user?' }
       end
     end
   end
