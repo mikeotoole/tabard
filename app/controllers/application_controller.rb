@@ -230,7 +230,7 @@ protected
   ###
   def limit_subdomain_access
     if request.subdomain.present? and request.subdomain != 'www'
-      redirect_to [request.protocol, 'www', request.domain, request.port_string, request.path].join # Try to downgrade gracefully...
+      redirect_to [request.protocol, 'www.', request.domain, request.port_string, request.path].join # Try to downgrade gracefully...
       #redirect_to root_url(subdomain: "www"), alert: "Invalid action on a subdomain."
     end
   end
