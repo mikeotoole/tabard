@@ -180,7 +180,7 @@ describe CommunitiesController do
     it "redirects to the admin's user profile when authenticated as admin" do
       sign_in admin_user
       delete :destroy, :id => community.id.to_s, :user => {:current_password => admin_user.password}
-      response.should redirect_to(user_profile_url(admin_user.user_profile))
+      response.should redirect_to(user_profile_url(admin_user.user_profile, subdomain: "www"))
     end
 
     it "should redirect to new user session path when not authenticated as a user" do

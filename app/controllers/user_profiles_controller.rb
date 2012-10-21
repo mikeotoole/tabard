@@ -22,7 +22,7 @@ class UserProfilesController < ApplicationController
   def show
     if @user_profile.is_disabled?
       flash[:alert] = 'The user profile you requested is no longer active.'
-      redirect_to root_url(subdomain: false)
+      redirect_to root_url(subdomain: "www")
     end
     @communities_to_invite_to = Array.new
     @communities_with_roles_to_assign = Array.new

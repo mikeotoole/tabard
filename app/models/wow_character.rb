@@ -98,6 +98,7 @@ class WowCharacter < BaseCharacter
   validate :class_is_valid_for_race
   validates :gender, presence: true,
                      inclusion: {in: VALID_GENDERS}
+  validates :level, numericality: {only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 85}
 
 ###
 # Public Methods

@@ -112,6 +112,7 @@ class SwtorCharacter < BaseCharacter
   validate :species_is_valid_for_advanced_class
   validates :gender, presence: true,
                      inclusion: {in: VALID_GENDERS}
+  validates :level, numericality: {only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 50}
 
 ###
 # Public Methods

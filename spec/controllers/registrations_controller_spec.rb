@@ -32,13 +32,13 @@ describe RegistrationsController do
       get :disable_confirmation
       assigns(:user).should eq(user)
     end
-    
+
     it "should render the 'cancel_confirmation' template when authenticated as a user" do
       sign_in user
       get :disable_confirmation
       response.should render_template("disable_confirmation")
     end
-    
+
     it "should redirect to new user session path when not authenticated as a user" do
       get :disable_confirmation
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
@@ -50,46 +50,46 @@ describe RegistrationsController do
       before(:each) {
         sign_in user
       }
-  
+
       it "marks user as is_user_disabled" do
         delete :destroy, :user => {:current_password => "Password"}
-        response.should redirect_to(root_url)
+        response.should redirect_to(root_url("www"))
         updated_user = User.find(user)
         updated_user.user_disabled_at.should_not be_nil
         updated_user.admin_disabled_at.should be_nil
       end
-      
+
       describe "with invalid params" do
         it "assigns the user as @user" do
           delete :destroy, :user => {:current_password => "Not Pass"}
           assigns(:user).should eq(user)
         end
-  
+
         it "re-renders the 'cancel_confirmation' template" do
           delete :destroy, :user => {:current_password => "Not Pass"}
           response.should render_template("disable_confirmation")
         end
       end
-      
+
       it "should remove user from communities" do
         user.owned_communities.should be_empty
         community_profiles = user.community_profiles.all
-        
+
         delete :destroy, :user => {:current_password => "Password"}
-        
+
         community_profiles.should_not be_empty
         community_profiles.each do |c_profile|
           CommunityProfile.exists?(c_profile).should be_false
         end
       end
-      
+
       it "should delete owned communities" do
         sign_in admin
         owned_communities = admin.owned_communities.all
         community_profiles = admin.community_profiles.all
-        
+
         delete :destroy, :user => {:current_password => "Password"}
-        
+
         owned_communities.should_not be_empty
         community_profiles.should_not be_empty
         community_profiles.each do |c_profile|
@@ -99,13 +99,13 @@ describe RegistrationsController do
           Community.exists?(community).should be_false
         end
       end
-      
+
       it "redirects to the root_url when authenticated as owner" do
         delete :destroy, :user => {:current_password => "Password"}
-        response.should redirect_to(root_url)
+        response.should redirect_to(root_url("www"))
       end
     end
-    
+
     it "should redirect to new user session path when not authenticated as a user" do
       delete :destroy, :user => {:current_password => "Password"}
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))

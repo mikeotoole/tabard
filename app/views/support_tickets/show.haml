@@ -4,7 +4,7 @@
   = stylesheet_link_tag 'top_level/support'
 
 %h1
-  = link_to "Tabard Support", support_index_url(subdomain: false)
+  = link_to "Tabard Support", support_index_url(subdomain: "www")
   = " / Ticket ##{@support_ticket.id}"
 %p.status{ class: @support_ticket.status.downcase().gsub(/[^a-z]/, '') }= @support_ticket.status
 
