@@ -7,6 +7,7 @@
 ###
 class UnlocksController < Devise::UnlocksController
   prepend_view_path "app/views/devise"
+  skip_before_filter :block_unauthorized_user!
 
   protected
 
@@ -14,4 +15,7 @@ class UnlocksController < Devise::UnlocksController
   def after_sending_unlock_instructions_path_for(resource)
     root_url
   end
+  def after_unlock_path_for(resource)
+      new_session_url(resource, subdomain: "secure")
+    end
 end
