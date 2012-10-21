@@ -36,7 +36,11 @@ DaBvRails::Application.routes.draw do
   devise_for :admin_users , ActiveAdmin::Devise.config
 
   # Users
-  devise_for :users, controllers: { sessions: 'sessions', registrations: 'registrations', passwords: 'passwords', confirmations: 'confirmations' }
+  devise_for :users, controllers: { sessions: 'sessions',
+                                    registrations: 'registrations',
+                                    passwords: 'passwords',
+                                    confirmations: 'confirmations',
+                                    unlocks: 'unlocks' }
   devise_scope :user do
     get 'login' => 'sessions#new', as: :new_user_session
     post 'login' => 'sessions#create', as: :user_session
