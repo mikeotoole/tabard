@@ -18,4 +18,9 @@ class ConfirmationsController < Devise::ConfirmationsController
       after_sign_in_path_for(resource)
     end
   end
+
+  # Override default path
+  def after_resending_confirmation_instructions_path_for(resource_name)
+    root_url
+  end
 end
