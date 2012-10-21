@@ -4,8 +4,11 @@ ActiveAdmin.register SupportComment do
 
   actions :new, :create
 
+  belongs_to :support_ticket
+
   # Override default controller actions.
   controller do
+
     # This overrides the default create
     def create
       @support_ticket = SupportTicket.find_by_id(params[:support_ticket_id])
@@ -22,7 +25,7 @@ ActiveAdmin.register SupportComment do
   form do |f|
     f.inputs "Support Comment Details" do
       f.input :body
-      f.actions
+      f.buttons
     end
   end
 end
