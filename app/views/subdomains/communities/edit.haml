@@ -40,4 +40,4 @@
 
   %p.submit
     = f.button :submit, 'Save Changes'
-    = link_to 'Remove community', community_remove_confirmation_url, class: 'secondary'
+    = link_to 'Remove community', community_remove_confirmation_url(protocol: (Rails.env.development? ? "http://" : "https://")), class: 'secondary'

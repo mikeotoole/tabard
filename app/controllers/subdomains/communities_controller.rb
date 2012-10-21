@@ -12,6 +12,8 @@ class Subdomains::CommunitiesController < SubdomainsController
   ###
   skip_before_filter :enforce_community_features, only: [:disabled]
   skip_before_filter :ensure_current_user_is_member, only: [:disabled]
+  skip_before_filter :ensure_not_ssl_mode, only: [:remove_confirmation]
+
   load_and_authorize_resource except: [:activities, :disabled]
   prepend_before_filter :block_unauthorized_user!, except: [:activities, :disabled]
   before_filter :load_activities, only: [:activities]
