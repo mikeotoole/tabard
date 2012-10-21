@@ -1,7 +1,7 @@
 %ul.accountlinks
-  %li= link_to_unless_current 'Edit my profile', edit_user_profile_url(current_user.user_profile, protocol: "http://", subdomain: false)
+  %li= link_to_unless_current 'Edit my profile', edit_user_profile_url(current_user.user_profile, protocol: "http://", subdomain: "www")
   %li= link_to_unless_current 'Edit my account', account_settings_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"))
-  %li= link_to_unless_current 'Add a new WoW Character', new_wow_character_url(protocol: "http://", subdomain: false)
-  %li= link_to_unless_current 'Add a new SW:TOR Character', new_swtor_character_url(protocol: "http://", subdomain: false)
-  %li= link_to_unless_current 'Add a new Minecraft Character', new_minecraft_character_url(protocol: "http://", subdomain: false)
-  %li= link_to_unless_current 'Create a new community', new_community_url(protocol: "http://", subdomain: false)
+  %li= link_to_unless_current 'Add a new WoW Character', new_wow_character_url(protocol: "http://", subdomain: "www")
+  %li= link_to_unless_current 'Add a new SW:TOR Character', new_swtor_character_url(protocol: "http://", subdomain: "www")
+  %li= link_to_unless_current 'Add a new Minecraft Character', new_minecraft_character_url(protocol: "http://", subdomain: "www")
+  %li= link_to_unless_current 'Create a new community', new_community_url(protocol: "http://", subdomain: "www")

@@ -4,10 +4,10 @@
   %td.cinch
     - if profile_type == 'admin'
       %strong
-        = link_to member_profile.name, user_profile_url(member_profile, subdomain: false)
+        = link_to member_profile.name, user_profile_url(member_profile, subdomain: "www")
       %dfn Community Admin
     - else
-      = link_to member_profile.name, user_profile_url(member_profile, subdomain: false)
+      = link_to member_profile.name, user_profile_url(member_profile, subdomain: "www")
   %td.characters
     - cp = member_profile.community_profiles.find_by_community_id(current_community.id)
     - if cp.roster_assignments.includes(:supported_game).delete_if{|ra| ra.is_pending? or (!!supported_game and ra.supported_game != supported_game)}.size > 0

@@ -14,6 +14,6 @@ class PasswordsController < Devise::PasswordsController
 
    # The path used after sending reset password instructions
     def after_sending_reset_password_instructions_path_for(resource_name)
-      root_url(subdomain: false)
+      root_url(subdomain: "www")
     end
 end

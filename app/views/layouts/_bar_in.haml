@@ -1,4 +1,4 @@
-= link_to 'Tabard™', user_profile_url(current_user.user_profile, subdomain: false, anchor: 'characters'), class: 'logo'
+= link_to 'Tabard™', user_profile_url(current_user.user_profile, subdomain: "www", anchor: 'characters'), class: 'logo'
 
 %ul.menu
   %li
@@ -10,20 +10,20 @@
         - current_user.communities.includes(:admin_profile).each do |community|
           %li= link_to shorten_words(community.name), actual_community_url(community), class: current_community == community ? 'current' : ''
         - unless current_user.communities.any?
-          = link_to 'Find a community', search_url(subdomain: false)
+          = link_to 'Find a community', search_url(subdomain: "www")
         - if current_user.owned_communities.size < Community::MAX_OWNED_COMMUNITIES
-          %li.add= link_to 'Add a community', new_community_url(subdomain: false)
+          %li.add= link_to 'Add a community', new_community_url(subdomain: "www")
 
 %ul.dashboard
   %li.notice
-    = link_to "Announcements", user_profile_url(current_user.user_profile, subdomain: false, anchor: 'announcements'), (current_user.unread_announcements.size > 0 ? { meta: current_user.unread_announcements.size } : {})
+    = link_to "Announcements", user_profile_url(current_user.user_profile, subdomain: "www", anchor: 'announcements'), (current_user.unread_announcements.size > 0 ? { meta: current_user.unread_announcements.size } : {})
   %li.calendar
-    = link_to "Event Invites", user_profile_url(current_user.user_profile, subdomain: false, anchor: 'invites'), (current_user.invites.not_responded_to.fresh.size > 0 ? { meta: current_user.invites.not_responded_to.fresh.size } : {})
+    = link_to "Event Invites", user_profile_url(current_user.user_profile, subdomain: "www", anchor: 'invites'), (current_user.invites.not_responded_to.fresh.size > 0 ? { meta: current_user.invites.not_responded_to.fresh.size } : {})
   %li.envelope
-    = link_to "Messages", inbox_url(subdomain: false), (current_user.unread_messages.size > 0 ? { meta: current_user.unread_messages.size } : {})
+    = link_to "Messages", inbox_url(subdomain: "www"), (current_user.unread_messages.size > 0 ? { meta: current_user.unread_messages.size } : {})
 
 .avatar
-  = link_to image_tag(current_user.avatar_url :tiny), user_profile_url(current_user.user_profile, subdomain: false, anchor: 'characters')
+  = link_to image_tag(current_user.avatar_url :tiny), user_profile_url(current_user.user_profile, subdomain: "www", anchor: 'characters')
   %ul
     %li.profile= link_to 'Edit My Profile', edit_user_profile_url(current_user.user_profile)
     %li.settings= link_to 'Account Settings', account_settings_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"))

@@ -55,7 +55,7 @@ class TopLevelController < ApplicationController
   # GET /
   ###
   def index
-    redirect_to user_profile_url(current_user.user_profile, subdomain: false) + '#characters' if user_signed_in?
+    redirect_to user_profile_url(current_user.user_profile, subdomain: "www") + '#characters' if user_signed_in?
   end
 
   # This method gets the Pricing page.
