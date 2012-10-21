@@ -12,7 +12,7 @@ class AdminUser < ActiveRecord::Base
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable :recoverable
-  devise :database_authenticatable, :trackable, :validatable, :lockable, :recoverable
+  devise :database_authenticatable, :trackable, :validatable, :lockable, :recoverable, :timeoutable
 
   attr_accessor :validation_code
 
@@ -106,12 +106,19 @@ class AdminUser < ActiveRecord::Base
     (new_record? ? false : super) || self.password.present?
   end
 
+  # Get the url for grcode used for multifactor auth setup.
   def google_authenticator_qrcode_url
     data = "otpauth://totp/bv-pro?secret=#{self.auth_secret}"
     data = Rack::Utils.escape(data)
     url = "https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=#{data}"
     return url
   end
+
+  # Session will time out after 20 minutes of inactivity.
+  def timeout_in
+    20.minutes
+  end
+
 
 protected
 

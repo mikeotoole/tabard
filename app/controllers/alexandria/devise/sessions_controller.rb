@@ -19,7 +19,7 @@ class Alexandria::Devise::SessionsController < ActiveAdmin::Devise::SessionsCont
   end
 
   def validation_code_correct
-    if Rails.env.test? or params[:admin_user][:validation_code] == ROTP::TOTP.new(current_admin_user.auth_secret).now.to_s
+    if Rails.env.development? or Rails.env.test? or params[:admin_user][:validation_code] == ROTP::TOTP.new(current_admin_user.auth_secret).now.to_s
       return true
     else
       current_admin_user.errors.add(:validation_code, "Invalid Code")
