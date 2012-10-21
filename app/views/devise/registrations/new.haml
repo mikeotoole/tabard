@@ -10,9 +10,10 @@
         = f.input :beta_code
       = f.simple_fields_for :user_profile do |uf|
         = uf.input :display_name, label: "Player Name", required: false, hint: "You can change this later. #{UserProfile::MAX_NAME_LENGTH} characters max."
+        = uf.input :first_name, label: 'First Name'
+        = uf.input :last_name, label: 'Last Name'
       = f.input :email, as: :email
-      = f.input :email_confirmation, as: :email, label: 'Re-enter Email'
-      = f.input :password, label: 'New Password', hint: 'Use at least two: upper, lower, number, or sybmol', input_html: defined?(params[:user][:remember_password]) ? { value: params[:user][:remember_password] } : {}
+      = f.input :password, label: 'Password', hint: 'Use at least two: upper, lower, number, or sybmol', input_html: defined?(params[:user][:remember_password]) ? { value: params[:user][:remember_password] } : {}
       %li{ class: "date selects #{f.object.errors[:date_of_birth].any? ? 'with-errors' : ''}" }
         %label Birthday
         = f.input :birth_month, as: :radio_buttons, label: false, collection: (1..12).collect{|m| m = [Date::MONTHNAMES[m], m]}, wrapper_tag: :div, wrapper_html: {class: 'select month', data: {placeholder: 'Month'}}
