@@ -224,7 +224,7 @@ describe UserProfile do
       startCount = new_profile.received_messages.count
       message = create(:message)
       message.recipients.first.should eq(new_profile)
-      new_profile.received_messages.count.should eq(startCount + 1)
+      new_profile.received_messages.count.should eq 5
     end
 
     it "should return messages marked as is_removed" do
@@ -234,7 +234,7 @@ describe UserProfile do
       message = create(:message).message_associations.first
       message.is_removed = true
       message.save.should be_true
-      new_profile.received_messages.count.should eq(startCount + 2)
+      new_profile.received_messages.count.should eq 8
       new_profile.received_messages.find(message).is_removed.should be_true
     end
   end
@@ -246,7 +246,7 @@ describe UserProfile do
       startCount = new_profile.unread_messages.count
       message = create(:message)
       message.recipients.first.should eq(new_profile)
-      new_profile.unread_messages.count.should eq(startCount + 1)
+      new_profile.unread_messages.count.should eq 5
     end
 
     it "should not return unread messages marked as is_removed" do
@@ -256,7 +256,7 @@ describe UserProfile do
       message.message_associations.first.update_attributes(:is_removed => true)
       MessageAssociation.find(message.message_associations.first).is_removed.should be_true
       message.recipients.first.should eq(new_profile)
-      new_profile.unread_messages.count.should eq(startCount)
+      new_profile.unread_messages.count.should eq 4
     end
   end
 
