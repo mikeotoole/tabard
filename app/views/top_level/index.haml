@@ -25,7 +25,7 @@
     %p.subtext for your free account
     %fieldset
       %ol
-        = f.input :display_name, label: false, placeholder: 'Player name', hint: 'You can change this later', input_html: { name: 'user[user_profile_attributes][display_name]', tabindex: 1 }
+        = f.input :display_name, label: false, placeholder: 'Display name', hint: 'You can change this later', input_html: { name: 'user[user_profile_attributes][display_name]', tabindex: 1 }
         = f.input :first_name, label: false, placeholder: 'First Name', input_html: { name: 'user[user_profile_attributes][first_name]', tabindex: 2 }
         = f.input :last_name, label: false, placeholder: 'Last Name', input_html: { name: 'user[user_profile_attributes][last_name]', tabindex: 2 }
         = f.input :email, as: :email, label: false, placeholder: 'Email', input_html: { tabindex: 3 }
