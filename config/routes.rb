@@ -24,6 +24,7 @@ DaBvRails::Application.routes.draw do
   devise_for :admin_users do
     get "/alexandria/login" => "alexandria/devise/sessions#new"
     post "/alexandria/login" => "alexandria/devise/sessions#create"
+    match "/alexandria/logout" => "alexandria/devise/sessions#destroy"
     get "/admin_users/sign_in" => "alexandria/devise/sessions#new"
     post "/admin_users/sign_in" => "alexandria/devise/sessions#create"
     get "/admin_users/password/edit" => "alexandria/devise/passwords#edit"
