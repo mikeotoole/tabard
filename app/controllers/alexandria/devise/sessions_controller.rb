@@ -6,11 +6,26 @@ class Alexandria::Devise::SessionsController < ActiveAdmin::Devise::SessionsCont
   skip_before_filter :check_maintenance_mode
   skip_before_filter :ensure_not_ssl_mode, :limit_subdomain_access
   before_filter :ensure_secure_subdomain, only: [:new,:create]
+  after_filter :validation_code_correct, only: :create
   layout 'application'
 
   # GET /admin/login
   def new
     super
+  end
+
+  def create
+    super
+  end
+
+  def validation_code_correct
+    if Rails.env.test? or params[:admin_user][:validation_code] == ROTP::TOTP.new(current_admin_user.auth_secret).now.to_s
+      return true
+    else
+      current_admin_user.errors.add(:validation_code, "Invalid Code")
+      sign_out current_admin_user if current_admin_user
+      return true
+    end
   end
 end
 
