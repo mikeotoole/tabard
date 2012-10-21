@@ -9,6 +9,8 @@ class DocumentAcceptance < ActiveRecord::Base
   validates_lengths_from_database
   belongs_to :user
   belongs_to :document
+
+  scope :most_recent, order(:created_at).reverse_order.limit(1)
 end
 
 # == Schema Information

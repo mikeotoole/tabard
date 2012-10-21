@@ -227,12 +227,21 @@ class User < ActiveRecord::Base
 ###
   #This method checks to see if the user has accepted the most recent version of the Terms of Service.
   def has_accepted_current_terms_of_service?
-    accepted_documents.include?(TermsOfService.current)
+    has_accepted_the_document(TermsOfService.current)
   end
 
   #This method checks to see if the user has accepted the most recent version of the Privacy Policy.
   def has_accepted_current_privacy_policy?
-    accepted_documents.include?(PrivacyPolicy.current)
+    has_accepted_the_document(PrivacyPolicy.current)
+  end
+
+  # This method determines if the user has accepted the current document
+  def has_accepted_the_document(document)
+    if accepted_documents.include?(document)
+      most_recent = self.document_acceptances.where(document_id: document.id).most_recent.first
+      return true if most_recent != nil and most_recent.is_current
+    end
+    return false
   end
 
   #This method checks to see if the user has accepted the most recent version of all legal documents.
@@ -241,10 +250,9 @@ class User < ActiveRecord::Base
   end
   #Updates documment acceptance cache.
   def update_acceptance_of_documents(document)
-    self.update_attributes(accepted_current_terms_of_service: true) if document == TermsOfService.current
-    self.update_attributes(accepted_current_privacy_policy: true) if document == PrivacyPolicy.current
-    doc_acceptance = self.document_acceptances.find_by_document_id(document.id)
-    doc_acceptance.update_column(:is_current, true) unless doc_acceptance == nil
+    self.update_column(:accepted_current_terms_of_service, true) if document == TermsOfService.current
+    self.update_column(:accepted_current_privacy_policy, true) if document == PrivacyPolicy.current
+    self.accepted_documents << document
   end
 
 ###
@@ -338,8 +346,8 @@ class User < ActiveRecord::Base
     self.remove_all_avatars
     self.update_column(:accepted_current_terms_of_service, false)
     self.update_column(:accepted_current_privacy_policy, false)
-    tos = self.document_acceptances.find_by_document_id(TermsOfService.current.id)
-    pp = self.document_acceptances.find_by_document_id(PrivacyPolicy.current.id)
+    tos = self.document_acceptances.where(document_id: TermsOfService.current.id).most_recent.first
+    pp = self.document_acceptances.where(document_id: PrivacyPolicy.current.id).most_recent.first
     tos.update_column(:is_current, false) unless tos == nil
     pp.update_column(:is_current, false) unless pp == nil
   end
@@ -403,8 +411,8 @@ protected
 
   # This method updates the acceptance of documents
   def update_document_acceptance
-    self.accepted_documents << TermsOfService.current if self.accepted_current_terms_of_service and not has_accepted_current_terms_of_service?
-    self.accepted_documents << PrivacyPolicy.current if self.accepted_current_privacy_policy and not has_accepted_current_privacy_policy?
+    update_acceptance_of_documents(TermsOfService.current) if self.accepted_current_terms_of_service and not has_accepted_current_terms_of_service?
+    update_acceptance_of_documents(PrivacyPolicy.current) if self.accepted_current_privacy_policy and not has_accepted_current_privacy_policy?
   end
 
   ###

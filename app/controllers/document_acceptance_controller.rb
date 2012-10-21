@@ -12,8 +12,7 @@ class DocumentAcceptanceController < ApplicationController
 
   # GET /accept_document/:id(.:format)
   def new
-    if current_user.accepted_documents.include?(@document) and current_user.document_acceptances.find_by_document_id(@document.id).is_current
-      current_user.update_acceptance_of_documents(@document)
+    if current_user.has_accepted_the_document(@document)
       redirect_to user_profile_url(current_user.user_profile), notice: "You have already accepted the document"
     end
     flash[:alert] = "You must accept the updated \"Terms of Service\" to continue to use Tabard&trade;." unless current_user.accepted_current_terms_of_service
@@ -22,11 +21,10 @@ class DocumentAcceptanceController < ApplicationController
 
   # POST /accept_document/:id(.:format)
   def create
-    if current_user.accepted_documents.include?(@document) and current_user.document_acceptances.find_by_document_id(@document.id).is_current
+    if current_user.has_accepted_the_document(@document.id)
       current_user.update_acceptance_of_documents(@document)
       redirect_to user_profile_url(current_user.user_profile), notice: "You have already accepted the document."
     elsif params[:accept]
-      current_user.accepted_documents << @document unless current_user.accepted_documents.include?(@document)
       current_user.update_acceptance_of_documents(@document)
       redirect_to user_profile_url(current_user.user_profile), notice: "The document has been accepted."
     else

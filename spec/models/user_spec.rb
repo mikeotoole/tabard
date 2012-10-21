@@ -40,7 +40,7 @@ describe User do
   it "should create a new instance given valid attributes" do
     user.should be_valid
   end
-  
+
   it "should setup billy using factory" do
     b = create(:billy)
     b.first_name.should eq("Robo")
@@ -48,11 +48,11 @@ describe User do
     b.user_profile.character_proxies.size.should eq(CharacterProxy.all.count)
     b.user_profile.characters.size.should eq(b.user_profile.character_proxies.size)
   end
-  
+
   it "should require a user_profile" do
     build(:user, :user_profile_attributes => {}).should_not be_valid
   end
-  
+
   describe "email address" do
     it "should be required" do
       build(:user, :email => nil).should_not be_valid
@@ -61,14 +61,14 @@ describe User do
     it "should have to be confirmed" do
       build(:user, email: "herp@derp.com", email_confirmation: "LOLOLOLOLOLOL").should_not be_valid
     end
-  
+
     it "should accept valid format and length" do
       ok_emails = %w{ a@b.us vaild@email.com } # TESTING Valid emails for testing.
       ok_emails.each do |email|
         user = build(:user, :email => email).should be_valid
       end
     end
-  
+
     it "should reject invalid format" do
       bad_emails = %w{ not_a_email no_domain@.com no_com@me } # TESTING Invalid emails for testing.
       bad_emails.each do |email|
@@ -76,16 +76,16 @@ describe User do
       end
       build(:user, :email => "").should_not be_valid
     end
-  
+
     it "should reject duplicate" do
       user_with_duplicate_email = build(:user, :email => user.email)
       user_with_duplicate_email.should_not be_valid
       user_with_duplicate_email.errors[:email].join('; ').should eq(I18n.translate('activerecord.error.message.taken'))
     end
-  
+
     it "should reject identical up to case" do
       build(:user, :email => user.email.upcase).should_not be_valid
-    end  
+    end
   end
 
   describe "password" do
@@ -96,14 +96,14 @@ describe User do
     it "confirmation should be an attribute" do
       user.should respond_to(:password_confirmation)
     end
-    
+
     it "should not change to blank on update" do
       old_password = user.encrypted_password
       user.update_attributes(:password => "")
       user.encrypted_password.should eq(old_password)
       user.should be_valid
     end
-    
+
     it "should be required" do
       build(:user, :password => "", :password_confirmation => "").should_not be_valid
     end
@@ -189,50 +189,50 @@ describe User do
       build(:user, :date_of_birth => (Time.zone.now - 27.years).to_date).should be_valid
     end
   end
-  
+
   describe "is_disabled?" do
     it "should return false if both admin_disabled_at and user_disabled_at are nil" do
       user.admin_disabled_at.should be_nil
       user.user_disabled_at.should be_nil
       user.is_disabled?.should be_false
     end
-    
+
     it "should return true if admin_disabled_at is not nil" do
       user.update_column(:admin_disabled_at, Time.now)
       user.reload.admin_disabled_at.should_not be_nil
       user.is_disabled?.should be_true
     end
-    
+
     it "should return true if user_disabled_at is not nil" do
       user.update_column(:user_disabled_at, Time.now)
       user.reload.user_disabled_at.should_not be_nil
       user.is_disabled?.should be_true
     end
   end
-  
+
   describe "disable_by_user" do
     describe "with correct password" do
       it "should return true" do
         user.disable_by_user({:user => {:current_password => user.password}}).should be_true
       end
-      
+
       it "should set user_disabled_at" do
         user.user_disabled_at.should be_nil
         user.disable_by_user({:user => {:current_password => user.password}}).should be_true
         user.reload.user_disabled_at.should_not be_nil
       end
-      
+
       it "should remove user from communities" do
         user = DefaultObjects.user
         community_profiles = user.community_profiles.all
         user.disable_by_user({:user => {:current_password => user.password}}).should be_true
-        
+
         community_profiles.should_not be_empty
         community_profiles.each do |community_profile|
           CommunityProfile.exists?(community_profile).should be_false
         end
       end
-      
+
       it "should remove user's owned communities" do
         user = DefaultObjects.community_admin
         owned_communities = user.owned_communities.all
@@ -242,30 +242,36 @@ describe User do
           Community.exists?(owned_community).should be_false
         end
       end
+      it "should ensure the user has no longer accepted the most recent documents" do
+        user = DefaultObjects.user
+        user.has_accepted_all_documents?.should be_true
+        user.disable_by_user({:user => {:current_password => user.password}}).should be_true
+        user.has_accepted_all_documents?.should be_false
+      end
     end
-    
+
     describe "with incorrect password" do
       it "should return false" do
         user.disable_by_user({:user => {:current_password => "Not Password"}}).should be_false
       end
-      
+
       it "should not set user_disabled_at" do
         user.user_disabled_at.should be_nil
         user.disable_by_user({:user => {:current_password => "Not Password"}}).should be_false
         user.reload.user_disabled_at.should be_nil
       end
-      
+
       it "should not remove user from communities" do
         user = DefaultObjects.user
         community_profiles = user.community_profiles.all
         user.disable_by_user({:user => {:current_password => "Not Password"}}).should be_false
-        
+
         community_profiles.should_not be_empty
         community_profiles.each do |community_profile|
           CommunityProfile.exists?(community_profile).should be_true
         end
       end
-      
+
       it "should not remove user's owned communities" do
         user = DefaultObjects.community_admin
         owned_communities = user.owned_communities.all
@@ -277,25 +283,25 @@ describe User do
       end
     end
   end
-  
+
   describe "disable_by_admin" do
     it "should set admin_disabled_at" do
       user.admin_disabled_at.should be_nil
       user.disable_by_admin
       user.reload.admin_disabled_at.should_not be_nil
     end
-    
+
     it "should remove user from communities" do
       user = DefaultObjects.user
       community_profiles = user.community_profiles.all
       user.disable_by_admin
-      
+
       community_profiles.should_not be_empty
       community_profiles.each do |community_profile|
         CommunityProfile.exists?(community_profile).should be_false
       end
     end
-    
+
     it "should remove user's owned communities" do
       user = DefaultObjects.community_admin
       owned_communities = user.owned_communities.all
@@ -306,19 +312,19 @@ describe User do
       end
     end
   end
-  
+
   describe "remove_from_all_communities" do
     it "should remove user from communities" do
       user = DefaultObjects.user
       community_profiles = user.community_profiles.all
       user.remove_from_all_communities
-      
+
       community_profiles.should_not be_empty
       community_profiles.each do |community_profile|
         CommunityProfile.exists?(community_profile).should be_false
       end
     end
-    
+
     it "should remove user's owned communities" do
       user = DefaultObjects.community_admin
       owned_communities = user.owned_communities.all
@@ -329,7 +335,7 @@ describe User do
       end
     end
   end
-  
+
   describe "reinstate_by_admin" do
     it "should set admin_disabled_at to nil" do
       user.update_column(:admin_disabled_at, Time.now)
@@ -337,7 +343,7 @@ describe User do
       user.reinstate_by_admin
       user.reload.admin_disabled_at.should be_nil
     end
-    
+
     it "should set user_disabled_at to nil" do
       user.update_column(:user_disabled_at, Time.now)
       user.reload.user_disabled_at.should_not be_nil
@@ -345,12 +351,12 @@ describe User do
       user.reload.user_disabled_at.should be_nil
     end
   end
-  
+
   describe "reinstate_by_user" do
     it "should return false if user is not disabled by user" do
       user.reinstate_by_user.should be_false
     end
-    
+
     it "should set reset_password_token" do
       user.update_column(:user_disabled_at, Time.now)
       user.reload.user_disabled_at.should_not be_nil
@@ -358,7 +364,7 @@ describe User do
       user.reinstate_by_user.should be_true
       user.reload.reset_password_token.should_not be_nil
     end
-    
+
     it "should set reset_password_sent_at" do
       user.update_column(:user_disabled_at, Time.now)
       user.reload.user_disabled_at.should_not be_nil
@@ -367,21 +373,21 @@ describe User do
       user.reload.reset_password_sent_at.should_not be_nil
     end
   end
-  
+
   describe "destroy" do
     it "should delete user" do
       user.destroy
       User.exists?(user).should be_false
     end
-    
+
     it "should delete user's user_profile" do
       user_profile = create(:user_profile)
       user = user_profile.user
-      
+
       user.destroy
       UserProfile.exists?(user_profile).should be_false
     end
-    
+
     it "should delete user's document_acceptances" do
       document_acceptances = user.document_acceptances.all
       user.destroy
@@ -397,23 +403,23 @@ describe User do
       user.nuke
       User.exists?(user).should be_false
     end
-    
+
     it "should delete user's user_profile" do
       user_profile = create(:user_profile)
       user = user_profile.user
-      
+
       user.nuke
       UserProfile.exists?(user_profile).should be_false
     end
-    
+
     it "should call 'nuke' on user's user_profile" do
       user_profile = create(:user_profile)
       user = user_profile.user
-      
+
       user_profile.should_receive(:nuke)
       user.nuke
     end
-    
+
     it "should delete user's document_acceptances" do
       document_acceptances = user.document_acceptances.all
       user.nuke
