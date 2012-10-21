@@ -13,6 +13,7 @@
         = uf.input :first_name, label: 'First Name'
         = uf.input :last_name, label: 'Last Name'
       = f.input :email, as: :email
+      = f.input :email_confirmation, as: :email, label: 'Re-enter Email'
       = f.input :password, label: 'Password', hint: 'Use at least two: upper, lower, number, or sybmol', input_html: defined?(params[:user][:remember_password]) ? { value: params[:user][:remember_password] } : {}
       %li{ class: "date selects #{f.object.errors[:date_of_birth].any? ? 'with-errors' : ''}" }
         %label Birthday

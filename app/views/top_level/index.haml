@@ -27,9 +27,10 @@
       %ol
         = f.input :display_name, label: false, placeholder: 'Display name', hint: 'You can change this later', input_html: { name: 'user[user_profile_attributes][display_name]', tabindex: 1 }
         = f.input :first_name, label: false, placeholder: 'First Name', input_html: { name: 'user[user_profile_attributes][first_name]', tabindex: 2 }
-        = f.input :last_name, label: false, placeholder: 'Last Name', input_html: { name: 'user[user_profile_attributes][last_name]', tabindex: 2 }
-        = f.input :email, as: :email, label: false, placeholder: 'Email', input_html: { tabindex: 3 }
-        = f.input :password, as: :password, label: false, placeholder: 'Password', input_html: { tabindex: 4 }
+        = f.input :last_name, label: false, placeholder: 'Last Name', input_html: { name: 'user[user_profile_attributes][last_name]', tabindex: 3 }
+        = f.input :email, as: :email, label: false, placeholder: 'Email', input_html: { tabindex: 4 }
+        = f.input :email_confirmation, as: :email, label: false, placeholder: 'Re-enter Email', input_html: { tabindex: 5 }
+        = f.input :password, as: :password, label: false, placeholder: 'Password', input_html: { tabindex: 6 }
         = f.input :birth_month, as: :radio_buttons, label: false, collection: (1..12).collect{|m| m = [Date::MONTHNAMES[m], m]}, wrapper_tag: 'div', wrapper_html: { class: 'select month', data: {placeholder: 'Birth Month'} }
         = f.input :birth_day, as: :radio_buttons, label: false, collection: 1..31, wrapper_tag: 'div', wrapper_html: { class: 'select day', data: {placeholder: 'Day'} }
         = f.input :birth_year, as: :radio_buttons, label: false, collection: Time.zone.now.year.downto(Time.zone.now.year-100), wrapper_tag: 'div', wrapper_html: { class: 'select year', data: {placeholder: 'Year'} }
