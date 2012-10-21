@@ -40,6 +40,6 @@ ActiveAdmin.register PageSpace do
       f.input :supported_game, collection: f.object.community.supported_games
       f.input :name
     end
-    f.actions
+    f.buttons
   end
 end

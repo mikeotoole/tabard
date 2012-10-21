@@ -53,10 +53,10 @@ ActiveAdmin.register SupportedGame do
 
   form do |f|
     f.inputs "Supported Game Details" do
-      f.input :faction, collection: f.object.game.all_factions
-      f.input :server_name, label: 'Server', collection: f.object.game.all_servers
+      f.input :faction, collection: f.object.game.all_factions if f.object.game.respond_to?(:all_factions)
+      f.input :server_name, label: 'Server', collection: f.object.game.all_servers if f.object.game.respond_to?(:all_servers)
       f.input :name
     end
-    f.actions
+    f.buttons
   end
 end

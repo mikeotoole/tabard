@@ -11,9 +11,10 @@ class AdminUser < ActiveRecord::Base
   ROLES = %w[moderator admin superadmin]
 
   # Include default devise modules. Others available are:
-  # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable,
-         :recoverable, :trackable, :validatable, :lockable
+  # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable :recoverable
+  devise :database_authenticatable, :trackable, :validatable, :lockable, :recoverable, :timeoutable
+
+  attr_accessor :validation_code
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :display_name, :avatar, :remove_avatar, :remote_avatar_url, :role
@@ -45,10 +46,17 @@ class AdminUser < ActiveRecord::Base
         message: "Must contain at least 2 of the following: lowercase letter, uppercase letter, number and punctuation symbols."
       },
       if: :password_required?
+
 ###
 # Uploaders
 ###
   mount_uploader :avatar, AvatarUploader
+
+###
+# Callbacks
+###
+  before_validation :assign_auth_secret, :on => :create
+
 
 ###
 # Public Methods
@@ -96,6 +104,30 @@ class AdminUser < ActiveRecord::Base
   ###
   def password_required?
     (new_record? ? false : super) || self.password.present?
+  end
+
+  # Get the url for grcode used for multifactor auth setup.
+  def google_authenticator_qrcode_url
+    data = "otpauth://totp/bv-pro?secret=#{self.auth_secret}"
+    data = Rack::Utils.escape(data)
+    url = "https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=#{data}"
+    return url
+  end
+
+  # Session will time out after 20 minutes of inactivity.
+  def timeout_in
+    20.minutes
+  end
+
+
+protected
+
+  ###
+  # _before_validation_
+  #
+  ###
+  def assign_auth_secret
+    self.auth_secret = ROTP::Base32.random_base32
   end
 end
 

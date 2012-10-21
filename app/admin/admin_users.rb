@@ -56,6 +56,9 @@ ActiveAdmin.register AdminUser do
     column "View" do |admin_user|
       link_to "View", alexandria_admin_user_path(admin_user)
     end
+    column do |au|
+      image_tag(au.avatar_url(:small), class: 'avatar')
+    end
     column :display_name
     column :email
     column :role
@@ -72,7 +75,12 @@ ActiveAdmin.register AdminUser do
 
   show title: :email do
     rows = default_attribute_table_rows.delete_if { |att| [:encrypted_password, :reset_password_token, :confirmation_token, :unlock_token].include?(att) }
-    attributes_table *rows
+    attributes_table *rows do
+      row :avatar do
+        image_tag admin_user.avatar_url :large
+      end
+    end
+
     active_admin_comments
   end
 

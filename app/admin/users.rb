@@ -89,6 +89,9 @@ ActiveAdmin.register User do
     column "View" do |user|
       link_to "View", alexandria_user_path(user)
     end
+    column do |au|
+      image_tag(au.avatar_url(:small), class: 'avatar')
+    end
     column :email
     column "User Profile" do |user|
       link_to user.display_name, [:alexandria, user.user_profile]

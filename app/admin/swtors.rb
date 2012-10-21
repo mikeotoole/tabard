@@ -49,6 +49,6 @@ ActiveAdmin.register Swtor, as: "Swtor" do
       f.input :server_name
       f.input :server_type, as: :select, collection: Swtor::VALID_SERVER_TYPES
     end
-    f.actions
+    f.buttons
   end
 end

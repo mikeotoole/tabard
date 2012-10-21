@@ -30,7 +30,7 @@ ActiveAdmin.register Question do
     end
     column :body
     column :custom_form do |question|
-      link_to question.custom_form_name , [:alexandria, question.custom_form]
+      question.custom_form.present? ? link_to(question.custom_form_name , [:alexandria, question.custom_form]) : "NONE"
     end
     column :style
     column :created_at

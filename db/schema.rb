@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121020211102) do
+ActiveRecord::Schema.define(:version => 20121021060158) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(:version => 20121020211102) do
     t.datetime "locked_at"
     t.string   "display_name"
     t.string   "avatar"
+    t.string   "auth_secret"
   end
 
   add_index "admin_users", ["email"], :name => "index_admin_users_on_email", :unique => true
