@@ -14,7 +14,7 @@ Once your account has been created, you will have the opportunity to create a cu
 If you choose to subscribe to one of our mailing or other contact lists that may involve commercial solicitation, We will always abide by the best practices listed below under **Commercial Solicitations**.  When you do so subscribe, then We will receive and record any identifying information, such as email address or other preference information, that you choose to provide.
 
 *Purchase Transaction Information*  
-If you decide to make a purchase from Us of any service or products We offer, then you will have to provide a valid means of payment that may involve providing your Paypal Account credentials, credit card, and billing address.
+If you decide to make a purchase from Us of any service or products We offer, including subscription based services such as Pro Upgrades, subscriptions for Advanced Functionality, and purchases of Member Packs, then you will have to provide a valid means of payment that may involve providing your credit card information and billing address.
 
 *User Content*  
 Certain functionality of the Service or other Websites or social media accounts operated by the Company will allow Users to upload or share data, information, images, videos or text in a variety of formats or forums (collectively, "User Content").  In addition to the submission formats or forums incidental and part of the use of the Service itself, this may also include submissions for contests, Wiki pages, public user forums or other interactive services.
@@ -40,11 +40,11 @@ We have a policy of cooperating with law enforcement officials if they can provi
 *In Response to Appropriate Legal Process*  
 We will produce any requested data that is lawfully and properly requested by service of proper legal process (subpoena, administrative order, or search warrant) pursuant to the ECPA, SCA or other applicable legal scheme.
 
-**What We Never Do with Information We Collect or Receive**
+**What We Do Not Do with Information We Collect or Receive**
 
-We never sell or lend personal information We collect from or about you to any third-party for commercial purposes.  For purposes of this statement, We define "personal information" as information We possess from or about you, that can be readily correlated with you as an individual person.  For example, your address, your individual user habits, or your credit card information, would all constitute personal information.  In contrast, a geographical count of users residing in a certain geographical area (without providing names), aggregate data about how many users have certain user habits, and how many users purchased a certain service using credit cards, would not be personally identifiable with you individually, and therefore would not constitute personal information.
+We do not sell or lend personal information We collect from or about you to any third-party for commercial purposes.  For purposes of this statement, We define "personal information" as information We possess from or about you, that can be readily correlated with you as an individual person.  For example, your billing address, your individual user habits, or your credit card information, would all constitute personal information.  In contrast, a geographical count of users residing in a certain geographical area (without providing names), aggregate data about how many users have certain user habits, and how many users purchased a certain service using credit cards, would not be personally identifiable with you individually, and therefore would not constitute personal information.
 
-In the case of credit card information necessary for a purchase transaction, We utilize a payment processor gateway that collects all of your information directly onto their secure servers.  None of Our servers or resources permanently store any of your credit card information at any time.
+In the case of credit card information necessary for a purchase transaction you initiate, We utilize a PCI compliant third-party payment processor that directly collects credit card information necessary for purchase transactions (consisting of your credit card number, expiration date, CVV code, name and billing address) through a secure Application Programming Interface ("API") designed by the payment processor and directly embedded into the Service.  According to our payment processor, the API works in such a way that none of your credit card transaction information is not permanently stored on our servers.  You can learn more about our payment processor and how they process your credit card transactions at https://stripe.com/us/help/faq.
 
 **How We Use Information We Collect or Receive**
 
