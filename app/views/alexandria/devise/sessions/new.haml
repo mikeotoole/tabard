@@ -10,11 +10,6 @@
       %li.submit
         %button{ type: 'submit' } Login
 
-.help
-  %h1 Account Assitance
-  %a.close{ onclick: "javascript:$('#body').removeClass('with-help');" } Close
-  = render "devise/shared/links"
-
 %script{ type: 'text/javascript' }
   :plain
     jQuery(document).ready(function($){ $('#admin_user_email').focus(); });
