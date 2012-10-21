@@ -23,6 +23,7 @@ ruby '1.9.3'
 
 # User Authentication
   gem 'devise'#                                                                             MIT - https://github.com/plataformatec/devise
+  gem 'rotp' #                                                                              MIT - https://github.com/mdp/rotp
 
 # Permissions/AC
   gem 'cancan'#                                                                             MIT - https://github.com/ryanb/cancan

@@ -6,3 +6,5 @@
   Before you start,
   = (link_to 'set your password here', edit_password_url(@resource, reset_password_token: @resource.reset_password_token, subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), style: 'color: #BE4124') + '.'
   Once your password is set, you will be able to login.
+%p
+  = image_tag(@resource.google_authenticator_qrcode_url, :alt => 'Google Authenticator QRCode')
