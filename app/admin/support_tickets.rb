@@ -13,7 +13,7 @@ ActiveAdmin.register SupportTicket do
 
   action_item :only => :show do
     if can?(:update, resource) and resource.admin_user != current_admin_user
-      link_to "Take", take_admin_support_ticket_path(resource), :method => :put
+      link_to "Take", take_alexandria_support_ticket_path(resource), :method => :put
     end
   end
 
