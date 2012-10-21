@@ -83,6 +83,6 @@ ActiveAdmin.register AdminUser do
       f.input :avatar, as: :file
       f.input :role, as: :select, collection: AdminUser::ROLES
     end
-    f.actions
+    f.buttons
   end
 end
