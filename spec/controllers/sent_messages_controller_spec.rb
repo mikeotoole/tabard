@@ -31,13 +31,13 @@ describe SentMessagesController do
       get :index
       assigns(:messages).should eq([message])
     end
-    
+
     it "should render the 'index' template when authenticated as a user" do
       sign_in sender
       get :index
       response.should render_template("index")
     end
-    
+
     it "should redirected to new user session path when not authenticated as a user" do
       get :index
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
@@ -50,22 +50,22 @@ describe SentMessagesController do
       get :show, :id => message
       assigns(:message).should eq(message)
     end
-    
+
     it "should render the 'show' template when authenticated as a owner" do
       sign_in sender
       get :show, :id => message
       response.should render_template("show")
     end
-    
+
     it "should redirect to new user session path when not authenticated as a user" do
       get :show, :id => message
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-    
+
     it "should raise error when authenticated as not the owner" do
       sign_in receiver
       lambda { get :show, :id => message }.should raise_error(ActiveRecord::RecordNotFound)
-    end   
+    end
   end
 
   describe "GET new" do
@@ -74,13 +74,13 @@ describe SentMessagesController do
       get :new
       assigns(:message).should be_a_new(Message)
     end
-    
+
     it "should render the 'new' template when authenticated as community admin" do
       sign_in sender
       get :new
       response.should render_template("new")
     end
-    
+
     it "should redirect to new user session path when not authenticated as a user" do
       get :new
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
@@ -91,12 +91,13 @@ describe SentMessagesController do
     before(:each) {
       sign_in sender
     }
-  
+
     describe "with valid params" do
       it "creates a new Message" do
         receiver
+        some_attr  = attributes_for(:message)
         expect {
-          post :create, :message => attributes_for(:message)
+          post :create, :message => some_attr
         }.to change(Message, :count).by(1)
       end
 
@@ -124,12 +125,12 @@ describe SentMessagesController do
       end
     end
   end
-  
+
   describe "POST create" do
     it "should redirected to new user session path when not authenticated as a user" do
       post :create, :message => attributes_for(:message)
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
-    end   
+    end
   end
 
 end

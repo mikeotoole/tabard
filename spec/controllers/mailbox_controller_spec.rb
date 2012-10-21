@@ -25,34 +25,34 @@ describe MailboxController do
 
   describe "GET inbox" do
     it "assigns todays messages as @todays_messages when authenticated as user" do
-      message
       sign_in receiver
+      message
       get :inbox
       assigns(:todays_messages).first.should eq(message.message_associations.first)
     end
-    
+
     it "assigns older messages as @older_messages when authenticated as user" do
       message
       message.created_at = Time.now - 1.week
-      message.save.should be_true      
+      message.save.should be_true
       sign_in receiver
       get :inbox
       assigns(:older_messages).last.should eq(message.message_associations.first)
     end
-    
+
     it "assigns inbox folder as @folder when authenticated as user" do
       message
       sign_in receiver
       get :inbox
       assigns(:folder).should eq(receiver.inbox)
     end
-    
+
     it "should render the 'show' template when authenticated as user" do
       sign_in receiver
       get :inbox
       response.should render_template("show")
     end
-    
+
     it "should redirected to new user session path when not authenticated as a user" do
       get :inbox
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
@@ -83,20 +83,20 @@ describe MailboxController do
       get :trash
       assigns(:older_messages).should eq([message_association])
     end
-    
+
     it "assigns trash folder as @folder when authenticated as user" do
       message
       sign_in receiver
       get :trash
       assigns(:folder).should eq(receiver.trash)
     end
-    
+
     it "should render the 'show' template when authenticated as user" do
       sign_in receiver
       get :trash
       response.should render_template("show")
     end
-    
+
     it "should redirected to new user session path when not authenticated as a user" do
       get :trash
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
