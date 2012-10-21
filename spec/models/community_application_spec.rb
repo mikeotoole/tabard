@@ -99,7 +99,7 @@ describe CommunityApplication do
 
     it "should make the applicant a member of the community" do
       community_application.accept_application(community.admin_profile).should be_true
-      community_application.user_profile.is_member?(community).should be_true
+      UserProfile.find(community_application.user_profile).is_member?(community).should be_true
     end
 
     it "should automaticaly add and approve the characters used for the application" do
