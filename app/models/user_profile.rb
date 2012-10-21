@@ -107,10 +107,9 @@ class UserProfile < ActiveRecord::Base
 ###
 # Validators
 ###
-  validates :display_name, presence: true,
-                           length: { maximum: MAX_NAME_LENGTH }
-  validates :first_name, length: { maximum: MAX_FIRST_NAME_LENGTH }
-  validates :last_name, length: { maximum: MAX_LAST_NAME_LENGTH }
+  validates :display_name, presence: true, length: { maximum: MAX_NAME_LENGTH }
+  validates :first_name, presence: true, length: { maximum: MAX_FIRST_NAME_LENGTH }
+  validates :last_name, presence: true, length: { maximum: MAX_LAST_NAME_LENGTH }
   validates :title, length: { maximum: MAX_TITLE_LENGTH }
   validates :location, length: { maximum: MAX_LOCATION_LENGTH }
   validates :description, length: { maximum: MAX_DESCRIPTION_LENGTH }

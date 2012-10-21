@@ -47,6 +47,10 @@ class ApplicationController < ActionController::Base
     http_status_code(:forbidden, exception)
   end
 
+  rescue_from ActiveRecord::RecordNotFound do |exception|
+    http_status_code(:not_found, exception)
+  end
+
   ###
   # This method will attempt to render a status code according to the arguments that are passed to it.
   # [Args]
@@ -64,6 +68,8 @@ class ApplicationController < ActionController::Base
       case status
       when :forbidden
         format.html { render "status_code/forbidden", status: status, layout: 'application' }
+      when :not_found
+        format.html { render "status_code/not_found", status: status, layout: 'application' }
       else
         format.html { render "status_code/index", status: status, layout: 'application' }
       end
