@@ -29,6 +29,8 @@ DaBvRails::Application.routes.draw do
     post "/admin_users/sign_in" => "alexandria/devise/sessions#create"
     get "/admin_users/password/edit" => "alexandria/devise/passwords#edit"
     put "/admin_users/password" => "alexandria/devise/passwords#update"
+    get "/admin_users/password/new" => "alexandria/devise/passwords#new"
+    post "/admin_users/password" => "alexandria/devise/passwords#create"
   end
   ActiveAdmin.routes(self)
   devise_for :admin_users , ActiveAdmin::Devise.config
