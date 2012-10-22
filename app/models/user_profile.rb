@@ -407,8 +407,9 @@ protected
   def self.search(search)
     if search
       search = "%"+search+'%'
-      where{(display_name =~ search) |
-            ((publicly_viewable == true) & ((location =~ search) | (first_name =~ search) | (last_name =~ search)))}
+#       where{(display_name =~ search) |
+#             ((publicly_viewable == true) & ((location =~ search) | (first_name =~ search) | (last_name =~ search)))}
+      where{(display_name =~ search)}
     else
       scoped
     end
