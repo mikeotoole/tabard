@@ -135,7 +135,7 @@ unless @dont_run
     end
   end
 
-  more_headshot = create_community('Billy', 'Even More Headshots', 'Ka Boom Baby!', %w(Empire Horde Minecraft))
+  more_headshot = create_community('Robo Billy', 'Even More Headshots', 'Ka Boom Baby!', %w(Empire Horde Minecraft))
 
 
 
