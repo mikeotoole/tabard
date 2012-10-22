@@ -125,13 +125,13 @@ describe UserProfilesController do
 
   describe "PUT 'update' when authenticated as owner" do
     before(:each) do
-      @new_first_name = 'Bob'
+      @new_full_name = 'Bob LOLZ'
       sign_in owner
-      put 'update', :id => user_profile, :user_profile => { :first_name => @new_first_name }
+      put 'update', :id => user_profile, :user_profile => { :full_name => @new_full_name }
     end
 
     it "should change attributes" do
-      UserProfile.find(user_profile).first_name.should eq(@new_first_name)
+      UserProfile.find(user_profile).full_name.should eq(@new_full_name)
     end
 
     it "should redirect to show" do
@@ -157,14 +157,14 @@ describe UserProfilesController do
 
   describe "PUT 'update' when authenticated as non-owner" do
     before(:each) do
-      @new_first_name = 'Bob'
+      @new_full_name = 'Bob'
       sign_in non_owner
-      put 'update', :id => user_profile, :user_profile => { :first_name => @new_first_name }
+      put 'update', :id => user_profile, :user_profile => { :full_name => @new_full_name }
     end
 
     it "should not change attributes" do
-      UserProfile.find(user_profile).first_name.should_not eq(@new_first_name)
-      assigns[:user_profile].first_name.should_not eq(@new_first_name)
+      UserProfile.find(user_profile).full_name.should_not eq(@new_full_name)
+      assigns[:user_profile].full_name.should_not eq(@new_full_name)
     end
 
     it "should be unauthorized" do
@@ -174,8 +174,8 @@ describe UserProfilesController do
 
   describe "PUT 'update' when not authenticated as a user" do
     before(:each) do
-      @new_first_name = 'Bob'
-      put 'update', :id => user_profile, :user_profile => { :first_name => @new_first_name }
+      @new_full_name = 'Bob'
+      put 'update', :id => user_profile, :user_profile => { :full_name => @new_full_name }
     end
 
     it "should redirect to new user session path" do
@@ -183,7 +183,7 @@ describe UserProfilesController do
     end
 
     it "should not change attributes" do
-      UserProfile.find(user_profile).first_name.should_not eq(@new_first_name)
+      UserProfile.find(user_profile).full_name.should_not eq(@new_full_name)
       assigns[:user_profile].should be_nil
     end
   end
