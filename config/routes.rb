@@ -75,6 +75,9 @@ DaBvRails::Application.routes.draw do
   resources :communities, only: [:show, :new, :create, :destroy] do
     get 'page/:page', action: :index, on: :collection
     get 'check_name', action: :check_name, on: :collection
+    member do
+      get :remove_confirmation, as: "community_remove_confirmation"
+    end
   end
 
   # Games
@@ -126,7 +129,6 @@ DaBvRails::Application.routes.draw do
       get "/disabled" => "communities#disabled", as: "community_disabled"
       get "/community_settings" => "communities#edit", as: "edit_community_settings"
       match "/community_settings" => "communities#update", as: "update_community_settings", via: :put
-      get "/remove_confirmation" => "communities#remove_confirmation", as: "community_remove_confirmation"
       match "/clear_action_items" => "communities#clear_action_items", as: "clear_action_items"
       get "/activities" => "communities#activities", as: "community_activities"
 

@@ -200,4 +200,28 @@ describe CommunitiesController do
       response.should be_forbidden
     end
   end
+  describe "GET 'remove_confirmation'" do
+    it "should be unauthorized when authenticated as a non admin user" do
+      sign_in create(:user)
+      get 'remove_confirmation', :id => community
+      response.response_code.should == 403
+    end
+
+    it "should be sucess when authenticated as the community admin user" do
+      sign_in admin_user
+      get 'remove_confirmation', :id => community
+      response.should be_success
+    end
+
+    it "should redirected to new user session path when not authenticated as a user" do
+      get 'remove_confirmation', :id => community
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
+    end
+
+    it "should render communities/edit template" do
+      sign_in admin_user
+      get 'remove_confirmation', :id => community
+      response.should render_template('communities/remove_confirmation')
+    end
+  end
 end
