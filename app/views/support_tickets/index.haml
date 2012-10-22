@@ -11,6 +11,13 @@
     = link_to 'log into Tabard', new_user_session_url
     to create or update your support tickets.
 
+  %p
+    If you need help accessing your accout try one of these links.
+    %li= link_to "Forgot your password?", new_password_url(:user, protocol: "http://", subdomain: "www")
+    %li= link_to "Didn't receive confirmation instructions?", new_confirmation_url(:user, protocol: "http://", subdomain: "www")
+    %li= link_to "Didn't receive unlock instructions?", new_unlock_url(:user, protocol: "http://", subdomain: "www")
+    %li= link_to "Need to reactivate deactivated account?", reinstate_confirmation_url(protocol: "http://", subdomain: "www")
+
 - else
   #submenu
     = link_to '+ New issue', 'javascript:;', class: 'button', onclick: "$('#new_support_ticket').slideDown(200,function(){$('#body').trigger('DOMNodeInserted');}).find('textarea').focus();$(this).hide();return false;"
