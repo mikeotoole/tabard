@@ -11,9 +11,9 @@ class CommunitiesController < ApplicationController
   # Before Filters
   ###
   before_filter :block_unauthorized_user!, except: [:show, :index, :check_name]
-  skip_before_filter :ensure_not_ssl_mode, only: [:destroy]
-  skip_before_filter :limit_subdomain_access, only: [:destroy]
-  before_filter :ensure_secure_subdomain, only: [:destroy]
+  skip_before_filter :ensure_not_ssl_mode, only: [:destroy, :remove_confirmation]
+  skip_before_filter :limit_subdomain_access, only: [:destroy, :remove_confirmation]
+  before_filter :ensure_secure_subdomain, only: [:destroy, :remove_confirmation]
   load_and_authorize_resource except: [:create, :index, :check_name]
   before_filter :load_plans_and_stripe, only: [:new, :create]
 
@@ -77,8 +77,12 @@ class CommunitiesController < ApplicationController
       redirect_to user_profile_url(current_user.user_profile, subdomain: "www", protocol: "http://")
     else
       flash[:alert] = 'Password was not valid.'
-      redirect_to community_remove_confirmation_url(subdomain: @community.subdomain, protocol: (Rails.env.development? ? "http://" : "https://"))
+      redirect_to community_remove_confirmation_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"))
     end
+  end
+
+  # Removes confirmations
+  def remove_confirmation
   end
 
 protected

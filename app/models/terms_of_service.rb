@@ -14,7 +14,7 @@ class TermsOfService < Document
   # Gets the current Terms Of Service
   ###
   def self.current
-    TermsOfService.find(:first, conditions: { is_published: true })
+    TermsOfService.where{is_published == true}.order(:version).limit(1).first
   end
 
   ###
