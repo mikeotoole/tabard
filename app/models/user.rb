@@ -59,6 +59,7 @@ class User < ActiveRecord::Base
 # Delegates
 ###
   delegate :display_name, to: :user_profile, allow_nil: true
+  delegate :full_name, to: :user_profile, allow_nil: true
   delegate :description, to: :user_profile, allow_nil: true
   delegate :owned_communities, to: :user_profile, allow_nil: true
   delegate :community_profiles, to: :user_profile, allow_nil: true

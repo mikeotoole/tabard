@@ -13,6 +13,7 @@
 #  publicly_viewable :boolean          default(TRUE)
 #  title             :string(255)
 #  location          :string(255)
+#  full_name         :string(255)
 #
 
 require 'spec_helper'
