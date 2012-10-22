@@ -9,9 +9,20 @@
   %br
   This cannot be undone, so be absolutely sure that you want to do this.
 
-= simple_form_for(@user, url: registration_url(@user, subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), html: { method: :delete }) do |f|
+= simple_form_for(@user, url: registration_url(@user, subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), html: { id: 'edit_user', method: :delete }) do |f|
   %fieldset
     %ol
       = f.input :current_password, label: "Account Password", hint: "we need your password to confirm this request"
     %p
       %button{ type: 'submit', data: {confirm: 'One last chance to back out. Are you sure you want to do this?'} } Deactivate Account
+
+- content_for :footer do
+  %script{ type: 'text/javascript' }
+    :plain
+      jQuery(document).ready(function($){
+
+        $('#edit_user').on('submit', function(){
+          $('body').addClass('busy');
+        });
+
+      });
