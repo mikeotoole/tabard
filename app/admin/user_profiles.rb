@@ -6,8 +6,7 @@ ActiveAdmin.register UserProfile do
 
   filter :id
   filter :display_name
-  filter :first_name
-  filter :last_name
+  filter :full_name
   filter :avatar
   filter :description
   filter :publicly_viewable, as: :select
@@ -25,8 +24,7 @@ ActiveAdmin.register UserProfile do
     column "User" do |user_profile|
       link_to user_profile.email, [:alexandria, user_profile.user]
     end
-    column :first_name
-    column :last_name
+    column :full_name
     column :created_at
   end
 

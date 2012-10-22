@@ -27,12 +27,19 @@ describe UserProfile do
 ###
 # Attribute Tests
 ###
-  it "should require a first name" do
-    build(:user_profile, :first_name => nil).should_not be_valid
-  end
-
-  it "should  require a last name" do
-    build(:user_profile, :last_name => nil).should_not be_valid
+  describe "full_name" do
+    it "should be require" do
+      build(:user_profile, :full_name => nil).should_not be_valid
+    end
+    it "should be limited to 80 characters" do
+      name = ""
+      80.times do
+        name = name + "a"
+      end
+      build(:user_profile, :full_name => name).should be_valid
+      name = name + "a"
+      build(:user_profile, :full_name => name).should_not be_valid
+    end
   end
 
   it "should not require a location" do

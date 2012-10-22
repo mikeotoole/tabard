@@ -43,8 +43,7 @@ describe User do
 
   it "should setup billy using factory" do
     b = create(:billy)
-    b.first_name.should eq("Robo")
-    b.last_name.should eq("Billy")
+    b.full_name.should eq("Robo Billy")
     b.user_profile.character_proxies.size.should eq(CharacterProxy.all.count)
     b.user_profile.characters.size.should eq(b.user_profile.character_proxies.size)
   end
