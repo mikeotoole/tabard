@@ -2,9 +2,9 @@
 # Helpers
 ###
 
-def create_event(community_name, name, body, start_in_days, hours, creator_last_name, invite_last_name_array, game_type=nil)
+def create_event(community_name, name, body, start_in_days, hours, creator_full_name, invite_full_name_array, game_type=nil)
   community = Community.find_by_name(community_name)
-  user_profile = UserProfile.find_by_last_name(creator_last_name)
+  user_profile = UserProfile.find_by_full_name(creator_full_name)
   supported_game = game_type ? community.supported_games.find_by_game_type(game_type).first : nil
   start_time = Date.today + start_in_days.days
   end_time = start_time.in(3600 * hours)
@@ -14,8 +14,8 @@ def create_event(community_name, name, body, start_in_days, hours, creator_last_
   event.save!
 
   event.invites.create!(user_profile: user_profile)
-  invite_last_name_array.each do |last_name|
-    event.invites.create!(user_profile: UserProfile.find_by_last_name(last_name))
+  invite_full_name_array.each do |full_name|
+    event.invites.create!(user_profile: UserProfile.find_by_full_name(full_name))
   end
 
   return event
@@ -30,20 +30,20 @@ unless @dont_run
                'Community Meeting',
                "We will be voting on officers.",
                1, 2,
-               'Billy',
-               %w(Moose Turtle Badger O'Toole))
+               'Robo Billy',
+               %w(Diabolical\ Moose Snappy\ Turtle Dirty\ Badger Mike\ O'Toole))
 
   create_event('Just Another Headshot',
                'Raid',
                "Lets try not to suck it up.",
                2, 6,
-               'Billy',
-               %w(Moose Turtle Badger))
+               'Robo Billy',
+               %w(Diabolical\ Moose Snappy\ Turtle Dirty\ Badger))
 
   create_event('Just Another Headshot',
                'Raid 2',
                "Lets try not to suck it up.",
                31, 4,
-               'Billy',
-               %w(Moose Turtle Badger))
+               'Robo Billy',
+               %w(Diabolical\ Moose Snappy\ Turtle Dirty\ Badger))
 end

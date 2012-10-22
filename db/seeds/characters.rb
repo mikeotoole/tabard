@@ -83,18 +83,18 @@ unless @dont_run
   ###
 
   User.all.each do |user|
-    create_empire_character(user.last_name, "Darth #{user.last_name}", 'Sith Warrior', 'Marauder', 'Zabrak', 45)
+    create_empire_character(user.full_name, "Darth #{user.full_name.split(' ')[1]}", 'Sith Warrior', 'Marauder', 'Zabrak', 45)
   end
 
-  create_horde_character('Moose', 'Moose Drool', 'Hunter', 'Orc', 80, "Female")
-  create_horde_character('Fox', 'Miss Fox', 'Hunter', 'Goblin', 20, "Female")
+  create_horde_character('Diabolical Moose', 'Moose Drool', 'Hunter', 'Orc', 80, "Female")
+  create_horde_character('Kinky Fox', 'Miss Fox', 'Hunter', 'Goblin', 20, "Female")
 
   %w(Yoda Han\ Solo Chewbacca R2D2).each do |cname|
-    create_empire_character('Billy', cname, 'Bounty Hunter', 'Mercenary', 'Cyborg', 33, "Female")
+    create_empire_character('Robo Billy', cname, 'Bounty Hunter', 'Mercenary', 'Cyborg', 33, "Female")
   end
 
   %w(Eliand Blaggarth Drejan).each do |cname|
-    create_horde_character('Billy', cname, 'Druid', 'Troll', 20)
+    create_horde_character('Robo Billy', cname, 'Druid', 'Troll', 20)
   end
 
   %w(Billy Fox O'Toole Moose).each do |user_last_name|

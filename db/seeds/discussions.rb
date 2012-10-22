@@ -2,7 +2,7 @@
 # Helpers
 ###
 
-def create_discussion_space(creator_last_name, community_name, space_name, faction='')
+def create_discussion_space(creator_full_name, community_name, space_name, faction='')
   puts "Creating #{community_name} discussion space #{space_name}"
   community = Community.find_by_name(community_name)
 
@@ -22,14 +22,14 @@ def create_discussion_space(creator_last_name, community_name, space_name, facti
 
   puts "With game #{supported_game.game_full_name}" if supported_game
   ds = community.discussion_spaces.create!(name: space_name, supported_game: supported_game)
-  creator = UserProfile.find_by_last_name(creator_last_name)
+  creator = UserProfile.find_by_full_name(creator_full_name)
   Activity.create!({user_profile: creator, community: community, target: ds, action: "created"}, without_protection: true)
   return ds
 end
 
-def create_discussion(community_name, space_name, name, body, poster_last_name)
+def create_discussion(community_name, space_name, name, body, poster_full_name)
   community = Community.find_by_name(community_name)
-  user_profile = UserProfile.find_by_last_name(poster_last_name)
+  user_profile = UserProfile.find_by_full_name(poster_full_name)
 
   puts "#{user_profile.name} is creating #{community_name} #{space_name} Space Discussion #{name}"
   discussion = community.discussion_spaces.find_by_name(space_name).discussions.new(name: name, body: body)
@@ -38,17 +38,17 @@ def create_discussion(community_name, space_name, name, body, poster_last_name)
   return discussion
 end
 
-def create_comment(commentable, body, poster_last_name)
-  user_profile = UserProfile.find_by_last_name(poster_last_name)
+def create_comment(commentable, body, poster_full_name)
+  user_profile = UserProfile.find_by_full_name(poster_full_name)
   comment = commentable.comments.new(body: body)
   comment.user_profile = user_profile
   comment.save!
   return comment
 end
 
-def create_announcement(community_name, name, body, poster_last_name, supported_game = nil)
+def create_announcement(community_name, name, body, poster_full_name, supported_game = nil)
   community = Community.find_by_name(community_name)
-  user_profile = UserProfile.find_by_last_name(poster_last_name)
+  user_profile = UserProfile.find_by_full_name(poster_full_name)
 
   puts "#{user_profile.name} is creating #{community_name} Announcement #{name}"
   announcement = community.announcements.new(name: name, body: body, supported_game: supported_game)
@@ -64,24 +64,24 @@ unless @dont_run
   ###
 
   # Two Maiden
-  create_discussion_space('Fox', 'Two Maidens', 'General Chat')
-  create_discussion_space('Fox', 'Two Maidens', 'WoW', 'Horde')
+  create_discussion_space('Kinky Fox', 'Two Maidens', 'General Chat')
+  create_discussion_space('Kinky Fox', 'Two Maidens', 'WoW', 'Horde')
 
   # Just Another Headshot
-  create_discussion_space('Billy', 'Just Another Headshot', 'General Chat')
-  create_discussion_space('Billy', 'Just Another Headshot', 'WoW Discussions', 'Horde')
-  create_discussion_space('Billy', 'Just Another Headshot', 'SWTOR Discussions', 'Empire')
+  create_discussion_space('Robo Billy', 'Just Another Headshot', 'General Chat')
+  create_discussion_space('Robo Billy', 'Just Another Headshot', 'WoW Discussions', 'Horde')
+  create_discussion_space('Robo Billy', 'Just Another Headshot', 'SWTOR Discussions', 'Empire')
 
-  jahc_gd = create_discussion('Just Another Headshot', 'General Chat', 'What up hommies!?', 'How was your weekend?', 'Billy')
-  create_discussion('Just Another Headshot', 'WoW Discussions', 'General WoW Discussion', 'YAY lets discuss WoW', 'Turtle')
-  create_discussion('Just Another Headshot', 'SWTOR Discussions', 'General SWTOR Discussion', 'YAY lets discuss SWTOR', 'Badger')
+  jahc_gd = create_discussion('Just Another Headshot', 'General Chat', 'What up hommies!?', 'How was your weekend?', 'Robo Billy')
+  create_discussion('Just Another Headshot', 'WoW Discussions', 'General WoW Discussion', 'YAY lets discuss WoW', 'Snappy Turtle')
+  create_discussion('Just Another Headshot', 'SWTOR Discussions', 'General SWTOR Discussion', 'YAY lets discuss SWTOR', 'Dirty Badger')
 
   puts "Adding comments to general discussion space discussion"
-  comment1 = create_comment(jahc_gd, "What's up RoboBilly!", 'Moose')
-  comment1a = create_comment(comment1, "What's up Diabolical Moose!", 'Turtle')
-  comment1b = create_comment(comment1, "You guys are weird.", 'Badger')
-  comment1b2 = create_comment(comment1b, "No, you are.", 'Moose')
-  comment2 = create_comment(jahc_gd, "Herp a derp.", 'Billy')
+  comment1 = create_comment(jahc_gd, "What's up RoboBilly!", 'Diabolical Moose')
+  comment1a = create_comment(comment1, "What's up Diabolical Moose!", 'Snappy Turtle')
+  comment1b = create_comment(comment1, "You guys are weird.", 'Dirty Badger')
+  comment1b2 = create_comment(comment1b, "No, you are.", 'Diabolical Moose')
+  comment2 = create_comment(jahc_gd, "Herp a derp.", 'Robo Billy')
   comment2.update_attributes!(has_been_edited: true)
 
   puts "Time: 3 weeks ago"
@@ -89,7 +89,7 @@ unless @dont_run
   create_announcement('Just Another Headshot',
                       'This announcement is derp old',
                       "So old in fact, it's in Latin! Nunc sem purus, posuere eu ullamcorper ac, vulputate ac dolor. Donec id mi eget lacus venenatis dignissim.",
-                      'Billy')
+                      'Robo Billy')
 
   puts "Time: Now"
   Timecop.return
@@ -97,25 +97,25 @@ unless @dont_run
   create_announcement('Just Another Headshot',
                       'Website is up and running!',
                       "This new website is off the hook!.",
-                      'Billy')
+                      'Robo Billy')
   create_announcement('Just Another Headshot',
                       'WoW is now supported!',
                       "Everyone add your WoW characters.",
-                      'Billy')
+                      'Robo Billy')
   create_announcement('Just Another Headshot',
                       'Star Wars is bad ass!',
                       "Raids are super cool. The new vent channel is open for SWTOR.",
-                      'Billy',
+                      'Robo Billy',
                       Community.find_by_name('Just Another Headshot').supported_games.find_by_game_type("Swtor"))
   create_announcement('Just Another Headshot',
                       'This is my favorite supported_game',
                       "LOLOLOLOLOLOLOLOLOL",
-                      'Billy',
+                      'Robo Billy',
                       Community.find_by_name('Just Another Headshot').supported_games.find_by_game_type("Wow"))
   create_announcement('Jedi Kittens',
                       'Star Wars is mew mew mew!',
                       "Raids are super mew. The new vent channel is open for SWTOR.",
-                      'Tiger',
+                      'Apathetic Tiger',
                       Community.find_by_name('Just Another Headshot').supported_games.find_by_game_type("Swtor"))
 
 end
