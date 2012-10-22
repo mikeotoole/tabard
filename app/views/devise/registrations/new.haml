@@ -6,7 +6,7 @@
 = simple_form_for(resource, as: resource_name, url: registration_url(resource_name, subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"))) do |f|
   %fieldset
     %ol
-      -if User::BETA_CODE_REQUIRED
+      - if User::BETA_CODE_REQUIRED
         = f.input :beta_code
       = f.simple_fields_for :user_profile do |uf|
         = uf.input :display_name, label: "Display Name", required: false, hint: "You can change this later. #{UserProfile::MAX_NAME_LENGTH} characters max."
@@ -28,13 +28,15 @@
         = f.input :time_zone, required: false, collection: timezone_collection_hash, as: :radio_buttons, wrapper_html: { class: 'select' }
     - if !!cookies[:timezone]
       = f.input :time_zone, as: :hidden, input_html: { value: cookies[:timezone].to_s }
-    %p.terms.input.boolean
+    %p.terms.input.boolean{ class: resource.errors[:terms].any? ? 'with-errors' : '' }
       = check_box_tag 'user[terms]'
       = label_tag :user_terms do
         I accept Tabard's
         = link_to 'Terms of Service', top_level_terms_of_service_url, target: '_blank'
         and have read and understand the
         = (link_to 'Privacy Policy', top_level_privacy_policy_url, target: '_blank') + '.'
+      - if resource.errors[:terms].any?
+        %mark.error= resource.errors[:terms].first
     %p
       %button{ type: 'submit' } Sign up
 = render "devise/shared/links"

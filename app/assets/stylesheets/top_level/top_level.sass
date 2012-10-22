@@ -318,6 +318,13 @@ body.index.minecrafts #submenu .minecraft
       clear: both
       margin: 10px 0
       padding: 15px 20px
+      &.with-errors
+        border: 1px solid #A93720
+        mark.error
+          +border_radius(0,0,3,3)
+          display: block
+          margin: 10px -20px -15px
+          padding: 5px 10px
       label
         color: #333
         display: block
