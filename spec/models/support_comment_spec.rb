@@ -46,4 +46,52 @@ describe SupportComment do
       build(:support_comment, :body => "").should_not be_valid
     end
   end
+
+  describe "close_comment" do
+    it "should not be required" do
+      build(:support_comment, close_comment: nil).should be_valid
+    end
+    describe "if true" do
+      it "should allow body to be not required if true" do
+        build(:support_comment, close_comment: "1", body: nil).should be_valid
+      end
+      it "should allow body to be blank if true" do
+        build(:support_comment, close_comment: "1", body: "").should be_valid
+      end
+      it "should close the ticket after save" do
+        ticket = support_comment.support_ticket
+        ticket.status.should_not eq "Closed"
+        create(:support_comment, close_comment: "1", support_ticket: support_comment.support_ticket, user_profile: support_comment.user_profile).should be_true
+        SupportTicket.find(ticket).status.should eq "Closed"
+      end
+      it "should add a default message to if none is provided" do
+        ticket = support_comment.support_ticket
+        ticket.status.should_not eq "Closed"
+        new_comment = build(:support_comment, close_comment: "1", support_ticket: support_comment.support_ticket, user_profile: support_comment.user_profile, body: "")
+        new_comment.save
+        new_comment.body.blank?.should be_false
+      end
+    end
+    describe "if false" do
+      it "should require body if false" do
+        build(:support_comment, close_comment: false, body: nil).should_not be_valid
+      end
+      it "should not allow body to be blank if false" do
+        build(:support_comment, close_comment: false, body: "").should_not be_valid
+      end
+      it "should not close the ticket after save" do
+        ticket = support_comment.support_ticket
+        ticket.status.should_not eq "Closed"
+        create(:support_comment, close_comment: false, support_ticket: support_comment.support_ticket, user_profile: support_comment.user_profile).should be_true
+        SupportTicket.find(ticket).status.should_not eq "Closed"
+      end
+      it "should add a default message to if none is provided" do
+        ticket = support_comment.support_ticket
+        ticket.status.should_not eq "Closed"
+        new_comment = build(:support_comment, close_comment: false, support_ticket: support_comment.support_ticket, user_profile: support_comment.user_profile, body: "")
+        new_comment.save
+        new_comment.body.blank?.should_not be_false
+      end
+    end
+  end
 end
