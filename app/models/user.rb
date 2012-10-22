@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   # This is the beta code
   BETA_CODE = "50DKPMINUS"
   # This determines if the beta code is required
-  BETA_CODE_REQUIRED = true
+  BETA_CODE_REQUIRED = false
 
 ###
 # Devise configuration information
