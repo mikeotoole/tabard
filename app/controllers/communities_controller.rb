@@ -77,7 +77,7 @@ class CommunitiesController < ApplicationController
       redirect_to user_profile_url(current_user.user_profile, subdomain: "www", protocol: "http://")
     else
       flash[:alert] = 'Password was not valid.'
-      redirect_to community_remove_confirmation_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"))
+      redirect_to community_remove_confirmation_community_url(@community, subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"))
     end
   end
 
