@@ -11,8 +11,7 @@ def create_user(first_name, last_name, display_name=nil)
       email_confirmation: "#{first_name.downcase}#{last_name.downcase}@digitalaugment.com",
       password: "Password",
       time_zone: -8,
-      user_profile_attributes: { first_name: first_name,
-                                    last_name: last_name,
+      user_profile_attributes: { full_name: "#{first_name} #{last_name}",
                                     display_name: display_name},
       date_of_birth: 22.years.ago.to_date,
       is_email_on_message: false,
@@ -60,13 +59,13 @@ unless @dont_run
   puts "Time: 3 months ago"
 
   puts "Removing Panda accepted documents"
-  s_panda = UserProfile.find_by_last_name("Panda")
+  s_panda = UserProfile.find_by_full_name("Sad Panda")
   s_panda.user.update_column(:accepted_current_terms_of_service, false)
   s_panda.user.update_column(:accepted_current_privacy_policy, false)
   s_panda.user.accepted_documents.destroy_all
 
   puts "Sleepy Pidgeon is private"
-  s_pidgeon = UserProfile.find_by_last_name("Pidgeon")
+  s_pidgeon = UserProfile.find_by_full_name("Sleepy Pidgeon")
   s_pidgeon.update_column(:publicly_viewable, false)
 
   puts "Creating a user for Mike, because he thinks our adjective animals aren't cool enough..."
@@ -76,7 +75,7 @@ unless @dont_run
                   email_confirmation: "mpotoole@gmail.com",
                   password: "Password",
                   date_of_birth: Date.new(1980,4,17),
-                  user_profile_attributes: {first_name: "Mike", last_name: "O'Toole", display_name: "Subfighter13"},
+                  user_profile_attributes: {full_name: "Mike O'Toole", display_name: "Subfighter13"},
                   time_zone: -8,
                   beta_code: User::BETA_CODE)
   mike.skip_confirmation!

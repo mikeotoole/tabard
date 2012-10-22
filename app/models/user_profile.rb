@@ -6,16 +6,14 @@
 # This class represents a user's profile.
 ###
 class UserProfile < ActiveRecord::Base
-  validates_lengths_from_database except: [:name, :first_name, :last_name, :title, :location, :description, :avatar]
+  validates_lengths_from_database except: [:name, :full_name, :title, :location, :description, :avatar]
 ###
 # Constants
 ###
   # Max name length
   MAX_NAME_LENGTH = 30
-  # Max first name length
-  MAX_FIRST_NAME_LENGTH = 30
-  # Max last name length
-  MAX_LAST_NAME_LENGTH = 50
+  # Max full name length
+  MAX_FULL_NAME_LENGTH = 80
   # Max title length
   MAX_TITLE_LENGTH = 30
   # Max location length
@@ -26,7 +24,7 @@ class UserProfile < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :first_name, :last_name, :display_name, :title, :publicly_viewable,
+  attr_accessible :full_name, :display_name, :title, :publicly_viewable,
       :avatar, :remove_avatar, :remote_avatar_url, :description, :location
 
 ###
@@ -88,7 +86,7 @@ class UserProfile < ActiveRecord::Base
 ###
 # Callbacks
 ###
-  nilify_blanks only: [:first_name, :last_name, :description, :title, :location]
+  nilify_blanks only: [:full_name, :description, :title, :location]
   after_create :create_mailboxes
   after_create :check_for_invites
 
@@ -108,8 +106,7 @@ class UserProfile < ActiveRecord::Base
 # Validators
 ###
   validates :display_name, presence: true, length: { maximum: MAX_NAME_LENGTH }
-  validates :first_name, presence: true, length: { maximum: MAX_FIRST_NAME_LENGTH }
-  validates :last_name, presence: true, length: { maximum: MAX_LAST_NAME_LENGTH }
+  validates :full_name, presence: true, length: { maximum: MAX_FULL_NAME_LENGTH }
   validates :title, length: { maximum: MAX_TITLE_LENGTH }
   validates :location, length: { maximum: MAX_LOCATION_LENGTH }
   validates :description, length: { maximum: MAX_DESCRIPTION_LENGTH }
@@ -182,11 +179,6 @@ class UserProfile < ActiveRecord::Base
       end
     end
     available_character_proxies
-  end
-
-  # This method returns the first name + space + last name
-  def full_name
-    "#{self.first_name} #{self.last_name}"
   end
 
   # This method attepts to add the specified role to the correct community profile of this user, if the user has a community profile that matches the role's community.
@@ -408,7 +400,7 @@ protected
     if search
       search = "%"+search+'%'
 #       where{(display_name =~ search) |
-#             ((publicly_viewable == true) & ((location =~ search) | (first_name =~ search) | (last_name =~ search)))}
+#             ((publicly_viewable == true) & ((location =~ search) | (full_name =~ search)))}
       where{(display_name =~ search)}
     else
       scoped
@@ -455,5 +447,6 @@ end
 #  publicly_viewable :boolean          default(TRUE)
 #  title             :string(255)
 #  location          :string(255)
+#  full_name         :string(255)
 #
 

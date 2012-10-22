@@ -22,8 +22,8 @@ def create_role(community_name, role_name, subject_class_array, permission_level
     end
   end
 
-  to_users_array.each do |last_name|
-    profile = UserProfile.find_by_last_name(last_name)
+  to_users_array.each do |full_name|
+    profile = UserProfile.find_by_full_name(full_name)
     puts "Giving #{profile.name} the #{role_name} role..."
     profile.add_new_role(role)
   end
@@ -36,7 +36,7 @@ unless @dont_run
   # Create Roles with Permissions
   ###
 
-  create_role('Two Maidens', 'n00b', %w(PageSpace), %w(Create), %w(Moose))
+  create_role('Two Maidens', 'n00b', %w(PageSpace), %w(Create), %w(Diabolical\ Moose))
 
   # Joe's Workaround. Don't kill me Mike
   # TODO upgrade to pro community first

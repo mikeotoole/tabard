@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121021060158) do
+ActiveRecord::Schema.define(:version => 20121022184902) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -697,8 +697,6 @@ ActiveRecord::Schema.define(:version => 20121021060158) do
   end
 
   create_table "user_profiles", :force => true do |t|
-    t.string   "first_name"
-    t.string   "last_name"
     t.string   "avatar"
     t.datetime "created_at",                          :null => false
     t.datetime "updated_at",                          :null => false
@@ -707,6 +705,7 @@ ActiveRecord::Schema.define(:version => 20121021060158) do
     t.boolean  "publicly_viewable", :default => true
     t.string   "title"
     t.string   "location"
+    t.string   "full_name"
   end
 
   add_index "user_profiles", ["display_name"], :name => "index_user_profiles_on_display_name"

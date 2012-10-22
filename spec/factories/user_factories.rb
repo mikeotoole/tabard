@@ -24,7 +24,7 @@ FactoryGirl.define do
     confirmed_at { 1.day.ago }
     email "billy@robo.com"
     email_confirmation "billy@robo.com"
-    user_profile_attributes { FactoryGirl.attributes_for(:user_profile, :display_name => "Robobilly", :first_name => "Robo", :last_name => "Billy") }
+    user_profile_attributes { FactoryGirl.attributes_for(:user_profile, :display_name => "Robobilly", :full_name => "Robo Billy") }
     date_of_birth 35.years.ago.to_date
     terms "1"
     after(:create) do |u|

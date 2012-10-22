@@ -3,8 +3,8 @@
 ###
 
 # Create SWTOR Empire Character
-def create_empire_character(user_last_name, char_name, char_class, advanced_class, species, level, gender="Male", server=nil)
-  user_profile = UserProfile.find_by_last_name(user_last_name)
+def create_empire_character(user_full_name, char_name, char_class, advanced_class, species, level, gender="Male", server=nil)
+  user_profile = UserProfile.find_by_full_name(user_full_name)
   server ||= "The Bastion"
   puts "Creating #{user_profile.name} SWTOR Empire Character #{char_name}"
   user_profile.character_proxies.create!({
@@ -20,8 +20,8 @@ def create_empire_character(user_last_name, char_name, char_class, advanced_clas
 end
 
 # Create SWTOR Republic Character
-def create_republic_character(user_last_name, char_name, char_class, advanced_class, species, level, gender="Male")
-  user_profile = UserProfile.find_by_last_name(user_last_name)
+def create_republic_character(user_full_name, char_name, char_class, advanced_class, species, level, gender="Male")
+  user_profile = UserProfile.find_by_full_name(user_full_name)
   puts "Creating #{user_profile.name} SWTOR Republic Character #{char_name}"
   user_profile.character_proxies.create!({
       character: SwtorCharacter.create!({
@@ -36,8 +36,8 @@ def create_republic_character(user_last_name, char_name, char_class, advanced_cl
 end
 
 # Create WoW Alliance Character
-def create_alliance_character(user_last_name, char_name, char_class, race, level, gender="Male", server=nil)
-  user_profile = UserProfile.find_by_last_name(user_last_name)
+def create_alliance_character(user_full_name, char_name, char_class, race, level, gender="Male", server=nil)
+  user_profile = UserProfile.find_by_full_name(user_full_name)
   server ||= ""
   puts "Creating #{user_profile.name} WoW Alliance Character #{char_name}"
   user_profile.character_proxies.create!({
@@ -52,8 +52,8 @@ def create_alliance_character(user_last_name, char_name, char_class, race, level
 end
 
 # Create WoW Horde Character
-def create_horde_character(user_last_name, char_name, char_class, race, level, gender="Male")
-  user_profile = UserProfile.find_by_last_name(user_last_name)
+def create_horde_character(user_full_name, char_name, char_class, race, level, gender="Male")
+  user_profile = UserProfile.find_by_full_name(user_full_name)
   puts "Creating #{user_profile.name} WoW Horde Character #{char_name}"
   user_profile.character_proxies.create!({
       character: WowCharacter.create!({
@@ -67,8 +67,8 @@ def create_horde_character(user_last_name, char_name, char_class, race, level, g
 end
 
 # Create Minecraft Character
-def create_minecraft_character(user_last_name, char_name)
-  user_profile = UserProfile.find_by_last_name(user_last_name)
+def create_minecraft_character(user_full_name, char_name)
+  user_profile = UserProfile.find_by_full_name(user_full_name)
   puts "Creating #{user_profile.name} Minecraft Character #{char_name}"
   user_profile.character_proxies.create!({
       character: MinecraftCharacter.create!({
@@ -83,21 +83,21 @@ unless @dont_run
   ###
 
   User.all.each do |user|
-    create_empire_character(user.last_name, "Darth #{user.last_name}", 'Sith Warrior', 'Marauder', 'Zabrak', 45)
+    create_empire_character(user.full_name, "Darth #{user.full_name.split(' ')[1]}", 'Sith Warrior', 'Marauder', 'Zabrak', 45)
   end
 
-  create_horde_character('Moose', 'Moose Drool', 'Hunter', 'Orc', 80, "Female")
-  create_horde_character('Fox', 'Miss Fox', 'Hunter', 'Goblin', 20, "Female")
+  create_horde_character('Diabolical Moose', 'Moose Drool', 'Hunter', 'Orc', 80, "Female")
+  create_horde_character('Kinky Fox', 'Miss Fox', 'Hunter', 'Goblin', 20, "Female")
 
   %w(Yoda Han\ Solo Chewbacca R2D2).each do |cname|
-    create_empire_character('Billy', cname, 'Bounty Hunter', 'Mercenary', 'Cyborg', 33, "Female")
+    create_empire_character('Robo Billy', cname, 'Bounty Hunter', 'Mercenary', 'Cyborg', 33, "Female")
   end
 
   %w(Eliand Blaggarth Drejan).each do |cname|
-    create_horde_character('Billy', cname, 'Druid', 'Troll', 20)
+    create_horde_character('Robo Billy', cname, 'Druid', 'Troll', 20)
   end
 
-  %w(Billy Fox O'Toole Moose).each do |user_last_name|
-    create_minecraft_character(user_last_name, "Boxy #{user_last_name}")
+  %w(Robo\ Billy Kinky\ Fox Mike\ O'Toole Diabolical\ Moose).each do |user_full_name|
+    create_minecraft_character(user_full_name, "Boxy #{user_full_name.split(' ')[1]}")
   end
 end
