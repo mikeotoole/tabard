@@ -43,12 +43,15 @@ ruby '1.9.3'
 # Pagination
   gem 'kaminari'#                                                                           MIT - https://github.com/amatsuda/kaminari
 
+# URL slugs
+  gem 'friendly_id'#                                                                        MIT - https://github.com/norman/friendly_id
+
 # Stripe
   gem 'stripe'
   gem 'stripe_event'
 
 # RestClient
-  gem 'rest-client'#                                                            MIT - https://github.com/archiloque/rest-client
+  gem 'rest-client'#                                                                        MIT - https://github.com/archiloque/rest-client
 
 # Memory Usage
   gem 'oink'#                                                                               MIT - https://github.com/noahd1/oink

@@ -1,19 +1,18 @@
 - title 'Sign up'
 
-%h1 Sign up for Tabard&trade;
+%h1 Sign up for Tabard
 
 - resource.build_user_profile unless resource.user_profile
 = simple_form_for(resource, as: resource_name, url: registration_url(resource_name, subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"))) do |f|
   %fieldset
     %ol
-      - if User::BETA_CODE_REQUIRED
-        = f.input :beta_code
+      = f.input :beta_code if User::BETA_CODE_REQUIRED
       = f.simple_fields_for :user_profile do |uf|
-        = uf.input :display_name, label: "Display Name", required: false, hint: "You can change this later. #{UserProfile::MAX_NAME_LENGTH} characters max."
-        = uf.input :full_name, label: 'Full Name'
+        = uf.input :gamer_tag, label: "Gamer Tag", required: false, hint: "Unique and cannot be changed. #{UserProfile::MAX_GAMER_TAG_LENGTH} characters max."
+        = uf.input :full_name, label: 'Full Name', required: false
       = f.input :email, as: :email
       = f.input :email_confirmation, as: :email, label: 'Re-enter Email'
-      = f.input :password, label: 'Password', hint: 'Use at least two: upper, lower, number, or sybmol', input_html: defined?(params[:user][:remember_password]) ? { value: params[:user][:remember_password] } : {}
+      = f.input :password, label: 'Password', hint: '8 or more characters of 2 or more kinds (upper, lower, number, sybmol)', input_html: defined?(params[:user][:remember_password]) ? { value: params[:user][:remember_password] } : {}
       %li{ class: "date selects #{f.object.errors[:date_of_birth].any? ? 'with-errors' : ''}" }
         %label Birthday
         = f.input :birth_month, as: :radio_buttons, label: false, collection: (1..12).collect{|m| m = [Date::MONTHNAMES[m], m]}, wrapper_tag: :div, wrapper_html: {class: 'select month', data: {placeholder: 'Month'}}
