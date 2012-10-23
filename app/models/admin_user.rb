@@ -108,7 +108,7 @@ class AdminUser < ActiveRecord::Base
 
   # Get the url for grcode used for multifactor auth setup.
   def google_authenticator_qrcode_url
-    data = "otpauth://totp/bv-pro?secret=#{self.auth_secret}"
+    data = "otpauth://totp/#{ENV['BV_HOST_URL']}?secret=#{self.auth_secret}"
     data = Rack::Utils.escape(data)
     url = "https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=#{data}"
     return url
