@@ -195,7 +195,7 @@ protected
 
   # This adds a little flash notice to reminde the user to RSVP.
   def rsvp_flash
-    default_url_options[:host] = ENV["RAILS_ENV"] == 'production' ? "#{current_community.subdomain}.tabard.co" : "#{current_community.subdomain}.lvh.me"
+    default_url_options[:host] = "#{current_community.subdomain}.#{ENV['BV_HOST_URL']}"
     invite = current_user.invites.find_by_event_id(@event.id)
     flash[:notice] = "You have not RSVP'd to this event yet. <a href='#{edit_invite_url(invite)}'>Respond now</a>" if invite != nil and invite.status == nil
   end
