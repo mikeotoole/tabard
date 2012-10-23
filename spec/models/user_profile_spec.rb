@@ -12,6 +12,8 @@
 #  title             :string(255)
 #  location          :string(255)
 #  full_name         :string(255)
+#  gamer_tag         :string(255)
+#  slug              :string(255)
 #
 
 require 'spec_helper'
