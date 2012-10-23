@@ -8,7 +8,7 @@
     %ol
       = f.input :beta_code if User::BETA_CODE_REQUIRED
       = f.simple_fields_for :user_profile do |uf|
-        = uf.input :gamer_tag, label: "Gamer Tag", required: false, hint: "Unique and cannot be changed. #{UserProfile::MAX_GAMER_TAG_LENGTH} characters max."
+        = uf.input :gamer_tag, label: "Gamer Tag", required: false, hint: "What other players see. Must be unique. Cannot be changed.", wrapper_html: {class: 'gamer_tag'}
         = uf.input :full_name, label: 'Full Name', required: false
       = f.input :email, as: :email
       = f.input :email_confirmation, as: :email, label: 'Re-enter Email'
