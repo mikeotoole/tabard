@@ -962,6 +962,23 @@ body.registrations #new_user
       width: 269px
     mark.error
       width: 271px
+  .selects
+    height: 50px
+    &.with-errors
+      height: 74px
+    .select
+      position: absolute
+      top: 34px
+    .month
+      left: 0
+    .day
+      left: 132px
+    .year
+      left: 209px
+    mark.error
+      +border_radius(3)
+      bottom: 0
+      position: absolute
 
 body.sessions
 
