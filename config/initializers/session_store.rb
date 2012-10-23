@@ -1,7 +1,7 @@
 # Be sure to restart your server when you modify this file.
-if Rails.env.production?
+if Rails.env.production? or Rails.env.staging?
   require 'action_dispatch/middleware/session/dalli_store'
-  DaBvRails::Application.config.session_store :dalli_store, memcache_server: ['host1', 'host2'], namespace: 'sessions', key: '_foundation_session', domain: '.tabard.co'
+  DaBvRails::Application.config.session_store :dalli_store, memcache_server: ['host1', 'host2'], namespace: 'sessions', key: '_foundation_session', domain: ".#{ENV['BV_HOST_URL']}"
 else
   DaBvRails::Application.config.session_store :cookie_store, key: '_da-bv-rails_session', domain: "lvh.me"
 end

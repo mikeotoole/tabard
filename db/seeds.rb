@@ -8,7 +8,7 @@ unless Rails.env.test?
     %w{ users characters communities roles_permissions discussions pages messages custom_forms events community_invites}.each do |part|
       require File.expand_path(File.dirname(__FILE__))+"/seeds/#{part}.rb"
     end
-  elsif Rails.env.production?
+  elsif Rails.env.production? or Rails.env.staging?
     puts "Seeding 'mike.otoole@digitalaugment.com' super admin"
     AdminUser.create!(email: 'mike.otoole@digitalaugment.com',
                       password: 'DVqaPP7Ai8Q66K',

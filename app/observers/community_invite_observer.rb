@@ -12,7 +12,7 @@ class CommunityInviteObserver < ActiveRecord::Observer
   ###
   def after_create(community_invite)
     unless Rails.env.test?
-      default_url_options[:host] = Rails.env.production? ? "tabard.co" : "lvh.me:3000"
+      default_url_options[:host] = ENV['BV_HOST_URL']
 
       if community_invite.applicant.blank?
         CommunityInviteMailer.delay.new_community_invite(community_invite.id)
@@ -24,7 +24,7 @@ class CommunityInviteObserver < ActiveRecord::Observer
 
   def after_update(community_invite)
     unless Rails.env.test?
-      default_url_options[:host] = Rails.env.production? ? "tabard.co" : "lvh.me:3000"
+      default_url_options[:host] = ENV['BV_HOST_URL']
 
       if community_invite.applicant_id_changed?
         send_message(community_invite, true)
