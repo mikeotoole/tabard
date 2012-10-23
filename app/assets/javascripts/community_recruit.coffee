@@ -39,7 +39,6 @@ jQuery(document).ready ($) ->
       select: (e, ui) ->
         unless ui.item.value in users
           users.push ui.item.value
-          console.log ui.item
           elId = "user_#{(new Date()).getTime()}"
           li = $('<li>').prependTo '#recruits fieldset ol'
           $("<input id='#{elId}' name='users[]' type='checkbox' value='#{ui.item.value}' checked='checked'>").appendTo(li).attr
