@@ -6,10 +6,12 @@
 # This class represents a user's profile.
 ###
 class UserProfile < ActiveRecord::Base
-  validates_lengths_from_database except: [:name, :full_name, :title, :location, :description, :avatar]
+  validates_lengths_from_database except: [:gamer_tag, :name, :full_name, :title, :location, :description, :avatar]
 ###
 # Constants
 ###
+  # Max gamer_tag length
+  MAX_GAMER_TAG_LENGTH = 15
   # Max name length
   MAX_NAME_LENGTH = 30
   # Max full name length
@@ -24,8 +26,14 @@ class UserProfile < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :full_name, :display_name, :title, :publicly_viewable,
+  attr_accessible :gamer_tag, :full_name, :display_name, :title, :publicly_viewable,
       :avatar, :remove_avatar, :remote_avatar_url, :description, :location
+
+###
+# Friendly ID
+###
+  extend FriendlyId
+  friendly_id :gamer_tag, use: :slugged
 
 ###
 # Associations
@@ -105,6 +113,11 @@ class UserProfile < ActiveRecord::Base
 ###
 # Validators
 ###
+  validates :gamer_tag,
+      presence: true,
+      uniqueness: { case_sensitive: false },
+      length: { maximum: MAX_GAMER_TAG_LENGTH },
+      format: { with: %r{^[a-z0-9]+$}i }
   validates :display_name, presence: true, length: { maximum: MAX_NAME_LENGTH }
   validates :full_name, presence: true, length: { maximum: MAX_FULL_NAME_LENGTH }
   validates :title, length: { maximum: MAX_TITLE_LENGTH }
@@ -437,8 +450,6 @@ end
 # Table name: user_profiles
 #
 #  id                :integer          not null, primary key
-#  first_name        :string(255)
-#  last_name         :string(255)
 #  avatar            :string(255)
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null

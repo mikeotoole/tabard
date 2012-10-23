@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121022184902) do
+ActiveRecord::Schema.define(:version => 20121022230849) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -706,10 +706,13 @@ ActiveRecord::Schema.define(:version => 20121022184902) do
     t.string   "title"
     t.string   "location"
     t.string   "full_name"
+    t.string   "gamer_tag"
+    t.string   "slug"
   end
 
   add_index "user_profiles", ["display_name"], :name => "index_user_profiles_on_display_name"
   add_index "user_profiles", ["location"], :name => "index_user_profiles_on_location"
+  add_index "user_profiles", ["slug"], :name => "index_user_profiles_on_slug", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "email",                                            :default => "",    :null => false

@@ -116,9 +116,9 @@ class UserProfilesController < ApplicationController
     @activities = Activity.activities({ user_profile_id: @user_profile.id }, updated, count).includes(:user_profile, :target, page: [:page_space], supported_game: [:community, :game], community: [:member_role])
   end
 
-  # Gets teh user profile
+  # Gets the user profile by ID
   def find_user_by_id
-    @user_profile = UserProfile.find_by_id(params[:id]) unless !!@user_profile
+    @user_profile = UserProfile.find(params[:id]) unless !!@user_profile
   end
 
   #Authorizes the custom actions

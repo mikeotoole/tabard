@@ -2,6 +2,7 @@ FactoryGirl.define do
   # Create a basic user profile.
   factory :user_profile, :aliases => [:admin_profile] do
     sequence(:full_name) {|n| "First Name #{n} Last Name #{n}"}
+    sequence(:gamer_tag) {|n| "GameMaster#{n}"}
     sequence(:display_name) {|n| "GameMaster#{n}"}
     sequence(:location) {|n| "#{n} Fake St"}
     sequence(:description) {|n| "Von Game Master is number #{n}"}
