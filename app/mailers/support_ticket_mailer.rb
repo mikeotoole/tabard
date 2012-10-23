@@ -6,7 +6,7 @@
 # This class is a mailer used by the SupportTicket to send emails.
 ###
 class SupportTicketMailer < ActionMailer::Base
-  default from: "Tabard <noreply@tabard.co>",
+  default from: "Tabard <noreply@#{ENV['BV_HOST_URL']}>",
           content_type: "text/html"
   layout 'mailer'
 

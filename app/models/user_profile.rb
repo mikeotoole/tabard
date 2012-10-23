@@ -413,9 +413,7 @@ protected
   def self.search(search)
     if search
       search = "%"+search+'%'
-#       where{(display_name =~ search) |
-#             ((publicly_viewable == true) & ((location =~ search) | (full_name =~ search)))}
-      where{(display_name =~ search)}
+      where{((display_name =~ search) | (gamer_tag =~ search))}
     else
       scoped
     end
