@@ -17,7 +17,7 @@ jQuery(document).ready ($) ->
     .on 'ajax:complete', 'dd a[data-remote]', ->
       $('#message').removeClass 'busy'
     .on 'ajax:error', 'dd a[data-remote]', (xhr, status, error) ->
-      $.alert body: 'Unable to load message.'
+      $.alert 'Unable to load message.'
     .on 'ajax:success', 'dd a[data-remote]', (event, data, status, xhr) ->
       $('#mailbox dd').removeClass 'open'
       dd = $(@).closest('dd')

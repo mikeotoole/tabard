@@ -33,7 +33,8 @@ card =
           $.confirm
             title: 'Confirm Charge'
             body: 'Your current statement will be processed with this request.'
-            action: -> card.process()
+            actions:
+              confirm: -> card.process()
         else
           card.process()
       false

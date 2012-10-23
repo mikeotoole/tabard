@@ -35,7 +35,8 @@ card =
           $.confirm
             title: 'Confirm Charge'
             body: 'This will submit a payment with the card you provided and configure your recurring monthly subscription.'
-            action: -> card.process()
+            actions:
+              confirm: -> card.process()
         else
           card.process()
       false

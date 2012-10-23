@@ -7,11 +7,10 @@ jQuery(document).ready ($) ->
         $.confirm
           title: 'Discard Changes?'
           body: 'Your changes will be lost if you switch roles without saving first. Are you sure you want to discard your changes to this role?'
-          affirm: 'Discard'
-          cancel: 'Go back'
-          action: ->
-            $('#role').data 'changed', false
-            $(link).trigger 'click'
+          actions:
+            discard: ->
+              $('#role').data 'changed', false
+              $(link).trigger 'click'
         return false
       return true
     .on 'ajax:before', 'a', ->
@@ -19,7 +18,7 @@ jQuery(document).ready ($) ->
       $('#permissions > dd').slideUp 200
     .on 'ajax:error', 'a', (xhr, status, error) ->
       $('#roles, #role').removeClass 'busy'
-      $.alert body: 'Error: unable to load role.'
+      $.alert 'Error: unable to load role.'
     .on 'ajax:success', 'a', (event, data, status, xhr) ->
       $('#roles a').removeClass 'active'
       $(@).addClass 'active'
@@ -43,7 +42,7 @@ jQuery(document).ready ($) ->
       $('#roles, #role').addClass 'busy'
     .on 'ajax:error', 'form', (xhr, status, error) ->
       $('#roles, #role').removeClass 'busy'
-      $.alert body: 'Error: unable to save role.'
+      $.alert 'Error: unable to save role.'
     .on 'ajax:success', 'form', (event, data, status, xhr) ->
       $('#roles, #role').removeClass 'busy'
       response = $.parseJSON xhr.responseText
@@ -60,6 +59,6 @@ jQuery(document).ready ($) ->
             'data-remote': 'true'
         $('#role').html(response.form).find('.slider').trigger('init') if response.form?
       else if response.error?
-        $.alert body: response.error
+        $.alert response.error
       else
         $(@).trigger 'ajax:error'

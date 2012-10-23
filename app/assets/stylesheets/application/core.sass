@@ -1237,7 +1237,7 @@ body.busy:before
   top: 0
   z-index: 100
 
-#modal,
+body > .modal,
 .wmd-prompt-dialog
   background: #eee
   +bg_gradient(#dddddd,#ffffff)
@@ -1307,13 +1307,13 @@ body.busy:before
     bottom: 10px
     position: absolute
     right: 10px
-    
     button,
     input[type="button"]
-      +bg_gradient(#d24723,#792b28)
+      background: #777
+      +bg_gradient(#888888,#666666)
       border: 1px solid #eee
       +border_radius(3)
-      color: #f8d5bb
+      color: #eee
       display: inline-block
       float: left
       height: 30px
@@ -1322,29 +1322,29 @@ body.busy:before
       padding: 0 15px
       text-decoration: none
       text-shadow: 0 -1px 1px #000
+      text-transform: capitalize
       +transition(box-shadow .2s linear)
-      
       &:focus,
       &:hover
-        +bg_gradient(#e05c2e,#9e3834)
-        +box_shadow(0 0 10px #aaa)
+        +bg_gradient(#999999,#777777)
         color: #fff
-      
-      &.cancel
-        background: #777
-        +bg_gradient(#888888,#666666)
-        color: #eee
-        
+      &:last-of-type
+        +bg_gradient(#d24723,#792b28)
+        color: #f8d5bb
         &:focus,
         &:hover
-          +bg_gradient(#999999,#777777)
+          +bg_gradient(#e05c2e,#9e3834)
+          +box_shadow(0 0 10px #aaa)
           color: #fff
 
   &.prompt
     padding: 0 0 20px
 
-#modal
+body > .modal
+  display: none
   padding: 0 0 20px
+  &:last-of-type
+    display: block
 
 .wmd-prompt-dialog form
   padding: 0 0 40px

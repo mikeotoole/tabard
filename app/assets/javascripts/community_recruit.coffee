@@ -11,7 +11,7 @@ jQuery(document).ready ($) ->
       return unless key is 13
       recruit = $.trim($(@).val()).toLowerCase()
       return if recruit is ''
-      return $.alert body: 'Invalid email address.' unless recruit.match /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/i
+      return $.alert 'Invalid email address.' unless recruit.match /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/i
       $(@).val ''
       return if recruit in emails
       emails.push recruit

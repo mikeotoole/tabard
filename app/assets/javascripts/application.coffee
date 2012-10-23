@@ -1,7 +1,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
-//= require 'chosen.jquery.min.js'
+//= require modal
 
 
 # global var access
@@ -10,88 +10,25 @@ root = exports ? this
 
 ((jQuery) ->
 
-  # alert box
   $.alert = (options) ->
-    document.activeElement.blur()
-    title = options['title'] or= ''
-    body = options['body'] or= ''
-    button = options['button'] or= 'Ok'
-    action = options['action']
-    $('body').append('<div id="mask"></div><div id="modal" class="alert"><div class="actions"><button>' + button + '</button></div></div>')
-    $('#modal').prepend('<p>' + body + '</p>') if body
-    $('#modal').prepend('<h1>' + title + '</h1>') if title
-    $('#mask').remove() if $('.wmd-prompt-background').length
-    $('#mask, .wmd-prompt-background')
-      .css(opacity: 0)
-      .animate({ opacity: .7 }, 400, 'linear')
-    $('#modal')
-      .css({ opacity: 0, marginLeft: -500 })
-      .animate({ opacity: 1, marginLeft: -250 }, 200)
-    $('#modal button').click action if action
-    $('#modal button').click ->
-      $('#modal, .wmd-prompt-dialog').animate { marginTop: 0, opacity: 0 }, 300
-      $('#mask, .wmd-prompt-background').animate { opacity: 0 }, 600, ->
-        $('#mask, .wmd-prompt-background, #modal').remove()
-    setTimeout ->
-      $(document).on 'keypress', ->
-        $('#modal button').trigger 'click'
-        $(document).off 'keypress'
-    , 300
-        
-  # confirm box
+    options.type = 'alert'
+    options = body: options if typeof(options) is 'string'
+    new Modal options
+
   $.confirm = (options) ->
-    title = options['title'] or= ''
-    body = options['body'] or= ''
-    cancel = options['cancel'] or= 'Cancel'
-    affirm = options['affirm'] or= 'Continue'
-    action = options['action']
-    dismiss = ->
-      $('#modal, .wmd-prompt-dialog').animate { marginTop: 0, opacity: 0 }, 300
-      $('#mask, .wmd-prompt-background').animate { opacity: 0 }, 600, ->
-        $('#mask, .wmd-prompt-background, #modal').remove()
-    $('body').append('<div id="mask"></div><div id="modal" class="confirm"><h1>' + title + '</h1><p>' + body + '</p><div class="actions"><button class="cancel">' + cancel + '</button><button class="affirm">' + affirm + '</button></div></div>')
-    $('#mask').remove() if $('.wmd-prompt-background').length
-    $('#mask, .wmd-prompt-background')
-      .css({ opacity: 0 })
-      .animate({ opacity: .7 }, 400, 'linear')
-      .click ->
-        $('#modal, .wmd-prompt-dialog').find('.cancel').trigger 'click'
-    $('#modal')
-      .css({ opacity: 0, marginLeft: -500 })
-      .animate({ opacity: 1, marginLeft: -250 }, 200)
-    $('#modal button.cancel').click dismiss
-    $('#modal button.affirm').click ->
-      action()
-      dismiss()
-        
-  # prompt input box
-  $.prompt = (options) ->
-    require = options['require'] or= false
-    title = options['title'] or= ''
-    body = options['body'] or= ''
-    cancel = options['cancel'] or= 'Cancel'
-    affirm = options['affirm'] or= 'Submit'
-    action = options['action']
-    dismiss = ->
-      $('#modal, .wmd-prompt-dialog').animate { marginTop: 0, opacity: 0 }, 300
-      $('#mask, .wmd-prompt-background').animate { opacity: 0 }, 600, ->
-        $('#mask, .wmd-prompt-background, #modal').remove()
-    $('body').append('<div id="mask"></div><div id="modal" class="prompt"><h1>' + title + '</h1><p>' + body + '</p><p><input type="text" id="prompt" /></p><div class="actions">' + (if !require then '<button class="cancel">' + cancel + '</button>' else '') + '<button class="affirm">' + affirm + '</button></div></div>')
-    $('#mask').remove() if $('.wmd-prompt-background').length
-    $('#mask, .wmd-prompt-background')
-      .css({ opacity: 0 })
-      .animate({ opacity: .7 }, 400, 'linear')
-      .click ->
-        $('#modal, .wmd-prompt-dialog').find('.cancel').trigger 'click'
-    $('#modal')
-      .css({ opacity: 0, marginLeft: -500 })
-      .animate({ opacity: 1, marginLeft: -250 }, 200)
-    $('#prompt').focus ->
-      $(@).select()
-    $('#modal button.cancel').click dismiss if !require
-    $('#modal button.affirm').click ->
-      action($('#modal #prompt').val())
-      dismiss()
+    options.type = 'confirm'
+    options.actions = $.extend {cancel: (-> true)}, options.actions unless options.actions.cancel?
+    new Modal options
+
+  $.prompt = (options, callback) ->
+    options.type = 'prompt'
+    options.body = '' unless options.body?
+    options.body += '<p><input type="text" class="prompt" /></p>'
+    options['require'] = true unless options.require?
+    options.actions = $.extend {cancel: (-> true)}, options.actions unless options.actions.cancel?
+    modal = new Modal options
+    setTimeout (-> modal.$modal.find('.prompt').focus()), 10
+    modal
 
   $.flash = (type, html) ->
     $('<ul id="flash">').insertAfter '#bar' unless $('#flash').length
@@ -99,7 +36,6 @@ root = exports ? this
     adjustHeaderByFlash()
 
 ) jQuery
-
 
 # Adjust page to accomodate flash messages
 adjustHeaderByFlash = (speed,rowOffset=0) ->
@@ -114,7 +50,6 @@ adjustHeaderByFlash = (speed,rowOffset=0) ->
       $('.sidemenu, .editor, #wmd-fields, #wmd-preview, #mailbox, #message, #message header .actions, #calendar')
         .animate({ top: (amount + 70) + 'px' }, speed)
 
-
 jQuery(document).ready ($) ->
 
   # dynamic loaded content after page load
@@ -122,7 +57,7 @@ jQuery(document).ready ($) ->
     .on 'ajax:before', '.dynload', ->
       $($(@).attr('data-target')).addClass('busy')      
     #.on 'ajax:error', '.dynload', (xhr, status, error) ->
-    #  $.alert body: $(@).attr('data-error') if errormsg
+    #  $.alert $(@).attr('data-error') if errormsg
     .on 'ajax:success', '.dynload', (event, data, status, xhr) ->
       $($(@).attr('data-target'))
         .removeClass('busy')
@@ -166,10 +101,10 @@ jQuery(document).ready ($) ->
     else
       $.confirm
         body: element.data 'confirm'
-        action: ->
-          element.data 'affirm', yes
-          element.click()
-          $('#modal button.cancel').trigger 'click'
+        actions:
+          continue: ->
+            element.data 'affirm', yes
+            element.click()
       false
 
   # Batch actions
@@ -202,8 +137,8 @@ jQuery(document).ready ($) ->
         row = $(@).closest('li')
         $.alert
           body: error
-          action: ->
-            row.removeClass('busy')
+          actions:
+            ok: -> row.removeClass('busy')
       .on 'ajax:success', (event, data, status, xhr) ->
         $('#bar .notice a').each ->
           num = $(@).attr('meta') - 1

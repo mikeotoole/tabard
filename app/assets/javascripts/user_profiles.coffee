@@ -6,7 +6,7 @@ jQuery(document).ready ($) ->
       $(@).closest('dt').find('+ dd').html ''
     # Announcements
     .on 'ajax:error', 'dt.announcements + dd form', (xhr, status, error) ->
-      $.alert body: 'Unable to mark announcements as read.'
+      $.alert 'Unable to mark announcements as read.'
     .on 'ajax:complete', 'dt.announcements + dd form', (event, data, status, xhr) ->
       $('#tabs dt.announcements a').trigger 'click'
     # Update window history on tabl switching
@@ -44,7 +44,7 @@ jQuery(document).ready ($) ->
   # Batch invites action
   $('#body')
     .on 'ajax:error', '#invites_batch', (xhr, status, error) ->
-      $.alert body: error
+      $.alert error
     .on 'ajax:success', '#invites_batch', (event, data, status, xhr) ->
       response = $.parseJSON xhr.responseText
       if response.success
@@ -55,7 +55,7 @@ jQuery(document).ready ($) ->
         else
           $('#bar .dashboard .calendar a').removeAttr 'meta'
       else
-        $.alert body: response.message
+        $.alert response.message
 
   # Role assignment toggling
   $('#body')
@@ -70,4 +70,4 @@ jQuery(document).ready ($) ->
         else
           $(@).closest('li').removeClass 'checked'
       else
-        $.alert body: 'Error. Unable to assign role.'
+        $.alert 'Error. Unable to assign role.'

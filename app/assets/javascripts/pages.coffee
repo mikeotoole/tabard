@@ -14,8 +14,8 @@ jQuery(document).ready ($) ->
     $.prompt
       title: 'Insert Image'
       body: 'Paste a link to the image below:'
-      action: (link) ->
-        callback(link)
+      actions:
+        submit: (modal) -> callback(modal.$modal.find('.prompt').val())
     setTimeout ->
       $('#prompt').val('http://').focus()
     , 100

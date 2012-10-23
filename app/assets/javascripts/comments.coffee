@@ -31,7 +31,7 @@ jQuery(document).ready ($) ->
   # Inserts a new comment form beneath the comment being replied to 
   $('.comments .reply[data-remote]')
     .live 'ajax:error', (xhr, status, error) ->
-      $.alert body: 'Unable to make comment.'
+      $.alert 'Unable to make comment.'
     .live 'ajax:success', (event, data, status, xhr) ->
       li = $(@).closest 'li'
       bq = li.find '>blockquote'
@@ -50,7 +50,7 @@ jQuery(document).ready ($) ->
   # Inserts the a form into the DOM to edit the current comment
   $('.comments .edit[data-remote]')
     .live 'ajax:error', (xhr, status, error) ->
-      $.alert body: 'Unable to edit comment.'
+      $.alert 'Unable to edit comment.'
     .live 'ajax:success', (event, data, status, xhr) ->
       li = $(@).closest 'li'
       bq = li.find '>blockquote'
@@ -63,7 +63,7 @@ jQuery(document).ready ($) ->
   # Deletes a comment and updates the DOM
   $('.comments .delete[data-remote]')
     .live 'ajax:error', (event, data, status, xhr) ->
-      $.alert body: 'Unable to delete comment.'
+      $.alert 'Unable to delete comment.'
     .live 'ajax:success', (xhr, status, error) ->
       li = $(@).closest 'li'
       bq = li.find '>blockquote'
@@ -87,7 +87,7 @@ jQuery(document).ready ($) ->
   # Locks a comment and updates the DOM
   $('.comments .lock[data-remote]')
     .live 'ajax:error', (xhr, status, error) ->
-      $.alert body: 'Unable to lock comment.'
+      $.alert 'Unable to lock comment.'
     .live 'ajax:success', (event, data, status, xhr) ->
       li = $(@).closest 'li'
       li
@@ -99,7 +99,7 @@ jQuery(document).ready ($) ->
   # Unlocks a comment and updates the DOM
   $('.comments .unlock[data-remote]')
     .live 'ajax:error', (xhr, status, error) ->
-      $.alert body: 'Unable to unlock comment.'
+      $.alert 'Unable to unlock comment.'
     .live 'ajax:success', (event, data, status, xhr) ->
       li = $(@).closest('li')
       li.before(xhr.responseText)
@@ -128,7 +128,7 @@ jQuery(document).ready ($) ->
           $(@).addClass 'busy'
         .bind 'ajax:error', (xhr, status, error) ->
           $(@).removeClass 'busy'
-          $.alert body: 'Error: unable to post comment.'
+          $.alert 'Error: unable to post comment.'
           $(@).find('textarea').focus()
         .bind 'ajax:success', (event, data, status, xhr) ->
           if $(@).parents('li').length
