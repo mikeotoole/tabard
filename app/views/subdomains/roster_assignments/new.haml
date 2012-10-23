@@ -1,8 +1,10 @@
+- content_for :footer do
+  = javascript_include_tag 'roster_assignments'
+
 %h1 My Roster Assigments
 %p
   This page keeps track of which of your characters are members of
   %strong= current_community.name
-
 
 - if @roster_assignments.any? or @available_characters.any?
   %table.my_roster
@@ -31,8 +33,18 @@
         %td
           - if @available_characters.any?
             = simple_form_for @roster_assignment, wrapper: false do |f|
-              = f.input :character_proxy_id, as: :radio, label: false, wrapper_tag: :div, wrapper_html: {class: 'select'}, collection: @available_characters.collect{|cp| cp = [raw(image_tag(cp.avatar_url(:icon), class: 'avatar')) + "#{cp.name} — #{cp.game_name}", cp.id]}
-              = f.input :supported_game_id, as: :radio, label: false, wrapper_tag: :div, wrapper_html: {class: 'select'}, collection: current_community.supported_games.includes(:community).collect{|sg| sg = [sg.smart_name, sg.id]}
+              .select.characters
+                %ul
+                  - @available_characters.each do |cp|
+                    %li{ 'data-game-type' => cp.game.class.to_s.downcase }
+                      = radio_button_tag 'roster_assignment[character_proxy_id]', cp.id
+                      = label_tag "roster_assignment_character_proxy_id_#{cp.id}", raw(image_tag(cp.avatar_url(:icon), class: 'avatar')) + "#{cp.name} — #{cp.game_name}"
+              .select.games
+                %ul
+                  - current_community.supported_games.includes(:community).each do |sg|
+                    %li{ 'data-game-type' => sg.game.class.to_s.downcase }
+                      = radio_button_tag 'roster_assignment[supported_game_id]', sg.id
+                      = label_tag "roster_assignment_supported_game_id_#{sg.id}", sg.smart_name
               %button{ type: 'submit' } Add character
         %td
 - else

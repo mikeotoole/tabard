@@ -22,6 +22,8 @@
             - else
               = image_tag ra.character_proxy_avatar_url(:icon), class: 'avatar icon'
               = ra.character_proxy_name
+    - elsif member_profile == current_user.user_profile
+      = link_to 'Add Characters', my_roster_assignments_url
     - else
       &mdash;
   %td
