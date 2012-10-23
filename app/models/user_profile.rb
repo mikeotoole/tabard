@@ -95,6 +95,7 @@ class UserProfile < ActiveRecord::Base
 # Callbacks
 ###
   nilify_blanks only: [:full_name, :description, :title, :location]
+  before_validation :set_display_name_if_nil
   after_create :create_mailboxes
   after_create :check_for_invites
 
@@ -421,6 +422,11 @@ protected
 ###
 # Callback Methods
 ###
+
+  def set_display_name_if_nil
+    self.display_name = self.gamer_tag if self.display_name.blank?
+  end
+
   ###
   # _after_create_
   #
@@ -457,5 +463,7 @@ end
 #  title             :string(255)
 #  location          :string(255)
 #  full_name         :string(255)
+#  gamer_tag         :string(255)
+#  slug              :string(255)
 #
 

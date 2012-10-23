@@ -28,7 +28,9 @@
 
 %h2 Add a comment
 = simple_form_for [@support_ticket, @support_comment], method: :post, as: :support_comment, url: support_comment_index_url(@support_ticket), html: {novalidate: true} do |f|
-  = f.input :body, wrapper_tag: :p, label: false
-  = f.input :close_comment, as: :boolean, label: "Close Ticket"
-  %p.submit
-    %button{ type: :submit } Add comment
+  %fieldset
+    %ol
+      = f.input :body, wrapper_tag: :p, label: false
+      = f.input :close_comment, as: :boolean, label: "Close Ticket"
+    %p.submit
+      %button{ type: :submit } Submit

@@ -18,6 +18,9 @@ jQuery(document).ready ($) ->
   # Links rom user bar that activate tabs instead of full page reloads
   if $('#body:has(header.myprofile)').length
     $('#bar')
+      .on 'click','.logo, .avatar > a', ->
+        $('#tabs dt.characters a').trigger 'click'
+        false
       .on 'click','.dashboard .notice a', ->
         $('#tabs dt.announcements a').trigger 'click'
         false
