@@ -372,9 +372,21 @@ protected
   # This method allows requests to be sent to www from community subdomains
   ###
   def set_access_control_headers
-    if !defined?(current_community) or (current_community == nil)
-      headers['Access-Control-Allow-Origin'] = '*'
-      headers['Access-Control-Request-Method'] = '*'
+    if current_community != nil
+      # Subdomain -> www request
+    else
+      # www -> subdomain request
+      origin = request.env['HTTP_ORIGIN']
+      begin
+        origin_uri = URI.parse(request.env['HTTP_ORIGIN'])
+        some_subdomain = origin_uri.hostname.split('.').first
+        # TODO add check to make sure this is ours....
+        if not origin.blank? and not some_subdomain.blank? and Community.where{subdomain == some_subdomain}.exists?
+          headers['Access-Control-Allow-Origin'] = request.env['HTTP_ORIGIN']
+          headers['Access-Control-Request-Method'] = '*'
+        end
+      rescue
+      end
     end
   end
 
