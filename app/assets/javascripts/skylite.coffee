@@ -1,4 +1,4 @@
-class window.Modal
+class window.Skylite
 
   constructor: (options) ->
     @[key] = option for key, option of options

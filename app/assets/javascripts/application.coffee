@@ -1,7 +1,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
-//= require modal
+//= require skylite
 
 
 # global var access
@@ -13,12 +13,12 @@ root = exports ? this
   $.alert = (options) ->
     options.type = 'alert'
     options = body: options if typeof(options) is 'string'
-    new Modal options
+    new Skylite options
 
   $.confirm = (options) ->
     options.type = 'confirm'
     options.actions = $.extend {cancel: (-> true)}, options.actions unless options.actions.cancel?
-    new Modal options
+    new Skylite options
 
   $.prompt = (options, callback) ->
     options.type = 'prompt'
@@ -26,7 +26,7 @@ root = exports ? this
     options.body += '<p><input type="text" class="prompt" /></p>'
     options['require'] = true unless options.require?
     options.actions = $.extend {cancel: (-> true)}, options.actions unless options.actions.cancel?
-    modal = new Modal options
+    modal = new Skylite options
     setTimeout (-> modal.$modal.find('.prompt').focus()), 10
     modal
 
