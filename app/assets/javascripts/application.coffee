@@ -11,8 +11,8 @@ root = exports ? this
 ((jQuery) ->
 
   $.alert = (options) ->
-    options.type = 'alert'
     options = body: options if typeof(options) is 'string'
+    options.type = 'alert'
     new Skylite options
 
   $.confirm = (options) ->
@@ -20,7 +20,7 @@ root = exports ? this
     options.actions = $.extend {cancel: (-> true)}, options.actions unless options.actions.cancel?
     new Skylite options
 
-  $.prompt = (options, callback) ->
+  $.prompt = (options) ->
     options.type = 'prompt'
     options.body = '' unless options.body?
     options.body += '<p><input type="text" class="prompt" /></p>'
@@ -29,6 +29,16 @@ root = exports ? this
     modal = new Skylite options
     setTimeout (-> modal.$modal.find('.prompt').focus()), 10
     modal
+
+  $.profile = (options) ->
+    options = body: options if typeof(options) is 'string'
+    options.type = 'profile'
+    options.actions = $.extend {
+      message: ((modal) -> document.location = modal.$modal.find('.avatar').attr('href').replace('/profiles/', 'mail/compose'))
+      'View Profile': ((modal) -> document.location = modal.$modal.find('.avatar').attr('href'))
+      close: (-> true)
+    }, (options.actions ? {})
+    new Skylite options
 
   $.flash = (type, html) ->
     $('<ul id="flash">').insertAfter '#bar' unless $('#flash').length
@@ -63,6 +73,18 @@ jQuery(document).ready ($) ->
         .removeClass('busy')
         .html(xhr.responseText)
   $('.dynload:not(.wait)').trigger 'click'
+
+  # Wire links to profile modals
+  $('body')
+    .on 'ajax:before', 'a.profile[data-remote]', ->
+      $(@).data 'type', 'json'
+    .on 'ajax:error', 'a.profile[data-remote]', (xhr, status, error) ->
+      $.alert error
+    .on 'ajax:success', 'a.profile[data-remote]', (event, data, status, xhr) ->
+      if data.success
+        $.profile data.html
+      else
+        $.alert data.text
 
   # Improved select box functionality
   $('body')

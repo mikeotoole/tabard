@@ -3,7 +3,7 @@ class window.Skylite
   constructor: (options) ->
     @[key] = option for key, option of options
 
-    @$modal = $("<div class='modal #{options.type}'>")
+    @$modal = $("<div class='modal #{@type}'>")
     $("<h1>#{@title}</h1>").appendTo @$modal if @title?
     $("<p>#{@body}</p>").appendTo @$modal if @body?
     @$actions = $("<div class='actions'>")
@@ -13,7 +13,7 @@ class window.Skylite
       $.each @actions, (text, action) =>
         $("<button>")
           .text(text)
-          .addClass(text.toLowerCase().replace(/[a-z]/g,''))
+          .addClass(text.toLowerCase().replace(/[^a-z]/g,''))
           .click(=> action(@); @dismiss())
           .appendTo @$actions
     else
@@ -25,12 +25,15 @@ class window.Skylite
 
     # Add a hotkey to auto-click the last action on press(enter) on a delay
     setTimeout =>
-      $(document).on 'keypress', (e) =>
+      $(document).on 'keyup', (e) =>
         return unless @$modal.is ':last-of-type'
         key = e.keyCode ? e.which
-        return unless key is 13
-        @$actions.find('button:last').trigger 'click'
-        $(document).off 'keypress', false, @keypress
+        if key is 13 # Enter
+          @$actions.find('button:last').trigger 'click'
+          $(document).off 'keypress', false, @keypress
+        if key is 27 # Esc
+          @dismiss()
+          $(document).off 'keypress', false, @keypress
       , @keypress
     , 500
 

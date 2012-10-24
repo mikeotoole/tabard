@@ -1,0 +1,23 @@
+- is_my_profile = (user_signed_in? and user_profile == current_user.user_profile)
+- is_private = !(user_profile.publicly_viewable or (user_signed_in? and user_profile.id == current_user.user_profile_id))
+
+%h1
+  = link_to user_profile do
+    = shorten_words user_profile.display_name.to_s, 21
+
+%p
+  = link_to user_profile, class: 'avatar' do
+    = image_tag user_profile.avatar_url :small
+
+.stats
+  %dl
+    %dt Communities
+    %dd= user_profile.communities.size
+  %dl
+    %dt Characters
+    %dd= user_profile.characters.size
+  %dl
+    %dt Profile Age
+    %dd
+      - years_old = (Time.now - user_profile.created_at) / 1.years
+      = years_old < 1 ? (number_with_precision years_old, precision: 1) : years_old.floor

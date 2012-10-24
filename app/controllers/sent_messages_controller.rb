@@ -35,7 +35,7 @@ class SentMessagesController < MailboxController
 
   # GET /mail/compose(.:format)
   def new
-    to = ((params[:id] && current_user.address_book.collect{ |p| p.id.to_s }.flatten.include?(params[:id])) ? [params[:id]] : [])
+    to = ((params[:id] && current_user.address_book.collect{|p| p.slug}.flatten.include?(params[:id])) ? [params[:id]] : [])
     @message = current_user.sent_messages.build(to: to)
     authorize!(:create, @message)
     @mailbox_view_state = 'compose'

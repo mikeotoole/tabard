@@ -39,6 +39,9 @@ class ApplicationController < ActionController::Base
   # This before_filter checks browser is supported.
   before_filter :check_supported_browser
 
+  # Allow subdomains to punch through to www
+  after_filter :set_access_control_headers
+
 ###
 # Status Code Rescues
 ###
@@ -360,6 +363,18 @@ protected
     else
       session[:supported_browser] = false
       redirect_to unsupported_browser_url
+    end
+  end
+
+  ###
+  # _after_filter_
+  #
+  # This method allows requests to be sent to www from community subdomains
+  ###
+  def set_access_control_headers
+    if !defined?(current_community) or (current_community == nil)
+      headers['Access-Control-Allow-Origin'] = '*'
+      headers['Access-Control-Request-Method'] = '*'
     end
   end
 

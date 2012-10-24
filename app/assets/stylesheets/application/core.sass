@@ -1280,7 +1280,60 @@ body > .modal,
         background: #4B385C
         color: #fff
         text-decoration: none
-  
+
+  &.profile
+    height: 170px
+    h1
+      font-size: 35px
+      margin-top: -10px
+    .actions
+      .close
+        overflow: hidden
+        padding: 0
+        position: absolute
+        right: 0
+        text-indent: -500px
+        top: -140px
+        width: 30px
+        &:before
+          content: '\f001'
+          font: 25px Picara
+          left: 0
+          line-height: 25px
+          position: absolute
+          right: 0
+          text-align: center
+          text-indent: 0
+          top: 0
+    .avatar
+      background: #ccc
+      left: 20px
+      padding: 0
+      position: absolute
+      top: 70px
+      img
+        display: block
+    .stats
+      height: 60px
+      left: 80px
+      position: absolute
+      right: 10px
+      top: 70px
+      dl
+        border-right: 1px solid #ccc
+        color: #666
+        float: left
+        height: 60px
+        padding: 0 15px
+        &:last-child
+          border-right: 0
+        dt
+          font-size: 14px
+          line-height: 20px
+        dd
+          font-size: 30px
+          line-height: 40px
+
   textarea,
   input[type="text"],
   input[type="email"],

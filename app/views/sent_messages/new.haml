@@ -15,7 +15,7 @@
             - if @message.to
               %ul
                 - @message.to.each do |to|
-                  - if user_profile = UserProfile.find_by_id(to)
+                  - if user_profile = UserProfile.find(to)
                     = render 'sent_messages/to', user_profile: user_profile
 
     = f.input :body, as: :text, label: false, wrapper_tag: :article, input_html: { tabindex: 3 }
