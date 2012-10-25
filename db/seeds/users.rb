@@ -3,15 +3,17 @@
 ###
 
 # Create user
-def create_user(first_name, last_name, gamer_tag=nil)
-  puts "Creating User #{first_name} #{last_name}"
-  gamer_tag ||= "#{first_name}#{last_name}"
+def create_user(full_name, gamer_tag=nil)
+  puts "Creating User #{full_name}"
+  gamer_tag ||= "#{full_name}"
+  gamer_tag = gamer_tag[0..(UserProfile::MAX_GAMER_TAG_LENGTH-1)] if gamer_tag.length > UserProfile::MAX_GAMER_TAG_LENGTH
+  email = "#{gamer_tag}@digitalaugment.com"
   user = User.new(accepted_current_terms_of_service: true, accepted_current_privacy_policy: true,
-      email: "#{first_name.downcase}#{last_name.downcase}@digitalaugment.com",
-      email_confirmation: "#{first_name.downcase}#{last_name.downcase}@digitalaugment.com",
+      email: email,
+      email_confirmation: email,
       password: "Password",
       time_zone: -8,
-      user_profile_attributes: { full_name: "#{first_name} #{last_name}", gamer_tag: gamer_tag, display_name: gamer_tag },
+      user_profile_attributes: { full_name: full_name, gamer_tag: gamer_tag, display_name: gamer_tag },
       date_of_birth: 22.years.ago.to_date,
       is_email_on_message: false,
       is_email_on_announcement: false,
@@ -51,7 +53,7 @@ unless @dont_run
   Timecop.freeze(3.months.ago)
 
   USER_NAMES.each do |user|
-    create_user(user[0], user[1])
+    create_user(user.join(' '), user.join)
   end
 
   Timecop.return

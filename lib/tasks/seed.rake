@@ -29,16 +29,17 @@ namespace :seed do
 
     headshot = Community.find_by_name("Just Another Headshot")
     more_headshot = Community.find_by_name("Even More Headshots")
-    billy = UserProfile.find_by_last_name('Billy')
+    billy = UserProfile.find_by_full_name('RoboBilly')
 
-    ANIMAL_NAMES.each do |last_name|
-      create_user(ADJ_LIST[rand(ADJ_LIST.length)].capitalize, last_name)
-      create_empire_character(last_name, "Darth #{last_name}", 'Sith Warrior', 'Marauder', 'Zabrak', 45)
-      create_minecraft_character(last_name, "Boxy #{last_name}")
-      comm = create_community(last_name, "Sith #{last_name}s", "The #{ADJ_LIST[rand(ADJ_LIST.length)].capitalize} #{last_name}s will PWN you", %w(Empire))
-      generate_application(comm, 'Fox').accept_application(UserProfile.find_by_last_name(last_name))
-      generate_application(headshot, last_name).accept_application(billy)
-      generate_application(more_headshot, last_name)
+    ANIMAL_NAMES.each do |animal|
+      full_name = "#{ADJ_LIST[rand(ADJ_LIST.length)].capitalize} #{animal}"
+      create_user(full_name)
+      create_empire_character(animal, "Darth #{animal}", 'Sith Warrior', 'Marauder', 'Zabrak', 45)
+      create_minecraft_character(animal, "Boxy #{animal}")
+      comm = create_community(animal, "Sith #{animal}s", "The #{ADJ_LIST[rand(ADJ_LIST.length)].capitalize} #{animal}s will PWN you", %w(Empire))
+      generate_application(comm, 'Fox').accept_application(UserProfile.find_by_full_name(full_name))
+      generate_application(headshot, animal).accept_application(billy)
+      generate_application(more_headshot, animal)
     end
   end
 
