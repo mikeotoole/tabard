@@ -55,7 +55,7 @@ class Subdomains::InvitesController < SubdomainsController
 ###
   # This method returns the current game that is in scope.
   def current_game
-    @invite.supported_game if @invite and @invite.persisted?
+    @invite.community_game if @invite and @invite.persisted?
   end
   helper_method :current_game
 end

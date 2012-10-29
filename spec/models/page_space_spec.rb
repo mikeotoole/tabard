@@ -9,6 +9,7 @@
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  deleted_at        :datetime
+#  community_game_id :integer
 #
 
 require 'spec_helper'
@@ -44,7 +45,7 @@ describe PageSpace do
   end 
   
   it "game_name should return game name if there is a game" do
-    wow_space.game_name.should eq(wow_space.supported_game.full_name)
+    wow_space.game_name.should eq(wow_space.community_game.full_name)
   end
   
   describe "destroy" do

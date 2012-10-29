@@ -2,14 +2,14 @@
 # Helpers
 ###
 
-def create_event(community_name, name, body, start_in_days, hours, creator_full_name, invite_full_name_array, game_type=nil)
+def create_event(community_name, name, body, start_in_days, hours, creator_full_name, invite_full_name_array, game_id=nil)
   community = Community.find_by_name(community_name)
   user_profile = UserProfile.find_by_full_name(creator_full_name)
-  supported_game = game_type ? community.supported_games.find_by_game_type(game_type).first : nil
+  community_game = game_id ? community.community_games.find_by_game_id(game_id).first : nil
   start_time = Date.today + start_in_days.days
   end_time = start_time.in(3600 * hours)
   puts "#{user_profile.name} is creating #{community_name} Event #{name}"
-  event = community.events.new(name: name, body: body, start_time: start_time, end_time: end_time, supported_game: supported_game)
+  event = community.events.new(name: name, body: body, start_time: start_time, end_time: end_time, community_game: community_game)
   event.creator = user_profile
   event.save!
 

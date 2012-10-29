@@ -10,6 +10,7 @@
 #  updated_at           :datetime         not null
 #  deleted_at           :datetime
 #  supported_game_id    :integer
+#  community_game_id    :integer
 #
 
 require 'spec_helper'
@@ -29,7 +30,7 @@ describe RosterAssignment do
 
   describe "community_profile" do
   	it "should be required" do
-      build(:roster_assignment, :community_profile => nil, :supported_game => nil).should_not be_valid
+      build(:roster_assignment, :community_profile => nil, :community_game => nil).should_not be_valid
     end
   end
 
@@ -40,7 +41,7 @@ describe RosterAssignment do
   end
 
   it "should enforce character non-duplication within a roster" do
-    RosterAssignment.new(:character_proxy => roster_assignment.character_proxy, :community_profile => roster_assignment.community_profile, :supported_game => roster_assignment.supported_game).should_not be_valid
+    RosterAssignment.new(:character_proxy => roster_assignment.character_proxy, :community_profile => roster_assignment.community_profile, :community_game => roster_assignment.community_game).should_not be_valid
   end
 
   describe "approve" do

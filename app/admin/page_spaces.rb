@@ -17,7 +17,7 @@ ActiveAdmin.register PageSpace do
       link_to page_space.community_name, [:alexandria, page_space.community]
     end
     column :name
-    column :supported_game, sortable: :supported_game_id
+    column :community_game, sortable: :community_game_id
     column :created_at
   end
 
@@ -37,7 +37,7 @@ ActiveAdmin.register PageSpace do
 
   form do |f|
     f.inputs "Page Space Details" do
-      f.input :supported_game, collection: f.object.community.supported_games
+      f.input :community_game, collection: f.object.community.community_games
       f.input :name
     end
     f.buttons

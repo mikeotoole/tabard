@@ -50,7 +50,7 @@ class Invite < ActiveRecord::Base
   validates :user_profile,  presence: true
   validate :character_is_valid_for_user_profile
 
-  delegate :supported_game, to: :event, allow_nil: true
+  delegate :community_game, to: :event, allow_nil: true
   delegate :community, to: :event, allow_nil: true
   delegate :community_subdomain, to: :event, allow_nil: true
   delegate :community_name, to: :event, allow_nil: true

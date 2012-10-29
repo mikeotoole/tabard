@@ -9,11 +9,11 @@ FactoryGirl.define do
   end
 
   factory :wow_event, :parent => :event do
-    supported_game_id { create(:wow_supported_game).id }
+    community_game_id { create(:wow_community_game).id }
   end
 
   factory :swtor_event, :parent => :event do
-    supported_game_id { create(:swtor_supported_game).id }
+    community_game_id { create(:swtor_community_game).id }
   end
 
   factory :private_event, :parent => :event do

@@ -50,12 +50,12 @@
             - if user_signed_in? and current_user.is_member? current_community
               %li
                 = link_to 'Announcements', announcements_url
-                - if current_community.supported_games.any?
+                - if current_community.community_games.any?
                   %ul
                     %li= link_to 'Community Announcements', community_announcements_url
-                    - current_community.supported_games.includes(:community, :game).each do |supported_game|
-                      - if supported_game.persisted?
-                        %li= link_to supported_game.smart_name, game_announcements_url(supported_game)
+                    - current_community.community_games.includes(:community, :game).each do |community_game|
+                      - if community_game.persisted?
+                        %li= link_to community_game.smart_name, game_announcements_url(community_game)
             - if can? :index, PageSpace
               %li
                 = link_to 'Wiki', page_spaces_url
@@ -66,10 +66,10 @@
             - if current_community.is_public_roster or (user_signed_in? and current_user.is_member? @community and @community.custom_forms.published.any?)
               %li
                 = link_to 'Members', roster_assignments_url
-                - if current_community.supported_games.any? and supported_games = current_community.supported_games.reject{|sg| !sg.persisted?} and supported_games.size > 1
+                - if current_community.community_games.any? and community_games = current_community.community_games.reject{|sg| !sg.persisted?} and community_games.size > 1
                   %ul
-                    - supported_games.each do |supported_game|
-                      %li= link_to supported_game.smart_name, game_roster_assignments_url(supported_game)
+                    - community_games.each do |community_game|
+                      %li= link_to community_game.smart_name, game_roster_assignments_url(community_game)
             - if user_signed_in? and current_user.is_member? current_community and form_items.any?
               %li
                 = link_to 'Forms', custom_forms_url

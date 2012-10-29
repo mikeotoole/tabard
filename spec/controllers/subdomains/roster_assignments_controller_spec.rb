@@ -22,13 +22,13 @@ describe Subdomains::RosterAssignmentsController do
   let(:billy) { create(:billy) }
   let(:user_profile) { create(:user_profile) }
   let(:user) { user_profile.user }
-  let(:community) { create(:community_with_supported_games) }
+  let(:community) { create(:community_with_community_games) }
   let(:admin_user) { community.admin_profile.user }
   let(:community_profile) { admin_user.community_profiles.first }
   let(:character_proxy) { create(:character_proxy_with_wow_character, :user_profile => admin_user.user_profile)}
   let(:character_proxy2) { create(:character_proxy_with_wow_character, :user_profile => admin_user.user_profile)}
-  let(:roster_assignment) { create(:roster_assignment, :community_profile => community_profile, :character_proxy => character_proxy, :supported_game => community.supported_games.where(:game_type => "Wow").first)}
-  let(:roster_assignment2) { create(:roster_assignment, :community_profile => community_profile, :character_proxy => character_proxy2, :supported_game => community.supported_games.where(:game_type => "Wow").first)}
+  let(:roster_assignment) { create(:roster_assignment, :community_profile => community_profile, :character_proxy => character_proxy, :community_game => community.community_games.where(:game_type => "Wow").first)}
+  let(:roster_assignment2) { create(:roster_assignment, :community_profile => community_profile, :character_proxy => character_proxy2, :community_game => community.community_games.where(:game_type => "Wow").first)}
   let(:roster_assignment_id_array) { [[roster_assignment.id], [roster_assignment2.id]] }
   let(:roster_assignment_att) { attributes_for(:roster_assignment, :community_profile => community_profile, :character_proxy => character_proxy) }
 

@@ -32,13 +32,13 @@ class Event < ActiveRecord::Base
 # Attribute accessible
 ###
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :name, :invites_attributes, :body, :start_time, :end_time, :supported_game_id, :supported_game, :is_public, :location,
+  attr_accessible :name, :invites_attributes, :body, :start_time, :end_time, :community_game_id, :community_game, :is_public, :location,
                   :start_time_date, :start_time_hm, :end_time_date, :end_time_hm
 
 ###
 # Associations
 ###
-  belongs_to :supported_game
+  belongs_to :community_game
   belongs_to :creator, class_name: "UserProfile"
   belongs_to :community
   has_many :invites, inverse_of: :event, include: :user_profile, order: 'LOWER(user_profiles.display_name) ASC', dependent: :destroy
@@ -68,7 +68,7 @@ class Event < ActiveRecord::Base
 ###
   delegate :display_name, to: :creator, prefix: true, allow_nil: true
   delegate :avatar_url, to: :creator, prefix: true, allow_nil: true
-  delegate :smart_name, to: :supported_game, prefix: true, allow_nil: true
+  delegate :smart_name, to: :community_game, prefix: true, allow_nil: true
   delegate :subdomain, to: :community, prefix: true, allow_nil: true
   delegate :name, to: :community, prefix: true, allow_nil: true
   delegate :member_profiles, to: :community, prefix: true, allow_nil: true
@@ -198,5 +198,6 @@ end
 #  location          :string(255)
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  community_game_id :integer
 #
 

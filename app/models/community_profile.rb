@@ -65,13 +65,13 @@ class CommunityProfile < ActiveRecord::Base
   delegate :is_email_on_announcement, to: :user_profile
 
   ###
-  # This method determines if this community profile has character that matches supported game.
+  # This method determines if this community profile has character that matches Community game.
   # [Args]
-  #   * +supported_game+ -> The supported game.
+  #   * +community_game+ -> The supported game.
   ###
-  def has_character_that_matches_supported_game(supported_game)
+  def has_character_that_matches_community_game(community_game)
     self.character_proxies.each do |proxy|
-      return true if proxy.game.class.to_s == supported_game.game_type
+      return true if proxy.game.class.to_s == community_game.game_type
     end
     return false
   end

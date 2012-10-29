@@ -9,11 +9,11 @@
         %th Joined
         %th.actions
     %tbody
-      = render 'row', member_profile: current_community.admin_profile, supported_game: supported_game, profile_type: 'admin' unless params[:page] or not member_profiles.include?(current_community.admin_profile)
+      = render 'row', member_profile: current_community.admin_profile, community_game: community_game, profile_type: 'admin' unless params[:page] or not member_profiles.include?(current_community.admin_profile)
       - if member_profiles.any?
         - member_profiles.each do |member_profile|
           - next if member_profile == current_community.admin_profile
-          = render 'row', member_profile: member_profile, supported_game: supported_game, profile_type: 'user'
+          = render 'row', member_profile: member_profile, community_game: community_game, profile_type: 'user'
     %tfoot
       %tr
         %td{ colspan: 5, class: 'batch' }

@@ -30,10 +30,10 @@ ActiveAdmin.register Wow, as: "Wow" do
     attributes_table *default_attribute_table_rows
 
     div do
-      panel("Supported Games") do
-        table_for(wow.supported_games) do
-          column "Name" do |supported_game|
-            link_to supported_game.name, [:alexandria, supported_game]
+      panel("Community Games") do
+        table_for(wow.community_games) do
+          column "Name" do |community_game|
+            link_to community_game.name, [:alexandria, community_game]
           end
           column :game_full_name
         end

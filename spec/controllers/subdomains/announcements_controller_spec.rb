@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Subdomains::AnnouncementsController do
-  let(:community) { create(:community_with_supported_games) }
+  let(:community) { create(:community_with_community_games) }
   let(:admin) { community.admin_profile.user }
   let(:member) { create(:user_profile_with_characters).user }
   let(:non_member) { create(:user_profile).user }
@@ -20,7 +20,7 @@ describe Subdomains::AnnouncementsController do
         )
       mapping = Hash.new
       application.character_proxies.each do |proxy|
-        sp = community.supported_games.where(:game_type => proxy.game.class.to_s).first
+        sp = community.community_games.where(:game_type => proxy.game.class.to_s).first
         mapping[proxy.id.to_s] = sp.id if sp
       end
       application.accept_application(community.admin_profile,mapping)

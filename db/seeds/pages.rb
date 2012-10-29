@@ -8,22 +8,19 @@ def create_page_space(creator_full_name, community_name, space_name, faction='')
   community = Community.find_by_name(community_name)
 
   case faction
-    when 'Horde'
-      game = Wow.find(:first, conditions: {faction: "Horde"})
-    when 'Alliance'
-      game = Wow.find(:first, conditions: {faction: "Alliance"})
-    when 'Empire'
-      game = Swtor.find(:first, conditions: {faction: "Empire"})
-    when 'Republic'
-      game = Swtor.find(:first, conditions: {faction: "Republic"})
+    when 'Horde', 'Alliance'
+      game = Wow.all.first
+    when 'Empire', 'Republic'
+      game = Swtor.all.first
     else
       game = nil
   end
-  supported_game = game ? community.supported_games.find_by_game_id_and_game_type(game.id, game.class.name) : nil
+  community_game = game ? CommunityGame.find_by_game_and_faction(community, game, faction) : nil
+
   creator = UserProfile.find_by_full_name(creator_full_name)
 
-  puts "With game #{supported_game.game_full_name}" if supported_game
-  ps = community.page_spaces.create!(name: space_name, supported_game: supported_game)
+  puts "With game #{community_game.game_full_name}" if community_game
+  ps = community.page_spaces.create!(name: space_name, community_game: community_game)
   Activity.create!({user_profile: creator, community: community, target: ps, action: "created"}, without_protection: true)
   return ps
 end

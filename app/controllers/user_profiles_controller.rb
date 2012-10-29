@@ -123,7 +123,7 @@ class UserProfilesController < ApplicationController
     @activities_count_increment = 10
     updated = !!params[:updated] ? params[:updated] : nil
     count = !!params[:max_items] ? params[:max_items] : @activities_count_initial
-    @activities = Activity.activities({ user_profile_id: @user_profile.id }, updated, count).includes(:user_profile, :target, page: [:page_space], supported_game: [:community, :game], community: [:member_role])
+    @activities = Activity.activities({ user_profile_id: @user_profile.id }, updated, count).includes(:user_profile, :target, page: [:page_space], community_game: [:community, :game], community: [:member_role])
   end
 
   # Gets the user profile by ID

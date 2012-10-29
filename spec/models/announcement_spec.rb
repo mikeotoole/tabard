@@ -14,6 +14,7 @@
 #  has_been_edited    :boolean          default(FALSE)
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  community_game_id  :integer
 #
 
 require 'spec_helper'

@@ -41,9 +41,9 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
 
   # GET /roster_assignments/game/:id(.:format)
   def game
-    @supported_game = current_community.supported_games.find_by_id(params[:id])
-    if !!@supported_game
-      @member_profiles = Kaminari.paginate_array(@supported_game.member_profiles).page params[:page]
+    @community_game = current_community.community_games.find_by_id(params[:id])
+    if !!@community_game
+      @member_profiles = Kaminari.paginate_array(@community_game.member_profiles).page params[:page]
     else
       redirect_to not_found_url
     end
@@ -156,8 +156,8 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   # This before filter attempts to populate @roster_assignments and @roster_assignment for the current_community and current_user.
   ###
   def load_roster_assignment
-    if @supported_game
-      @roster_assignments = current_community.roster_assignments.where(supported_game: @supported_game)
+    if @community_game
+      @roster_assignments = current_community.roster_assignments.where(community_game: @community_game)
     else
       @roster_assignments = current_community.roster_assignments
     end

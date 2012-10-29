@@ -19,7 +19,8 @@ class Wow < Game
 # Attribute accessible
 ###
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :faction, :server_name, :server_type
+#   attr_accessible :faction, :server_name, :server_type
+  attr_accessible :servers
 
 ###
 # Associations
@@ -29,12 +30,12 @@ class Wow < Game
 ###
 # Validators
 ###
-  validates :faction,  presence: true,
-                    inclusion: { in: VALID_FACTIONS, message: "%{value} is not a valid faction." }
-  validates :server_type,  presence: true,
-                    inclusion: { in: VALID_SERVER_TYPES, message: "%{value} is not a valid server type." }
-  validates :server_name, presence: true,
-                    uniqueness: {case_sensitive: false, scope: [:faction, :server_type], message: "A game with this faction, server name, server type exists."}
+#   validates :faction,  presence: true,
+#                     inclusion: { in: VALID_FACTIONS, message: "%{value} is not a valid faction." }
+#   validates :server_type,  presence: true,
+#                     inclusion: { in: VALID_SERVER_TYPES, message: "%{value} is not a valid server type." }
+#   validates :server_name, presence: true,
+#                     uniqueness: {case_sensitive: false, scope: [:faction, :server_type], message: "A game with this faction, server name, server type exists."}
 
 ###
 # Public Methods
@@ -73,11 +74,6 @@ class Wow < Game
   # Calls class method by same name.
   def all_factions
     self.class.all_factions
-  end
-
-  # Returns the full name of this game including game type faction and server.
-  def full_name
-    "World of Warcraft (#{self.faction}) #{self.server_name}"
   end
 
   # Returns just basic game name

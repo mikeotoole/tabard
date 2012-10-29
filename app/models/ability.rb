@@ -87,7 +87,7 @@ class Ability
   can :manage, SelectQuestion
   can :manage, SingleSelectQuestion
   can :manage, Submission
-  can :manage, SupportedGame
+  can :manage, CommunityGame
   can :manage, Swtor
   can :manage, SwtorCharacter
   can :manage, TextQuestion
@@ -212,12 +212,12 @@ class Ability
       support_comment.support_ticket.user_profile_id = user.user_profile_id and support_comment.user_profile_id = user.user_profile_id
     end
 
-    # Supported Game Rules
-    can [:read], SupportedGame do |supported_game|
-      user.user_profile.is_member?(supported_game.community)
+    # Community Game Rules
+    can [:read], CommunityGame do |community_game|
+      user.user_profile.is_member?(community_game.community)
     end
-    can [:update, :destroy, :create], SupportedGame do |supported_game|
-      supported_game.community_admin_profile_id == user.user_profile_id
+    can [:update, :destroy, :create], CommunityGame do |community_game|
+      community_game.community_admin_profile_id == user.user_profile_id
     end
   end
 

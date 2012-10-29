@@ -225,7 +225,7 @@ describe Community do
   end
 
   describe "is_protected_roster" do
-    let(:community_profile) { create(:community_profile_with_characters, :community => create(:community_with_supported_games)) }
+    let(:community_profile) { create(:community_profile_with_characters, :community => create(:community_with_community_games)) }
     let(:new_proxy) { create(:character_proxy_with_wow_character, :user_profile => community_profile.user_profile)}
 
     it "should be false by default" do
@@ -235,7 +235,7 @@ describe Community do
     describe "when true" do
       it "should make roster changes pending" do
         community_profile.community.update_column(:is_protected_roster, true)
-        ra = community_profile.roster_assignments.create!(:character_proxy => new_proxy, :is_pending => false, :supported_game => community_profile.community.supported_games.where(:game_type => "Wow").first )
+        ra = community_profile.roster_assignments.create!(:character_proxy => new_proxy, :is_pending => false, :community_game => community_profile.community.community_games.where(:game_type => "Wow").first )
         ra.is_pending.should be_true
       end
     end
@@ -243,7 +243,7 @@ describe Community do
     describe "when false" do
       it "should not make roster changes pending" do
         community_profile.community.update_column(:is_protected_roster, true)
-        ra = community_profile.roster_assignments.create!(:character_proxy => new_proxy, :is_pending => true, :supported_game => community_profile.community.supported_games.where(:game_type => "Wow").first )
+        ra = community_profile.roster_assignments.create!(:character_proxy => new_proxy, :is_pending => true, :community_game => community_profile.community.community_games.where(:game_type => "Wow").first )
         ra.community_profile.community.is_protected_roster.should be_true
         RosterAssignment.find_by_id(ra.id).is_pending.should be_true
       end
@@ -346,14 +346,14 @@ describe Community do
       Role.with_deleted.exists?(member_role).should be_true
     end
 
-    it "should mark community's supported_games as deleted" do
-      community = create(:wow_supported_game).community
-      supported_games = community.supported_games.all
+    it "should mark community's community_games as deleted" do
+      community = create(:wow_community_game).community
+      community_games = community.community_games.all
       community.destroy
-      supported_games.should_not be_empty
-      supported_games.each do |supported_game|
-        SupportedGame.exists?(supported_game).should be_false
-        SupportedGame.with_deleted.exists?(supported_game).should be_true
+      community_games.should_not be_empty
+      community_games.each do |community_game|
+        CommunityGame.exists?(community_game).should be_false
+        CommunityGame.with_deleted.exists?(community_game).should be_true
       end
     end
 
@@ -472,14 +472,14 @@ describe Community do
       Role.with_deleted.exists?(member_role).should be_false
     end
 
-    it "should delete community's supported_games" do
-      community = create(:wow_supported_game).community
-      supported_games = community.supported_games.all
+    it "should delete community's community_games" do
+      community = create(:wow_community_game).community
+      community_games = community.community_games.all
       community.nuke
-      supported_games.should_not be_empty
-      supported_games.each do |supported_game|
-        SupportedGame.exists?(supported_game).should be_false
-        SupportedGame.with_deleted.exists?(supported_game).should be_false
+      community_games.should_not be_empty
+      community_games.each do |community_game|
+        CommunityGame.exists?(community_game).should be_false
+        CommunityGame.with_deleted.exists?(community_game).should be_false
       end
     end
 

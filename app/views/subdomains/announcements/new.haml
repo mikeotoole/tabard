@@ -10,7 +10,7 @@
         = f.input :body, as: :text, hint: "Optional. Announcements with body text cannot be marked as seen from a user's dropdown message.", input_html: { maxlength: Announcement::MAX_BODY_LENGTH }
         - if available_characters.any?
           = f.input :character_proxy_id, label: 'Posted As', collection: collection_with_blank(available_characters, current_user.user_profile.display_name), checked: last_posted_as_character_proxy_id, as: :radio_buttons, wrapper_html: { class: 'select with-label' }
-        = f.input :supported_game_id, label: 'Context', collection: collection_with_blank(current_community.supported_games.includes(:community), 'Community', :smart_name), as: :radio_buttons, wrapper_html: { class: 'select with-label' }
+        = f.input :community_game_id, label: 'Context', collection: collection_with_blank(current_community.community_games.includes(:community), 'Community', :smart_name), as: :radio_buttons, wrapper_html: { class: 'select with-label' }
         = f.input :comments_enabled, label: 'Allow Comments?', as: :boolean, input_html: { checked: !@announcement.is_locked }
     %p.submit
       = f.button :submit, 'Create Announcement'

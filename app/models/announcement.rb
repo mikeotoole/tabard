@@ -24,7 +24,7 @@ class Announcement < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :body, :character_proxy_id, :is_locked, :has_been_edited, :supported_game, :supported_game_id, :comments_enabled
+  attr_accessible :name, :body, :character_proxy_id, :is_locked, :has_been_edited, :community_game, :community_game_id, :comments_enabled
 
   # This is a virtual attribute to determine if comments are enabled.
   attr_accessor :comments_enabled
@@ -35,7 +35,7 @@ class Announcement < ActiveRecord::Base
   belongs_to :user_profile
   belongs_to :character_proxy
   belongs_to :community
-  belongs_to :supported_game
+  belongs_to :community_game
   has_many :acknowledgements, dependent: :destroy
   has_many :has_been_viewed_acknowledgements, class_name: "Acknowledgement", conditions: {has_been_viewed: true}
   has_many :community_profiles_have_seen, through: :has_been_viewed_acknowledgements, source: "community_profile"
@@ -54,7 +54,7 @@ class Announcement < ActiveRecord::Base
   validates :user_profile, presence: true
   validates :community, presence: true
   validate :character_is_valid_for_user_profile
-  validate :character_is_valid_for_supported_game
+  validate :character_is_valid_for_community_game
 
 ###
 # Delegates
@@ -63,13 +63,13 @@ class Announcement < ActiveRecord::Base
   delegate :name, to: :community, prefix: true, allow_nil: true
   delegate :subdomain, to: :community, allow_nil: true
   delegate :name, to: :poster, prefix: true, allow_nil: true
-  delegate :smart_name, to: :supported_game, prefix: true, allow_nil: true
+  delegate :smart_name, to: :community_game, prefix: true, allow_nil: true
 
   before_destroy :destroy_all_comments
   after_create :create_acknowledgements
   before_save :update_is_locked_from_comments_enabled
 
-  scope :non_community, where(Announcement.arel_table[:supported_game_id].not_eq(nil))
+  scope :non_community, where(Announcement.arel_table[:community_game_id].not_eq(nil))
 
 ###
 # Public Methods
@@ -94,8 +94,8 @@ class Announcement < ActiveRecord::Base
 
   #This method finds the correct name.
   def context_name
-    if self.supported_game
-      return self.supported_game.smart_name
+    if self.community_game
+      return self.community_game.smart_name
     else
       return "#{self.community_name} Announcements"
     end
@@ -154,11 +154,11 @@ protected
   ###
   # This method validates that the selected character is valid for the community.
   ###
-  def character_is_valid_for_supported_game
+  def character_is_valid_for_community_game
     return unless self.character_proxy
-    unless self.character_proxy.compatable_with_supported_game?(self.supported_game)
+    unless self.character_proxy.compatable_with_community_game?(self.community_game)
       self.errors.add(:character_proxy_id, "this character is not compatable with the selected context")
-      self.errors.add(:supported_game_id, "this context is not compatable with the selected character")
+      self.errors.add(:community_game_id, "this context is not compatable with the selected character")
     end
   end
 
@@ -180,8 +180,8 @@ protected
   # Destroys all comments
   ###
   def create_acknowledgements
-    if self.supported_game
-      self.community.community_profiles.delete_if{|profile| !profile.has_character_that_matches_supported_game(self.supported_game)}.each do |community_profile|
+    if self.community_game
+      self.community.community_profiles.delete_if{|profile| !profile.has_character_that_matches_community_game(self.community_game)}.each do |community_profile|
         community_profile.acknowledgements.create({announcement: self, has_been_viewed: community_profile.user_profile_id == self.user_profile_id ? true : false}, without_protection: true)
       end
     else
@@ -219,5 +219,6 @@ end
 #  has_been_edited    :boolean          default(FALSE)
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  community_game_id  :integer
 #
 

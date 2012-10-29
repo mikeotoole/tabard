@@ -14,7 +14,7 @@
 require 'spec_helper'
 
 describe CommunityProfile do
-  let(:profile) { create(:community_profile, :community => FactoryGirl.create(:community_with_supported_games)) }
+  let(:profile) { create(:community_profile, :community => FactoryGirl.create(:community_with_community_games)) }
   let(:community) { profile.community }
   let(:profile_with_characters) { create(:community_profile_with_characters) }
   let(:some_other_community) { create(:community) }

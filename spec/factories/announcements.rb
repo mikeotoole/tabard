@@ -11,12 +11,12 @@ FactoryGirl.define do
     
     factory :announcement_for_wow do
       community { DefaultObjects.community }
-      supported_game { community.supported_games.where(:game_type => "Wow").first }
+      community_game { community.community_games.where(:game_type => "Wow").first }
     end
     
     factory :announcement_for_swtor do
       community { DefaultObjects.community }
-      supported_game { community.supported_games.where(:game_type => "Swtor").first }
+      community_game { community.community_games.where(:game_type => "Swtor").first }
     end
   end
 end

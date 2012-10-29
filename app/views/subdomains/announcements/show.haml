@@ -6,8 +6,8 @@
 #breadcrumb
   %ol
     %li= link_to "Announcements", announcements_url
-    - if @announcement.supported_game
-      %li= link_to @announcement.supported_game_smart_name, announcements_url(supported_game: @announcement.supported_game)
+    - if @announcement.community_game
+      %li= link_to @announcement.community_game_smart_name, announcements_url(community_game: @announcement.community_game)
     - else
       %li= link_to 'Community Announcements', community_announcements_url
     %li

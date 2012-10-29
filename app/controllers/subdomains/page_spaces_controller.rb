@@ -23,7 +23,7 @@ class Subdomains::PageSpacesController < SubdomainsController
 ###
   # GET /page_spaces(.:format)
   def index
-    @page_spaces = Kaminari.paginate_array(current_community.page_spaces.includes(:supported_game).reject{|d| !can? :show, d }).page params[:page]
+    @page_spaces = Kaminari.paginate_array(current_community.page_spaces.includes(:community_game).reject{|d| !can? :show, d }).page params[:page]
   end
 
   # GET /page_spaces/:id(.:format)

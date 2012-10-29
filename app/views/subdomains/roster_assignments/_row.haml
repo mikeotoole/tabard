@@ -10,9 +10,9 @@
       = link_to member_profile.name, user_profile_url(member_profile, subdomain: "www")
   %td.characters
     - cp = member_profile.community_profiles.find_by_community_id(current_community.id)
-    - if cp.roster_assignments.includes(:supported_game).delete_if{|ra| ra.is_pending? or (!!supported_game and ra.supported_game != supported_game)}.size > 0
+    - if cp.roster_assignments.includes(:community_game).delete_if{|ra| ra.is_pending? or (!!community_game and ra.community_game != community_game)}.size > 0
       %ul
-        - cp.roster_assignments.includes(:supported_game, character_proxy: [:character]).each do |ra|
+        - cp.roster_assignments.includes(:community_game, character_proxy: [:character]).each do |ra|
           %li
             - if can? :destroy, ra
               %input{ id: "roster_assignments_#{ra.id}", name: 'ids[]', type: 'checkbox', value: ra.id }

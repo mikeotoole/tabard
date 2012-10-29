@@ -247,8 +247,11 @@ VALID_WOW_SERVERS = [
   ["Zuluhed", 'PvP', 'US']
 ]
 
-puts "Creating WoW Games..."
-VALID_WOW_SERVERS.each do |server_name, server_type|
-  Wow.create!(faction: "Alliance", server_name: server_name, server_type: server_type)
-  Wow.create!(faction: "Horde", server_name: server_name, server_type: server_type)
-end
+# puts "Creating WoW Games..."
+# VALID_WOW_SERVERS.each do |server_name, server_type|
+#   Wow.create!(faction: "Alliance", server_name: server_name, server_type: server_type)
+#   Wow.create!(faction: "Horde", server_name: server_name, server_type: server_type)
+# end
+
+puts "Creating WoW Game"
+Wow.create!(name: "World of Warcraft", servers: VALID_WOW_SERVERS)

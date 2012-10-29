@@ -24,10 +24,10 @@
   - if @event.body
     %p= @event.body
 
-- if @event.supported_game
+- if @event.community_game
   %p
     %b Game:
-    = @event.supported_game_smart_name
+    = @event.community_game_smart_name
 
 - if @comments.any? or can? :comment, @event
   %aside.comments

@@ -51,7 +51,7 @@ class Subdomains::AnnouncementsController < SubdomainsController
   # GET /announcement_spaces/:announcement_space_id/announcements/new(.:format)
   def new
     @announcement = current_community.announcements.new()
-    @announcement.supported_game_id = params[:game].to_i if params.has_key? 'game'
+    @announcement.community_game_id = params[:game].to_i if params.has_key? 'game'
   end
 
   # POST /announcement_spaces/:announcement_space_id/announcements(.:format)
@@ -82,9 +82,9 @@ class Subdomains::AnnouncementsController < SubdomainsController
 
   # GET /announcements/game/:id(.:format)
   def game
-    @supported_game = current_community.supported_games.find_by_id(params[:id])
-    if !!@supported_game
-      @announcements = @supported_game.announcements.where(community_id: current_community.id).ordered
+    @community_game = current_community.community_games.find_by_id(params[:id])
+    if !!@community_game
+      @announcements = @community_game.announcements.where(community_id: current_community.id).ordered
     else
       redirect_to not_found_url
     end
@@ -142,7 +142,7 @@ class Subdomains::AnnouncementsController < SubdomainsController
 ###
   # This method returns the current game that is in scope.
   def current_game
-    @announcement.supported_game if @announcement and @announcement.persisted?
+    @announcement.community_game if @announcement and @announcement.persisted?
   end
   helper_method :current_game
 end

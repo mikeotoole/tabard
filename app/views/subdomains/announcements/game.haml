@@ -1,15 +1,15 @@
-- title "#{@supported_game.smart_name} Announcements | #{@community.name}"
+- title "#{@community_game.smart_name} Announcements | #{@community.name}"
 
 #breadcrumb
   %ol
     %li= link_to "Announcements", announcements_url
     %li
-      %span= "#{@supported_game.smart_name} Announcements"
+      %span= "#{@community_game.smart_name} Announcements"
 
 #actions.actions
   - if can? :create, Announcement
     = link_to 'New Announcement', new_announcement_url, class: 'new', meta: 'Create a new announcement'
 
-%h1= "#{@supported_game.smart_name} Announcements"
+%h1= "#{@community_game.smart_name} Announcements"
 
 = render 'table', announcements: @announcements

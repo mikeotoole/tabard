@@ -41,7 +41,7 @@ class AdminAbility
       can [:read], DiscussionSpace
       can [:update, :destroy], DiscussionSpace
       can [:read, :destroy, :remove_comment], Discussion
-      can [:read, :update], SupportedGame
+      can [:read, :update], CommunityGame
       can [:read], SwtorCharacter
       can [:read], WowCharacter
       can [:read], MinecraftCharacter
@@ -57,7 +57,7 @@ class AdminAbility
       can [:destroy], WowCharacter
       can [:destroy], MinecraftCharacter
       can [:destroy], Community
-      can [:destroy], SupportedGame
+      can [:destroy], CommunityGame
       can [:read, :create, :update], [Wow, 'Wow']
       can [:read, :create, :update], [Swtor, 'Swtor']
       can [:read, :create, :update], [Minecraft, 'Minecraft']

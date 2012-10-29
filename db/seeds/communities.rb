@@ -11,23 +11,23 @@ def create_community(admin_user_full_name, name, slogan, game_array)
     case game_name
       when "Horde"
         puts "with the game WoW Horde"
-        sg = community.supported_games.create!(game: Wow.find(:first, conditions: {faction: "Horde"}), name: "A-Team")
+        sg = community.community_games.create!(game: Wow.all.first, faction: "Horde")
         Activity.create!({user_profile: admin_user, community: community, target: sg, action: "created"}, without_protection: true)
       when "Alliance"
         puts "with the game WoW Alliance"
-        sg = community.supported_games.create!(game: Wow.find(:first, conditions: {faction: "Alliance"}), name: "A-Team")
+        sg = community.community_games.create!(game: Wow.all.first, faction: "Alliance")
         Activity.create!({user_profile: admin_user, community: community, target: sg, action: "created"}, without_protection: true)
       when "Empire"
         puts "with the game SWTOR Empire"
-        sg = community.supported_games.create!(game: Swtor.find(:first, conditions: {faction: "Empire"}), name: "A-Team")
+        sg = community.community_games.create!(game: Swtor.all.first, faction: "Empire")
         Activity.create!({user_profile: admin_user, community: community, target: sg, action: "created"}, without_protection: true)
       when "Republic"
         puts "with the game SWTOR Republic"
-        sg = community.supported_games.create!(game: Swtor.find(:first, conditions: {faction: "Republic"}), name: "A-Team")
+        sg = community.community_games.create!(game: Swtor.all.first, faction: "Republic")
         Activity.create!({user_profile: admin_user, community: community, target: sg, action: "created"}, without_protection: true)
       when "Minecraft"
         puts "with the game Minecraft"
-        sg = community.supported_games.create!(game: Minecraft.find(:first, conditions: {server_type: "Survival"}), name: "A-Team")
+        sg = community.community_games.create!(game: Minecraft.all.first, server_type: "Survival")
         Activity.create!({user_profile: admin_user, community: community, target: sg, action: "created"}, without_protection: true)
     end
   end
@@ -63,11 +63,11 @@ def generate_application(community, user_full_name)
   return app
 end
 
-# Gets the character to supported_game mappings
+# Gets the character to community_game mappings
 def find_character_mapping(community, application)
   mapping = Hash.new
   application.character_proxies.each do |proxy|
-    sp = community.supported_games.where(game_type: proxy.game.class.to_s).first
+    sp = community.community_games.where(game_type: proxy.game.class.to_s).first
     mapping[proxy.id.to_s] = sp.id if sp
   end
   return mapping

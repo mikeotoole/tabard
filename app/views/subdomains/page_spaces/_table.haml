@@ -9,8 +9,8 @@
       %tr
         %td
           = link_to shorten_words(space.name, 21), space
-          - if space.supported_game
-            %em= "— #{space.supported_game.smart_name}"
+          - if space.community_game
+            %em= "— #{space.community_game.smart_name}"
         %td
           - if space.pages.size > 0
             = space.pages.size

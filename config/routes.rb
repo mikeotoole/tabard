@@ -1,7 +1,4 @@
 DaBvRails::Application.routes.draw do
-
-  resources :community_games
-
   # Stripe Callbacks
   mount StripeEvent::Engine => '/stripe-sentry'
 
@@ -210,8 +207,8 @@ DaBvRails::Application.routes.draw do
         resources :pages, shallow: true, except: [:index]
       end
 
-      # Supported Games
-      resources :supported_games, except: [:show]
+      # Community Games
+      resources :community_games, except: [:show]
 
       # Events
       resources :events do
@@ -415,14 +412,14 @@ end
 #                          admin_question GET    /admin/questions/:id(.:format)                                                 {:action=>"show", :controller=>"admin/questions"}
 #                                         PUT    /admin/questions/:id(.:format)                                                 {:action=>"update", :controller=>"admin/questions"}
 #                                         DELETE /admin/questions/:id(.:format)                                                 {:action=>"destroy", :controller=>"admin/questions"}
-#                    admin_supported_game PUT    /admin/supported_games/:id(.:format)                                           {:action=>"update", :controller=>"admin/supported_games"}
-#                   admin_supported_games GET    /admin/supported_games(.:format)                                               {:action=>"index", :controller=>"admin/supported_games"}
-#                                         POST   /admin/supported_games(.:format)                                               {:action=>"create", :controller=>"admin/supported_games"}
-#                new_admin_supported_game GET    /admin/supported_games/new(.:format)                                           {:action=>"new", :controller=>"admin/supported_games"}
-#               edit_admin_supported_game GET    /admin/supported_games/:id/edit(.:format)                                      {:action=>"edit", :controller=>"admin/supported_games"}
-#                                         GET    /admin/supported_games/:id(.:format)                                           {:action=>"show", :controller=>"admin/supported_games"}
-#                                         PUT    /admin/supported_games/:id(.:format)                                           {:action=>"update", :controller=>"admin/supported_games"}
-#                                         DELETE /admin/supported_games/:id(.:format)                                           {:action=>"destroy", :controller=>"admin/supported_games"}
+#                    admin_community_game PUT    /admin/community_games/:id(.:format)                                           {:action=>"update", :controller=>"admin/community_games"}
+#                   admin_community_games GET    /admin/community_games(.:format)                                               {:action=>"index", :controller=>"admin/community_games"}
+#                                         POST   /admin/community_games(.:format)                                               {:action=>"create", :controller=>"admin/community_games"}
+#                new_admin_community_game GET    /admin/community_games/new(.:format)                                           {:action=>"new", :controller=>"admin/community_games"}
+#               edit_admin_community_game GET    /admin/community_games/:id/edit(.:format)                                      {:action=>"edit", :controller=>"admin/community_games"}
+#                                         GET    /admin/community_games/:id(.:format)                                           {:action=>"show", :controller=>"admin/community_games"}
+#                                         PUT    /admin/community_games/:id(.:format)                                           {:action=>"update", :controller=>"admin/community_games"}
+#                                         DELETE /admin/community_games/:id(.:format)                                           {:action=>"destroy", :controller=>"admin/community_games"}
 #                  admin_swtor_characters GET    /admin/swtor_characters(.:format)                                              {:action=>"index", :controller=>"admin/swtor_characters"}
 #                                         POST   /admin/swtor_characters(.:format)                                              {:action=>"create", :controller=>"admin/swtor_characters"}
 #               new_admin_swtor_character GET    /admin/swtor_characters/new(.:format)                                          {:action=>"new", :controller=>"admin/swtor_characters"}
@@ -678,13 +675,13 @@ end
 #                              page_space GET    /page_spaces/:id(.:format)                                                     {:action=>"show", :controller=>"subdomains/page_spaces"}
 #                                         PUT    /page_spaces/:id(.:format)                                                     {:action=>"update", :controller=>"subdomains/page_spaces"}
 #                                         DELETE /page_spaces/:id(.:format)                                                     {:action=>"destroy", :controller=>"subdomains/page_spaces"}
-#                         supported_games GET    /supported_games(.:format)                                                     {:action=>"index", :controller=>"subdomains/supported_games"}
-#                                         POST   /supported_games(.:format)                                                     {:action=>"create", :controller=>"subdomains/supported_games"}
-#                      new_supported_game GET    /supported_games/new(.:format)                                                 {:action=>"new", :controller=>"subdomains/supported_games"}
-#                     edit_supported_game GET    /supported_games/:id/edit(.:format)                                            {:action=>"edit", :controller=>"subdomains/supported_games"}
-#                          supported_game GET    /supported_games/:id(.:format)                                                 {:action=>"show", :controller=>"subdomains/supported_games"}
-#                                         PUT    /supported_games/:id(.:format)                                                 {:action=>"update", :controller=>"subdomains/supported_games"}
-#                                         DELETE /supported_games/:id(.:format)                                                 {:action=>"destroy", :controller=>"subdomains/supported_games"}
+#                         community_games GET    /community_games(.:format)                                                     {:action=>"index", :controller=>"subdomains/community_games"}
+#                                         POST   /community_games(.:format)                                                     {:action=>"create", :controller=>"subdomains/community_games"}
+#                      new_community_game GET    /community_games/new(.:format)                                                 {:action=>"new", :controller=>"subdomains/community_games"}
+#                     edit_community_game GET    /community_games/:id/edit(.:format)                                            {:action=>"edit", :controller=>"subdomains/community_games"}
+#                          community_game GET    /community_games/:id(.:format)                                                 {:action=>"show", :controller=>"subdomains/community_games"}
+#                                         PUT    /community_games/:id(.:format)                                                 {:action=>"update", :controller=>"subdomains/community_games"}
+#                                         DELETE /community_games/:id(.:format)                                                 {:action=>"destroy", :controller=>"subdomains/community_games"}
 #                                    root        /                                                                              {:controller=>"top_level", :action=>"index"}
 #                         top_level_index GET    /top_level/index(.:format)                                                     {:controller=>"top_level", :action=>"index"}
 #                         top_level_intro GET    /intro(.:format)                                                               {:controller=>"top_level", :action=>"intro"}

@@ -118,12 +118,12 @@ namespace :seed do
                     create_w_string(Announcement::MAX_NAME_LENGTH),
                     create_w_string(Announcement::MAX_BODY_LENGTH),
                     'Length',
-                    max_community.supported_games.find_by_game_type("Swtor"))
+                    max_community.community_games.find_by_game_type("Swtor"))
     create_announcement(max_community.name,
                     create_w_string(Announcement::MAX_NAME_LENGTH),
                     create_w_string(Announcement::MAX_BODY_LENGTH),
                     'Length',
-                    max_community.supported_games.find_by_game_type("Swtor"))
+                    max_community.community_games.find_by_game_type("Swtor"))
 
     page_space = create_page_space('Length', max_community.name, create_w_string(PageSpace::MAX_NAME_LENGTH), "Republic")
     create_page('Length', max_community.name, page_space.name, create_w_string(Page::MAX_NAME_LENGTH), create_w_string(300))

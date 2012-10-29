@@ -26,8 +26,11 @@ VALID_SWTOR_SERVERS = [
   ["Dalborra", 'PvE', "English"]
 ]
 
-puts "Creating SWTOR Games..."
-VALID_SWTOR_SERVERS.each do |server_name, server_type|
-  Swtor.create!(faction: "Republic", server_name: server_name, server_type: server_type)
-  Swtor.create!(faction: "Empire", server_name: server_name, server_type: server_type)
-end
+# puts "Creating SWTOR Games..."
+# VALID_SWTOR_SERVERS.each do |server_name, server_type|
+#   Swtor.create!(faction: "Republic", server_name: server_name, server_type: server_type)
+#   Swtor.create!(faction: "Empire", server_name: server_name, server_type: server_type)
+# end
+
+puts "Creating SWTOR Game..."
+Swtor.create!(name: "Star Wars: The Old Republic", servers: VALID_SWTOR_SERVERS)

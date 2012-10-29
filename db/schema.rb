@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121029205550) do
+ActiveRecord::Schema.define(:version => 20121029205634) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(:version => 20121029205550) do
     t.boolean  "has_been_edited",    :default => false
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
+    t.integer  "community_game_id"
   end
 
   add_index "announcements", ["character_proxy_id"], :name => "index_announcements_on_character_proxy_id"
@@ -228,7 +229,12 @@ ActiveRecord::Schema.define(:version => 20121029205550) do
     t.text     "info"
     t.datetime "created_at",                 :null => false
     t.datetime "updated_at",                 :null => false
+    t.datetime "deleted_at"
   end
+
+  add_index "community_games", ["community_id"], :name => "index_community_games_on_community_id"
+  add_index "community_games", ["game_announcement_space_id"], :name => "index_community_games_on_game_announcement_space_id"
+  add_index "community_games", ["game_id"], :name => "index_community_games_on_game_id"
 
   create_table "community_invites", :force => true do |t|
     t.integer  "applicant_id"
@@ -332,6 +338,7 @@ ActiveRecord::Schema.define(:version => 20121029205550) do
     t.datetime "updated_at",                               :null => false
     t.boolean  "is_announcement_space", :default => false
     t.datetime "deleted_at"
+    t.integer  "community_game_id"
   end
 
   add_index "discussion_spaces", ["community_id"], :name => "index_discussion_spaces_on_community_id"
@@ -386,6 +393,7 @@ ActiveRecord::Schema.define(:version => 20121029205550) do
     t.string   "location"
     t.datetime "created_at",                           :null => false
     t.datetime "updated_at",                           :null => false
+    t.integer  "community_game_id"
   end
 
   add_index "events", ["community_id"], :name => "index_events_on_community_id"
@@ -512,6 +520,7 @@ ActiveRecord::Schema.define(:version => 20121029205550) do
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
     t.datetime "deleted_at"
+    t.integer  "community_game_id"
   end
 
   add_index "page_spaces", ["community_id"], :name => "index_page_spaces_on_community_id"
@@ -623,6 +632,7 @@ ActiveRecord::Schema.define(:version => 20121029205550) do
     t.datetime "updated_at",                             :null => false
     t.datetime "deleted_at"
     t.integer  "supported_game_id"
+    t.integer  "community_game_id"
   end
 
   add_index "roster_assignments", ["character_proxy_id"], :name => "index_roster_assignments_on_character_proxy_id"

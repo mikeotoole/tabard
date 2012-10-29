@@ -12,14 +12,14 @@ class RosterAssignment < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :community_profile, :character_proxy, :supported_game, :character_proxy_id, :supported_game_id
+  attr_accessible :community_profile, :character_proxy, :community_game, :character_proxy_id, :community_game_id
 
 ###
 # Associations
 ###
   belongs_to :community_profile, touch: true
   belongs_to :character_proxy
-  belongs_to :supported_game
+  belongs_to :community_game
   has_one :user_profile, through: :community_profile
 
 ###
@@ -28,8 +28,8 @@ class RosterAssignment < ActiveRecord::Base
   validates :community_profile, presence: true
   validates :character_proxy_id, uniqueness: { scope: ["community_profile_id", "deleted_at"], message: "is already rostered to the community."}
   validate :character_and_game_must_be_present
-  validate :community_valid_for_supported_game
-  validate :character_valid_for_supported_game
+  validate :community_valid_for_community_game
+  validate :character_valid_for_community_game
 
 ###
 # Delegates
@@ -42,8 +42,8 @@ class RosterAssignment < ActiveRecord::Base
   delegate :avatar_url, to: :user_profile, prefix: true
   delegate :name, to: :character_proxy, prefix: true
   delegate :character, to: :character_proxy
-  delegate :name, to: :supported_game, prefix: true
-  delegate :smart_name, to: :supported_game, prefix: true
+  delegate :name, to: :community_game, prefix: true
+  delegate :smart_name, to: :community_game, prefix: true
 
 ###
 # Callbacks
@@ -81,19 +81,19 @@ class RosterAssignment < ActiveRecord::Base
 ###
 # Validator Methods
 ###
-  # This method validates that a character and supported game are presenet.
+  # This method validates that a character and Community game are presenet.
   def character_and_game_must_be_present
-    errors.add(:base, "You need to select a game.") if supported_game.blank?
+    errors.add(:base, "You need to select a game.") if community_game.blank?
     errors.add(:base, "You need to select a character.") if character_proxy.blank?
   end
   # This method validates that the community is compatable with the supported game
-  def community_valid_for_supported_game
-    errors.add(:base, "Community and supported game do not match.") if self.community_profile != nil and self.supported_game != nil and self.community_profile.community != self.supported_game.community
+  def community_valid_for_community_game
+    errors.add(:base, "Community and supported game do not match.") if self.community_profile != nil and self.community_game != nil and self.community_profile.community != self.community_game.community
   end
 
   # This method validates that the character is compatable with the supported game
-  def character_valid_for_supported_game
-    errors.add(:base, "That character is not compatible with #{self.supported_game.game_short_name}.") if self.character_proxy != nil and self.supported_game != nil and self.character_proxy.game.class.to_s != self.supported_game.game_type
+  def character_valid_for_community_game
+    errors.add(:base, "That character is not compatible with #{self.community_game.game_short_name}.") if self.character_proxy != nil and self.community_game != nil and self.character_proxy.game.class.to_s != self.community_game.game_type
   end
 
 ###
@@ -127,5 +127,6 @@ end
 #  updated_at           :datetime         not null
 #  deleted_at           :datetime
 #  supported_game_id    :integer
+#  community_game_id    :integer
 #
 

@@ -7,21 +7,17 @@ def create_discussion_space(creator_full_name, community_name, space_name, facti
   community = Community.find_by_name(community_name)
 
   case faction
-    when 'Horde'
-      game = Wow.find(:first, conditions: {faction: "Horde"})
-    when 'Alliance'
-      game = Wow.find(:first, conditions: {faction: "Alliance"})
-    when 'Empire'
-      game = Swtor.find(:first, conditions: {faction: "Empire"})
-    when 'Republic'
-      game = Swtor.find(:first, conditions: {faction: "Republic"})
+    when 'Horde', 'Alliance'
+      game = Wow.all.first
+    when 'Empire', 'Republic'
+      game = Swtor.all.first
     else
       game = nil
   end
-  supported_game = game ? community.supported_games.find_by_game_id_and_game_type(game.id, game.class.name) : nil
+  community_game = game ? CommunityGame.find_by_game_and_faction(community, game, faction) : nil
 
-  puts "With game #{supported_game.game_full_name}" if supported_game
-  ds = community.discussion_spaces.create!(name: space_name, supported_game: supported_game)
+  puts "With game #{community_game.game_full_name}" if community_game
+  ds = community.discussion_spaces.create!(name: space_name, community_game: community_game)
   creator = UserProfile.find_by_full_name(creator_full_name)
   Activity.create!({user_profile: creator, community: community, target: ds, action: "created"}, without_protection: true)
   return ds
@@ -46,12 +42,12 @@ def create_comment(commentable, body, poster_full_name)
   return comment
 end
 
-def create_announcement(community_name, name, body, poster_full_name, supported_game = nil)
+def create_announcement(community_name, name, body, poster_full_name, community_game = nil)
   community = Community.find_by_name(community_name)
   user_profile = UserProfile.find_by_full_name(poster_full_name)
 
   puts "#{user_profile.name} is creating #{community_name} Announcement #{name}"
-  announcement = community.announcements.new(name: name, body: body, supported_game: supported_game)
+  announcement = community.announcements.new(name: name, body: body, community_game: community_game)
   announcement.user_profile = user_profile
   announcement.save!
   return announcement
@@ -106,16 +102,16 @@ unless @dont_run
                       'Star Wars is bad ass!',
                       "Raids are super cool. The new vent channel is open for SWTOR.",
                       'Robo Billy',
-                      Community.find_by_name('Just Another Headshot').supported_games.find_by_game_type("Swtor"))
+                      Community.find_by_name('Just Another Headshot').community_games.find_by_game_id(Swtor.all.first.id))
   create_announcement('Just Another Headshot',
-                      'This is my favorite supported_game',
+                      'This is my favorite community_game',
                       "LOLOLOLOLOLOLOLOLOL",
                       'Robo Billy',
-                      Community.find_by_name('Just Another Headshot').supported_games.find_by_game_type("Wow"))
+                      Community.find_by_name('Just Another Headshot').community_games.find_by_game_id(Wow.all.first.id))
   create_announcement('Jedi Kittens',
                       'Star Wars is mew mew mew!',
                       "Raids are super mew. The new vent channel is open for SWTOR.",
                       'Apathetic Tiger',
-                      Community.find_by_name('Just Another Headshot').supported_games.find_by_game_type("Swtor"))
+                      Community.find_by_name('Just Another Headshot').community_games.find_by_game_id(Swtor.all.first.id))
 
 end

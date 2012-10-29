@@ -44,7 +44,7 @@
                     %li
                       = radio_button_tag "proxy_hash[#{character_proxy.id}]", ''
                       = label_tag "proxy_hash_#{character_proxy.id}_", 'Reject Character'
-                    - @supported_games.where(game_type: character_proxy.game.class.to_s).each do |sg|
+                    - @community_games.where(game_type: character_proxy.game.class.to_s).each do |sg|
                       %li
                         = radio_button_tag "proxy_hash[#{character_proxy.id}]", sg.id, (params[:proxy_hash] and sg.id.to_s == params[:proxy_hash][character_proxy.id.to_s].to_s)
                         = label_tag "proxy_hash_#{character_proxy.id}_#{sg.id}", sg.smart_name

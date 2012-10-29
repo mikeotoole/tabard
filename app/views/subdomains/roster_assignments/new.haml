@@ -22,7 +22,7 @@
             %td.character
               %h3= roster_assignment.character_proxy_name
               = roster_assignment.is_pending ? 'is pending approval to ' : 'is a member of'
-              = roster_assignment.supported_game_smart_name
+              = roster_assignment.community_game_smart_name
             %td.actions
               %div
                 - if  can? :mine, RosterAssignment or can? :destroy, roster_assignment
@@ -41,21 +41,21 @@
                       = label_tag "roster_assignment_character_proxy_id_#{cp.id}", raw(image_tag(cp.avatar_url(:icon), class: 'avatar')) + "#{cp.name} — #{cp.game_name}"
               .select.games
                 %ul
-                  - current_community.supported_games.includes(:community).each do |sg|
+                  - current_community.community_games.includes(:community).each do |sg|
                     %li{ 'data-game-type' => sg.game.class.to_s.downcase }
-                      = radio_button_tag 'roster_assignment[supported_game_id]', sg.id
-                      = label_tag "roster_assignment_supported_game_id_#{sg.id}", sg.smart_name
+                      = radio_button_tag 'roster_assignment[community_game_id]', sg.id
+                      = label_tag "roster_assignment_community_game_id_#{sg.id}", sg.smart_name
               %button{ type: 'submit' } Add character
         %td
 - else
   %p
     %strong
-      - if current_community.supported_games.any?
+      - if current_community.community_games.any?
         You do not have any characters available to be added to the roster.
         %p
           = link_to 'Add Characters', user_profile_url(current_user.user_profile, subdomain: "www") + '#characters', class: 'button'
       - else
-        This community does not have any supported games, and thus no rosters.
+        This community does not have any community games, and thus no rosters.
         %p
           - if can? :manage, RosterAssignment
-            = link_to 'Add a Game', new_supported_game_url, class: 'button'
+            = link_to 'Add a Game', new_community_game_url, class: 'button'

@@ -21,7 +21,7 @@ jQuery(document).ready ($) ->
     $(@).val moment(val,'h:mm a').format 'h:mm a'
 
   # Game dropdown character filtering
-  $('label[for="event_supported_game_id"] + ul input[type="radio"]').change ->
+  $('label[for="event_community_game_id"] + ul input[type="radio"]').change ->
     sgId = $(@).closest('ul').find('input[type="radio"]:checked').val()
     chars = $('table.invites tbody td.characters ul li')
     if sgId

@@ -11,7 +11,7 @@ class Community < ActiveRecord::Base
   acts_as_paranoid
 
   # This is a store used for the action items community setup bar.
-  store :action_items, accessors: [ :update_home_page, :add_supported_game, :update_settings, :update_application, :create_discussion_space ]
+  store :action_items, accessors: [ :update_home_page, :add_community_game, :update_settings, :update_application, :create_discussion_space ]
 
 ###
 # Constants
@@ -42,10 +42,11 @@ class Community < ActiveRecord::Base
   has_many :community_applications, dependent: :destroy
   has_many :pending_applications, class_name: "CommunityApplication", conditions: {status: "Pending"}
   has_many :custom_forms, dependent: :delete_all, order: 'LOWER(name)', inverse_of: :community
-  has_many :community_announcements, class_name: "Announcement", conditions: {supported_game_id: nil}
+  has_many :community_announcements, class_name: "Announcement", conditions: {community_game_id: nil}
   has_many :announcements
   has_many :community_invites, inverse_of: :community
-  has_many :supported_games, dependent: :destroy
+  has_many :community_games, dependent: :destroy #TODO: Remove.
+  has_many :community_games, dependent: :destroy
   has_many :community_profiles, dependent: :destroy, inverse_of: :community
   has_many :approved_character_proxies, through: :community_profiles
   has_many :member_profiles, through: :community_profiles, class_name: "UserProfile", source: "user_profile", order: 'LOWER(user_profiles.display_name)'
@@ -136,7 +137,7 @@ class Community < ActiveRecord::Base
 ###
   # Returns all games that this community supports
   def games
-    self.supported_games.collect{|sg| sg.game}.uniq{|g| g.short_name}
+    self.community_games.collect{|sg| sg.game}.uniq{|g| g.short_name}
   end
 
   ###
@@ -328,13 +329,13 @@ class Community < ActiveRecord::Base
   end
 
   ###
-  # This method gets the current members who have at least one character in the supported game.
+  # This method gets the current members who have at least one character in the Community game.
   # [Args]
-  #   * +supported_game+ -> The supported game to use as a filter.
+  #   * +community_game+ -> The supported game to use as a filter.
   # [Returns] An array of user_profiles, filtered by supported game.
   ###
-  def member_profiles_for_supported_game(supported_game)
-    self.approved_roster_assignments.includes(:user_profile).where(supported_game_id: supported_game.id).collect{|ra| ra.user_profile }.uniq.sort_by(&:display_name)
+  def member_profiles_for_community_game(community_game)
+    self.approved_roster_assignments.includes(:user_profile).where(community_game_id: community_game.id).collect{|ra| ra.user_profile }.uniq.sort_by(&:display_name)
   end
 
 ###
@@ -364,10 +365,10 @@ protected
   ###
   def self.search(search)
     if search
-      corrected_game_type = SupportedGame.attempt_to_match_type(search)
+      corrected_game_type = CommunityGame.attempt_to_match_type(search)
       search = "%"+search+'%'
-      correct_supported_games = SupportedGame.where{(name =~ search) | (game_type =~ corrected_game_type)}
-      return where{(name =~ search) | (slogan =~ search) | (id.in(correct_supported_games.select{community_id}))}
+      correct_community_games = CommunityGame.where{(name =~ search) | (game_type =~ corrected_game_type)} #TODO: Fix this -MO
+      return where{(name =~ search) | (slogan =~ search) | (id.in(correct_community_games.select{community_id}))}
     else
       return scoped
     end
@@ -441,7 +442,7 @@ protected
   ###
   def setup_action_items
     self.action_items = { update_home_page: true,
-                          add_supported_game: true,
+                          add_community_game: true,
                           update_settings: true,
                           update_application: true,
                           create_discussion_space: true,

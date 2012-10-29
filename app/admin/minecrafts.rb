@@ -26,10 +26,10 @@ ActiveAdmin.register Minecraft do
     attributes_table *default_attribute_table_rows
 
     div do
-      panel("Supported Games") do
-        table_for(minecraft.supported_games) do
-          column "Name" do |supported_game|
-            link_to supported_game.name, [:alexandria, supported_game]
+      panel("Community Games") do
+        table_for(minecraft.community_games) do
+          column "Name" do |community_game|
+            link_to community_game.name, [:alexandria, community_game]
           end
           column :game_full_name
         end

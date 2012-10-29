@@ -1,12 +1,12 @@
-- title "#{@supported_game.smart_name} Roster | #{current_community.name}"
+- title "#{@community_game.smart_name} Roster | #{current_community.name}"
 
 #breadcrumb
   %ol
     %li= link_to "Members", roster_assignments_url
     %li
-      %span= "#{@supported_game.smart_name} Roster"
+      %span= "#{@community_game.smart_name} Roster"
 
-%h1= "#{@supported_game.smart_name} Roster"
+%h1= "#{@community_game.smart_name} Roster"
 = paginate @member_profiles
-= render 'table', member_profiles: @member_profiles, supported_game: @supported_game
+= render 'table', member_profiles: @member_profiles, community_game: @community_game
 = paginate @member_profiles

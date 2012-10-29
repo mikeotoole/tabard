@@ -51,10 +51,10 @@ ActiveAdmin.register Community do
     end
 
     div do
-      panel("Supported Games") do
-        table_for(community.supported_games) do
-          column "Name" do |supported_game|
-            link_to supported_game.name, [:alexandria, supported_game]
+      panel("Community Games") do
+        table_for(community.community_games) do
+          column "Name" do |community_game|
+            link_to community_game.name, [:alexandria, community_game]
           end
           column :game_full_name
         end

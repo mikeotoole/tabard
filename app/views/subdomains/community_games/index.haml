@@ -1,0 +1,31 @@
+- title "Community Games | #{current_community.name}"
+
+%h1 Community Games
+
+- if @community_games.any?
+
+  %table
+    %thead
+      %tr
+        %th Name
+        %th.actions
+    %tbody
+      - @community_games.each do |community_game|
+        %tr
+          %td= link_to_if (can? :update, community_game), community_game.full_name, edit_community_game_url(community_game)
+          %td.actions
+            %div
+              - if (can? :update, community_game)
+                = link_to 'Edit', edit_community_game_url(community_game), meta: 'Edit game', class: 'edit'
+              - if (can? :destroy, community_game)
+                = link_to 'Destroy', community_game, confirm: 'All characters, pages, discussions and comments related to this game will also be removed. Are you absolutely sure you want to do this?', method: :delete, meta: 'Remove community game', class: 'delete'
+    %tfoot
+      %tr
+        %td{ colspan: 3 }
+          - if can? :create, CommunityGame
+            = link_to 'Add Game', new_community_game_url, class: 'button'
+
+-else
+  %p There are no community games.
+  - if can? :create, CommunityGame
+    %p= link_to 'Add Game', new_community_game_url, class: 'button'

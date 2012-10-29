@@ -30,10 +30,10 @@ ActiveAdmin.register Swtor, as: "Swtor" do
     attributes_table *default_attribute_table_rows
 
     div do
-      panel("Supported Games") do
-        table_for(swtor.supported_games) do
-          column "Name" do |supported_game|
-            link_to supported_game.name, [:admin, supported_game]
+      panel("Community Games") do
+        table_for(swtor.community_games) do
+          column "Name" do |community_game|
+            link_to community_game.name, [:admin, community_game]
           end
           column :game_full_name
         end

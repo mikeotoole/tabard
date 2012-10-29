@@ -19,7 +19,8 @@ class Swtor < Game
 # Attribute accessible
 ###
   # Setup accessible (or protected) attributes for your model.
-  attr_accessible :faction, :server_name, :server_type
+#   attr_accessible :faction, :server_name, :server_type
+  attr_accessible :servers
 
 ###
 # Associations
@@ -29,12 +30,12 @@ class Swtor < Game
 ###
 # Validators
 ###
-  validates :faction,  presence: true,
-                    inclusion: { in: VALID_FACTIONS, message: "%{value} is not a valid faction." }
-  validates :server_type,  presence: true,
-                    inclusion: { in: VALID_SERVER_TYPES, message: "%{value} is not a valid server type." }
-  validates :server_name, presence: true,
-                    uniqueness: {case_sensitive: false, scope: [:faction, :server_type], message: "A game with this faction, server name, server type exists."}
+#   validates :faction,  presence: true,
+#                     inclusion: { in: VALID_FACTIONS, message: "%{value} is not a valid faction." }
+#   validates :server_type,  presence: true,
+#                     inclusion: { in: VALID_SERVER_TYPES, message: "%{value} is not a valid server type." }
+#   validates :server_name, presence: true,
+#                     uniqueness: {case_sensitive: false, scope: [:faction, :server_type], message: "A game with this faction, server name, server type exists."}
 
 ###
 # Public Methods

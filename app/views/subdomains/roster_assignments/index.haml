@@ -9,5 +9,5 @@
 = render 'communities/population', community: current_community
 -#= render 'shared/searchbox', resource: @member_profiles, action: roster_assignments_url
 = paginate @member_profiles
-= render 'table', member_profiles: @member_profiles, supported_game: nil
+= render 'table', member_profiles: @member_profiles, community_game: nil
 = paginate @member_profiles

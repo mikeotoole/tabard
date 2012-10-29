@@ -82,22 +82,22 @@ unless @dont_run
   # Create Characters
   ###
 
-  User.all.each do |user|
-    create_empire_character(user.full_name, "Darth #{user.full_name.split(' ')[1]}", 'Sith Warrior', 'Marauder', 'Zabrak', 45)
-  end
-
-  create_horde_character('Diabolical Moose', 'Moose Drool', 'Hunter', 'Orc', 80, "Female")
-  create_horde_character('Kinky Fox', 'Miss Fox', 'Hunter', 'Goblin', 20, "Female")
-
-  %w(Yoda Han\ Solo Chewbacca R2D2).each do |cname|
-    create_empire_character('Robo Billy', cname, 'Bounty Hunter', 'Mercenary', 'Cyborg', 33, "Female")
-  end
-
-  %w(Eliand Blaggarth Drejan).each do |cname|
-    create_horde_character('Robo Billy', cname, 'Druid', 'Troll', 20)
-  end
-
-  %w(Robo\ Billy Kinky\ Fox Mike\ O'Toole Diabolical\ Moose).each do |user_full_name|
-    create_minecraft_character(user_full_name, "Boxy #{user_full_name.split(' ')[1]}")
-  end
+#   User.all.each do |user|
+#     create_empire_character(user.full_name, "Darth #{user.full_name.split(' ')[1]}", 'Sith Warrior', 'Marauder', 'Zabrak', 45)
+#   end
+#
+#   create_horde_character('Diabolical Moose', 'Moose Drool', 'Hunter', 'Orc', 80, "Female")
+#   create_horde_character('Kinky Fox', 'Miss Fox', 'Hunter', 'Goblin', 20, "Female")
+#
+#   %w(Yoda Han\ Solo Chewbacca R2D2).each do |cname|
+#     create_empire_character('Robo Billy', cname, 'Bounty Hunter', 'Mercenary', 'Cyborg', 33, "Female")
+#   end
+#
+#   %w(Eliand Blaggarth Drejan).each do |cname|
+#     create_horde_character('Robo Billy', cname, 'Druid', 'Troll', 20)
+#   end
+#
+#   %w(Robo\ Billy Kinky\ Fox Mike\ O'Toole Diabolical\ Moose).each do |user_full_name|
+#     create_minecraft_character(user_full_name, "Boxy #{user_full_name.split(' ')[1]}")
+#   end
 end

@@ -5,11 +5,11 @@ FactoryGirl.define do
   end
   
   factory :page_space_for_wow, :parent => :page_space do
-    supported_game_id { create(:wow_supported_game).id }
+    community_game_id { create(:wow_community_game).id }
   end
   
   factory :page_space_for_swtor, :parent => :page_space do
-    supported_game_id { create(:swtor_supported_game).id }
+    community_game_id { create(:swtor_community_game).id }
   end
   
   factory :page do

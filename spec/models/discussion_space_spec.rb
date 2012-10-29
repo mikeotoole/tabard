@@ -10,6 +10,7 @@
 #  updated_at            :datetime         not null
 #  is_announcement_space :boolean          default(FALSE)
 #  deleted_at            :datetime
+#  community_game_id     :integer
 #
 
 require 'spec_helper'
@@ -45,7 +46,7 @@ describe DiscussionSpace do
   end 
   
   it "game_name should return game name if there is a game" do
-    wow_space.game_name.should eq(wow_space.supported_game.full_name)
+    wow_space.game_name.should eq(wow_space.community_game.full_name)
   end 
   
   it "should respond to is_announcement_space" do

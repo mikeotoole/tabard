@@ -32,8 +32,8 @@
                   %label{ for: "invite_id_#{invite.id}" }
             %td
               = link_to shorten_words(event.name, 21), event
-              - if event.supported_game
-                %dfn.hint= event.supported_game.smart_name
+              - if event.community_game
+                %dfn.hint= event.community_game.smart_name
             - if has_invites
               %td
                 - if invite.try 'status'

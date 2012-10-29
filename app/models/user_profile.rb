@@ -172,7 +172,7 @@ class UserProfile < ActiveRecord::Base
   end
 
   ###
-  # This method gets all of character proxies that are compatable with the communities supported games.
+  # This method gets all of character proxies that are compatable with the communities Community games.
   # [Returns] An array that contains all of the compatable character proxies.
   ###
   def compatable_character_proxies(community)
@@ -189,7 +189,7 @@ class UserProfile < ActiveRecord::Base
     community_profile = self.community_profiles.where{community_id == community.id}.first
     available_character_proxies.concat community_profile.approved_character_proxies.includes(:character) if community_profile
     if game
-      if game.class == SupportedGame
+      if game.class == CommunityGame
         available_character_proxies = available_character_proxies.delete_if{|proxy| proxy.game.class.to_s != game.game.class.to_s}
       else
         available_character_proxies = available_character_proxies.delete_if{|proxy| proxy.game.class.to_s != game.class.to_s}

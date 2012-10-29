@@ -1,0 +1,17 @@
+- title "Editing Community Game | #{current_community.name}"
+
+%h1 Editing Community Game
+
+= simple_form_for @community_game, html: {novalidate: true} do |f|
+  = f.error_notification
+  %fieldset
+    %ol
+      = #f.input :name, input_html: { maxlength: CommunityGame::MAX_NAME_LENGTH }
+      - if @community_game.game.respond_to?(:all_factions)
+        = f.input :faction, as: :radio_buttons, collection: @community_game.all_factions, wrapper_html: { class: 'select with-label faction' }
+      - if @community_game.game.respond_to?(:all_servers)
+        = f.input :server_name, as: :radio_buttons, label: 'Server', collection: @community_game.all_servers, wrapper_html: { class: 'select with-label server' }
+      - if @community_game.game.respond_to?(:all_server_types)
+        = f.input :server_type, as: :radio_buttons, collection: @community_game.all_server_types, wrapper_html: { class: 'select with-label' }
+      %li
+        %button{ type: 'submit' } Save changes

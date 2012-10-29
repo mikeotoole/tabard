@@ -19,12 +19,12 @@ class DiscussionSpace < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :supported_game_id, :supported_game
+  attr_accessible :name, :community_game_id, :community_game
 
 ###
 # Associations
 ###
-  belongs_to :supported_game
+  belongs_to :community_game
   belongs_to :community
   has_many :discussions, dependent: :destroy
 
@@ -39,7 +39,7 @@ class DiscussionSpace < ActiveRecord::Base
 # Delegates
 ###
   delegate :name, to: :community, prefix: true
-  delegate :smart_name, to: :supported_game, prefix: true, allow_nil: true
+  delegate :smart_name, to: :community_game, prefix: true, allow_nil: true
 
   after_create :apply_default_permissions
   after_create :remove_action_item
@@ -61,8 +61,8 @@ class DiscussionSpace < ActiveRecord::Base
 ###
   # This gets the game
   def game
-    if self.supported_game
-      self.supported_game.game
+    if self.community_game
+      self.community_game.game
     else
       nil
     end
@@ -70,7 +70,7 @@ class DiscussionSpace < ActiveRecord::Base
 
   # This gets the game name
   def game_name
-    self.supported_game_smart_name
+    self.community_game_smart_name
   end
 
   ###
@@ -78,7 +78,7 @@ class DiscussionSpace < ActiveRecord::Base
   # [Returns] True if space has game context. False otherwise.
   ###
   def has_game_context?
-    self.supported_game_id != nil
+    self.community_game_id != nil
   end
 
   ###
@@ -138,5 +138,6 @@ end
 #  updated_at            :datetime         not null
 #  is_announcement_space :boolean          default(FALSE)
 #  deleted_at            :datetime
+#  community_game_id     :integer
 #
 
