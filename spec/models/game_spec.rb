@@ -2,12 +2,11 @@
 #
 # Table name: games
 #
-#  id         :integer         not null, primary key
+#  id         :integer          not null, primary key
 #  name       :string(255)
-#  type       :string(255)
-#  created_at :datetime
-#  updated_at :datetime
-#  pretty_url :string(255)
+#  info       :text
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
 
 require 'spec_helper'

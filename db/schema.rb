@@ -411,6 +411,13 @@ ActiveRecord::Schema.define(:version => 20121029182517) do
 
   add_index "folders", ["user_profile_id"], :name => "index_folders_on_user_profile_id"
 
+  create_table "games", :force => true do |t|
+    t.string   "name"
+    t.text     "info"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "invites", :force => true do |t|
     t.integer  "event_id"
     t.integer  "user_profile_id"
