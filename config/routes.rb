@@ -69,6 +69,7 @@ DaBvRails::Application.routes.draw do
       get :roles
     end
     resources :roles, only: [:update]
+    resources :played_games
   end
   get "/account" => "user_profiles#account", as: "account"
   match "/account/update" => "user_profiles#update", as: "update_account", via: :put

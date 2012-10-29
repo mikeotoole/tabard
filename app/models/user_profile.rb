@@ -50,6 +50,9 @@ class UserProfile < ActiveRecord::Base
   has_many :invited_to_communities, through: :community_invite_applications, class_name: "Community", source: :community
   has_many :community_invite_sponsors, class_name: "CommunityInvite", foreign_key: "sponsor_id", inverse_of: :sponsor, dependent: :destroy
 
+#Games
+  has_many :played_games
+
   has_many :character_proxies, dependent: :destroy, conditions: {is_removed: false}
   has_many :swtor_characters, through: :character_proxies, source: :character, source_type: 'SwtorCharacter', order: 'LOWER(name)'
   has_many :wow_characters, through: :character_proxies, source: :character, source_type: 'WowCharacter', order: 'LOWER(name)'
@@ -454,6 +457,8 @@ end
 # Table name: user_profiles
 #
 #  id                :integer          not null, primary key
+#  first_name        :string(255)
+#  last_name         :string(255)
 #  avatar            :string(255)
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
@@ -463,7 +468,5 @@ end
 #  title             :string(255)
 #  location          :string(255)
 #  full_name         :string(255)
-#  gamer_tag         :string(255)
-#  slug              :string(255)
 #
 

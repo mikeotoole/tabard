@@ -1,0 +1,12 @@
+- title "New Played Game"
+
+%h1 New Played Game
+
+= simple_form_for [@user_profile, @played_game], html: {novalidate: true} do |f|
+  %fieldset
+    %ol
+      = text_field_tag 'game_name', nil, placeholder: 'Game Name'
+      %li
+        %button{ type: 'submit' } Create Game
+
+= render 'shared/user_account_links'

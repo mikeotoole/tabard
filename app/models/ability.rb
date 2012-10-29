@@ -54,7 +54,8 @@ class Ability
     # Game Rules
     can :read, Game
     # UserProfile Rules
-    can :read, UserProfile
+    can :read, UserProfile, publicly_viewable: true
+    can :read, PlayedGame, user_profile: { publicly_viewable: true }
     # User Rules
     can :create, User
     # ArtworkUpload Rules
@@ -106,6 +107,9 @@ class Ability
     can :dashboard, UserProfile do |user_profile|
       user_profile == user.user_profile
     end
+
+    # Played Games
+    can :manage, PlayedGame, user_profile: { id: user.user_profile_id }
     # Character Rules
     can :create, BaseCharacter
     can [:update, :destroy], BaseCharacter do |character|

@@ -81,5 +81,8 @@
         %dt{ class: 'activities current' }
           = link_to 'Recent Activity', activities_user_profile_url(@user_profile, subdomain: "www", format: :js), remote: true, class: 'dynload wait', data: { type: :text, target: '#tabs dt.activities + dd', error: 'Error: unable to load recent activity.' }
         %dd
+        %dt{ class: 'played_games' }
+          = link_to 'Played Games', user_profile_played_games_url(@user_profile, subdomain: "www", format: :js), remote: true, class: 'dynload wait', data: { type: :text, target: '#tabs dt.played_games + dd', error: 'Error: unable to load games.' }
+          %dd
   - else
     %p This user's profile is private.

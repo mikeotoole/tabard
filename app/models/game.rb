@@ -6,6 +6,7 @@
 # This class represents a Game. Only subclasses of this should be created.
 ###
 class Game < ActiveRecord::Base
+  self.abstract_class = true
 ###
 # Constants
 ###
