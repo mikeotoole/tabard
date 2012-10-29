@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Community:
+  = @community_game.community_id
+%p
+  %b Game:
+  = @community_game.game_id
+%p
+  %b Game announcement space:
+  = @community_game.game_announcement_space_id
+%p
+  %b Info:
+  = @community_game.info
+
+= link_to 'Edit', edit_community_game_path(@community_game)
+\|
+= link_to 'Back', community_games_path

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121022230849) do
+ActiveRecord::Schema.define(:version => 20121029182517) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -221,6 +221,15 @@ ActiveRecord::Schema.define(:version => 20121022230849) do
   add_index "community_applications", ["submission_id"], :name => "index_community_applications_on_submission_id"
   add_index "community_applications", ["user_profile_id"], :name => "index_community_applications_on_user_profile_id"
 
+  create_table "community_games", :force => true do |t|
+    t.integer  "community_id"
+    t.integer  "game_id"
+    t.integer  "game_announcement_space_id"
+    t.text     "info"
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+  end
+
   create_table "community_invites", :force => true do |t|
     t.integer  "applicant_id"
     t.integer  "sponsor_id"
@@ -298,6 +307,16 @@ ActiveRecord::Schema.define(:version => 20121022230849) do
   end
 
   add_index "custom_forms", ["community_id"], :name => "index_custom_forms_on_community_id"
+
+  create_table "custom_games", :force => true do |t|
+    t.string   "name"
+    t.string   "platform"
+    t.string   "platform_id"
+    t.text     "info"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.string   "logo"
+  end
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -554,6 +573,16 @@ ActiveRecord::Schema.define(:version => 20121022230849) do
   end
 
   add_index "permissions", ["role_id"], :name => "index_permissions_on_role_id"
+
+  create_table "played_games", :force => true do |t|
+    t.integer  "user_profile_id"
+    t.integer  "custom_game_id"
+    t.float    "hours_played"
+    t.integer  "achievements_done"
+    t.text     "stats"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
 
   create_table "predefined_answers", :force => true do |t|
     t.text     "body"

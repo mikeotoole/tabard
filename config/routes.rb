@@ -1,5 +1,7 @@
 DaBvRails::Application.routes.draw do
 
+  resources :community_games
+
   # Stripe Callbacks
   mount StripeEvent::Engine => '/stripe-sentry'
 

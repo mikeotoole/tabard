@@ -1,0 +1,11 @@
+= simple_form_for(@community_game) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :community_id
+    = f.input :game_id
+    = f.input :game_announcement_space_id
+    = f.input :info
+
+  .form-actions
+    = f.button :submit

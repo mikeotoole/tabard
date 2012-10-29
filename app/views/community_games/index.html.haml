@@ -1,0 +1,25 @@
+%h1 Listing community_games
+
+%table
+  %tr
+    %th Community
+    %th Game
+    %th Game announcement space
+    %th Info
+    %th
+    %th
+    %th
+
+  - @community_games.each do |community_game|
+    %tr
+      %td= community_game.community_id
+      %td= community_game.game_id
+      %td= community_game.game_announcement_space_id
+      %td= community_game.info
+      %td= link_to 'Show', community_game
+      %td= link_to 'Edit', edit_community_game_path(community_game)
+      %td= link_to 'Destroy', community_game, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Community game', new_community_game_path
