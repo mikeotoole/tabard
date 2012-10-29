@@ -37,10 +37,7 @@ class Subdomains::CommunityGamesController < SubdomainsController
 
   # POST /community_games
   def create
-    @community_game.game = Game.get_game(params[:community_game][:game_type],
-                                         params[:community_game][:faction],
-                                         params[:community_game][:server_name],
-                                         params[:community_game][:server_type])
+    @community_game.game = Game.find_or_create_by_name(params[:community_game][:name]) #TODO: FIX! This should create a custom game. -MO
 
     if @community_game.save
       flash[:success] = 'Game has been added.'
@@ -53,10 +50,7 @@ class Subdomains::CommunityGamesController < SubdomainsController
 
   # PUT /community_games/1
   def update
-    @community_game.game = Game.get_game(@community_game.game_type,
-                                         params[:community_game][:faction],
-                                         params[:community_game][:server_name],
-                                         params[:community_game][:server_type])
+    @community_game.game = Game.find_or_create_by_name(params[:community_game][:name]) #TODO: FIX! This should create a custom game. -MO
 
     @community_game.assign_attributes(params[:community_game])
     is_changed = @community_game.changed?

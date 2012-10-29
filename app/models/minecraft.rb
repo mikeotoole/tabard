@@ -35,14 +35,8 @@ class Minecraft < Game
 # Class Methods
 ###
   # Gets an array of all faction names.
-  def self.all_server_types
+  def self.server_types
     VALID_SERVER_TYPES
-  end
-
-  # Gets a game instance for given faction server combination
-  def self.game_for_server_type(server_type)
-    minecraft = Minecraft.find_by_server_type(server_type).first
-    return minecraft
   end
 
   # Gets all minecraft characters
@@ -54,33 +48,13 @@ class Minecraft < Game
 # Instance Methods
 ###
   # Calls class method by same name.
-  def all_server_types
-    self.class.all_server_types
+  def server_types
+    self.class.server_types
   end
 
   # gets all minecraft characters
   def minecraft_characters
     self.class.minecraft_characters
-  end
-
-  # Returns the full name of this game including game type faction and server.
-  def full_name
-    "Minecraft (#{self.server_type})"
-  end
-
-  # Returns just basic game name
-  def short_name
-    "Minecraft"
-  end
-
-  # Gets the server name
-  def server_name
-    nil
-  end
-
-  # Gets the faction
-  def faction
-    nil
   end
 end
 

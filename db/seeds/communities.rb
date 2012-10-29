@@ -11,19 +11,27 @@ def create_community(admin_user_full_name, name, slogan, game_array)
     case game_name
       when "Horde"
         puts "with the game WoW Horde"
-        sg = community.community_games.create!(game: Wow.all.first, faction: "Horde")
+        game = Wow.all.first
+        server = game.servers.first
+        sg = community.community_games.create!(game: game, faction: "Horde", server_name: server[0], server_type: server[1])
         Activity.create!({user_profile: admin_user, community: community, target: sg, action: "created"}, without_protection: true)
       when "Alliance"
         puts "with the game WoW Alliance"
-        sg = community.community_games.create!(game: Wow.all.first, faction: "Alliance")
+        game = Wow.all.first
+        server = game.servers.first
+        sg = community.community_games.create!(game: game, faction: "Alliance", server_name: server[0], server_type: server[1])
         Activity.create!({user_profile: admin_user, community: community, target: sg, action: "created"}, without_protection: true)
       when "Empire"
         puts "with the game SWTOR Empire"
-        sg = community.community_games.create!(game: Swtor.all.first, faction: "Empire")
+        game = Swtor.all.first
+        server = game.servers.first
+        sg = community.community_games.create!(game: game, faction: "Empire", server_name: server[0], server_type: server[1])
         Activity.create!({user_profile: admin_user, community: community, target: sg, action: "created"}, without_protection: true)
       when "Republic"
         puts "with the game SWTOR Republic"
-        sg = community.community_games.create!(game: Swtor.all.first, faction: "Republic")
+        game = Swtor.all.first
+        server = game.servers.first
+        sg = community.community_games.create!(game: game, faction: "Republic", server_name: server[0], server_type: server[1])
         Activity.create!({user_profile: admin_user, community: community, target: sg, action: "created"}, without_protection: true)
       when "Minecraft"
         puts "with the game Minecraft"

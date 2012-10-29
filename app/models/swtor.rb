@@ -44,22 +44,9 @@ class Swtor < Game
 ###
 # Class Methods
 ###
-
-  # Gets an array of all server names.
-  def self.all_servers
-    Swtor.order(:server_name).collect{|game| game.server_name}.uniq
-  end
-
   # Gets an array of all faction names.
-  def self.all_factions
+  def self.factions
     VALID_FACTIONS
-  end
-
-  # Gets a game instance for given faction server combination
-  def self.game_for_faction_server(faction, server)
-    swtor = Swtor.find(:first, conditions: {faction: faction, server_name: server})
-    swtor = Swtor.new(server_name: server) unless swtor
-    return swtor
   end
 
 ###
@@ -67,23 +54,13 @@ class Swtor < Game
 ###
 
   # Calls class method by same name.
-  def all_servers
-    self.class.all_servers
+  def server_names
+    self.servers.map{|s| s[0]}
   end
 
   # Calls class method by same name.
-  def all_factions
-    self.class.all_factions
-  end
-
-  # Returns the full name of this game including game type faction and server.
-  def full_name
-    "Star Wars: The Old Republic (#{self.faction}) #{self.server_name}"
-  end
-
-  # Returns just basic game name
-  def short_name
-    "Star Wars: The Old Republic"
+  def factions
+    self.class.factions
   end
 end
 

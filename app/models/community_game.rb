@@ -10,11 +10,13 @@ class CommunityGame < ActiveRecord::Base
   # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
   acts_as_paranoid
 
+  attr_accessor :name
+
 ###
 # Attribute accessible
 ###
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :game_id, :game, :faction, :server_name, :server_type
+  attr_accessible :game_id, :game, :faction, :server_name, :server_type, :name
 
 ###
 # Store
@@ -40,14 +42,14 @@ class CommunityGame < ActiveRecord::Base
 ###
 # Delegates
 ###
-  delegate :short_name, to: :game, prefix: true
   delegate :name, to: :community, prefix: true
-  delegate :name, to: :game, prefix: true
+  delegate :name, to: :game, allow_nil: true
   delegate :admin_profile_id, to: :community, prefix: true, allow_nil: true
 
-  delegate :all_factions, to: :game, allow_nil: true
-  delegate :all_servers, to: :game, allow_nil: true
-  delegate :all_server_types, to: :game, allow_nil: true
+  delegate :factions, to: :game, allow_nil: true
+  delegate :servers, to: :game, allow_nil: true
+  delegate :server_names, to: :game, allow_nil: true
+  delegate :server_types, to: :game, allow_nil: true
 
 ###
 # Validators
@@ -55,6 +57,7 @@ class CommunityGame < ActiveRecord::Base
   validates :community, presence: true
   validate :game_attributes_valid
   validates :game, presence: true
+  # TODO: Add validation of server, faction, and server_type based on game.
 
 ###
 # Public Methods
@@ -82,7 +85,11 @@ class CommunityGame < ActiveRecord::Base
 ###
   # Gets the full name of this game with type faction and server
   def full_name
-    self.game_name
+    f_name = self.name
+    f_name = f_name + " (#{self.faction})" if self.faction.present?
+    f_name = f_name + " #{self.server_name}" if self.server_name.present?
+    f_name = f_name + " - #{self.server_type}" if self.server_type.present?
+    f_name
   end
 
   # Gets the smart name
@@ -94,13 +101,13 @@ class CommunityGame < ActiveRecord::Base
 #     else
 #       self.game_full_name
 #     end
-    self.game_full_name
+    self.full_name
   end
 
   # Returns the full name of this game including game type faction and server.
   def game_full_name
 #     "World of Warcraft (#{self.faction}) #{self.server_name}" #TODO: Fix game_full_name -MO
-    self.game_name
+    "#{self.name} (#{self.faction}) #{self.server_name}"
   end
 
   # Gets the user_profiles of
