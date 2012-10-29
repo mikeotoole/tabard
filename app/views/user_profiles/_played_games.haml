@@ -1,3 +1,9 @@
 %h2 Played games
 = link_to "Add new game", new_user_profile_played_game_url(user_profile)
-%p=played_games.to_yaml
+- if @played_games.any?
+  %ul
+    - @played_games.each do |played_game|
+      %li
+        %h3=played_game.game_name
+- else
+  %p None

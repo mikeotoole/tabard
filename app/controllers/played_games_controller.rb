@@ -7,7 +7,7 @@
 ###
 class PlayedGamesController < ApplicationController
   respond_to :html, :js
-
+  skip_before_filter :block_unauthorized_user!
   load_and_authorize_resource :user_profile
   load_and_authorize_resource :played_game, through: :user_profile
   def index
@@ -20,14 +20,11 @@ class PlayedGamesController < ApplicationController
   end
 
   def create
-    game_name = params[:game_name]
-    @game = Game.where{name == game_name}.limit(1).first
-    if @game.blank?
-      # TODO Create on the fly
+    if @played_game.save
+      redirect_to user_profile_url(@user_profile, anchor: "played_games", subdomain: "www")
+    else
+      render :new
     end
-    #@played_game.game = @game
-    #@played_game.save
-    respond_with [@user_profile, @played_game]
   end
 
 end
