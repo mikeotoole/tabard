@@ -21,12 +21,12 @@ class PlayedGamesController < ApplicationController
 
   def create
     game_name = params[:game_name]
-    #@game = Game.where{name == game_name}.limit(1).first
+    @game = Game.where{name == game_name}.limit(1).first
     if @game.blank?
       # TODO Create on the fly
     end
-    @played_game.game = @game
-    @played_game.save
+    #@played_game.game = @game
+    #@played_game.save
     respond_with [@user_profile, @played_game]
   end
 

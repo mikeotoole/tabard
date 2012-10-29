@@ -88,13 +88,12 @@ end
 
 # == Schema Information
 #
-# Table name: swtors
+# Table name: games
 #
-#  id          :integer          not null, primary key
-#  faction     :string(255)
-#  server_name :string(255)
-#  server_type :string(255)
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  id         :integer          not null, primary key
+#  name       :string(255)
+#  info       :text
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
 

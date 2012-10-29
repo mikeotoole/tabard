@@ -85,11 +85,12 @@ end
 
 # == Schema Information
 #
-# Table name: minecrafts
+# Table name: games
 #
-#  id          :integer          not null, primary key
-#  server_type :string(255)
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  id         :integer          not null, primary key
+#  name       :string(255)
+#  info       :text
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
 

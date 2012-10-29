@@ -6,7 +6,6 @@
 # This class represents a Game. Only subclasses of this should be created.
 ###
 class Game < ActiveRecord::Base
-  self.abstract_class = true
 ###
 # Constants
 ###
@@ -74,5 +73,6 @@ end
 #  info       :text
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  type       :string(255)
 #
 
