@@ -56,6 +56,12 @@ DaBvRails::Application.routes.draw do
   get "users/accept_document/:id" => "document_acceptance#new", as: "accept_document"
   post "users/accept_document/:id" => "document_acceptance#create", as: "accept_document_create"
 
+  # Games
+  resources :games, only: [:show, :index] do
+    collection do
+      get :autocomplete
+    end
+  end
   # User Profiles
   resources :user_profiles, path: :profiles, only: [:show, :edit, :update] do
     member do

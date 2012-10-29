@@ -1,11 +1,12 @@
 - title "New Played Game"
-
+- content_for :footer do
+  = javascript_include_tag 'played_games'
 %h1 New Played Game
 
 = simple_form_for [@user_profile, @played_game], html: {novalidate: true} do |f|
   %fieldset
     %ol
-      = text_field_tag 'game_name', nil, placeholder: 'Game Name'
+      = f.input :game_name, input_html:{ data: {autocomplete_source: autocomplete_games_url(subdomain:'www')}}
       %li
         %button{ type: 'submit' } Create Game
 
