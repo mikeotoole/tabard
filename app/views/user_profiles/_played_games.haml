@@ -1,5 +1,5 @@
 %h2 Played games
-= link_to "Add new game", new_user_profile_played_game_url(user_profile)
+= link_to "Add new game", new_user_profile_played_game_url(user_profile) if can? :create, PlayedGame.new(user_profile_id: user_profile.id)
 - if @played_games.any?
   %ul
     - @played_games.each do |played_game|
