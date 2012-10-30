@@ -38,7 +38,7 @@ class Subdomains::CommunityGamesController < SubdomainsController
   # POST /community_games
   def create
     @community_game.game = Game.find_or_create_by_name(params[:community_game][:name]) #TODO: FIX! This should create a custom game. -MO
-
+    # TODO: Need to set sever type from servers hash using hidden attribute in form. -MO
     if @community_game.save
       flash[:success] = 'Game has been added.'
       @action = 'created'
@@ -51,7 +51,7 @@ class Subdomains::CommunityGamesController < SubdomainsController
   # PUT /community_games/1
   def update
     @community_game.game = Game.find_or_create_by_name(params[:community_game][:name]) #TODO: FIX! This should create a custom game. -MO
-
+    # TODO: Need to set sever type from servers hash using hidden attribute in form. -MO
     @community_game.assign_attributes(params[:community_game])
     is_changed = @community_game.changed?
 

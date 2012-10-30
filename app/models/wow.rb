@@ -16,12 +16,6 @@ class Wow < Game
   VALID_SERVER_TYPES =  %w(PvP PvE RP\ PvP RP)
 
 ###
-# Attribute accessible
-###
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :servers
-
-###
 # Associations
 ###
   has_many :wow_characters, dependent: :destroy
@@ -29,6 +23,23 @@ class Wow < Game
 ###
 # Public Methods
 ###
+
+###
+# H-Store
+###
+  # Dynamicly add setter, getter, attr_accessible and scope for stored keys.
+  %w[servers].each do |key|
+    attr_accessible key
+    scope "has_#{key}", lambda { |value| where("info @> (? => ?)", key, value) }
+
+    define_method(key) do
+      info && info[key]
+    end
+
+    define_method("#{key}=") do |value|
+      self.info = (info || {}).merge(key => value)
+    end
+  end
 
 ###
 # Class Methods
@@ -41,10 +52,23 @@ class Wow < Game
 ###
 # Instance Methods
 ###
+  ###
+  # Gets a hash with all severs and server meta data.
+  # example server_array.first[:name]
+  # example server_array.first[:type]
+  # example server_array.first[:region]
+  ###
+  def server_array
+    array = []
+    self.servers.split(",").each do |server|
+      a_server = server.split("|")
+      array << {name: a_server[0].strip, type: a_server[1].strip, region: a_server[2].strip}
+    end
+    array
+  end
 
-  # Calls class method by same name.
   def server_names
-    self.servers.map{|s| s[0]}
+    self.server_array.map{|sa| sa[:name]}
   end
 
   # Calls class method by same name.
