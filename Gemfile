@@ -7,7 +7,7 @@ ruby '1.9.3'
 # ActiveRecord extensions
   gem 'rails3_acts_as_paranoid'#                                                            MIT - https://github.com/goncalossilva/rails3_acts_as_paranoid
   gem 'nilify_blanks'#                                                                      MIT - https://github.com/rubiety/nilify_blanks
-  #gem 'activerecord-postgres-hstore'# https://github.com/softa/activerecord-postgres-hstore/blob/master/LICENSE
+  gem 'activerecord-postgres-hstore'#                                                             https://github.com/softa/activerecord-postgres-hstore
 
 # Javascript Library
   gem 'jquery-rails'#                                                                       MIT - https://github.com/rails/jquery-rails

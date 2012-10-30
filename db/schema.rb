@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121029205634) do
+ActiveRecord::Schema.define(:version => 20121030184039) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -565,17 +565,17 @@ ActiveRecord::Schema.define(:version => 20121029205634) do
     t.integer  "role_id"
     t.string   "permission_level"
     t.string   "subject_class"
-    t.integer  "id_of_subject",                  :limit => 255
-    t.datetime "created_at",                                                       :null => false
-    t.datetime "updated_at",                                                       :null => false
-    t.boolean  "can_lock",                                      :default => false
-    t.boolean  "can_accept",                                    :default => false
+    t.integer  "id_of_subject"
+    t.datetime "created_at",                                        :null => false
+    t.datetime "updated_at",                                        :null => false
+    t.boolean  "can_lock",                       :default => false
+    t.boolean  "can_accept",                     :default => false
     t.string   "parent_association_for_subject"
     t.integer  "id_of_parent"
-    t.boolean  "can_read",                                      :default => false
-    t.boolean  "can_create",                                    :default => false
-    t.boolean  "can_update",                                    :default => false
-    t.boolean  "can_destroy",                                   :default => false
+    t.boolean  "can_read",                       :default => false
+    t.boolean  "can_create",                     :default => false
+    t.boolean  "can_update",                     :default => false
+    t.boolean  "can_destroy",                    :default => false
     t.datetime "deleted_at"
   end
 
@@ -749,8 +749,8 @@ ActiveRecord::Schema.define(:version => 20121029205634) do
   add_index "user_profiles", ["slug"], :name => "index_user_profiles_on_slug", :unique => true
 
   create_table "users", :force => true do |t|
-    t.string   "email",                                            :default => "",    :null => false
-    t.string   "encrypted_password",                               :default => "",    :null => false
+    t.string   "email",                             :default => "",    :null => false
+    t.string   "encrypted_password",                :default => "",    :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -758,23 +758,23 @@ ActiveRecord::Schema.define(:version => 20121029205634) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
-    t.integer  "failed_attempts",                                  :default => 0
+    t.integer  "failed_attempts",                   :default => 0
     t.string   "unlock_token"
     t.datetime "locked_at"
-    t.datetime "created_at",                                                          :null => false
-    t.datetime "updated_at",                                                          :null => false
-    t.boolean  "accepted_current_terms_of_service",                :default => false
-    t.boolean  "accepted_current_privacy_policy",                  :default => false
-    t.boolean  "force_logout",                                     :default => false
+    t.datetime "created_at",                                           :null => false
+    t.datetime "updated_at",                                           :null => false
+    t.boolean  "accepted_current_terms_of_service", :default => false
+    t.boolean  "accepted_current_privacy_policy",   :default => false
+    t.boolean  "force_logout",                      :default => false
     t.date     "date_of_birth"
     t.datetime "user_disabled_at"
     t.datetime "admin_disabled_at"
     t.integer  "user_profile_id"
-    t.integer  "time_zone",                         :limit => 255, :default => -8
-    t.boolean  "is_email_on_message",                              :default => true
-    t.boolean  "is_email_on_announcement",                         :default => true
+    t.integer  "time_zone",                         :default => -8
+    t.boolean  "is_email_on_message",               :default => true
+    t.boolean  "is_email_on_announcement",          :default => true
     t.string   "stripe_customer_token"
-    t.boolean  "is_in_good_account_standing",                      :default => true
+    t.boolean  "is_in_good_account_standing",       :default => true
     t.string   "billing_address_zip"
   end
 
