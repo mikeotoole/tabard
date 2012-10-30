@@ -121,10 +121,10 @@ unless @dont_run
         :exp_month => 8,
         :exp_year => 2023,
         :cvc => 314,
-        :addressLine1 => '710 George Washington Way',
-        :addressCity => 'Richland',
-        :addressState => 'WA',
-        :addressZip => '99352'
+        :address_line1 => '710 George Washington Way',
+        :address_city => 'Richland',
+        :address_state => 'WA',
+        :address_zip => '99352'
       },
     )
     invoice_hash = { "invoice_items_attributes" => { "0" => { "community_id"=>"#{headshot.id}",
