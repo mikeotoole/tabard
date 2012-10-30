@@ -5,7 +5,7 @@ class CreatePermissions < ActiveRecord::Migration
       t.string :action
       t.string :permission_level
       t.string :subject_class
-      t.string :id_of_subject
+      t.integer :id_of_subject
 
       t.timestamps
     end
