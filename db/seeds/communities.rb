@@ -1,6 +1,13 @@
 ###
 # Helpers
 ###
+# Create a played game
+def create_played_game(user_full_name, game_name)
+  user_profile = UserProfile.find_by_full_name(user_full_name)
+  custom_game = Game.where{(name == game_name)}.first_or_create
+  cgi = custom_game.id
+  pg = user_profile.played_games.where{(game_id == cgi)}.first_or_create
+end
 
 # Create a community
 def create_community(admin_user_full_name, name, slogan, game_array)
@@ -10,30 +17,35 @@ def create_community(admin_user_full_name, name, slogan, game_array)
   game_array.each do |game_name|
     case game_name
       when "Horde"
+        create_played_game(admin_user_full_name, Wow.all.first.name)
         puts "with the game WoW Horde"
         game = Wow.all.first
         server = game.servers.first
         sg = community.community_games.create!(game: game, faction: "Horde", server_name: server[0], server_type: server[1])
         Activity.create!({user_profile: admin_user, community: community, target: sg, action: "created"}, without_protection: true)
       when "Alliance"
+        create_played_game(admin_user_full_name, Wow.all.first.name)
         puts "with the game WoW Alliance"
         game = Wow.all.first
         server = game.servers.first
         sg = community.community_games.create!(game: game, faction: "Alliance", server_name: server[0], server_type: server[1])
         Activity.create!({user_profile: admin_user, community: community, target: sg, action: "created"}, without_protection: true)
       when "Empire"
+        create_played_game(admin_user_full_name, Swtor.all.first.name)
         puts "with the game SWTOR Empire"
         game = Swtor.all.first
         server = game.servers.first
         sg = community.community_games.create!(game: game, faction: "Empire", server_name: server[0], server_type: server[1])
         Activity.create!({user_profile: admin_user, community: community, target: sg, action: "created"}, without_protection: true)
       when "Republic"
+        create_played_game(admin_user_full_name, Swtor.all.first.name)
         puts "with the game SWTOR Republic"
         game = Swtor.all.first
         server = game.servers.first
         sg = community.community_games.create!(game: game, faction: "Republic", server_name: server[0], server_type: server[1])
         Activity.create!({user_profile: admin_user, community: community, target: sg, action: "created"}, without_protection: true)
       when "Minecraft"
+        create_played_game(admin_user_full_name, Minecraft.all.first.name)
         puts "with the game Minecraft"
         sg = community.community_games.create!(game: Minecraft.all.first, server_type: "Survival")
         Activity.create!({user_profile: admin_user, community: community, target: sg, action: "created"}, without_protection: true)
@@ -52,6 +64,9 @@ end
 # Apply to a community
 def generate_application(community, user_full_name)
   user_profile = UserProfile.find_by_full_name(user_full_name)
+  community.community_games.map(&:game).each do |game|
+    create_played_game(user_profile.full_name,game.name)
+  end
   puts "#{user_profile.name} submitting application to #{community.name} Guild"
   app = community.community_applications.new
   app.prep(user_profile, community.community_application_form)

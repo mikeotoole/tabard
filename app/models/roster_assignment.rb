@@ -127,5 +127,6 @@ end
 #  updated_at           :datetime         not null
 #  deleted_at           :datetime
 #  supported_game_id    :integer
+#  community_game_id    :integer
 #
 
