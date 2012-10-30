@@ -10,6 +10,7 @@
 #  updated_at            :datetime         not null
 #  is_announcement_space :boolean          default(FALSE)
 #  deleted_at            :datetime
+#  community_game_id     :integer
 #
 
 require 'spec_helper'
