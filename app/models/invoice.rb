@@ -117,7 +117,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def should_be_taxed?
-    self.tax_rate == 0
+    self.tax_rate != 0
   end
 
   def tax_rate

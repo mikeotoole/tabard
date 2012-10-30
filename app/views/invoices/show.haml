@@ -62,10 +62,23 @@
               %td.r= number_to_currency(period_subtotal)
             - community_subtotals[community.id][:subtotal] = community_subtotals[community.id][:subtotal] + period_subtotal
         %tfoot
-          %tr
-            %td.r{ colspan: 3 }= items_by_community.size > 1 ? 'Community Subtotal' : 'Total'
-            %td.r
-              %h2= number_to_currency(community_subtotals[community.id][:subtotal])
+          - if items_by_community.size > 1
+            %tr
+              %td.r{ colspan: 3 } Community Subtotal
+              %td.r
+                %h2= number_to_currency(community_subtotals[community.id][:subtotal])
+          - else
+            %tr
+              %td.r{ colspan: 3 }
+                - if @invoice.should_be_taxed?
+                  Local Tax
+                  %br
+                %h2 Total
+              %td.r
+                - if @invoice.should_be_taxed?
+                  = number_to_currency(@invoice.total_tax_in_dollars)
+                  %br
+                %h2= number_to_currency(@invoice.total_price_in_dollars)
 
     - if items_by_community.size > 1
       %table
@@ -79,8 +92,15 @@
               %td= community[:name]
               %td.r= number_to_currency(community[:subtotal])
         %tfoot
-          %td.r Total
           %td.r
+            - if @invoice.should_be_taxed?
+              Local Tax
+              %br
+            %h2 Total
+          %td.r
+            - if @invoice.should_be_taxed?
+              = number_to_currency(@invoice.total_tax_in_dollars)
+              %br
             %h2= number_to_currency(@invoice.total_price_in_dollars)
 
 - else
