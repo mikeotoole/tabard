@@ -14,7 +14,7 @@ def create_discussion_space(creator_full_name, community_name, space_name, facti
     else
       game = nil
   end
-  community_game = game ? CommunityGame.find_by_game_and_faction(community, game, faction) : nil
+  community_game = game ? community.community_games.where(game_id: game.id).has_faction(faction).limit(1).first : nil
 
   puts "With game #{community_game.game_full_name}" if community_game
   ds = community.discussion_spaces.create!(name: space_name, community_game: community_game)

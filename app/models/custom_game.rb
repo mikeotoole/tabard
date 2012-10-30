@@ -14,9 +14,9 @@ end
 #
 #  id         :integer          not null, primary key
 #  name       :string(255)
-#  info       :text
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  type       :string(255)
+#  info       :hstore
 #
 

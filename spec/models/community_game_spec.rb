@@ -6,10 +6,10 @@
 #  community_id               :integer
 #  game_id                    :integer
 #  game_announcement_space_id :integer
-#  info                       :text
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
 #  deleted_at                 :datetime
+#  info                       :hstore
 #
 
 require 'spec_helper'

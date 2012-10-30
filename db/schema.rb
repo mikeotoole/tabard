@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121030184039) do
+ActiveRecord::Schema.define(:version => 20121030195101) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -226,10 +226,10 @@ ActiveRecord::Schema.define(:version => 20121030184039) do
     t.integer  "community_id"
     t.integer  "game_id"
     t.integer  "game_announcement_space_id"
-    t.text     "info"
     t.datetime "created_at",                 :null => false
     t.datetime "updated_at",                 :null => false
     t.datetime "deleted_at"
+    t.hstore   "info"
   end
 
   add_index "community_games", ["community_id"], :name => "index_community_games_on_community_id"
@@ -411,10 +411,10 @@ ActiveRecord::Schema.define(:version => 20121030184039) do
 
   create_table "games", :force => true do |t|
     t.string   "name"
-    t.text     "info"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.string   "type"
+    t.hstore   "info"
   end
 
   create_table "invites", :force => true do |t|

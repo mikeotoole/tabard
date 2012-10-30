@@ -17,11 +17,6 @@ class Game < ActiveRecord::Base
   attr_accessible :name
 
 ###
-# Store
-###
-  store :info, accessors: [:servers]
-
-###
 # Associations
 ###
   has_many :community_games
@@ -39,6 +34,26 @@ class Game < ActiveRecord::Base
 # Uploaders
 ###
 #   mount_uploader :logo, GameLogoUploader
+
+###
+# H-Store
+###
+  # Setup info to use Hstore. This should not be needed for Rails 4.
+  serialize :info, ActiveRecord::Coders::Hstore
+
+  # Dynamicly add setter, getter, attr_accessible and scope for stored keys.
+  %w[servers achievements].each do |key|
+    attr_accessible key
+    scope "has_#{key}", lambda { |value| where("info @> (? => ?)", key, value) }
+
+    define_method(key) do
+      info && info[key]
+    end
+
+    define_method("#{key}=") do |value|
+      self.info = (info || {}).merge(key => value)
+    end
+  end
 
 ###
 # Class Methods
@@ -83,12 +98,16 @@ class Game < ActiveRecord::Base
     self.server_types.present?
   end
 
-  def has_achievements?
-    self.achievements.present?
+  def factions
+    nil
   end
 
-  def has_store_url?
-    self.store_url.present?
+  def server_names
+    nil
+  end
+
+  def server_types
+    nil
   end
 end
 
@@ -98,9 +117,9 @@ end
 #
 #  id         :integer          not null, primary key
 #  name       :string(255)
-#  info       :text
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  type       :string(255)
+#  info       :hstore
 #
 

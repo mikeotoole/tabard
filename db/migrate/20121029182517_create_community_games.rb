@@ -4,7 +4,6 @@ class CreateCommunityGames < ActiveRecord::Migration
       t.integer :community_id
       t.integer :game_id
       t.integer :game_announcement_space_id
-      t.text :info
 
       t.timestamps
     end

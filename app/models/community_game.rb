@@ -16,12 +16,7 @@ class CommunityGame < ActiveRecord::Base
 # Attribute accessible
 ###
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :game_id, :game, :faction, :server_name, :server_type, :name
-
-###
-# Store
-###
-  store :info, accessors: [:faction, :server_name, :server_type]
+  attr_accessible :game_id, :game, :name
 
 ###
 # Associations
@@ -60,6 +55,26 @@ class CommunityGame < ActiveRecord::Base
   # TODO: Add validation of server, faction, and server_type based on game.
 
 ###
+# H-Store
+###
+  # Setup info to use Hstore. This should not be needed for Rails 4.
+  serialize :info, ActiveRecord::Coders::Hstore
+
+  # Dynamicly add setter, getter, attr_accessible and scope for stored keys.
+  %w[faction server_name server_type].each do |key|
+    attr_accessible key
+    scope "has_#{key}", lambda { |value| where("info @> (? => ?)", key, value) }
+
+    define_method(key) do
+      info && info[key]
+    end
+
+    define_method("#{key}=") do |value|
+      self.info = (info || {}).merge(key => value)
+    end
+  end
+
+###
 # Public Methods
 ###
 
@@ -71,14 +86,6 @@ class CommunityGame < ActiveRecord::Base
 #
 #     return term
 #   end
-
-  def self.find_by_game_and_faction(community, game, faction)
-    community_id = community.id
-    game_id = game.id
-    faction_hack = "%faction: #{faction}%"
-    community_game = self.where{(community_id == community_id) & (game_id == game_id) & (info =~ faction_hack)}.limit(1).first
-    return community_game
-  end
 
 ###
 # Instance Methods
@@ -165,9 +172,9 @@ end
 #  community_id               :integer
 #  game_id                    :integer
 #  game_announcement_space_id :integer
-#  info                       :text
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
 #  deleted_at                 :datetime
+#  info                       :hstore
 #
 

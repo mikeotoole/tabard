@@ -15,7 +15,7 @@ def create_page_space(creator_full_name, community_name, space_name, faction='')
     else
       game = nil
   end
-  community_game = game ? CommunityGame.find_by_game_and_faction(community, game, faction) : nil
+  community_game = game ? community.community_games.where(game_id: game.id).has_faction(faction).limit(1).first : nil
 
   creator = UserProfile.find_by_full_name(creator_full_name)
 

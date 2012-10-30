@@ -9,7 +9,6 @@
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  deleted_at        :datetime
-#  community_game_id :integer
 #
 
 require 'spec_helper'
