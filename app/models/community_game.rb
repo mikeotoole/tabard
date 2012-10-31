@@ -16,7 +16,7 @@ class CommunityGame < ActiveRecord::Base
 # Attribute accessible
 ###
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :game_id, :game, :name. :faction, :server_name, :server_type
+  attr_accessible :game_id, :game, :name, :faction, :server_name, :server_type
 
 ###
 # Associations
@@ -59,7 +59,6 @@ class CommunityGame < ActiveRecord::Base
 ###
   # Setup info to use Hstore. This should not be needed for Rails 4.
   serialize :info, ActiveRecord::Coders::Hstore
-  # TODO: Add index for info. -MO
 
   # Dynamicly add setter, getter, and scopes for keys (See lib/hstore_accessor.rb).
   hstore_accessor :info, :faction, :server_name, :server_type
