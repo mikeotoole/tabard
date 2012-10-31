@@ -5,10 +5,8 @@
 #
 # This class represents a Minecraft character.
 ###
-class MinecraftCharacter < BaseCharacter
-  validates_lengths_from_database except: [:name, :avatar]
-
-  has_one :character_proxy, as: :character
+class MinecraftCharacter < Character
+  #validates_lengths_from_database except: [:name, :avatar]
 
 ###
 # Constants
@@ -34,38 +32,10 @@ class MinecraftCharacter < BaseCharacter
 ###
 # Class Methods
 ###
-  # Creates a new wow character with the given params.
-  def self.create_character(params, user)
-    if params[:minecraft_character]
-      minecraft_character = MinecraftCharacter.create(params[:minecraft_character])
-
-      if minecraft_character.valid?
-        profile = user.user_profile
-        proxy = profile.character_proxies.build(character: minecraft_character)
-        minecraft_character.errors.add(:error, "could not add character to user profile") unless proxy.save
-      end
-      return minecraft_character
-    end
-  end
 
 ###
 # Instance Methods
 ###
-  ###
-  # This method gets a game for the character.
-  # [Returns] A Minecraft game.
-  ###
-  def game
-    Minecraft.first
-  end
-
-  ###
-  # This method gets the game name for the character.
-  # [Returns] The name of Minecraft
-  ###
-  def game_name
-    "Minecraft"
-  end
 
   ###
   # This method gets the description for the character.
@@ -82,12 +52,7 @@ class MinecraftCharacter < BaseCharacter
   # [Returns] An array of characters
   ###
   def self.search(search)
-    if search
-      search = "%"+search+'%'
-      where{(name =~ search) | (about =~ search)}
-    else
-      scoped
-    end
+    scoped # TODO Fix this
   end
 end
 
