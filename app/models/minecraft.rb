@@ -25,6 +25,11 @@ class Minecraft < Game
     VALID_SERVER_TYPES
   end
 
+  def self.game_name
+    @minecraft_game_name ||= Minecraft.all.first.name
+    return @minecraft_game_name
+  end
+
   # Gets all minecraft characters
   def self.minecraft_characters
     MinecraftCharacters.all

@@ -15,10 +15,6 @@ DaBvRails::Application.routes.draw do
 
   resources :invoices, only: [:index, :show], path: :statements
 
-  resources :minecraft_characters
-
-  resources :minecrafts
-
   # Admin Users
   devise_for :admin_users do
     get "/alexandria/login" => "alexandria/devise/sessions#new"
@@ -72,10 +68,15 @@ DaBvRails::Application.routes.draw do
       get :roles
     end
     resources :roles, only: [:update]
-    resources :played_games
+    resources :played_games, only: [:index, :show]
   end
   get "/account" => "user_profiles#account", as: "account"
   match "/account/update" => "user_profiles#update", as: "update_account", via: :put
+
+  resources :played_games, only: [:new,:create,:update,:destroy] do
+    resource :characters
+  end
+
 
   # Communities
   resources :communities, only: [:show, :new, :create, :destroy] do

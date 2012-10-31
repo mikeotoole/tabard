@@ -13,7 +13,7 @@ class Character < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :about, :avatar, :info, :name, :type
+  attr_accessible :about, :avatar, :info, :name, :type, :played_game_id
 
 ###
 # Associations

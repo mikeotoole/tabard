@@ -1,11 +1,12 @@
 %h2 Played games
-= link_to "Add new game", new_user_profile_played_game_url(user_profile) if can? :create, PlayedGame.new(user_profile_id: user_profile.id)
+= link_to "Add new game", new_played_game_url if can? :create, PlayedGame.new(user_profile_id: user_profile.id)
 - if @played_games.any?
   %ul
     - @played_games.each do |played_game|
       %li
         %h3= played_game.game_name
         %p= "Has #{pluralize(played_game.characters.count,'character')}"
+        = link_to "Add new character", new_played_game_characters_url([played_game]) if can? :create, Character.new(played_game_id: played_game.id)
         -if played_game.characters.any?
           %ul
             - played_game.characters.each do |character|

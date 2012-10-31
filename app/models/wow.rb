@@ -49,6 +49,11 @@ class Wow < Game
     VALID_FACTIONS
   end
 
+  def self.game_name
+    @wow_game_name ||= Wow.all.first.name
+    return @wow_game_name
+  end
+
 ###
 # Instance Methods
 ###

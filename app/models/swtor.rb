@@ -49,6 +49,11 @@ class Swtor < Game
     VALID_FACTIONS
   end
 
+  def self.game_name
+    @swtor_game_name ||= Swtor.all.first.name
+    return @swtor_game_name
+  end
+
 ###
 # Instance Methods
 ###
