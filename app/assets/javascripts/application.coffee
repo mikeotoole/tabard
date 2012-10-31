@@ -10,17 +10,25 @@ root = exports ? this
 
 ((jQuery) ->
 
+  modalOptions =
+    cssIn: {opacity: 0, top: '45%'}
+    animIn: [{opacity: 1, top: '50%'}, 200]
+    animOut: [{opacity: 0, top: '55%'}, 400]
+
   $.alert = (options) ->
     options = body: options if typeof(options) is 'string'
+    $.extend options, modalOptions
     options.type = 'alert'
     new Skylite options
 
   $.confirm = (options) ->
+    $.extend options, modalOptions
     options.type = 'confirm'
     options.actions = $.extend {cancel: (-> true)}, options.actions unless options.actions.cancel?
     new Skylite options
 
   $.prompt = (options) ->
+    $.extend options, modalOptions
     options.type = 'prompt'
     options.body = '' unless options.body?
     options.body += '<p><input type="text" class="prompt" /></p>'
@@ -32,6 +40,7 @@ root = exports ? this
 
   $.profile = (options) ->
     options = body: options if typeof(options) is 'string'
+    $.extend options, modalOptions
     options.type = 'profile'
     options.actions = $.extend {
       message: ((modal) -> document.location = modal.$modal.find('.avatar').attr('href').replace('/profiles/', 'mail/compose'))
