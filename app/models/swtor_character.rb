@@ -5,10 +5,8 @@
 #
 # This class represents a Star Wars the Old Republic character.
 ###
-class SwtorCharacter < BaseCharacter
-  validates_lengths_from_database except: [:name, :avatar]
-
-  has_one :character_proxy, as: :character
+class SwtorCharacter < Character
+  #validates_lengths_from_database except: [:name, :avatar]
 
 ###
 # Constants
@@ -74,46 +72,29 @@ class SwtorCharacter < BaseCharacter
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :swtor_id, :swtor, :about, :char_class, :advanced_class, :species, :level, :gender
+  attr_accessible :name
+###
+# H-Store
+###
+  # Dynamicly add setter, getter, attr_accessible and scope for stored keys.
+  %w[char_class advanced_class species level gender faction server_name].each do |key|
+    attr_accessible key
+    scope "has_#{key}", lambda { |value| where("info @> (? => ?)", key, value) }
 
-###
-# Associations
-###
-  belongs_to :swtor
+    define_method(key) do
+      info && info[key]
+    end
 
-###
-# Delegates
-###
-  delegate :faction, to: :swtor, allow_nil: true
-  delegate :server_name, to: :swtor, allow_nil: true
+    define_method("#{key}=") do |value|
+      self.info = (info || {}).merge(key => value)
+    end
+  end
 
 ###
 # Validators
 ###
   validates :name, presence: true,
                    length: { maximum: MAX_NAME_LENGTH }
-  validate do |swtor_character|
-    swtor_character.errors.add(:game, "not found with this faction server combination") if swtor_character.swtor_id.blank?
-  end
-  validates :char_class,  presence: true
-  validate do |swtor_character|
-    if not SwtorCharacter.classes(swtor_character.faction).include?(swtor_character.char_class)
-      swtor_character.errors.add(:class, "is not valid for given faction")
-    end
-  end
-  validates :advanced_class,  presence: true,
-                              inclusion: { in: VALID_ADVANCED_CLASSES, message: "%{value} is not a valid advanced class." }
-  validate do |swtor_character|
-    if SwtorCharacter.char_class(swtor_character.advanced_class) != swtor_character.char_class
-      swtor_character.errors.add(:advanced_class, "is not valid for given class")
-    end
-  end
-  validates :species,  presence: true
-  validate :species_is_valid_for_advanced_class
-  validates :gender, presence: true,
-                     inclusion: {in: VALID_GENDERS}
-  validates :level, numericality: {only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 50}
-
 ###
 # Public Methods
 ###
@@ -205,43 +186,9 @@ class SwtorCharacter < BaseCharacter
     ]
   end
 
-  # Creates a new swtor character with the given params.
-  def self.create_character(params, user)
-    if params[:swtor_character]
-      swtor = Swtor.game_for_faction_server(SwtorCharacter.faction(params[:swtor_character][:advanced_class]), params[:server_name])
-      params[:swtor_character][:swtor] = swtor
-      params[:swtor_character][:char_class] = SwtorCharacter.char_class(params[:swtor_character][:advanced_class])
-      swtor_character = SwtorCharacter.create(params[:swtor_character])
-
-      if swtor_character.valid?
-        profile = user.user_profile
-        proxy = profile.character_proxies.build(character: swtor_character)
-        swtor_character.errors.add(:error, "could not add character to user profile") unless proxy.save
-      else
-        swtor_character.errors.add(:server_name, "can't be blank") if not params[:server_name]
-      end
-      return swtor_character
-    end
-  end
-
 ###
 # Instance Methods
 ###
-  ###
-  # This method gets the game for the character.
-  # [Returns] The SWTOR game.
-  ###
-  def game
-    self.swtor
-  end
-
-  ###
-  # This method gets the game name for the character.
-  # [Returns] The name of SWTOR
-  ###
-  def game_name
-    "Star Wars: The Old Republic"
-  end
 
   ###
   # This method gets the description for the character.
@@ -258,12 +205,7 @@ class SwtorCharacter < BaseCharacter
   # [Returns] An array of characters
   ###
   def self.search(search)
-    if search
-      search = "%"+search+'%'
-      where{(name =~ search) | (about =~ search)}
-    else
-      scoped
-    end
+    scoped # TODO fix this
   end
 ###
 # Validator Methods
@@ -274,14 +216,14 @@ class SwtorCharacter < BaseCharacter
   #
   # Checks species is valid for the given advanced_class
   ###
-  def species_is_valid_for_advanced_class
-    species_array = SwtorCharacter.species_class_collection.select{|item| item[0] == self.advanced_class }
-    vaild_species = species_array[0][1] if species_array and species_array[0]
-
-    if not vaild_species or not vaild_species.include?(self.species)
-      self.errors.add(:species, "is not valid for given class")
-    end
-  end
+  #def species_is_valid_for_advanced_class
+  #  species_array = SwtorCharacter.species_class_collection.select{|item| item[0] == self.advanced_class }
+  #  vaild_species = species_array[0][1] if species_array and species_array[0]
+#
+ #   if not vaild_species or not vaild_species.include?(self.species)
+  #    self.errors.add(:species, "is not valid for given class")
+   # end
+ # end
 end
 
 # == Schema Information

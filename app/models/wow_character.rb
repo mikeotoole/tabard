@@ -5,10 +5,9 @@
 #
 # This class represents a World of Warcraft character.
 ###
-class WowCharacter < BaseCharacter
-  validates_lengths_from_database except: [:name, :avatar]
+class WowCharacter < Character
+  #validates_lengths_from_database except: [:name, :avatar]
 
-  has_one :character_proxy, as: :character
 
 ###
 # Constants
@@ -72,33 +71,30 @@ class WowCharacter < BaseCharacter
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :race, :level, :wow_id, :wow, :about, :char_class, :gender
+  attr_accessible :name
 
 ###
-# Associations
+# H-Store
 ###
-  belongs_to :wow
+  # Dynamicly add setter, getter, attr_accessible and scope for stored keys.
+  %w[race level char_class gender faction server_name].each do |key|
+    attr_accessible key
+    scope "has_#{key}", lambda { |value| where("info @> (? => ?)", key, value) }
 
-###
-# Delegates
-###
-  delegate :faction, to: :wow, allow_nil: true
-  delegate :server_name, to: :wow, allow_nil: true
+    define_method(key) do
+      info && info[key]
+    end
+
+    define_method("#{key}=") do |value|
+      self.info = (info || {}).merge(key => value)
+    end
+  end
 
 ###
 # Validators
 ###
   validates :name, presence: true,
                    length: { maximum: MAX_NAME_LENGTH }
-  validate do |wow_character|
-    wow_character.errors.add(:game, "not found with this faction server combination") if wow_character.wow_id.blank?
-  end
-  validates :race, presence: true
-  validates :char_class, presence: true
-  validate :class_is_valid_for_race
-  validates :gender, presence: true,
-                     inclusion: {in: VALID_GENDERS}
-  validates :level, numericality: {only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 90}
 
 ###
 # Public Methods
@@ -146,44 +142,9 @@ class WowCharacter < BaseCharacter
     ]
   end
 
-  # Creates a new wow character with the given params.
-  def self.create_character(params, user)
-    if params[:wow_character]
-      wow = Wow.game_for_faction_server(params[:faction], params[:server_name])
-      params[:wow_character][:wow] = wow
-      wow_character = WowCharacter.create(params[:wow_character])
-
-      if wow_character.valid?
-        profile = user.user_profile
-        proxy = profile.character_proxies.build(character: wow_character)
-        wow_character.errors.add(:error, "could not add character to user profile") unless proxy.save
-      else
-        wow_character.errors.add(:server_name, "can't be blank") if not params[:server_name]
-        wow_character.errors.add(:faction, "can't be blank") if not params[:faction]
-      end
-      return wow_character
-    end
-  end
-
 ###
 # Instance Methods
 ###
-  ###
-  # This method gets the game for the character.
-  # [Returns] The WOW game.
-  ###
-  def game
-    self.wow
-  end
-
-  ###
-  # This method gets the game name for the character.
-  # [Returns] The name of WoW
-  ###
-  def game_name
-    "World of Warcraft"
-  end
-
   ###
   # This method gets the description for the character.
   # [Returns] A string that contains the description of the character.
@@ -199,12 +160,7 @@ class WowCharacter < BaseCharacter
   # [Returns] An array of characters
   ###
   def self.search(search)
-    if search
-      search = "%"+search+'%'
-      where{(name =~ search) | (about =~ search)}
-    else
-      scoped
-    end
+    scoped # TODO Fix this
   end
 
 ###
@@ -216,16 +172,16 @@ class WowCharacter < BaseCharacter
   #
   # Checks class is valid for race and faction.
   ###
-  def class_is_valid_for_race
-    if self.faction and self.race
-      class_array = WowCharacter.faction_race_class_collection.select{|item| item[0] == "#{self.faction}_#{self.race.gsub(/\s/,'_')}" }
-    end
-    valid_classes = class_array[0][1] if class_array and class_array[0]
-
-    if not valid_classes or not valid_classes.include?(self.char_class)
-      self.errors.add(:char_class, "is not valid for given race")
-    end
-  end
+  #def class_is_valid_for_race
+  # if self.faction and self.race
+  #   class_array = WowCharacter.faction_race_class_collection.select{|item| item[0] == "#{self.faction}_#{self.race.gsub(/\s/,'_')}" }
+  # end
+  # valid_classes = class_array[0][1] if class_array and class_array[0]
+  #
+  # if not valid_classes or not valid_classes.include?(self.char_class)
+  #   self.errors.add(:char_class, "is not valid for given race")
+  # end
+  #end
 end
 
 # == Schema Information

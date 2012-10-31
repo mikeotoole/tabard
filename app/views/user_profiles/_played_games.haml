@@ -4,6 +4,11 @@
   %ul
     - @played_games.each do |played_game|
       %li
-        %h3=played_game.game_name
+        %h3= played_game.game_name
+        %p= "Has #{pluralize(played_game.characters.count,'character')}"
+        -if played_game.characters.any?
+          %ul
+            - played_game.characters.each do |character|
+              %li=character.to_yaml
 - else
   %p None
