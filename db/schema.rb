@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121030220803) do
+ActiveRecord::Schema.define(:version => 20121031182433) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -246,6 +246,7 @@ ActiveRecord::Schema.define(:version => 20121030220803) do
   add_index "community_games", ["community_id"], :name => "index_community_games_on_community_id"
   add_index "community_games", ["game_announcement_space_id"], :name => "index_community_games_on_game_announcement_space_id"
   add_index "community_games", ["game_id"], :name => "index_community_games_on_game_id"
+  add_index "community_games", ["info"], :name => "community_games_info"
 
   create_table "community_invites", :force => true do |t|
     t.integer  "applicant_id"
@@ -427,6 +428,8 @@ ActiveRecord::Schema.define(:version => 20121030220803) do
     t.string   "type"
     t.hstore   "info"
   end
+
+  add_index "games", ["info"], :name => "games_info"
 
   create_table "invites", :force => true do |t|
     t.integer  "event_id"

@@ -39,7 +39,6 @@ class Game < ActiveRecord::Base
 ###
   # Setup info to use Hstore. This should not be needed for Rails 4.
   serialize :info, ActiveRecord::Coders::Hstore
-  # TODO: Add index for info. -MO
 
 ###
 # Instance Methods

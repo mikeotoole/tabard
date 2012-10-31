@@ -1,0 +1,1 @@
+require "hstore_accessor"
