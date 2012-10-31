@@ -20,26 +20,21 @@ class Wow < Game
 ###
   has_many :wow_characters, dependent: :destroy
 
+
 ###
-# Public Methods
+# Attribute accessible
 ###
+  attr_accessible :servers
 
 ###
 # H-Store
 ###
-  # Dynamicly add setter, getter, attr_accessible and scope for stored keys.
-  %w[servers].each do |key|
-    attr_accessible key
-    scope "has_#{key}", lambda { |value| where("info @> (? => ?)", key, value) }
+  # Dynamicly add setter, getter, and scopes for keys (See lib/hstore_accessor.rb).
+  hstore_accessor :info, :servers
 
-    define_method(key) do
-      info && info[key]
-    end
-
-    define_method("#{key}=") do |value|
-      self.info = (info || {}).merge(key => value)
-    end
-  end
+###
+# Public Methods
+###
 
 ###
 # Class Methods

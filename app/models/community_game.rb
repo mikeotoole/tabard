@@ -16,7 +16,7 @@ class CommunityGame < ActiveRecord::Base
 # Attribute accessible
 ###
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :game_id, :game, :name
+  attr_accessible :game_id, :game, :name. :faction, :server_name, :server_type
 
 ###
 # Associations
@@ -61,32 +61,12 @@ class CommunityGame < ActiveRecord::Base
   serialize :info, ActiveRecord::Coders::Hstore
   # TODO: Add index for info. -MO
 
-  # Dynamicly add setter, getter, attr_accessible and scope for stored keys.
-  %w[faction server_name server_type].each do |key|
-    attr_accessible key
-    scope "has_#{key}", lambda { |value| where("info @> (? => ?)", key, value) }
-
-    define_method(key) do
-      info && info[key]
-    end
-
-    define_method("#{key}=") do |value|
-      self.info = (info || {}).merge(key => value)
-    end
-  end
+  # Dynamicly add setter, getter, and scopes for keys (See lib/hstore_accessor.rb).
+  hstore_accessor :info, :faction, :server_name, :server_type
 
 ###
 # Public Methods
 ###
-
-#   def self.attempt_to_match_type(term)
-#     regex = Regexp.new(term.downcase.gsub(/\s+/, "|"))
-#     return "Swtor" if regex =~ "swtor" or regex =~ "sw:tor" or regex =~ "star wars the old republic" or regex =~ "star wars: the old republic"
-#     return "Minecraft" if regex =~ "minecraft"
-#     return "Wow" if regex =~ "wow" or regex =~ "world of warcraft"
-#
-#     return term
-#   end
 
 ###
 # Instance Methods
