@@ -59,6 +59,7 @@ class CommunityGame < ActiveRecord::Base
 ###
   # Setup info to use Hstore. This should not be needed for Rails 4.
   serialize :info, ActiveRecord::Coders::Hstore
+  # TODO: Add index for info. -MO
 
   # Dynamicly add setter, getter, attr_accessible and scope for stored keys.
   %w[faction server_name server_type].each do |key|
