@@ -23,12 +23,13 @@ class Game < ActiveRecord::Base
   has_many :communities, through: :community_games
 
   has_many :played_games
-  has_many :players, through: :played_games
+  has_many :players, through: :played_games, class_name: "UserProfile", source: "user_profile"
 
 ###
 # Validators
 ###
-  validates :name, presence: true
+  validates :name, presence: true,
+                   uniqueness: {case_sensitive: false}
 
 ###
 # Public Methods
@@ -39,18 +40,6 @@ class Game < ActiveRecord::Base
 ###
   # Setup info to use Hstore. This should not be needed for Rails 4.
   serialize :info, ActiveRecord::Coders::Hstore
-
-###
-# Instance Methods
-###
-
-  def short_name
-    self.name
-  end
-
-  def full_name
-    self.name
-  end
 end
 
 # == Schema Information

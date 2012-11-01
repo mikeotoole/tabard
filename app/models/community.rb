@@ -45,7 +45,6 @@ class Community < ActiveRecord::Base
   has_many :community_announcements, class_name: "Announcement", conditions: {community_game_id: nil}
   has_many :announcements
   has_many :community_invites, inverse_of: :community
-  has_many :community_games, dependent: :destroy #TODO: Remove.
   has_many :community_games, dependent: :destroy
   has_many :community_profiles, dependent: :destroy, inverse_of: :community
   has_many :approved_character_proxies, through: :community_profiles

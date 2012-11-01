@@ -19,7 +19,7 @@ def create_page_space(creator_full_name, community_name, space_name, faction='')
 
   creator = UserProfile.find_by_full_name(creator_full_name)
 
-  puts "With game #{community_game.game_full_name}" if community_game
+  puts "With game #{community_game.full_name}" if community_game
   ps = community.page_spaces.create!(name: space_name, community_game: community_game)
   Activity.create!({user_profile: creator, community: community, target: ps, action: "created"}, without_protection: true)
   return ps

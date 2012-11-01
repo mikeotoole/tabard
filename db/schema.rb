@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121031182433) do
+ActiveRecord::Schema.define(:version => 20121101172057) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -311,6 +311,11 @@ ActiveRecord::Schema.define(:version => 20121031182433) do
     t.datetime "updated_at",               :null => false
     t.string   "type"
     t.text     "upgrade_options"
+  end
+
+  create_table "custom_characters", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "custom_forms", :force => true do |t|

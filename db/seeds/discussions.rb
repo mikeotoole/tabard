@@ -16,7 +16,7 @@ def create_discussion_space(creator_full_name, community_name, space_name, facti
   end
   community_game = game ? community.community_games.where(game_id: game.id).has_faction(faction).limit(1).first : nil
 
-  puts "With game #{community_game.game_full_name}" if community_game
+  puts "With game #{community_game.full_name}" if community_game
   ds = community.discussion_spaces.create!(name: space_name, community_game: community_game)
   creator = UserProfile.find_by_full_name(creator_full_name)
   Activity.create!({user_profile: creator, community: community, target: ds, action: "created"}, without_protection: true)
