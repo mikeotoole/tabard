@@ -1,0 +1,2 @@
+class CustomCharactersController < CharactersController
+end

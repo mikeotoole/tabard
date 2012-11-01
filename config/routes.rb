@@ -73,8 +73,13 @@ DaBvRails::Application.routes.draw do
   get "/account" => "user_profiles#account", as: "account"
   match "/account/update" => "user_profiles#update", as: "update_account", via: :put
 
+  # Characer and PlayedGames
   resources :played_games, only: [:new,:create,:update,:destroy] do
-    resource :characters
+    resource :characters, only: [:new, :edit]
+    resource :wow_characters, only: [:create, :update]
+    resource :swtor_characters, only: [:create, :update]
+    resource :minecraft_characters, only: [:create, :update]
+    resource :custom_characters, only: [:create, :update]
   end
 
 

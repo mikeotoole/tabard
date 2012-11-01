@@ -44,6 +44,10 @@ class Wow < Game
     VALID_FACTIONS
   end
 
+  def self.server_names
+    Wow.all.first.try(:server_names)
+  end
+
   def self.game_name
     @wow_game_name ||= Wow.all.first.name
     return @wow_game_name

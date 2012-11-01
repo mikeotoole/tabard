@@ -13,7 +13,7 @@ class Character < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :about, :avatar, :info, :name, :type, :played_game_id
+  attr_accessible :about, :avatar, :remote_avatar_url, :info, :name, :type, :played_game_id
 
 ###
 # Associations
@@ -27,6 +27,11 @@ class Character < ActiveRecord::Base
 ###
 # Public Methods
 ###
+
+###
+# Uploaders
+###
+  mount_uploader :avatar, AvatarUploader
 
 ###
 # H-Store

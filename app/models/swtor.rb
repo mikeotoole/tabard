@@ -48,6 +48,10 @@ class Swtor < Game
     return @swtor_game_name
   end
 
+  def self.server_names
+    Swtor.all.first.try(:server_names)
+  end
+
 ###
 # Instance Methods
 ###
