@@ -364,14 +364,7 @@ protected
   # [Returns] A scoped query
   ###
   def self.search(search)
-    if search
-      corrected_game_type = CommunityGame.attempt_to_match_type(search)
-      search = "%"+search+'%'
-      correct_community_games = CommunityGame.where{(name =~ search) | (game_type =~ corrected_game_type)} #TODO: Fix this -MO
-      return where{(name =~ search) | (slogan =~ search) | (id.in(correct_community_games.select{community_id}))}
-    else
-      return scoped
-    end
+    return scoped # TODO Fix this
   end
 
 ###

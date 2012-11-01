@@ -172,16 +172,16 @@ class WowCharacter < Character
   #
   # Checks class is valid for race and faction.
   ###
-  #def class_is_valid_for_race
-  # if self.faction and self.race
-  #   class_array = WowCharacter.faction_race_class_collection.select{|item| item[0] == "#{self.faction}_#{self.race.gsub(/\s/,'_')}" }
-  # end
-  # valid_classes = class_array[0][1] if class_array and class_array[0]
-  #
-  # if not valid_classes or not valid_classes.include?(self.char_class)
-  #   self.errors.add(:char_class, "is not valid for given race")
-  # end
-  #end
+  def class_is_valid_for_race
+   if self.faction and self.race
+     class_array = WowCharacter.faction_race_class_collection.select{|item| item[0] == "#{self.faction}_#{self.race.gsub(/\s/,'_')}" }
+   end
+   valid_classes = class_array[0][1] if class_array and class_array[0]
+
+   if not valid_classes or not valid_classes.include?(self.char_class)
+     self.errors.add(:char_class, "is not valid for given race")
+   end
+  end
 end
 
 # == Schema Information

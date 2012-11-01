@@ -19,15 +19,12 @@ class SearchController < ApplicationController
   # GET /search(.:format)
   def index
     unless params[:term].blank?
-      @communities = Community.search params[:term]
-      @users = UserProfile.active.search params[:term]
-      @character_proxies = CharacterProxy.search params[:term]
-      @character_proxies_users = @character_proxies.map{|p| p.user_profile}.uniq
-      @users = @users - @character_proxies_users
+      @character_users = @characters.map{|c| c.user_profile}.uniq
+      @users = @users - @character_users
       @users_and_characters = Array.new
-      @character_proxies.group_by(&:user_profile).each do |user,proxies|
-        @users_and_characters << user
-        @users_and_characters << proxies
+      @characters.group_by(&:user_profile).each do |user_profile,character|
+        @users_and_characters << user_profile
+        @users_and_characters << character
       end
       @users_and_characters = @users_and_characters.flatten
       @results = @communities + @users + @users_and_characters
@@ -45,7 +42,7 @@ class SearchController < ApplicationController
 
   # GET /search/autocomplete(.:format)
   def autocomplete
-    @results = @communities + @users + @character_proxies unless params[:term].blank?
+    @results = @communities + @users + @characters unless params[:term].blank?
 
     render json: @results.map{|r|
       case r.class.to_s
@@ -60,7 +57,7 @@ class SearchController < ApplicationController
           url: user_profile_url(r),
           avatar: view_context.image_path(r.avatar_url(:icon))
         }
-      when 'CharacterProxy' then {
+      when 'Character' then {
           label: "<strong>#{r.name}</strong> (#{r.user_profile.name})",
           value: r.name,
           url: user_profile_url(r.user_profile, anchor: 'characters'),
@@ -85,7 +82,8 @@ protected
     else
       @communities = Community.search params[:term]
       @users = UserProfile.active.search params[:term]
-      @character_proxies = CharacterProxy.search params[:term]
+      @character_proxies = nil
+      @characters = Character.search params[:term]
     end
   end
 end
