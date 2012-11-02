@@ -136,7 +136,8 @@ class Community < ActiveRecord::Base
 ###
   # Returns all games that this community supports
   def games
-    self.community_games.collect{|sg| sg.game}.uniq{|g| g.short_name}
+    # TODO: Can this be changed to a has_may through now? -MO
+    self.community_games.collect{|sg| sg.game}.uniq{|g| g.name}
   end
 
   ###
