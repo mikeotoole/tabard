@@ -13,12 +13,19 @@ class Character < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :about, :avatar, :info, :name, :type
+  attr_accessible :about, :avatar, :remote_avatar_url, :info, :name, :type, :played_game_id
 
 ###
 # Associations
 ###
   belongs_to :played_game
+  has_one :user_profile, through: :played_game
+
+###
+# Delegates
+###
+  delegate :game, to: :played_game
+  delegate :name, to: :game, prefix: true
 
 ###
 # Validators
@@ -29,6 +36,11 @@ class Character < ActiveRecord::Base
 ###
 
 ###
+# Uploaders
+###
+  mount_uploader :avatar, AvatarUploader
+
+###
 # H-Store
 ###
   # Setup info to use Hstore. This should not be needed for Rails 4.
@@ -37,6 +49,30 @@ class Character < ActiveRecord::Base
 ###
 # Instance Methods
 ###
+  # This method determines if this character proxy is compatable with the provided community.
+  def compatable_with_community?(community)
+    return community.community_games.exists?(game_id: self.game.id) if community
+  end
+
+  # This method determines if this character proxy is compatable with the provided community_game.
+  def compatable_with_community_game?(community_game)
+    return true if community_game == nil
+    return community_game.game_type == self.game.class.to_s
+  end
+  ###
+  # This method returns a search scoped or simply scoped search helper
+  # [Args]
+  #   * +search+ -> The string search for.
+  # [Returns] A scoped query
+  ###
+  def self.search(search)
+    if search
+      search = "%"+search+'%'
+      where{(name =~ search) | (about =~ search)}
+    else
+      scoped
+    end
+  end
 end
 
 # == Schema Information

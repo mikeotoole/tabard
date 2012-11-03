@@ -45,7 +45,6 @@ class Community < ActiveRecord::Base
   has_many :community_announcements, class_name: "Announcement", conditions: {community_game_id: nil}
   has_many :announcements
   has_many :community_invites, inverse_of: :community
-  has_many :community_games, dependent: :destroy #TODO: Remove.
   has_many :community_games, dependent: :destroy
   has_many :community_profiles, dependent: :destroy, inverse_of: :community
   has_many :approved_character_proxies, through: :community_profiles
@@ -137,7 +136,8 @@ class Community < ActiveRecord::Base
 ###
   # Returns all games that this community supports
   def games
-    self.community_games.collect{|sg| sg.game}.uniq{|g| g.short_name}
+    # TODO: Can this be changed to a has_may through now? -MO
+    self.community_games.collect{|sg| sg.game}.uniq{|g| g.name}
   end
 
   ###
@@ -365,10 +365,9 @@ protected
   ###
   def self.search(search)
     if search
-      corrected_game_type = CommunityGame.attempt_to_match_type(search)
-      search = "%"+search+'%'
-      correct_community_games = CommunityGame.where{(name =~ search) | (game_type =~ corrected_game_type)} #TODO: Fix this -MO
-      return where{(name =~ search) | (slogan =~ search) | (id.in(correct_community_games.select{community_id}))}
+      community_ids = CommunityGame.search_by_game_name(search).pluck(:community_id)
+      search = "%#{search}%"
+      return where{(name =~ search) | (slogan =~ search) | (id.in(community_ids))}
     else
       return scoped
     end

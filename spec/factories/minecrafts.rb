@@ -2,6 +2,6 @@
 
 FactoryGirl.define do
   factory :minecraft do
-    server_type "Survival"
+    name "Minecraft"
   end
 end

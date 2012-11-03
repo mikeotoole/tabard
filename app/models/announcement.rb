@@ -24,7 +24,7 @@ class Announcement < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :body, :character_proxy_id, :is_locked, :has_been_edited, :community_game, :community_game_id, :comments_enabled
+  attr_accessible :name, :body, :character_id, :is_locked, :has_been_edited, :community_game, :community_game_id, :comments_enabled
 
   # This is a virtual attribute to determine if comments are enabled.
   attr_accessor :comments_enabled
@@ -33,7 +33,7 @@ class Announcement < ActiveRecord::Base
 # Associations
 ###
   belongs_to :user_profile
-  belongs_to :character_proxy
+  belongs_to :character
   belongs_to :community
   belongs_to :community_game
   has_many :acknowledgements, dependent: :destroy
@@ -79,14 +79,14 @@ class Announcement < ActiveRecord::Base
 # Instance Methods
 ###
   ###
-  # This method gets the poster of this discussion. If character proxy is not nil
+  # This method gets the poster of this discussion. If character is not nil
   # the character is returned. Otherwise the user profile is returned. These should
   # both respond to a common interface for things like display name and avatar.
   # [Returns] The poster, A character or user profile.
   ###
   def poster
-    if self.character_proxy
-      self.character_proxy.character
+    if self.character
+      self.character
     else
       self.user_profile
     end
@@ -106,7 +106,7 @@ class Announcement < ActiveRecord::Base
   # [Returns] True if a character made this discussion, otherwise false.
   ###
   def charater_posted?
-    self.character_proxy != nil
+    self.character != nil
   end
 
   ###
@@ -147,17 +147,17 @@ protected
   # This method validates that the selected character is valid for the community.
   ###
   def character_is_valid_for_user_profile
-    return unless self.character_proxy
-    self.errors.add(:character_proxy_id, "this character is not owned by you") unless self.user_profile.character_proxies.include?(self.character_proxy)
+    return unless self.character
+    self.errors.add(:character_id, "this character is not owned by you") unless self.character.user_profile == self.user_profile
   end
 
   ###
   # This method validates that the selected character is valid for the community.
   ###
   def character_is_valid_for_community_game
-    return unless self.character_proxy
-    unless self.character_proxy.compatable_with_community_game?(self.community_game)
-      self.errors.add(:character_proxy_id, "this character is not compatable with the selected context")
+    return unless self.character
+    unless self.character.compatable_with_community_game?(self.community_game)
+      self.errors.add(:character_id, "this character is not compatable with the selected context")
       self.errors.add(:community_game_id, "this context is not compatable with the selected character")
     end
   end
@@ -207,18 +207,18 @@ end
 #
 # Table name: announcements
 #
-#  id                 :integer          not null, primary key
-#  name               :string(255)
-#  body               :text
-#  character_proxy_id :integer
-#  user_profile_id    :integer
-#  community_id       :integer
-#  supported_game_id  :integer
-#  is_locked          :boolean          default(FALSE)
-#  deleted_at         :datetime
-#  has_been_edited    :boolean          default(FALSE)
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
-#  community_game_id  :integer
+#  id                :integer          not null, primary key
+#  name              :string(255)
+#  body              :text
+#  character_id      :integer
+#  user_profile_id   :integer
+#  community_id      :integer
+#  supported_game_id :integer
+#  is_locked         :boolean          default(FALSE)
+#  deleted_at        :datetime
+#  has_been_edited   :boolean          default(FALSE)
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  community_game_id :integer
 #
 

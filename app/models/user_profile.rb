@@ -53,10 +53,7 @@ class UserProfile < ActiveRecord::Base
 #Games
   has_many :played_games
 
-  has_many :character_proxies, dependent: :destroy, conditions: {is_removed: false}
-  has_many :swtor_characters, through: :character_proxies, source: :character, source_type: 'SwtorCharacter', order: 'LOWER(name)'
-  has_many :wow_characters, through: :character_proxies, source: :character, source_type: 'WowCharacter', order: 'LOWER(name)'
-  has_many :minecraft_characters, through: :character_proxies, source: :character, source_type: 'MinecraftCharacter', order: 'LOWER(name)'
+  has_many :characters, through: :played_games
 
   has_many :approved_character_proxies, through: :community_profiles
   has_many :communities, through: :community_profiles, order: 'LOWER(name)'
@@ -150,14 +147,6 @@ class UserProfile < ActiveRecord::Base
   end
 
   ###
-  # This method gets all of the characters attached to this user profile.
-  # [Returns] An array that contains all of the characters attached to this user profile.
-  ###
-  def characters
-    self.wow_characters + self.swtor_characters + self.minecraft_characters
-  end
-
-  ###
   # This method will return a cancan ability with the passed community's dynamic rules added in.
   # [Args]
   #   * +context_community+ -> The community to scope the ability with.
@@ -175,27 +164,27 @@ class UserProfile < ActiveRecord::Base
   # This method gets all of character proxies that are compatable with the communities Community games.
   # [Returns] An array that contains all of the compatable character proxies.
   ###
-  def compatable_character_proxies(community)
-    self.character_proxies.includes(:character).reject{|cp| !cp.compatable_with_community?(community)}
+  def compatable_characters(community)
+    self.characters.reject{|character| !character.compatable_with_community?(community)}
   end
 
   ###
   # This method gets all of the avaliable characters attached to this user profile.
   # [Returns] An array that contains all of the avalible characters attached to this user profile.
   ###
-  def available_character_proxies(community, game = nil)
-    return self.character_proxies unless community
-    available_character_proxies = Array.new
+  def available_characters(community, game = nil)
+    return self.characters unless community
+    available_characters = Array.new
     community_profile = self.community_profiles.where{community_id == community.id}.first
-    available_character_proxies.concat community_profile.approved_character_proxies.includes(:character) if community_profile
+    available_characters.concat community_profile.approved_characters.includes(:character) if community_profile
     if game
       if game.class == CommunityGame
-        available_character_proxies = available_character_proxies.delete_if{|proxy| proxy.game.class.to_s != game.game.class.to_s}
+        available_characters = available_characters.delete_if{|character| character.game.class.to_s != game.game.class.to_s}
       else
-        available_character_proxies = available_character_proxies.delete_if{|proxy| proxy.game.class.to_s != game.class.to_s}
+        available_characters = available_characters.delete_if{|character| character.game.class.to_s != game.class.to_s}
       end
     end
-    available_character_proxies
+    available_characters
   end
 
   # This method attepts to add the specified role to the correct community profile of this user, if the user has a community profile that matches the role's community.
@@ -457,6 +446,8 @@ end
 # Table name: user_profiles
 #
 #  id                :integer          not null, primary key
+#  first_name        :string(255)
+#  last_name         :string(255)
 #  avatar            :string(255)
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
@@ -466,7 +457,5 @@ end
 #  title             :string(255)
 #  location          :string(255)
 #  full_name         :string(255)
-#  gamer_tag         :string(255)
-#  slug              :string(255)
 #
 

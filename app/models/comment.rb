@@ -18,13 +18,13 @@ class Comment < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :body, :commentable_id, :commentable_type, :is_removed, :has_been_edited, :is_locked, :character_proxy_id, :community
+  attr_accessible :body, :commentable_id, :commentable_type, :is_removed, :has_been_edited, :is_locked, :character_id, :community
 
 ###
 # Associations
 ###
   belongs_to :user_profile
-  belongs_to :character_proxy
+  belongs_to :character
   belongs_to :community
   belongs_to :commentable, polymorphic: true
   belongs_to :original_commentable, polymorphic: true
@@ -78,8 +78,8 @@ class Comment < ActiveRecord::Base
   # [Returns] The poster, A character or user profile.
   ###
   def poster
-    if self.character_proxy
-      self.character_proxy.character
+    if self.character
+      self.character
     else
       self.user_profile
     end
@@ -90,7 +90,7 @@ class Comment < ActiveRecord::Base
   # [Returns] True if a character made this comment, otherwise false.
   ###
   def charater_posted?
-    character_proxy != nil
+    character != nil
   end
 
   ###
@@ -177,8 +177,8 @@ protected
   # This method validates that the selected game is valid for the community.
   ###
   def character_is_valid_for_user_profile
-    return unless self.character_proxy
-    self.errors.add(:character_proxy_id, "this character is not owned by you") unless self.user_profile.character_proxies.include?(self.character_proxy)
+    return unless self.character
+    self.errors.add(:character_id, "this character is not owned by you") unless self.user_profile.characters.include?(self.character)
   end
 
 ###
@@ -222,7 +222,7 @@ end
 #  id                        :integer          not null, primary key
 #  body                      :text
 #  user_profile_id           :integer
-#  character_proxy_id        :integer
+#  character_id              :integer
 #  community_id              :integer
 #  commentable_id            :integer
 #  commentable_type          :string(255)

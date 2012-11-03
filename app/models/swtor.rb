@@ -2,7 +2,7 @@
 # Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
 # Copyright:: Copyright (c) 2011 DigitalAugment Inc.
 # License::   Proprietary Closed Source
-
+#
 # This class represents the Star Wars the Old Republic game.
 ###
 class Swtor < Game
@@ -21,25 +21,19 @@ class Swtor < Game
   has_many :swtor_characters, dependent: :destroy
 
 ###
-# Public Methods
+# Attribute accessible
 ###
+  attr_accessible :servers
 
 ###
 # H-Store
 ###
-  # Dynamicly add setter, getter, attr_accessible and scope for stored keys.
-  %w[servers].each do |key|
-    attr_accessible key
-    scope "has_#{key}", lambda { |value| where("info @> (? => ?)", key, value) }
+  # Dynamicly add setter, getter, and scopes for keys (See lib/hstore_accessor.rb).
+  hstore_accessor :info, :servers
 
-    define_method(key) do
-      info && info[key]
-    end
-
-    define_method("#{key}=") do |value|
-      self.info = (info || {}).merge(key => value)
-    end
-  end
+###
+# Public Methods
+###
 
 ###
 # Class Methods
@@ -47,6 +41,15 @@ class Swtor < Game
   # Gets an array of all faction names.
   def self.factions
     VALID_FACTIONS
+  end
+
+  def self.game_name
+    @swtor_game_name ||= Swtor.all.first.name
+    return @swtor_game_name
+  end
+
+  def self.server_names
+    Swtor.all.first.try(:server_names)
   end
 
 ###
@@ -87,5 +90,6 @@ end
 #  updated_at :datetime         not null
 #  type       :string(255)
 #  info       :hstore
+#  aliases    :string(255)
 #
 

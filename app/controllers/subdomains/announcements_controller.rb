@@ -59,7 +59,7 @@ class Subdomains::AnnouncementsController < SubdomainsController
     @announcement.user_profile = current_user.user_profile
 
     if @announcement.save
-      set_last_posted_as((@announcement.charater_posted? ? @announcement.character_proxy : @announcement.user_profile))
+      set_last_posted_as((@announcement.charater_posted? ? @announcement.character : @announcement.user_profile))
       flash[:success] = 'Announcement was successfully created.'
     end
     respond_with(@announcement)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121030220803) do
+ActiveRecord::Schema.define(:version => 20121103162800) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -81,19 +81,19 @@ ActiveRecord::Schema.define(:version => 20121030220803) do
   create_table "announcements", :force => true do |t|
     t.string   "name"
     t.text     "body"
-    t.integer  "character_proxy_id"
+    t.integer  "character_id"
     t.integer  "user_profile_id"
     t.integer  "community_id"
     t.integer  "supported_game_id"
-    t.boolean  "is_locked",          :default => false
+    t.boolean  "is_locked",         :default => false
     t.datetime "deleted_at"
-    t.boolean  "has_been_edited",    :default => false
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
+    t.boolean  "has_been_edited",   :default => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
     t.integer  "community_game_id"
   end
 
-  add_index "announcements", ["character_proxy_id"], :name => "index_announcements_on_character_proxy_id"
+  add_index "announcements", ["character_id"], :name => "index_announcements_on_character_proxy_id"
   add_index "announcements", ["community_id"], :name => "index_announcements_on_community_id"
   add_index "announcements", ["supported_game_id"], :name => "index_announcements_on_supported_game_id"
   add_index "announcements", ["user_profile_id"], :name => "index_announcements_on_user_profile_id"
@@ -141,14 +141,6 @@ ActiveRecord::Schema.define(:version => 20121030220803) do
   add_index "character_proxies", ["character_type", "character_id"], :name => "index_proxies_on_character_type_and_character_id", :unique => true
   add_index "character_proxies", ["user_profile_id"], :name => "index_character_proxies_on_user_profile_id"
 
-  create_table "character_proxies_community_applications", :id => false, :force => true do |t|
-    t.integer "character_proxy_id"
-    t.integer "community_application_id"
-  end
-
-  add_index "character_proxies_community_applications", ["character_proxy_id"], :name => "habtm_cproxy_app_proxy_id"
-  add_index "character_proxies_community_applications", ["community_application_id"], :name => "habtm_cproxy_app_app_id"
-
   create_table "characters", :force => true do |t|
     t.string   "name"
     t.string   "avatar"
@@ -160,10 +152,15 @@ ActiveRecord::Schema.define(:version => 20121030220803) do
     t.datetime "updated_at",     :null => false
   end
 
+  create_table "characters_community_applications", :id => false, :force => true do |t|
+    t.integer "character_id",             :null => false
+    t.integer "community_application_id", :null => false
+  end
+
   create_table "comments", :force => true do |t|
     t.text     "body"
     t.integer  "user_profile_id"
-    t.integer  "character_proxy_id"
+    t.integer  "character_id"
     t.integer  "community_id"
     t.integer  "commentable_id"
     t.string   "commentable_type"
@@ -177,7 +174,7 @@ ActiveRecord::Schema.define(:version => 20121030220803) do
     t.datetime "deleted_at"
   end
 
-  add_index "comments", ["character_proxy_id"], :name => "index_comments_on_character_proxy_id"
+  add_index "comments", ["character_id"], :name => "index_comments_on_character_proxy_id"
   add_index "comments", ["commentable_type", "commentable_id"], :name => "index_comments_on_commentable_type_and_id"
   add_index "comments", ["community_id"], :name => "index_comments_on_community_id"
   add_index "comments", ["original_commentable_id", "original_commentable_type"], :name => "index_comments_original_commentable"
@@ -246,6 +243,7 @@ ActiveRecord::Schema.define(:version => 20121030220803) do
   add_index "community_games", ["community_id"], :name => "index_community_games_on_community_id"
   add_index "community_games", ["game_announcement_space_id"], :name => "index_community_games_on_game_announcement_space_id"
   add_index "community_games", ["game_id"], :name => "index_community_games_on_game_id"
+  add_index "community_games", ["info"], :name => "community_games_info"
 
   create_table "community_invites", :force => true do |t|
     t.integer  "applicant_id"
@@ -426,7 +424,10 @@ ActiveRecord::Schema.define(:version => 20121030220803) do
     t.datetime "updated_at", :null => false
     t.string   "type"
     t.hstore   "info"
+    t.string   "aliases"
   end
+
+  add_index "games", ["info"], :name => "games_info"
 
   create_table "invites", :force => true do |t|
     t.integer  "event_id"
@@ -637,7 +638,7 @@ ActiveRecord::Schema.define(:version => 20121030220803) do
 
   create_table "roster_assignments", :force => true do |t|
     t.integer  "community_profile_id"
-    t.integer  "character_proxy_id"
+    t.integer  "character_id"
     t.boolean  "is_pending",           :default => true
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
@@ -646,7 +647,7 @@ ActiveRecord::Schema.define(:version => 20121030220803) do
     t.integer  "community_game_id"
   end
 
-  add_index "roster_assignments", ["character_proxy_id"], :name => "index_roster_assignments_on_character_proxy_id"
+  add_index "roster_assignments", ["character_id"], :name => "index_roster_assignments_on_character_proxy_id"
   add_index "roster_assignments", ["community_profile_id"], :name => "index_roster_assignments_on_community_profile_id"
   add_index "roster_assignments", ["supported_game_id"], :name => "index_roster_assignments_on_supported_game_id"
 

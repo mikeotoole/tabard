@@ -247,4 +247,4 @@ VALID_WOW_SERVERS =
   Zuluhed| PvP| US"
 
 puts "Creating WoW Game..."
-Wow.create!(name: "World of Warcraft", servers: VALID_WOW_SERVERS.gsub(/[\r\n]/,""))
+Wow.create!(name: "World of Warcraft", servers: VALID_WOW_SERVERS.gsub(/[\r\n]/,""), aliases: "WoW")

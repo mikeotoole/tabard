@@ -36,8 +36,9 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
     @community_games = current_community.community_games
     @comments = @community_application.comments.page params[:page]
     params[:proxy_hash] ||= Hash.new
-    @community_application.character_proxies.each do |character_proxy|
-      if @community_games.where(game_type: character_proxy.game.class.to_s).size == 1
+    # TODO Fix this
+    @community_application.character.each do |character|
+      if @community_games.where(game_type: character.game.class.to_s).size == 1
         params[:proxy_hash][character_proxy.id.to_s] = @community_games.where(game_type: character_proxy.game.class.to_s).first.id
       end
     end
@@ -126,7 +127,7 @@ protected
   ###
   def create_application
     if(params[:community_application])
-      params[:community_application][:character_proxy_ids] ||= []
+      params[:community_application][:character_ids] ||= []
     end
     @community_application = current_community.community_applications.new(params[:community_application])
     @community_application.user_profile = current_user.user_profile

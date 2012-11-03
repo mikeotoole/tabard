@@ -1,0 +1,7 @@
+%h2 SW:TOR
+= simple_form_for [played_game,character], html: {novalidate: true} do |f|
+  %fieldset
+    %ol
+      = render 'swtor_characters/fields', f: f, swtor_character: character
+      %li
+        %button{ type: 'submit' } Create character

@@ -98,7 +98,7 @@ class UserProfilesController < ApplicationController
 
   # GET /user_profiles/:id/invites(.:format)
   def invites
-    @invites = current_user.invites.fresh.order(:is_viewed).includes(:user_profile, :character_proxy, event: [:community]).page params[:page]
+    @invites = current_user.invites.fresh.order(:is_viewed).includes(:user_profile, :character, event: [:community]).page params[:page]
     render partial: 'user_profiles/invites', locals: { invites: @invites }
   end
 

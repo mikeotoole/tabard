@@ -1,6 +1,6 @@
 = f.input :name, input_html: { maxlength: WowCharacter::MAX_NAME_LENGTH }
-= f.input :server_name, as: :radio_buttons, required: true, label: 'Server', collection: Wow.all_servers, wrapper_html: { class: 'select with-label' }, input_html: { name: 'server_name' }
-= f.input :faction, as: :radio_buttons, required: true, collection: Wow.all_factions, wrapper_html: { class: 'faction select with-label', affects: 'race' }, input_html: { name: 'faction' }
+= f.input :server_name, as: :radio_buttons, required: true, label: 'Server', collection: Wow.server_names, wrapper_html: { class: 'select with-label' }, input_html: { name: 'server_name' }
+= f.input :faction, as: :radio_buttons, required: true, collection: Wow.factions, wrapper_html: { class: 'faction select with-label', affects: 'race' }, input_html: { name: 'faction' }
 = render partial: 'shared/affected_dropdown', locals: { f: f, affected_by: 'faction', affected_by_value: wow_character.faction, label: 'Race', field: 'race', field_value: wow_character.race, collection: WowCharacter.faction_race_collection, affects: 'char_class' }
 = render partial: 'shared/affected_dropdown', locals: { f: f, affected_by: 'race', affected_by_value: (wow_character.faction && wow_character.race ? "#{wow_character.faction}_#{wow_character.race.gsub(/\s/,'_')}" : ''), label: 'Class', field: 'char_class', field_value: wow_character.char_class, collection: WowCharacter.faction_race_class_collection }
 = f.input :level, as: :string, input_html: { maxlength: 2 }, wrapper_html: { class: 'short' }

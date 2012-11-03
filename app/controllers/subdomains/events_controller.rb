@@ -129,7 +129,7 @@ class Subdomains::EventsController < SubdomainsController
   def attend
     participant = @event.participants.new()
     participant.user_profile = current_user.user_profile
-    participant.character_proxy = (character_active? ? current_character.character_proxy : nil)
+    participant.character = (character_active? ? current_character : nil) #TODO WAT?
     if participant.save
       flash[:success] = 'Successfully responded as attending.'
       redirect_to url_for(@event), action: :show

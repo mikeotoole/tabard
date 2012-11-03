@@ -32,11 +32,11 @@ class CommunityProfile < ActiveRecord::Base
   has_many :unread_announcements, through: :unread_acknowledgements, source: "announcement"
   has_many :read_announcements, through: :read_acknowledgements, source: "announcement"
   has_many :roster_assignments, dependent: :destroy
-  has_many :character_proxies, through: :roster_assignments, before_add: :ensure_that_character_proxy_user_matches
+  has_many :characters, through: :roster_assignments, before_add: :ensure_that_character_user_matches, source: "character"
   has_many :approved_roster_assignments, class_name: "RosterAssignment", conditions: {is_pending: false}
-  has_many :approved_character_proxies, through: :approved_roster_assignments, source: "character_proxy"
+  has_many :approved_characters, through: :approved_roster_assignments, source: "character"
   has_many :pending_roster_assignments, class_name: "RosterAssignment", conditions: {is_pending: true}
-  has_many :pending_character_proxies, through: :pending_roster_assignments, source: "character_proxy"
+  has_many :pending_character_proxies, through: :pending_roster_assignments, source: "character"
 
 ###
 # Callbacks
@@ -70,8 +70,8 @@ class CommunityProfile < ActiveRecord::Base
   #   * +community_game+ -> The supported game.
   ###
   def has_character_that_matches_community_game(community_game)
-    self.character_proxies.each do |proxy|
-      return true if proxy.game.class.to_s == community_game.game_type
+    self.characters.each do |character|
+      return true if character.game.id == community_game.game_id
     end
     return false
   end
@@ -100,8 +100,8 @@ protected
   # [Args]
   #   * +role+ -> The role being added to the collection.
   ###
-  def ensure_that_character_proxy_user_matches(character_proxy)
-    raise InvalidCollectionAddition.new("You can't add a character_proxy from a different user.") if character_proxy and character_proxy.user_profile != self.user_profile
+  def ensure_that_character_user_matches(character_proxy)
+    raise InvalidCollectionAddition.new("You can't add a character_proxy from a different user.") if character and character.user_profile != self.user_profile
   end
 
   ###

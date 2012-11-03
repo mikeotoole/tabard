@@ -172,32 +172,30 @@ class WowCharacter < Character
   #
   # Checks class is valid for race and faction.
   ###
-  #def class_is_valid_for_race
-  # if self.faction and self.race
-  #   class_array = WowCharacter.faction_race_class_collection.select{|item| item[0] == "#{self.faction}_#{self.race.gsub(/\s/,'_')}" }
-  # end
-  # valid_classes = class_array[0][1] if class_array and class_array[0]
-  #
-  # if not valid_classes or not valid_classes.include?(self.char_class)
-  #   self.errors.add(:char_class, "is not valid for given race")
-  # end
-  #end
+  def class_is_valid_for_race
+   if self.faction and self.race
+     class_array = WowCharacter.faction_race_class_collection.select{|item| item[0] == "#{self.faction}_#{self.race.gsub(/\s/,'_')}" }
+   end
+   valid_classes = class_array[0][1] if class_array and class_array[0]
+
+   if not valid_classes or not valid_classes.include?(self.char_class)
+     self.errors.add(:char_class, "is not valid for given race")
+   end
+  end
 end
 
 # == Schema Information
 #
-# Table name: wow_characters
+# Table name: characters
 #
-#  id         :integer          not null, primary key
-#  name       :string(255)
-#  race       :string(255)
-#  level      :integer
-#  wow_id     :integer
-#  avatar     :string(255)
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  char_class :string(255)
-#  about      :text
-#  gender     :string(255)
+#  id             :integer          not null, primary key
+#  name           :string(255)
+#  avatar         :string(255)
+#  about          :text
+#  played_game_id :integer
+#  info           :hstore
+#  type           :string(255)
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
 #
 
