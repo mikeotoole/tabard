@@ -94,14 +94,14 @@ protected
 # Callbacks
 ###
   ###
-  # _before_add_ on character_proxies
+  # _before_add_ on character
   #
   # This method ensures that the community matches when a role is added.
   # [Args]
   #   * +role+ -> The role being added to the collection.
   ###
-  def ensure_that_character_user_matches(character_proxy)
-    raise InvalidCollectionAddition.new("You can't add a character_proxy from a different user.") if character and character.user_profile != self.user_profile
+  def ensure_that_character_user_matches(character)
+    raise InvalidCollectionAddition.new("You can't add a character from a different user.") if character and character.user_profile != self.user_profile
   end
 
   ###

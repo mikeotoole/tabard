@@ -1,5 +1,5 @@
-%p
-  %strong Hello #{@user_profile.full_name},
+%h2
+  %font{ color: '#333' } Hello #{@user_profile.full_name},
 %p
   A problem occurred when we attempted to bill your credit card:
 %hr
@@ -12,4 +12,4 @@
 %p
   Please check out your recent billing statement and update your card if needed:
 %p
-  = link_to @url, @url, style: 'color: #BE4124'
+  %strong= link_to @url, @url, style: 'color: #BE4124'

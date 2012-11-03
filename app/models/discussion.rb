@@ -22,7 +22,7 @@ class Discussion < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :body, :character_proxy_id, :is_locked, :has_been_edited, :comments_enabled
+  attr_accessible :name, :body, :character_id, :is_locked, :has_been_edited, :comments_enabled
 
   # This is a virtual attribute to determine if comments are enabled.
   attr_accessor :comments_enabled
@@ -31,7 +31,7 @@ class Discussion < ActiveRecord::Base
 # Associations
 ###
   belongs_to :user_profile
-  belongs_to :character_proxy
+  belongs_to :character
   belongs_to :discussion_space
   has_many :comments, as: :commentable
   has_many :all_comments, as: :original_commentable, class_name: "Comment"
@@ -71,14 +71,14 @@ class Discussion < ActiveRecord::Base
 # Instance Methods
 ###
   ###
-  # This method gets the poster of this discussion. If character proxy is not nil
+  # This method gets the poster of this discussion. If character is not nil
   # the character is returned. Otherwise the user profile is returned. These should
   # both respond to a common interface for things like display name and avatar.
   # [Returns] The poster, A character or user profile.
   ###
   def poster
-    if self.character_proxy
-      self.character_proxy.character
+    if self.character
+      self.character
     else
       self.user_profile
     end
@@ -89,7 +89,7 @@ class Discussion < ActiveRecord::Base
   # [Returns] True if a character made this discussion, otherwise false.
   ###
   def charater_posted?
-    self.character_proxy != nil
+    self.character != nil
   end
 
   ###
@@ -128,8 +128,8 @@ protected
   # This method validates that the selected character is valid for the community.
   ###
   def character_is_valid_for_user_profile
-    return unless self.character_proxy
-    self.errors.add(:character_proxy_id, "this character is not owned by you") unless self.user_profile.character_proxies.include?(self.character_proxy)
+    return unless self.character
+    self.errors.add(:character_id, "this character is not owned by you") unless self.user_profile.characters.include?(self.character)
   end
 
 
@@ -165,7 +165,7 @@ end
 #  name                :string(255)
 #  body                :text
 #  discussion_space_id :integer
-#  character_proxy_id  :integer
+#  character_id        :integer
 #  user_profile_id     :integer
 #  is_locked           :boolean          default(FALSE)
 #  created_at          :datetime         not null

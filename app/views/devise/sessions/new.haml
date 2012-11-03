@@ -1,6 +1,6 @@
 - title 'Sign in'
 
-%h1 Login to Tabard
+%h1 Log in to Tabard
 
 = simple_form_for(resource, as: resource_name, url: session_url(resource_name, subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"))) do |f|
   %fieldset

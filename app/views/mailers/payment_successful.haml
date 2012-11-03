@@ -1,5 +1,5 @@
-%p
-  %strong Hello #{@user_profile.full_name},
+%h2
+  %font{ color: '#333' } Hello #{@user_profile.full_name},
 %p
   This is a receipt for your Tabard account.
   This is simply for your record and NO payment is due.
@@ -36,4 +36,4 @@
 %p
   To view your statement online go to:
 %p
-  = link_to @url, @url, style: 'color: #BE4124'
+  %strong= link_to @url, @url, style: 'color: #BE4124'

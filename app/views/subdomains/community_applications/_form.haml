@@ -30,11 +30,11 @@
       .characters
         %h2 Characters
         %p Select which of your characters you are applying with:
-        - community_application.character_proxies.each do |cp|
-          %label{ for: "community_application_character_proxy_ids_#{cp.id}" }
-            = image_tag cp.avatar_url(:tiny), class: 'avatar'
-            = cp.name
-        .select.picker= f.input :character_proxy_ids, as: :check_boxes, label: false, wrapper: false, collection: current_user.compatable_character_proxies(current_community).collect{|cp| cp = [raw(image_tag(cp.avatar_url(:tiny), class: 'avatar')) + cp.name, cp.id]}
+        - community_application.characters.each do |character|
+          %label{ for: "community_application_character_ids_#{character.id}" }
+            = image_tag character.avatar_url(:tiny), class: 'avatar'
+            = character.name
+        .select.picker= f.input :character_proxy_ids, as: :check_boxes, label: false, wrapper: false, collection: current_user.compatable_characters(current_community).collect{|character| character = [raw(image_tag(character.avatar_url(:tiny), class: 'avatar')) + character.name, character.id]}
     .instructions
       - unless community_application.custom_form_instructions.empty?
         %h2 Instructions

@@ -72,8 +72,8 @@ module ApplicationHelper
   end
 
   ###
-  # Provides a list of character proxies that are within scope of the current action.
-  # [Returns] array of character proxies.
+  # Provides a list of characters that are within scope of the current action.
+  # [Returns] array of characters.
   ###
   def available_characters
     current_user.available_characters(current_community,current_game)

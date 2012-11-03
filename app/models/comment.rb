@@ -72,7 +72,7 @@ class Comment < ActiveRecord::Base
 # Instance Methods
 ###
   ###
-  # This method gets the poster of this comment. If character proxy is not nil
+  # This method gets the poster of this comment. If character is not nil
   # the character is returned. Otherwise the user profile is returned. These should
   # both respond to a common interface for things like display name and avatar.
   # [Returns] The poster, A character or user profile.

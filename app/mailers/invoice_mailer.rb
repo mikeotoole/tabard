@@ -6,7 +6,7 @@
 # This class is a mailer used to notify users about invoices.
 ###
 class InvoiceMailer < ActionMailer::Base
-  default from: "Tabard <noreply@#{ENV['BV_HOST_URL']}>",
+  default from: "Tabard <noreply@#{ENV['BV_HOST_DOMAIN']}>",
           content_type: "text/html"
   layout 'mailer'
 

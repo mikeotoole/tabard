@@ -1,9 +1,9 @@
-%p
-  %strong Hello #{@user_profile.full_name},
+%h2
+  %font{ color: '#333' } Hello #{@user_profile.full_name},
 %p
   Your account is #{distance_of_time_in_words_to_now(@invoice.first_failed_attempt_date)} past due. We have downgraded all of you paid communities to free for you.
 %hr
 %p
   Please check out your recent billing statement and update your card if needed:
 %p
-  = link_to @url, @url, style: 'color: #BE4124'
+  %strong= link_to @url, @url, style: 'color: #BE4124'

@@ -22,14 +22,14 @@ class Invite < ActiveRecord::Base
 # Attribute accessible
 ###
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :status, :comment_body, :user_profile, :character_proxy, :user_profile_id, :character_proxy_id, :event_id
+  attr_accessible :status, :comment_body, :user_profile, :character, :user_profile_id, :character_id, :event_id
 
 ###
 # Associations
 ###
   belongs_to :event, inverse_of: :invites
   belongs_to :user_profile, inverse_of: :invites
-  belongs_to :character_proxy
+  belongs_to :character
 
 ###
 # Scopes
@@ -61,7 +61,7 @@ class Invite < ActiveRecord::Base
   delegate :avatar_url, to: :invitee, prefix: true, allow_nil: true
   delegate :display_name, to: :user_profile, prefix: true, allow_nil: true
   delegate :avatar_url, to: :user_profile, prefix: true, allow_nil: true
-  delegate :avatar_url, to: :character_proxy, prefix: true, allow_nil: true
+  delegate :avatar_url, to: :character, prefix: true, allow_nil: true
 
 ###
 # Callbacks
@@ -73,19 +73,19 @@ class Invite < ActiveRecord::Base
 # Instance Methods
 ###
   ###
-  # This method gets the invitee of this invite. If character proxy is not nil
+  # This method gets the invitee of this invite. If character is not nil
   # the character is returned. Otherwise the user profile is returned. These should
   # both respond to a common interface for things like display name and avatar.
   # [Returns] The invitee, A character or user profile.
   ###
   def invitee
-    if self.character_proxy
-      self.character_proxy.character
+    if self.character
+      self.character
     else
       self.user_profile
     end
   end
-  
+
   # This updates viewed for the specified user profile.
   def update_viewed(user_profile)
     self.update_column(:is_viewed, true) if user_profile and user_profile.invites.include?(self)
@@ -108,8 +108,8 @@ protected
   # This method validates that the selected game is valid for the community.
   ###
   def character_is_valid_for_user_profile
-    return unless self.character_proxy
-    self.errors.add(:character_proxy_id, "this character is not owned by you") unless self.user_profile.character_proxies.include?(self.character_proxy)
+    return unless self.character
+    self.errors.add(:character_id, "this character is not owned by you") unless self.user_profile.characters.include?(self.character)
   end
 
 ###
@@ -117,7 +117,7 @@ protected
 ###
   # This creates a comment from the body.
   def create_comment_from_body
-    event.comments.create({body: comment_body, user_profile_id: user_profile_id, character_proxy_id: character_proxy_id}, without_protection: true) unless comment_body.blank?
+    event.comments.create({body: comment_body, user_profile_id: user_profile_id, character_id: character_id}, without_protection: true) unless comment_body.blank?
   end
 
   # This sets the expiration date from the event.
@@ -130,14 +130,14 @@ end
 #
 # Table name: invites
 #
-#  id                 :integer          not null, primary key
-#  event_id           :integer
-#  user_profile_id    :integer
-#  character_proxy_id :integer
-#  status             :string(255)
-#  is_viewed          :boolean          default(FALSE)
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
-#  expiration         :datetime
+#  id              :integer          not null, primary key
+#  event_id        :integer
+#  user_profile_id :integer
+#  character_id    :integer
+#  status          :string(255)
+#  is_viewed       :boolean          default(FALSE)
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  expiration      :datetime
 #
 

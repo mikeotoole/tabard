@@ -55,7 +55,7 @@ class UserProfile < ActiveRecord::Base
 
   has_many :characters, through: :played_games
 
-  has_many :approved_character_proxies, through: :community_profiles
+  has_many :approved_characters, through: :community_profiles
   has_many :communities, through: :community_profiles, order: 'LOWER(name)'
   has_many :announcements, through: :community_profiles
   has_many :acknowledgements, through: :community_profiles
@@ -161,7 +161,7 @@ class UserProfile < ActiveRecord::Base
   end
 
   ###
-  # This method gets all of character proxies that are compatable with the communities Community games.
+  # This method gets all of characters that are compatable with the communities Community games.
   # [Returns] An array that contains all of the compatable character proxies.
   ###
   def compatable_characters(community)
@@ -176,7 +176,7 @@ class UserProfile < ActiveRecord::Base
     return self.characters unless community
     available_characters = Array.new
     community_profile = self.community_profiles.where{community_id == community.id}.first
-    available_characters.concat community_profile.approved_characters.includes(:character) if community_profile
+    available_characters.concat community_profile.approved_characters if community_profile
     if game
       if game.class == CommunityGame
         available_characters = available_characters.delete_if{|character| character.game.class.to_s != game.game.class.to_s}
@@ -308,7 +308,7 @@ class UserProfile < ActiveRecord::Base
   ###
   def active_profile_helper_collection(community, game)
     if community
-      return (Array.new() << (self)).concat(self.available_character_proxies(community,game).map{|proxy| proxy.character})
+      return (Array.new() << (self)).concat(self.available_characters(community,game))
     else
       return (Array.new() << (self)).concat(self.characters)
     end
@@ -353,7 +353,7 @@ class UserProfile < ActiveRecord::Base
   def nuke
     self.swtor_characters.each{|swtor_character| swtor_character.delete}
     self.wow_characters.each{|wow_character| wow_character.delete}
-    self.character_proxies.each{|character_proxy| character_proxy.delete}
+    self.characters.each{|character| character.delete}
 
     self.owned_communities.each{|community| community.nuke}
     self.community_profiles.each{|community_profile| community_profile.destroy!}
@@ -446,8 +446,6 @@ end
 # Table name: user_profiles
 #
 #  id                :integer          not null, primary key
-#  first_name        :string(255)
-#  last_name         :string(255)
 #  avatar            :string(255)
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
@@ -457,5 +455,7 @@ end
 #  title             :string(255)
 #  location          :string(255)
 #  full_name         :string(255)
+#  gamer_tag         :string(255)
+#  slug              :string(255)
 #
 
