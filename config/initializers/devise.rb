@@ -3,7 +3,7 @@
 Devise.setup do |config|
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in DeviseMailer.
-  config.mailer_sender = "Tabard <noreply@#{ENV['BV_HOST_URL']}>"
+  config.mailer_sender = "Tabard <noreply@#{ENV['BV_HOST_DOMAIN']}>"
 
   # Configure the class responsible to send e-mails.
   # config.mailer = "Devise::Mailer"

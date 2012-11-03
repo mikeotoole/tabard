@@ -52,12 +52,6 @@ DaBvRails::Application.routes.draw do
   get "users/accept_document/:id" => "document_acceptance#new", as: "accept_document"
   post "users/accept_document/:id" => "document_acceptance#create", as: "accept_document_create"
 
-  # Games
-  resources :games, only: [:show, :index] do
-    collection do
-      get :autocomplete
-    end
-  end
   # User Profiles
   resources :user_profiles, path: :profiles, only: [:show, :edit, :update] do
     member do
@@ -80,8 +74,10 @@ DaBvRails::Application.routes.draw do
     resource :swtor_characters, only: [:create, :update]
     resource :minecraft_characters, only: [:create, :update]
     resource :custom_characters, only: [:create, :update]
+    collection do
+      get :autocomplete
+    end
   end
-
 
   # Communities
   resources :communities, only: [:show, :new, :create, :destroy] do
@@ -91,11 +87,6 @@ DaBvRails::Application.routes.draw do
       get :remove_confirmation, as: "community_remove_confirmation"
     end
   end
-
-  # Games
-  #get "/star-wars-the-old-republic" => 'swtors#index', as: 'swtors'
-  #get "/world-of-warcraft" => 'wows#index', as: 'wows'
-  #get "/minecraft" => 'minecrafts#index', as: 'minecrafts'
 
   # Characters
   resources :wow_characters, except: [:index, :create]
@@ -220,7 +211,11 @@ DaBvRails::Application.routes.draw do
       end
 
       # Community Games
-      resources :community_games, except: [:show]
+      resources :community_games, except: [:show] do
+        collection do
+          get :autocomplete
+        end
+      end
 
       # Events
       resources :events do
