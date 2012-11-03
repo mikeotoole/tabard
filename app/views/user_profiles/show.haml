@@ -38,7 +38,7 @@
           %li= link_to shorten_words(community.name), root_url(subdomain: community.subdomain)
     - elsif is_my_profile
       %p
-        You don't have any memberships yet.
+        You do not have any memberships yet.
         = link_to 'Find a community ›', search_url
         %br
         = link_to 'Create a community ›', new_community_url
@@ -75,14 +75,11 @@
             = link_to 'Announcements', announcements_user_profile_url(@user_profile, subdomain: "www", format: :js), remote: true, class: 'dynload wait', data: { type: :text, target: '#tabs dt.announcements + dd', error: 'Error: unable to load announcements.' }
           %dd
       - unless is_private
-        %dt{ class: 'characters' }
-          = link_to 'Characters', characters_user_profile_url(@user_profile, subdomain: "www", format: :js), remote: true, class: 'dynload wait', data: { type: :text, target: '#tabs dt.characters + dd', error: 'Error: unable to load characters.' }
+        %dt{ class: 'games' }
+          = link_to 'My Games', user_profile_played_games_url(@user_profile, subdomain: "www", format: :js), remote: true, class: 'dynload wait', data: { type: :text, target: '#tabs dt.games + dd', error: 'Error: unable to load games.' }
         %dd
         %dt{ class: 'activities current' }
           = link_to 'Recent Activity', activities_user_profile_url(@user_profile, subdomain: "www", format: :js), remote: true, class: 'dynload wait', data: { type: :text, target: '#tabs dt.activities + dd', error: 'Error: unable to load recent activity.' }
         %dd
-        %dt{ class: 'played_games' }
-          = link_to 'Played Games', user_profile_played_games_url(@user_profile, subdomain: "www", format: :js), remote: true, class: 'dynload wait', data: { type: :text, target: '#tabs dt.played_games + dd', error: 'Error: unable to load games.' }
-          %dd
   - else
     %p This user's profile is private.

@@ -4,6 +4,9 @@ class PlayedGame < ActiveRecord::Base
   belongs_to :user_profile
   has_many :characters
 
+
+  delegate :type, to: :game, prefix: true, allow_nil: true
+
   def game_name
     game.try(:name)
   end

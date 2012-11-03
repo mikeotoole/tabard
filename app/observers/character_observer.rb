@@ -14,7 +14,7 @@ class CharacterObserver < ActiveRecord::Observer
       unless (character.changed == ["avatar", "updated_at"] and not character.avatar.cached?.present?)
         change = (character.changed == ["avatar", "updated_at"] and character.avatar.cached?.present?) ? "avatar" : "edited"
         Activity.create!({user_profile: character.user_profile,
-                          target: character.character_proxy,
+                          target: character,
                           action: change}, without_protection: true)
       end
     end
@@ -23,7 +23,7 @@ class CharacterObserver < ActiveRecord::Observer
 
   # removes comment
   def after_destroy(character)
-    Activity.where(target_type: character.character_proxy.class.to_s, target_id: character.character_proxy.id).destroy_all
+    Activity.where(target_type: character.class.to_s, target_id: character.id).destroy_all
     return true
   end
 end

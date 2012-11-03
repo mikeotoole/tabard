@@ -6,4 +6,10 @@
 # This controller is for World of Warcraft characters.
 ###
 class WowCharactersController < CharactersController
+  load_and_authorize_resource
+
+  def update
+    @wow_character.update_attributes(params[:wow_character])
+    redirect_to user_profile_url(current_user, anchor: "games", subdomain: "www")
+  end
 end
