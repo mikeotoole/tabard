@@ -55,7 +55,7 @@ class CommunityApplication < ActiveRecord::Base
   validate :community_and_submission_match
   validate :user_profile_and_submission_match
   validate :user_profile_not_a_member
-  validate :character_proxies_are_compatable_with_community
+  validate :characters_are_compatable_with_community
 
 ###
 # Delegates
@@ -83,12 +83,12 @@ class CommunityApplication < ActiveRecord::Base
   # This method accepts this application and does all of the magic to make the applicant a member.
   # [Returns] True if this action was successful, otherwise false.
   ###
-  def accept_application(accepted_by_user_profile, proxy_map = Hash.new)
+  def accept_application(accepted_by_user_profile, character_map = Hash.new) # TODO Make this better!
     return false if self.accepted? or self.applicant_is_a_member?
     error_count = 0
-    self.character_proxies.each do |proxy|
-      if proxy_map[proxy.id.to_s] == "-1"
-        proxy.errors.add :base, "Character must be assigned to a game or rejected."
+    self.characters.each do |charatcer|
+      if character_map[charatcer.id.to_s] == "-1"
+        charatcer.errors.add :base, "Character must be assigned to a game or rejected."
         error_count += 1
       end
     end
@@ -102,11 +102,10 @@ class CommunityApplication < ActiveRecord::Base
                   to: [self.user_profile_id])
 
       unless community_profile.nil?
-        # TODO Fix this
-        self.character_proxies.each do |proxy|
-          next unless proxy_map[proxy.id.to_s]
+        self.characters.each do |charatcer|
+          next unless character_map[charatcer.id.to_s]
           begin
-            community_profile.roster_assignments.create!({community_game_id: proxy_map[proxy.id.to_s], character_proxy: proxy}, without_protection: true).approve(false)
+            community_profile.roster_assignments.create!({community_game_id: character_map[charatcer.id.to_s], character: charatcer}, without_protection: true).approve(false)
           rescue ActiveRecord::RecordInvalid => invalid
             logger.error invalid.record.errors
           end
@@ -224,9 +223,9 @@ protected
   end
 
   #This method ensures that the character proxies are compatable with the community.
-  def character_proxies_are_compatable_with_community
-    self.character_proxies.each do |cp|
-      errors.add(:base, "#{cp.name} does not belong to a game that is supported by the community.") unless cp.compatable_with_community?(self.community)
+  def characters_are_compatable_with_community
+    self.characters.each do |character|
+      errors.add(:base, "#{character.name} does not belong to a game that is supported by the community.") unless character.compatable_with_community?(self.community)
     end
   end
 
