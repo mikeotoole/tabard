@@ -65,7 +65,7 @@ class SentMessagesController < MailboxController
   # GET /sent/autocomplete(.:format)
   def autocomplete
     @user_profiles = current_user.address_book.active.search params[:term]
-    @character_proxies = CharacterProxy.search(params[:term]) & CharacterProxy.includes(:user_profile).where(user_profile_id: current_user.address_book.active)
+    @characters = Character.search(params[:term]) & current_user.address_book.active.map{&:characters)
     render json:
       @user_profiles.map{|up| {
         label: "<a>#{view_context.image_tag(view_context.image_path(up.avatar_url(:icon)))} <strong>#{up.display_name}</strong></a>",
@@ -73,11 +73,11 @@ class SentMessagesController < MailboxController
         html: render_to_string(partial: 'to', locals: {user_profile: up}),
         display_name: up.display_name
       }} +
-      @character_proxies.map{|cp| {
-        label: "<a>#{view_context.image_tag(view_context.image_path(cp.avatar_url(:icon)))} <strong>#{cp.name}</strong> (#{cp.user_profile_display_name})</a>",
-        value: cp.user_profile_id,
-        html: render_to_string(partial: 'to', locals: {user_profile: cp.user_profile}),
-        display_name: cp.user_profile_display_name
+      @characters.map{|character| {
+        label: "<a>#{view_context.image_tag(view_context.image_path(character.avatar_url(:icon)))} <strong>#{character.name}</strong> (#{character.user_profile_display_name})</a>",
+        value: character.user_profile.id,
+        html: render_to_string(partial: 'to', locals: {user_profile: character.user_profile}),
+        display_name: character.user_profile_display_name
       }}
   end
 

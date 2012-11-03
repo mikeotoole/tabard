@@ -64,8 +64,6 @@ class Ability
   end
 =begin
   can :manage, Answer
-  can :manage, BaseCharacter
-  can :manage, CharacterProxy
   can :manage, Comment
   can :manage, Community
   can :manage, CommunityApplication

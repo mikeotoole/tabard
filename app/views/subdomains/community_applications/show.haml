@@ -27,29 +27,29 @@
           = image_tag @community_application.user_profile_avatar_url(:tiny), class: 'avatar'
           = @community_application.user_profile_display_name
 
-      - if @community_application.character_proxies.size > 0
+      - if @community_application.characters.size > 0
         .characters
           %h2 Characters
-          - @community_application.character_proxies.each do |character_proxy|
+          - @community_application.characters.each do |character|
             %ul
               %li
-                = image_tag character_proxy.avatar_url(:tiny), class: 'avatar'
-                %span.name= character_proxy.name
-                %span.game= character_proxy.game_name
+                = image_tag character.avatar_url(:tiny), class: 'avatar'
+                %span.name= character.name
+                %span.game= character.game_name
             - if @community_application.is_pending? or @community_application.rejected? and can? :accept, @community_application
-              = hidden_field_tag "proxy_hash[#{character_proxy.id}]", -1
-              = f.simple_fields_for @community_application.character_proxies, character_proxy, index: character_proxy.id do |pf|
-                .select{ class: character_proxy.errors.any? ? 'with-errors' : '' }
+              = hidden_field_tag "proxy_hash[#{character.id}]", -1
+              = f.simple_fields_for @community_application.characters, character, index: character.id do |pf|
+                .select{ class: character.errors.any? ? 'with-errors' : '' }
                   %ul
                     %li
-                      = radio_button_tag "proxy_hash[#{character_proxy.id}]", ''
-                      = label_tag "proxy_hash_#{character_proxy.id}_", 'Reject Character'
-                    - @community_games.where(game_type: character_proxy.game.class.to_s).each do |sg|
+                      = radio_button_tag "proxy_hash[#{character.id}]", ''
+                      = label_tag "proxy_hash_#{character.id}_", 'Reject Character'
+                    - @community_games.where(game_type: character.game.class.to_s).each do |sg|
                       %li
-                        = radio_button_tag "proxy_hash[#{character_proxy.id}]", sg.id, (params[:proxy_hash] and sg.id.to_s == params[:proxy_hash][character_proxy.id.to_s].to_s)
-                        = label_tag "proxy_hash_#{character_proxy.id}_#{sg.id}", sg.smart_name
-                  - if character_proxy.errors.any?
-                    %mark.error= character_proxy.errors.full_messages.first
+                        = radio_button_tag "proxy_hash[#{character.id}]", sg.id, (params[:proxy_hash] and sg.id.to_s == params[:proxy_hash][character.id.to_s].to_s)
+                        = label_tag "proxy_hash_#{character.id}_#{sg.id}", sg.smart_name
+                  - if character.errors.any?
+                    %mark.error= character.errors.full_messages.first
 
     - if @community_application.submission.answers.size > 0
       .questions

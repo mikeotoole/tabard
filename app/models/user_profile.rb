@@ -353,7 +353,7 @@ class UserProfile < ActiveRecord::Base
   def nuke
     self.swtor_characters.each{|swtor_character| swtor_character.delete}
     self.wow_characters.each{|wow_character| wow_character.delete}
-    self.character_proxies.each{|character_proxy| character_proxy.delete}
+    self.characters.each{|character| character.delete}
 
     self.owned_communities.each{|community| community.nuke}
     self.community_profiles.each{|community_profile| community_profile.destroy!}
