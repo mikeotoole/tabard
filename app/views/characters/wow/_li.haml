@@ -1,5 +1,5 @@
 %li.wow.character
-  %h3= link_to_if (can? :update, character), shorten_words(character.name, 11), edit_wow_character_url(character)
+  %h3= link_to_if (can? :update, character), shorten_words(character.name, 11), edit_character_url(character)
   .avatar= image_tag character.avatar_url :small
   %dl.attributes
     - if defined? show_game and !!show_game

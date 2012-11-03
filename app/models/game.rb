@@ -54,6 +54,26 @@ class Game < ActiveRecord::Base
     return games
   end
 
+  ###
+  # Lets the subclasses use the parents routes.
+  # [Args]
+  #   * +child+ -> The class to check if subclass.
+  # [Returns] If is subclass of Game returns Game as model name.
+  ###
+  def self.inherited(child)
+    child.instance_eval do
+      # Defines the subclasses model name as its base class Game.
+      def model_name
+        Game.model_name
+      end
+    end
+    super
+  end
+
+###
+# Instance Methods
+###
+
   # Quick check to see if the game is supported officially or not
   def is_supported
     self.type != 'CustomGame'

@@ -68,20 +68,13 @@ DaBvRails::Application.routes.draw do
   match "/account/update" => "user_profiles#update", as: "update_account", via: :put
 
   # Characer and PlayedGames
-  resources :played_games, only: [:new,:create,:update,:destroy] do
-    resource :characters, only: [:new, :edit]
-    resource :custom_characters, only: [:create]
-    resource :minecraft_characters, only: [:create]
-    resource :swtor_characters, only: [:create]
-    resource :wow_characters, only: [:create]
+  resources :played_games, only: [:new, :create, :update, :destroy] do
+    resource :characters, only: [:new, :edit, :create]
     collection do
       get :autocomplete
     end
   end
-  resources :custom_characters, only: [:edit, :update]
-  resources :minecraft_characters, only: [:edit, :update]
-  resources :swtor_characters, only: [:edit, :update]
-  resources :wow_characters, only: [:edit, :update]
+  resources :characters, only: [:edit, :update, :destroy]
 
   # Communities
   resources :communities, only: [:show, :new, :create, :destroy] do
