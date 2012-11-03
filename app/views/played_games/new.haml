@@ -6,7 +6,7 @@
 = simple_form_for @played_game, html: {novalidate: true} do |f|
   %fieldset
     %ol
-      = f.input :game_name, input_html:{ data: {autocomplete_source: autocomplete_games_url(subdomain:'www')}}
+      = f.input :game_name, input_html:{ data: {autocomplete_source: autocomplete_played_games_url(subdomain:'www')}}
       %li
         %button{ type: 'submit' } Create Game
 

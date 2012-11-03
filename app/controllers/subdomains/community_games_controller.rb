@@ -6,7 +6,7 @@
 # This controller is for handling a communities games.
 ###
 class Subdomains::CommunityGamesController < SubdomainsController
-  respond_to :html
+  respond_to :html, :js
 
 ###
 # Before Filters
@@ -15,7 +15,7 @@ class Subdomains::CommunityGamesController < SubdomainsController
   before_filter :ensure_current_user_is_member
   before_filter :load_community_game, except: [:new, :create, :index]
   before_filter :create_community_game, only: [:new, :create]
-  authorize_resource except: [:index]
+  authorize_resource except: [:index, :autocomplete]
   skip_before_filter :limit_subdomain_access
   after_filter :create_activity, only: [:update, :create]
 
@@ -63,6 +63,12 @@ class Subdomains::CommunityGamesController < SubdomainsController
   def destroy
     flash[:notice] = 'Game was successfully removed.' if @community_game.destroy
     respond_with(@community_game)
+  end
+
+  # GET /community_games/autocomplete(.:format)
+  def autocomplete
+    @games = Game.search(params[:term]).pluck(:name)
+    render json: @games
   end
 
 ###

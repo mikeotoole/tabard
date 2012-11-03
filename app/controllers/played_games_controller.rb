@@ -11,6 +11,7 @@ class PlayedGamesController < ApplicationController
   load_and_authorize_resource :user_profile, only: [:show, :index]
   before_filter :load_user_profile_from_current_user, except: [:show, :index]
   load_and_authorize_resource :played_game, through: :user_profile
+
   def index
     respond_with(@played_games) do |format|
       format.js {render partial: 'user_profiles/played_games', locals: { user_profile: @user_profile, played_games: @played_games }}
@@ -19,7 +20,6 @@ class PlayedGamesController < ApplicationController
 
   def show
   end
-
 
   def new
   end
@@ -30,6 +30,12 @@ class PlayedGamesController < ApplicationController
     else
       render :new
     end
+  end
+
+  # GET /played_games/autocomplete
+  def autocomplete
+    @games = Game.search(params[:term]).pluck(:name)
+    render json: @games
   end
 
 protected

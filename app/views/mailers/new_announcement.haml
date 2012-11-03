@@ -1,5 +1,5 @@
-%p
-  %strong Hello #{@user_profile.display_name},
+%h2
+  %font{ color: '#333' } Hello #{@user_profile.display_name},
 %p
   #{@acknowledgement.poster_display_name} created a new #{@acknowledgement.community_name} announcement on Tabard&trade;!
 %hr
@@ -10,4 +10,5 @@
 
 %hr
 %p Checkout the complete announcement here:
-%p= link_to 'View Announcement', @url, style: 'color: #BE4124'
+%p
+  %strong= link_to 'View Announcement', @url, style: 'color: #BE4124'
