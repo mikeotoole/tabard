@@ -65,7 +65,7 @@ class SentMessagesController < MailboxController
   # GET /sent/autocomplete(.:format)
   def autocomplete
     @user_profiles = current_user.address_book.active.search params[:term]
-    @characters = Character.search(params[:term]) & current_user.address_book.active.map{&:characters)
+    @characters = Character.search(params[:term]) & current_user.address_book.active.map(&:characters)
     render json:
       @user_profiles.map{|up| {
         label: "<a>#{view_context.image_tag(view_context.image_path(up.avatar_url(:icon)))} <strong>#{up.display_name}</strong></a>",
