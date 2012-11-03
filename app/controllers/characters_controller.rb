@@ -12,13 +12,13 @@ class CharactersController < ApplicationController
   end
 
   def create
-    @character.save!
-    redirect_to user_profile_url(current_user, anchor: "games", subdomain: "www")
+    flash[:success] = "Your character has been created." if @character.save!
+    respond_with(@character, location: user_profile_url(current_user, anchor: "games", subdomain: "www"))
   end
 
   def update
-    @character.update_attributes(params[:character])
-    redirect_to user_profile_url(current_user, anchor: "games", subdomain: "www")
+    flash[:success] = "Your character has been updated." if @character.update_attributes(params[:character])
+    respond_with(@character, location: user_profile_url(current_user, anchor: "games", subdomain: "www"))
   end
 
   def destroy
@@ -32,13 +32,13 @@ protected
     if @character.blank?
       case @played_game.game.name
       when Wow.game_name
-        @character = WowCharacter.new(params[:wow_character])
+        @character = WowCharacter.new(params[:character])
       when Swtor.game_name
-        @character = SwtorCharacter.new(params[:swtor_character])
+        @character = SwtorCharacter.new(params[:character])
       when Minecraft.game_name
-        @character = MinecraftCharacter.new(params[:minecraft_character])
+        @character = MinecraftCharacter.new(params[:character])
       else
-        @character = CustomCharacter.new(params[:custom_character])
+        @character = CustomCharacter.new(params[:character])
       end
       @character.played_game = @played_game
     end
