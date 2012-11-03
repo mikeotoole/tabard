@@ -3,7 +3,7 @@
   = link_to "Add Game", new_played_game_url if can? :create, PlayedGame.new(user_profile_id: user_profile.id)
 - if @played_games.any?
   - @played_games.each do |played_game|
-    %h2.toggle.closed{ 'data-char-cound' => played_game.characters.count}
+    %h2.toggle.closed{ 'data-char-count' => played_game.characters.count}
       = played_game.game_name
       = link_to "Add Character", new_played_game_characters_url([played_game]) if can? :create, Character.new(played_game_id: played_game.id)
     -if played_game.characters.any?

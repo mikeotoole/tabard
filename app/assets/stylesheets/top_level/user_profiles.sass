@@ -289,6 +289,17 @@ body.user_profiles.dashboard
               position: relative
               text-shadow: 0 -2px 1px #fff
               z-index: 2
+              &:after
+                background: #90B4CA
+                +border_radius(20)
+                content: attr(data-char-count)
+                color: #fff
+                display: inline-block
+                height: 20px
+                font-size: 14px
+                min-width: 20px
+                text-align: center
+                text-shadow: none
               + h2
                 margin-top: 20px
               a
@@ -330,17 +341,16 @@ body.user_profiles.dashboard
               padding: 0
               position: relative
               z-index: 1
-              
               >li
                 border-top: 1px solid #D1E1EB
                 float: left
                 margin: -1px 0 10px
+                min-height: 50px
                 padding: 20px 0 20px 75px
                 position: relative
                 width: 220px
                 &:before
                   display: none
-                
                 .avatar
                   background: #efe8de
                   height: 60px
@@ -356,7 +366,6 @@ body.user_profiles.dashboard
                     right: 0
                     top: -15px
                     width: 18px
-                
                 h3
                   color: #56149C
                   line-height: 1em
@@ -367,7 +376,6 @@ body.user_profiles.dashboard
                     margin: 0 -3px
                     &:hover
                       color: #BE4124
-                
                 .attributes
                   font-size: 13px
                   line-height: 15px
