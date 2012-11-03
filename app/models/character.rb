@@ -25,6 +25,7 @@ class Character < ActiveRecord::Base
 # Delegates
 ###
   delegate :game, to: :played_game
+  delegate :game_type, to: :played_game
   delegate :name, to: :game, prefix: true
   delegate :id, to: :game, prefix: true
 
