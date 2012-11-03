@@ -1,13 +1,13 @@
 jQuery(document).ready ($) ->
 
   cache = []
+  $form = $('#new_community_game')
+  $fields = $form.find '.gamefields'
+  $fields.detach().removeClass 'hide'
 
   $('#community_game_game_name').autocomplete
     autoFocus: false
     delay: 300
-    focus: (e, ui) ->
-      $(@).val ui.item.display_name
-      return false
     minLength: 2
     open: (e, ui) ->
       $(@).autocomplete('widget').width $(@).width() + 8
@@ -18,7 +18,8 @@ jQuery(document).ready ($) ->
       collision: 'none'
     select: (e, ui) ->
       $(@).val ''
-      console.log 'do something'
+      $fields.detach()
+      $fields.filter("[data-game-type='#{ui.item.type}']").insertAfter $('#game_name')
     source: (request, response) ->
       term = request.term
       return response cache[term] if cache[term]?

@@ -9,12 +9,6 @@
   %fieldset
     %ol
       = f.input :game_name, input_html:{ data: {autocomplete_source: autocomplete_community_games_url}}
-      - if @community_game.game.respond_to?(:factions)
-        = f.input :faction, as: :radio_buttons, collection: @community_game.factions, wrapper_html: { class: 'select with-label faction' }
-      - if @community_game.game.respond_to?(:server_names)
-        - # TODO: This should get server_hash and set server type hidden attribute. -MO
-        = f.input :server_name, as: :radio_buttons, label: 'Server', collection: @community_game.server_names, wrapper_html: { class: 'select with-label server' }
-      - if @community_game.game.respond_to?(:server_types)
-        = f.input :server_type, as: :radio_buttons, collection: @community_game.server_types, wrapper_html: { class: 'select with-label' }
+      = render "subdomains/community_games/fields/#{@community_game.game_type.downcase}", f: f, game: @community_game.game if @community_game.game.is_supported
       %li
         %button{ type: 'submit' } Save changes

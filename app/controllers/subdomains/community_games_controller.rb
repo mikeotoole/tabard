@@ -67,7 +67,11 @@ class Subdomains::CommunityGamesController < SubdomainsController
 
   # GET /community_games/autocomplete(.:format)
   def autocomplete
-    @games = Game.search(params[:term]).pluck(:name)
+    @games = Game.search(params[:term])
+    @games = @games.map {|game|{
+      value: game.name,
+      type: game.type
+    }}
     render json: @games
   end
 

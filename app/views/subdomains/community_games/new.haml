@@ -6,7 +6,9 @@
 
 = simple_form_for @community_game, html: {novalidate: true} do |f|
   %fieldset
-    %ol
-      = f.input :game_name, input_html:{ data: {autocomplete_source: autocomplete_community_games_url} }
-      %li
-        %button{ type: 'submit' } Add this game
+    = f.input :game_name, wrapper_tag: :div, wrapper_html: {id: 'game_name'}, input_html: {data: {autocomplete_source: autocomplete_community_games_url}}
+    - Game.supported_list.each do |game|
+      %ol.gamefields.hide{ 'data-game-type' => game[:type] }
+        = render "subdomains/community_games/fields/#{game[:type].downcase}", f: f, game: Game.new
+    .submit
+      %button{ type: 'submit' } Add this game

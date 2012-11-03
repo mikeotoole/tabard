@@ -44,6 +44,21 @@ class Game < ActiveRecord::Base
     Game.where{(name =~ game_name) | (aliases =~ game_name)}
   end
 
+  # Get an array of supported game name/type hashes
+  def self.supported_list
+    games = []
+    VALID_GAMES.each do |game|
+      next if game[1] == 'CustomGame'
+      games << {name: game[0], type: game[1]}
+    end
+    return games
+  end
+
+  # Quick check to see if the game is supported officially or not
+  def is_supported
+    self.type != 'CustomGame'
+  end
+
 ###
 # H-Store
 ###
