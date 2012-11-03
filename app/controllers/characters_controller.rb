@@ -16,11 +16,6 @@ class CharactersController < ApplicationController
     redirect_to user_profile_url(current_user, anchor: "played_games", subdomain: "www")
   end
 
-  def update
-    @character.save!
-    redirect_to user_profile_url(current_user, anchor: "played_games", subdomain: "www")
-  end
-
 protected
   def create_or_find_character
     @character = @played_game.characters.find_by_id(params[:id])
