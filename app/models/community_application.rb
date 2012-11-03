@@ -102,10 +102,10 @@ class CommunityApplication < ActiveRecord::Base
                   to: [self.user_profile_id])
 
       unless community_profile.nil?
-        self.characters.each do |charatcer|
-          next unless character_map[charatcer.id.to_s]
+        self.characters.each do |character|
+          next unless character_map[character.id.to_s]
           begin
-            community_profile.roster_assignments.create!({community_game_id: character_map[charatcer.id.to_s], character: charatcer}, without_protection: true).approve(false)
+            community_profile.roster_assignments.create!({community_game_id: character_map[character.id.to_s], character: character}, without_protection: true).approve(false)
           rescue ActiveRecord::RecordInvalid => invalid
             logger.error invalid.record.errors
           end

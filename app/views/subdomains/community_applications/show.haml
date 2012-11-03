@@ -37,17 +37,17 @@
                 %span.name= character.name
                 %span.game= character.game_name
             - if @community_application.is_pending? or @community_application.rejected? and can? :accept, @community_application
-              = hidden_field_tag "proxy_hash[#{character.id}]", -1
+              = hidden_field_tag "character_hash[#{character.id}]", -1
               = f.simple_fields_for @community_application.characters, character, index: character.id do |pf|
                 .select{ class: character.errors.any? ? 'with-errors' : '' }
                   %ul
                     %li
-                      = radio_button_tag "proxy_hash[#{character.id}]", ''
-                      = label_tag "proxy_hash_#{character.id}_", 'Reject Character'
-                    - @community_games.where(game_type: character.game.class.to_s).each do |sg|
+                      = radio_button_tag "character_hash[#{character.id}]", ''
+                      = label_tag "character_hash_#{character.id}_", 'Reject Character'
+                    - @community_games.where(game_id: character.game._id).each do |cg|
                       %li
-                        = radio_button_tag "proxy_hash[#{character.id}]", sg.id, (params[:proxy_hash] and sg.id.to_s == params[:proxy_hash][character.id.to_s].to_s)
-                        = label_tag "proxy_hash_#{character.id}_#{sg.id}", sg.smart_name
+                        = radio_button_tag "character_hash[#{character.id}]", cg.id, (params[:character_hash] and cg.id.to_s == params[:character_hash][character.id.to_s].to_s)
+                        = label_tag "character_hash_#{character.id}_#{cg.id}", cg.smart_name
                   - if character.errors.any?
                     %mark.error= character.errors.full_messages.first
 

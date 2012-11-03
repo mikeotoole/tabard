@@ -26,6 +26,7 @@ class Character < ActiveRecord::Base
 ###
   delegate :game, to: :played_game
   delegate :name, to: :game, prefix: true
+  delegate :id, to: :game, prefix: true
 
 ###
 # Validators

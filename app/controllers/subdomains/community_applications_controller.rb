@@ -35,11 +35,11 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
     flash[:notice] = "Your community is almost full. You will not be able to accept any more members if you are full." if current_community.is_at_almost_max_capacity? and can? :edit, current_community
     @community_games = current_community.community_games
     @comments = @community_application.comments.page params[:page]
-    params[:proxy_hash] ||= Hash.new
-    # TODO Fix this
-    @community_application.character.each do |character|
-      if @community_games.where(game_type: character.game.class.to_s).size == 1
-        params[:proxy_hash][character_proxy.id.to_s] = @community_games.where(game_type: character_proxy.game.class.to_s).first.id
+    params[:character_hash] ||= Hash.new
+    @community_application.characters.each do |character|
+      community_games_for_character = @community_games.where(game_id: character.game_id).limit(2).pluck(:id)
+      if community_games_for_character.size == 1
+        params[:character_hash][character.id.to_s] = community_games_for_character.first
       end
     end
   end
@@ -80,8 +80,8 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
 
   # This accepts the specified application.
   def accept
-    params[:proxy_hash] ||= Hash.new
-    if @community_application.accept_application(current_user.user_profile, params[:proxy_hash])
+    params[:character_hash] ||= Hash.new
+    if @community_application.accept_application(current_user.user_profile, params[:character_hash])
       flash[:success] = "The application to \"#{@community_application.community_name}\" has been accepted."
       redirect_to community_applications_url
     else
