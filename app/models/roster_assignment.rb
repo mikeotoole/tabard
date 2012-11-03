@@ -3,7 +3,7 @@
 # Copyright:: Copyright (c) 2011 DigitalAugment Inc.
 # License::   Proprietary Closed Source
 #
-# This class represents an assignment of a character_proxy to a community profile.
+# This class represents an assignment of a character to a community profile.
 ###
 class RosterAssignment < ActiveRecord::Base
   validates_lengths_from_database
@@ -12,13 +12,13 @@ class RosterAssignment < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :community_profile, :character_proxy, :community_game, :character_proxy_id, :community_game_id
+  attr_accessible :community_profile, :character, :community_game, :character_id, :community_game_id
 
 ###
 # Associations
 ###
   belongs_to :community_profile, touch: true
-  belongs_to :character_proxy
+  belongs_to :character
   belongs_to :community_game
   has_one :user_profile, through: :community_profile
 
@@ -26,7 +26,7 @@ class RosterAssignment < ActiveRecord::Base
 # Validators
 ###
   validates :community_profile, presence: true
-  validates :character_proxy_id, uniqueness: { scope: ["community_profile_id", "deleted_at"], message: "is already rostered to the community."}
+  validates :character_id, uniqueness: { scope: ["community_profile_id", "deleted_at"], message: "is already rostered to the community."}
   validate :character_and_game_must_be_present
   validate :community_valid_for_community_game
   validate :character_valid_for_community_game
@@ -37,11 +37,10 @@ class RosterAssignment < ActiveRecord::Base
   delegate :user_profile, :user_profile_id, to: :community_profile, prefix: true, allow_nil: true
   delegate :community_admin_profile_id, to: :community_profile, allow_nil: true
   delegate :community, to: :community_profile, allow_nil: true
-  delegate :name, :avatar_url, to: :character_proxy, prefix: true
+  delegate :name, :avatar_url, to: :character, prefix: true
   delegate :display_name, to: :user_profile, prefix: true
   delegate :avatar_url, to: :user_profile, prefix: true
-  delegate :name, to: :character_proxy, prefix: true
-  delegate :character, to: :character_proxy
+  delegate :name, to: :character, prefix: true
   delegate :name, to: :community_game, prefix: true
   delegate :smart_name, to: :community_game, prefix: true
 
@@ -62,7 +61,7 @@ class RosterAssignment < ActiveRecord::Base
   def approve(message=true)
     return false unless self.is_pending
     self.update_attributes({is_pending: false}, without_protection: true)
-    message = Message.create_system(subject: "Character Accepted", body: "Your request to add #{self.character_proxy.name} to #{self.community_profile.community_name} has been accepted.", to: [self.community_profile_user_profile_id]) if message
+    message = Message.create_system(subject: "Character Accepted", body: "Your request to add #{self.character.name} to #{self.community_profile.community_name} has been accepted.", to: [self.community_profile_user_profile_id]) if message
   end
 
   # This method rejects this roster assignment, if it is pending.
@@ -70,7 +69,7 @@ class RosterAssignment < ActiveRecord::Base
   def reject(message=true)
     return false unless self.is_pending
     self.destroy
-    message = Message.create_system(subject: "Character Rejected", body: "Your request to add #{self.character_proxy.name} to #{self.community_profile.community_name} has been rejected.", to: [self.community_profile_user_profile_id]) if message
+    message = Message.create_system(subject: "Character Rejected", body: "Your request to add #{self.character.name} to #{self.community_profile.community_name} has been rejected.", to: [self.community_profile_user_profile_id]) if message
   end
 
 ###
@@ -84,7 +83,7 @@ class RosterAssignment < ActiveRecord::Base
   # This method validates that a character and Community game are presenet.
   def character_and_game_must_be_present
     errors.add(:base, "You need to select a game.") if community_game.blank?
-    errors.add(:base, "You need to select a character.") if character_proxy.blank?
+    errors.add(:base, "You need to select a character.") if character.blank?
   end
   # This method validates that the community is compatable with the supported game
   def community_valid_for_community_game
@@ -93,7 +92,7 @@ class RosterAssignment < ActiveRecord::Base
 
   # This method validates that the character is compatable with the supported game
   def character_valid_for_community_game
-    errors.add(:base, "That character is not compatible with #{self.community_game.game_short_name}.") if self.character_proxy != nil and self.community_game != nil and self.character_proxy.game.class.to_s != self.community_game.game_type
+    errors.add(:base, "That character is not compatible with #{self.community_game.game_short_name}.") if self.character != nil and self.community_game != nil and self.character.game.class.to_s != self.community_game.game_type
   end
 
 ###

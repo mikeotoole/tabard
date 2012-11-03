@@ -36,7 +36,7 @@ ActiveAdmin.register Discussion do
   end
 
   show title: proc{ "#{discussion.poster.name} - #{discussion.name}" } do
-    rows = default_attribute_table_rows.delete_if { |att| [:character_proxy_id].include?(att) }
+    rows = default_attribute_table_rows.delete_if { |att| [:character_id].include?(att) }
     rows.insert(1, :poster)
     attributes_table *rows, :community
     div do

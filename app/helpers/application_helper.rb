@@ -76,7 +76,7 @@ module ApplicationHelper
   # [Returns] array of character proxies.
   ###
   def available_characters
-    current_user.available_character_proxies(current_community,current_game)
+    current_user.available_characters(current_community,current_game)
   end
 
   ###

@@ -17,7 +17,7 @@ class CommunityApplication < ActiveRecord::Base
 # Attribute accessible
 ###
   attr_accessor :proxy_hash
-  attr_accessible :submission_attributes, :character_proxy_ids, :proxy_hash
+  attr_accessible :submission_attributes, :character_ids, :proxy_hash
 
 ###
 # Constants
@@ -34,7 +34,7 @@ class CommunityApplication < ActiveRecord::Base
   has_one :community_profile
   belongs_to :status_changer, class_name: "UserProfile"
   accepts_nested_attributes_for :submission
-  has_and_belongs_to_many :character_proxies
+  has_and_belongs_to_many :characters
   has_many :comments, as: :commentable, dependent: :destroy
 
 ###
@@ -102,6 +102,7 @@ class CommunityApplication < ActiveRecord::Base
                   to: [self.user_profile_id])
 
       unless community_profile.nil?
+        # TODO Fix this
         self.character_proxies.each do |proxy|
           next unless proxy_map[proxy.id.to_s]
           begin

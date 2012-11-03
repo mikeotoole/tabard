@@ -55,9 +55,9 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
     if @roster_assignment.save
       @roster_assignment.approve(current_user.user_profile_id != @roster_assignment.community_profile_user_profile_id) if can? :manage, @roster_assignment
       if @roster_assignment.is_pending
-        flash[:notice] = "Your request to add #{@roster_assignment.character_proxy_name} to the roster has been sent."
+        flash[:notice] = "Your request to add #{@roster_assignment.character_name} to the roster has been sent."
       else
-        flash[:success] = "#{@roster_assignment.character_proxy_name} has been added to the roster."
+        flash[:success] = "#{@roster_assignment.character_name} has been added to the roster."
       end
     end
     community_profile = current_user.community_profiles.find_by_community_id(current_community.id)
@@ -70,7 +70,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   # DELETE /roster_assignments/1.json
   def destroy
     #@roster_assignment = RosterAssignment.find(params[:id])
-    character_name = @roster_assignment.character_proxy_name
+    character_name = @roster_assignment.character_name
     if @roster_assignment.destroy
       flash[:notice] = "#{character_name} has been removed from the roster."
     end
@@ -94,13 +94,13 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   # GET /roster_assignments/pending
   def pending
     authorize! :pending, RosterAssignment
-    @roster_assignments = current_community.pending_roster_assignments.sort_by(&:character_proxy_name)
+    @roster_assignments = current_community.pending_roster_assignments.sort_by(&:character_name)
   end
 
   # PUT /roster_assignments/1/approve
   def approve
     @roster_assignment.approve(current_user.user_profile_id != @roster_assignment.community_profile_user_profile_id)
-    flash[:success] = "#{@roster_assignment.character_proxy_name} has been added to the community roster."
+    flash[:success] = "#{@roster_assignment.character_name} has been added to the community roster."
     redirect_to pending_roster_assignments_path
   end
 
@@ -121,7 +121,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   # PUT /roster_assignments/1/reject
   def reject
     @roster_assignment.reject(current_user.user_profile_id != @roster_assignment.community_profile_user_profile_id)
-    flash[:notice] = "You have rejcted #{@roster_assignment.character_proxy_name} from joining the roster."
+    flash[:notice] = "You have rejcted #{@roster_assignment.character_name} from joining the roster."
     redirect_to pending_roster_assignments_path
   end
 
@@ -192,8 +192,8 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   # This before filter gets the characters for the available characters drop down.
   ###
   def find_available_characters
-    @available_characters = current_user.compatable_character_proxies(current_community) - @community_profile.character_proxies
-    @available_characters << @roster_assignment.character_proxy if @roster_assignment and @roster_assignment.character_proxy
+    @available_characters = current_user.compatable_characters(current_community) - @community_profile.characters
+    @available_characters << @roster_assignment.character if @roster_assignment and @roster_assignment.character
   end
 
   ###

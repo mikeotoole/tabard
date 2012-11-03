@@ -33,7 +33,7 @@ class Announcement < ActiveRecord::Base
 # Associations
 ###
   belongs_to :user_profile
-  belongs_to :character_proxy
+  belongs_to :character
   belongs_to :community
   belongs_to :community_game
   has_many :acknowledgements, dependent: :destroy

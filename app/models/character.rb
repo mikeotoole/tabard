@@ -22,6 +22,12 @@ class Character < ActiveRecord::Base
   has_one :user_profile, through: :played_game
 
 ###
+# Delegates
+###
+  delegate :game, to: :played_game
+  delegate :name, to: :game, prefix: true
+
+###
 # Validators
 ###
 
@@ -43,6 +49,16 @@ class Character < ActiveRecord::Base
 ###
 # Instance Methods
 ###
+  # This method determines if this character proxy is compatable with the provided community.
+  def compatable_with_community?(community)
+    return community.community_games.exists?(game_id: self.game.id) if community
+  end
+
+  # This method determines if this character proxy is compatable with the provided community_game.
+  def compatable_with_community_game?(community_game)
+    return true if community_game == nil
+    return community_game.game_type == self.game.class.to_s
+  end
   ###
   # This method returns a search scoped or simply scoped search helper
   # [Args]
