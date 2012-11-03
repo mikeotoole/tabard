@@ -70,14 +70,18 @@ DaBvRails::Application.routes.draw do
   # Characer and PlayedGames
   resources :played_games, only: [:new,:create,:update,:destroy] do
     resource :characters, only: [:new, :edit]
-    resource :wow_characters, only: [:create, :update]
-    resource :swtor_characters, only: [:create, :update]
-    resource :minecraft_characters, only: [:create, :update]
-    resource :custom_characters, only: [:create, :update]
+    resource :custom_characters, only: [:create]
+    resource :minecraft_characters, only: [:create]
+    resource :swtor_characters, only: [:create]
+    resource :wow_characters, only: [:create]
     collection do
       get :autocomplete
     end
   end
+  resources :custom_characters, only: [:edit, :update]
+  resources :minecraft_characters, only: [:edit, :update]
+  resources :swtor_characters, only: [:edit, :update]
+  resources :wow_characters, only: [:edit, :update]
 
   # Communities
   resources :communities, only: [:show, :new, :create, :destroy] do
@@ -87,12 +91,6 @@ DaBvRails::Application.routes.draw do
       get :remove_confirmation, as: "community_remove_confirmation"
     end
   end
-
-  # Characters
-  resources :wow_characters, except: [:index, :create]
-  post 'wow_characters/new' => 'wow_characters#create', as: :wow_characters
-  resources :swtor_characters, except: [:index, :create]
-  post 'swtor_characters/new' => 'swtor_characters#create', as: :swtor_characters
 
   # Messaging
   resources :sent_messages, only: [:create]

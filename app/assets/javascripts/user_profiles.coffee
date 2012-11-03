@@ -19,7 +19,7 @@ jQuery(document).ready ($) ->
   if $('#body:has(header.myprofile)').length
     $('#bar')
       .on 'click','.avatar > a', ->
-        $('#tabs dt.characters a').trigger 'click'
+        $('#tabs dt.games a').trigger 'click'
         false
       .on 'click','.dashboard .notice a', ->
         $('#tabs dt.announcements a').trigger 'click'
@@ -32,8 +32,8 @@ jQuery(document).ready ($) ->
   switch hash
     when '#invites'
       $('#tabs dt.invites a').trigger 'click'
-    when '#characters'
-      $('#tabs dt.characters a').trigger 'click'
+    when '#games'
+      $('#tabs dt.games a').trigger 'click'
     when '#announcements'
       $('#tabs dt.announcements a').trigger 'click'
     when '#roles'
@@ -71,3 +71,10 @@ jQuery(document).ready ($) ->
           $(@).closest('li').removeClass 'checked'
       else
         $.alert 'Error. Unable to assign role.'
+
+  # Games/Charactesr
+  $('#body')
+    .on 'click', '#tabs dt.games + dd h2', ->
+      $(@).toggleClass 'closed'
+    .on 'click', '#tabs dt.games + dd h2 a', ->
+      event.stopPropagation()

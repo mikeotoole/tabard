@@ -36,7 +36,6 @@ class CommunityGame < ActiveRecord::Base
 ###
   delegate :name, to: :community, prefix: true
   delegate :admin_profile_id, to: :community, prefix: true, allow_nil: true
-
   delegate :type, to: :game, prefix: true, allow_nil: true
   delegate :factions, to: :game, allow_nil: true
   delegate :server_array, to: :game, allow_nil: true

@@ -1,9 +1,11 @@
 class CharactersController < ApplicationController
   respond_to :html, :js
-  load_and_authorize_resource :played_game
-  before_filter :create_or_find_character
+  load_and_authorize_resource :played_game, only: [:new, :create]
+  before_filter :create_or_find_character, only: [:new, :create]
+  load_resource :character, except: [:new, :create]
   authorize_resource :character
-  def create
+
+  def new
   end
 
   def edit
