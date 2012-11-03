@@ -365,10 +365,9 @@ protected
   ###
   def self.search(search)
     if search
-      corrected_game_type = CommunityGame.attempt_to_match_type(search)
-      search = "%"+search+'%'
-      correct_community_games = CommunityGame.where{(name =~ search) | (game_type =~ corrected_game_type)} #TODO: Fix this -MO
-      return where{(name =~ search) | (slogan =~ search) | (id.in(correct_community_games.select{community_id}))}
+      community_ids = CommunityGame.search_by_game_name(search).pluck(:community_id)
+      search = "%#{search}%"
+      return where{(name =~ search) | (slogan =~ search) | (id.in(community_ids))}
     else
       return scoped
     end

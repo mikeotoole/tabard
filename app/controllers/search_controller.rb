@@ -21,16 +21,17 @@ class SearchController < ApplicationController
     unless params[:term].blank?
       @communities = Community.search params[:term]
       @users = UserProfile.active.search params[:term]
-      @character_proxies = CharacterProxy.search params[:term]
-      @character_proxies_users = @character_proxies.map{|p| p.user_profile}.uniq
-      @users = @users - @character_proxies_users
-      @users_and_characters = Array.new
-      @character_proxies.group_by(&:user_profile).each do |user,proxies|
-        @users_and_characters << user
-        @users_and_characters << proxies
-      end
-      @users_and_characters = @users_and_characters.flatten
-      @results = @communities + @users + @users_and_characters
+      # TODO: Joe, Add back CharacterProxy search -MO
+#       @character_proxies = CharacterProxy.search params[:term]
+#       @character_proxies_users = @character_proxies.map{|p| p.user_profile}.uniq
+#       @users = @users - @character_proxies_users
+#       @users_and_characters = Array.new
+#       @character_proxies.group_by(&:user_profile).each do |user,proxies|
+#         @users_and_characters << user
+#         @users_and_characters << proxies
+#       end
+#       @users_and_characters = @users_and_characters.flatten
+      @results = @communities + @users # + @users_and_characters
       @results = Kaminari.paginate_array(@results).page(params[:page]).per 10 if @results.any?
     end
 
@@ -85,7 +86,8 @@ protected
     else
       @communities = Community.search params[:term]
       @users = UserProfile.active.search params[:term]
-      @character_proxies = CharacterProxy.search params[:term]
+      # TODO: Joe, Add back CharacterProxy search -MO
+      @character_proxies = [] #CharacterProxy.search params[:term]
     end
   end
 end

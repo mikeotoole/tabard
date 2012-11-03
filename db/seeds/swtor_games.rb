@@ -26,4 +26,4 @@ VALID_SWTOR_SERVERS =
   Dalborra| PvE| English"
 
 puts "Creating SWTOR Game..."
-Swtor.create!(name: "Star Wars: The Old Republic", servers: VALID_SWTOR_SERVERS.gsub(/[\r\n]/,""))
+Swtor.create!(name: "Star Wars: The Old Republic", servers: VALID_SWTOR_SERVERS.gsub(/[\r\n]/,""), aliases: "SWTOR SW:TOR")

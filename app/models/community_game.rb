@@ -60,6 +60,11 @@ class CommunityGame < ActiveRecord::Base
 ###
 # Public Methods
 ###
+  # Search for community games by game name.
+  def self.search_by_game_name(search)
+    game_name = "%#{search}%"
+    CommunityGame.joins{game}.where{(games.name =~ game_name) | (games.aliases =~ game_name)}
+  end
 
 ###
 # Instance Methods
