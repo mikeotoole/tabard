@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121103162800) do
+ActiveRecord::Schema.define(:version => 20121103195326) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -357,7 +357,7 @@ ActiveRecord::Schema.define(:version => 20121103162800) do
     t.string   "name"
     t.text     "body"
     t.integer  "discussion_space_id"
-    t.integer  "character_proxy_id"
+    t.integer  "character_id"
     t.integer  "user_profile_id"
     t.boolean  "is_locked",           :default => false
     t.datetime "created_at",                             :null => false
@@ -366,7 +366,7 @@ ActiveRecord::Schema.define(:version => 20121103162800) do
     t.boolean  "has_been_edited",     :default => false
   end
 
-  add_index "discussions", ["character_proxy_id"], :name => "index_discussions_on_character_proxy_id"
+  add_index "discussions", ["character_id"], :name => "index_discussions_on_character_proxy_id"
   add_index "discussions", ["discussion_space_id"], :name => "index_discussions_on_discussion_space_id"
   add_index "discussions", ["user_profile_id"], :name => "index_discussions_on_user_profile_id"
 
@@ -432,15 +432,15 @@ ActiveRecord::Schema.define(:version => 20121103162800) do
   create_table "invites", :force => true do |t|
     t.integer  "event_id"
     t.integer  "user_profile_id"
-    t.integer  "character_proxy_id"
+    t.integer  "character_id"
     t.string   "status"
-    t.boolean  "is_viewed",          :default => false
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
+    t.boolean  "is_viewed",       :default => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
     t.datetime "expiration"
   end
 
-  add_index "invites", ["character_proxy_id"], :name => "index_invites_on_character_proxy_id"
+  add_index "invites", ["character_id"], :name => "index_invites_on_character_proxy_id"
   add_index "invites", ["event_id"], :name => "index_invites_on_event_id"
   add_index "invites", ["user_profile_id"], :name => "index_invites_on_user_profile_id"
 

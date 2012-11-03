@@ -222,7 +222,7 @@ protected
     errors.add(:base, "Already a member of the community.") if user_profile.is_member?(community)
   end
 
-  #This method ensures that the character proxies are compatable with the community.
+  #This method ensures that the characters are compatable with the community.
   def characters_are_compatable_with_community
     self.characters.each do |character|
       errors.add(:base, "#{character.name} does not belong to a game that is supported by the community.") unless character.compatable_with_community?(self.community)
