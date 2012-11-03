@@ -10,6 +10,6 @@ class SwtorCharactersController < CharactersController
 
   def update
     @swtor_character.update_attributes(params[:swtor_character])
-    redirect_to user_profile_url(current_user, anchor: "played_games", subdomain: "www")
+    redirect_to user_profile_url(current_user, anchor: "games", subdomain: "www")
   end
 end

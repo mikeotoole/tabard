@@ -10,6 +10,6 @@ class CustomCharactersController < CharactersController
 
   def update
     @custom_character.update_attributes(params[:custom_character])
-    redirect_to user_profile_url(current_user, anchor: "played_games", subdomain: "www")
+    redirect_to user_profile_url(current_user, anchor: "games", subdomain: "www")
   end
 end

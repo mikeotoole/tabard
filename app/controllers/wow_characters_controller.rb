@@ -10,6 +10,6 @@ class WowCharactersController < CharactersController
 
   def update
     @wow_character.update_attributes(params[:wow_character])
-    redirect_to user_profile_url(current_user, anchor: "played_games", subdomain: "www")
+    redirect_to user_profile_url(current_user, anchor: "games", subdomain: "www")
   end
 end

@@ -10,6 +10,6 @@ class MinecraftCharactersController < CharactersController
 
   def update
     @minecraft_character.update_attributes(params[:minecraft_character])
-    redirect_to user_profile_url(current_user, anchor: "played_games", subdomain: "www")
+    redirect_to user_profile_url(current_user, anchor: "games", subdomain: "www")
   end
 end
