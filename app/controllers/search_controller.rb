@@ -19,19 +19,6 @@ class SearchController < ApplicationController
   # GET /search(.:format)
   def index
     unless params[:term].blank?
-      @communities = Community.search params[:term]
-      @users = UserProfile.active.search params[:term]
-      # TODO: Joe, Add back CharacterProxy search -MO
-#       @character_proxies = CharacterProxy.search params[:term]
-#       @character_proxies_users = @character_proxies.map{|p| p.user_profile}.uniq
-#       @users = @users - @character_proxies_users
-#       @users_and_characters = Array.new
-#       @character_proxies.group_by(&:user_profile).each do |user,proxies|
-#         @users_and_characters << user
-#         @users_and_characters << proxies
-#       end
-#       @users_and_characters = @users_and_characters.flatten
-      @results = @communities + @users # + @users_and_characters
       @character_users = @characters.map{|c| c.user_profile}.uniq
       @users = @users - @character_users
       @users_and_characters = Array.new
@@ -87,16 +74,16 @@ protected
 
   ###
   # _before_filter_
+  #
   # Uses given term to search models.
   ###
   def basic_search_collection
     if params[:term].blank?
       @results = []
     else
-      @communities = Community.search params[:term]
-      @users = UserProfile.active.search params[:term]
-      # TODO: Joe, Add back CharacterProxy search -MO
-      @character_proxies = [] #CharacterProxy.search params[:term]
+      @communities = Community.search(params[:term]).limit(10)
+      @users = UserProfile.active.search(params[:term]).limit(10)
+      @characters = Character.search(params[:term]).limit(10)
     end
   end
 end
