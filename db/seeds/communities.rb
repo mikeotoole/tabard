@@ -55,8 +55,8 @@ def generate_application(community, user_full_name)
   puts "#{user_profile.name} submitting application to #{community.name} Guild"
   app = community.community_applications.new
   app.prep(user_profile, community.community_application_form)
-  user_profile.character_proxies.each do |cp|
-    app.character_proxies << cp if cp.compatable_with_community?(community)
+  user_profile.characters.each do |character|
+    app.characters << character if character.compatable_with_community?(community)
   end
   app.save!
   app.submission.custom_form.questions.each do |q|
@@ -74,9 +74,9 @@ end
 # Gets the character to community_game mappings
 def find_character_mapping(community, application)
   mapping = Hash.new
-  application.character_proxies.each do |proxy|
-    sp = community.community_games.where(game_type: proxy.game.class.to_s).first
-    mapping[proxy.id.to_s] = sp.id if sp
+  application.characters.each do |character|
+    sp = community.community_games.where(game_id: character.game.id).first
+    mapping[character.id.to_s] = sp.id if sp
   end
   return mapping
 end

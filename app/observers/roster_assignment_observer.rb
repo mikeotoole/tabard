@@ -12,7 +12,7 @@ class RosterAssignmentObserver < ActiveRecord::Observer
     unless roster_assignment.is_pending
       Activity.create!( {user_profile: roster_assignment.user_profile,
                         community: roster_assignment.community,
-                        target: roster_assignment.character_proxy,
+                        target: roster_assignment.character,
                         action: "accepted"}, without_protection: true)
     end
   end
