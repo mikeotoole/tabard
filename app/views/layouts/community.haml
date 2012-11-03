@@ -39,23 +39,11 @@
               = link_to (user_signed_in? and current_user.is_member? current_community) ? 'Dashboard' : 'Home', actual_community_url(current_community)
             - if user_signed_in? and current_user.is_member? current_community
               %li
-                = link_to 'Events', events_url
-            - if user_signed_in? and current_user.is_member? current_community
-              %li
                 = link_to 'Discussions', discussion_spaces_url
                 - if discussion_items.any?
                   %ul
                     - discussion_items.each do |space|
                       %li= link_to shorten_words(space.name), space if space.persisted?
-            - if user_signed_in? and current_user.is_member? current_community
-              %li
-                = link_to 'Announcements', announcements_url
-                - if current_community.community_games.any?
-                  %ul
-                    %li= link_to 'Community Announcements', community_announcements_url
-                    - current_community.community_games.includes(:community, :game).each do |community_game|
-                      - if community_game.persisted?
-                        %li= link_to community_game.smart_name, game_announcements_url(community_game)
             - if can? :index, PageSpace
               %li
                 = link_to 'Wiki', page_spaces_url
@@ -66,13 +54,16 @@
             - if current_community.is_public_roster or (user_signed_in? and current_user.is_member? @community and @community.custom_forms.published.any?)
               %li
                 = link_to 'Members', roster_assignments_url
-                - if current_community.community_games.any? and community_games = current_community.community_games.reject{|sg| !sg.persisted?} and community_games.size > 1
-                  %ul
-                    - community_games.each do |community_game|
-                      %li= link_to community_game.smart_name, game_roster_assignments_url(community_game)
-            - if user_signed_in? and current_user.is_member? current_community and form_items.any?
-              %li
-                = link_to 'Forms', custom_forms_url
+            - if user_signed_in?
+              - if current_user.is_member? current_community
+                %li
+                  = link_to 'Events', events_url
+              - if current_user.is_member? current_community
+                %li
+                  = link_to 'Announcements', announcements_url
+              - if current_user.is_member? current_community and form_items.any?
+                %li
+                  = link_to 'Forms', custom_forms_url
             - if user_signed_in? and current_user.communities.include?(current_community)
               - if management_navigation_items.any?
                 %li{ class: 'special settings' }
