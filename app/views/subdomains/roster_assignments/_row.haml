@@ -12,16 +12,16 @@
     - cp = member_profile.community_profiles.find_by_community_id(current_community.id)
     - if cp.roster_assignments.includes(:community_game).delete_if{|ra| ra.is_pending? or (!!community_game and ra.community_game != community_game)}.size > 0
       %ul
-        - cp.roster_assignments.includes(:community_game, character_proxy: [:character]).each do |ra|
+        - cp.roster_assignments.includes(:community_game, :character).each do |ra|
           %li
             - if can? :destroy, ra
               %input{ id: "roster_assignments_#{ra.id}", name: 'ids[]', type: 'checkbox', value: ra.id }
               %label{ for: "roster_assignments_#{ra.id}" }
-                = image_tag ra.character_proxy_avatar_url(:icon), class: 'avatar icon'
-                = ra.character_proxy_name
+                = image_tag ra.character_avatar_url(:icon), class: 'avatar icon'
+                = ra.character_name
             - else
-              = image_tag ra.character_proxy_avatar_url(:icon), class: 'avatar icon'
-              = ra.character_proxy_name
+              = image_tag ra.character_avatar_url(:icon), class: 'avatar icon'
+              = ra.character_name
     - elsif member_profile == current_user.user_profile
       = link_to 'Add Characters', my_roster_assignments_url
     - else
