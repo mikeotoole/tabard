@@ -34,7 +34,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   def mine
     community_profile = current_user.community_profiles.find_by_community_id(current_community.id)
     @roster_assignments = Array.new
-    @roster_assignments = community_profile.roster_assignments.sort_by(&:character_proxy_name) if community_profile
+    @roster_assignments = community_profile.roster_assignments.sort_by(&:character_name) if community_profile
     render :new
   end
   alias :new :mine

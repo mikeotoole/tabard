@@ -18,15 +18,15 @@
         - @roster_assignments.each do |roster_assignment|
           %tr{ roster_assignment.is_pending ? { class: 'dim' } : {} }
             %td{ class: 'avatar cinch' }
-              = image_tag roster_assignment.character_proxy_avatar_url(:tiny), class: 'avatar'
+              = image_tag roster_assignment.character_avatar_url(:tiny), class: 'avatar'
             %td.character
-              %h3= roster_assignment.character_proxy_name
+              %h3= roster_assignment.character_name
               = roster_assignment.is_pending ? 'is pending approval to ' : 'is a member of'
               = roster_assignment.community_game_smart_name
             %td.actions
               %div
                 - if  can? :mine, RosterAssignment or can? :destroy, roster_assignment
-                  = link_to 'Remove', roster_assignment, confirm: 'Are you sure?', method: :delete, class: 'delete', meta: "Remove #{roster_assignment.character_proxy_name} from the roster"
+                  = link_to 'Remove', roster_assignment, confirm: 'Are you sure?', method: :delete, class: 'delete', meta: "Remove #{roster_assignment.character_name} from the roster"
     %tfoot
       %tr
         %td
@@ -37,8 +37,8 @@
                 %ul
                   - @available_characters.each do |cp|
                     %li{ 'data-game-type' => cp.game.class.to_s.downcase }
-                      = radio_button_tag 'roster_assignment[character_proxy_id]', cp.id
-                      = label_tag "roster_assignment_character_proxy_id_#{cp.id}", raw(image_tag(cp.avatar_url(:icon), class: 'avatar')) + "#{cp.name} — #{cp.game_name}"
+                      = radio_button_tag 'roster_assignment[character_id]', cp.id
+                      = label_tag "roster_assignment_character_id_#{cp.id}", raw(image_tag(cp.avatar_url(:icon), class: 'avatar')) + "#{cp.name} — #{cp.game_name}"
               .select.games
                 %ul
                   - current_community.community_games.includes(:community).each do |sg|
