@@ -12,13 +12,13 @@ class CharactersController < ApplicationController
   end
 
   def create
-    @character.save!
-    redirect_to user_profile_url(current_user, anchor: "games", subdomain: "www")
+    flash[:success] = "Your character has been created." if @character.save
+    respond_with(@character, location: user_profile_url(current_user, anchor: "games", subdomain: "www"))
   end
 
   def update
-    @character.update_attributes(params[:character])
-    redirect_to user_profile_url(current_user, anchor: "games", subdomain: "www")
+    flash[:success] = "Your character has been updated." if @character.update_attributes(params[:character])
+    respond_with(@character, location: user_profile_url(current_user, anchor: "games", subdomain: "www"))
   end
 
   def destroy
