@@ -5,7 +5,7 @@
 #  id                 :integer          not null, primary key
 #  event_id           :integer
 #  user_profile_id    :integer
-#  character_proxy_id :integer
+#  character_id :integer
 #  status             :string(255)
 #  is_viewed          :boolean          default(FALSE)
 #  created_at         :datetime         not null
@@ -34,9 +34,9 @@ describe Invite do
     end
   end
 
-  describe "character_proxy" do
+  describe "character" do
     it "should not be required" do
-      build(:invite, :character_proxy => nil).should be_valid
+      build(:invite, :character => nil).should be_valid
     end
   end
 

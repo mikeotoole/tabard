@@ -25,12 +25,12 @@ describe Subdomains::RosterAssignmentsController do
   let(:community) { create(:community_with_community_games) }
   let(:admin_user) { community.admin_profile.user }
   let(:community_profile) { admin_user.community_profiles.first }
-  let(:character_proxy) { create(:character_proxy_with_wow_character, :user_profile => admin_user.user_profile)}
-  let(:character_proxy2) { create(:character_proxy_with_wow_character, :user_profile => admin_user.user_profile)}
-  let(:roster_assignment) { create(:roster_assignment, :community_profile => community_profile, :character_proxy => character_proxy, :community_game => community.community_games.where(:game_type => "Wow").first)}
-  let(:roster_assignment2) { create(:roster_assignment, :community_profile => community_profile, :character_proxy => character_proxy2, :community_game => community.community_games.where(:game_type => "Wow").first)}
+  let(:character) { create(:wow_character, :user_profile => admin_user.user_profile)}
+  let(:character2) { create(:wow_character, :user_profile => admin_user.user_profile)}
+  let(:roster_assignment) { create(:roster_assignment, :community_profile => community_profile, :character => character, :community_game => community.community_games.where(:game_type => "Wow").first)}
+  let(:roster_assignment2) { create(:roster_assignment, :community_profile => community_profile, :character => character2, :community_game => community.community_games.where(:game_type => "Wow").first)}
   let(:roster_assignment_id_array) { [[roster_assignment.id], [roster_assignment2.id]] }
-  let(:roster_assignment_att) { attributes_for(:roster_assignment, :community_profile => community_profile, :character_proxy => character_proxy) }
+  let(:roster_assignment_att) { attributes_for(:roster_assignment, :community_profile => community_profile, :character => character) }
 
   before(:each) do
     community.update_column(:is_public_roster, false)
@@ -117,7 +117,7 @@ describe Subdomains::RosterAssignmentsController do
 
   describe "DELETE 'destroy'" do
     before(:each) do
-      @roster_assignment = create(:roster_assignment, :community_profile => community_profile, :character_proxy => character_proxy2)
+      @roster_assignment = create(:roster_assignment, :community_profile => community_profile, :character => character2)
     end
     it "should be successful when authenticated as an owner" do
       sign_in admin_user
@@ -173,7 +173,7 @@ describe Subdomains::RosterAssignmentsController do
       }.to change(Activity, :count).by(1)
 
       activity = Activity.last
-      activity.target_type.should eql "CharacterProxy"
+      activity.target_type.should eql "Character"
       activity.action.should eql 'accepted'
     end
   end
@@ -205,7 +205,7 @@ describe Subdomains::RosterAssignmentsController do
       }.to change(Activity, :count).by(2)
 
       activity = Activity.last
-      activity.target_type.should eql "CharacterProxy"
+      activity.target_type.should eql "Character"
       activity.action.should eql 'accepted'
     end
   end

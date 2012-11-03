@@ -15,14 +15,14 @@ describe AnnouncementsController do
           :community => community,
           :user_profile => member.user_profile,
           :submission => FactoryGirl.create(:submission, :custom_form => community.community_application_form, :user_profile => member.user_profile),
-          :character_proxies => member.user_profile.character_proxies
+          :characters => member.user_profile.characters
         )
-      mapping = Hash.new
-      application.character_proxies.each do |proxy|
-        sp = community.community_games.where(:game_type => proxy.game.class.to_s).first
-        mapping[proxy.id.to_s] = sp.id if sp
+      chars_to_add = []
+      application.characters.each do |character|
+        cg = community.community_games.where(:game_id => character.game.id).first
+        chars_to_add << character if cg
       end
-      application.accept_application(community.admin_profile,mapping)
+      application.accept_application(community.admin_profile, chars_to_add)
     end
   end
 
@@ -38,17 +38,17 @@ describe AnnouncementsController do
       get :show, :id => announcement
       assigns(:announcement).should eq(announcement)
     end
-    
+
     it "should redirect to new user session path when not authenticated as a user" do
       get :show, :id => announcement
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-    
+
     it "should respond forbidden when not a member" do
       sign_in non_member
       get :show, :id => announcement
       response.should be_forbidden
-    end   
+    end
   end
 
   describe "PUT batch_mark_as_seen" do

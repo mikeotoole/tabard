@@ -21,7 +21,7 @@ describe RosterAssignment do
   it "should create a new instance given valid attributes" do
     roster_assignment.should be_valid
   end
-  
+
   describe "is_pending" do
     it "should be true by default" do
       build(:roster_assignment).is_pending.should be_true
@@ -34,26 +34,26 @@ describe RosterAssignment do
     end
   end
 
-  describe "character_proxy" do
+  describe "character" do
   	it "should be required" do
-      build(:roster_assignment, :character_proxy => nil).should_not be_valid
+      build(:roster_assignment, :character => nil).should_not be_valid
     end
   end
 
   it "should enforce character non-duplication within a roster" do
-    RosterAssignment.new(:character_proxy => roster_assignment.character_proxy, :community_profile => roster_assignment.community_profile, :community_game => roster_assignment.community_game).should_not be_valid
+    RosterAssignment.new(:character => roster_assignment.character, :community_profile => roster_assignment.community_profile, :community_game => roster_assignment.community_game).should_not be_valid
   end
 
   describe "approve" do
     before(:each) do
       roster_assignment.update_column(:is_pending, true)
     end
-    
+
     it "should remove the pending status" do
       roster_assignment.approve
       RosterAssignment.find(roster_assignment).is_pending.should be_false
     end
-    
+
     it "should send message to user" do
       expect {
         roster_assignment.approve
@@ -65,12 +65,12 @@ describe RosterAssignment do
     before(:each) do
       roster_assignment.update_column(:is_pending, true)
     end
-    
+
     it "should remove the roster assignment" do
       roster_assignment.reject
       RosterAssignment.exists?(roster_assignment).should be_false
     end
-    
+
     it "should send message to user" do
       expect {
         roster_assignment.reject

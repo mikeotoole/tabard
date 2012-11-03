@@ -13,7 +13,7 @@ describe Subdomains::CommunityApplicationsController do
   let(:community_application_attr) {{
     :submission_attributes => {:custom_form_id => DefaultObjects.community.community_application_form.id,
     :user_profile_id => DefaultObjects.fresh_user_profile.id},
-    :character_proxy_ids => [DefaultObjects.fresh_user_profile.character_proxies.first.id]
+    :character_ids => [DefaultObjects.fresh_user_profile.characters.first.id]
     }
   }
 

@@ -27,7 +27,7 @@ describe CommunityProfile do
 # Attribute Tests
 ###
   it "should require a user_profile" do
-    lambda { build(:community_profile, :user_profile => nil, :community_application => FactoryGirl.create(:community_application, character_proxies: Array.new, community: community, user_profile: nil, submission: FactoryGirl.create(:submission, :custom_form_id => community.community_application_form.id, :user_profile_id => nil))).should_not be_valid }.should raise_error
+    lambda { build(:community_profile, :user_profile => nil, :community_application => FactoryGirl.create(:community_application, characters: Array.new, community: community, user_profile: nil, submission: FactoryGirl.create(:submission, :custom_form_id => community.community_application_form.id, :user_profile_id => nil))).should_not be_valid }.should raise_error
   end
 
   it "should require a community" do
@@ -71,33 +71,33 @@ describe CommunityProfile do
     end
   end
 
-  describe "character_proxies" do
+  describe "characters" do
     it "should be allowed empty" do
-      build(:community_profile, :character_proxies => Array.new).should be_valid
+      build(:community_profile, :characters => Array.new).should be_valid
     end
 
     describe "Conditional finders" do
-      it "approved_character_proxies should be all the approved proxies" do
-        profile_with_characters.approved_character_proxies.each do |character_proxy|
-          character_proxy.roster_assignments.size.should eq(1)
-          character_proxy.roster_assignments.first.is_pending.should be_false
+      it "approved_characters should be all the approved characters" do
+        profile_with_characters.approved_characters.each do |character|
+          character.roster_assignments.size.should eq(1)
+          character.roster_assignments.first.is_pending.should be_false
         end
       end
-      it "pending_character_proxies should be all the pending proxies" do
-        profile_with_characters.pending_character_proxies.each do |character_proxy|
-          character_proxy.roster_assignments.size.should eq(1)
-          character_proxy.roster_assignments.first.is_pending.should be_true
+      it "pending_characters should be all the pending characters" do
+        profile_with_characters.pending_characters.each do |character|
+          character.roster_assignments.size.should eq(1)
+          character.roster_assignments.first.is_pending.should be_true
         end
       end
-      it "character_proxies should be all the proxies" do
-        profile_with_characters.approved_character_proxies.each do |character_proxy|
-          profile_with_characters.character_proxies.include?(character_proxy).should be_true
+      it "characters should be all the characters" do
+        profile_with_characters.approved_characters.each do |character|
+          profile_with_characters.characters.include?(character).should be_true
         end
-        profile_with_characters.pending_character_proxies.each do |character_proxy|
-          profile_with_characters.character_proxies.include?(character_proxy).should be_true
+        profile_with_characters.pending_characters.each do |character|
+          profile_with_characters.characters.include?(character).should be_true
         end
-        expected_size = profile_with_characters.pending_character_proxies.size + profile_with_characters.approved_character_proxies.size
-        profile_with_characters.character_proxies.size.should eq(expected_size)
+        expected_size = profile_with_characters.pending_characters.size + profile_with_characters.approved_characters.size
+        profile_with_characters.characters.size.should eq(expected_size)
       end
     end
   end

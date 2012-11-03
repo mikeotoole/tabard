@@ -89,7 +89,7 @@ describe WowCharactersController do
       }.to change(Activity, :count).by(1)
 
       activity = Activity.last
-      activity.target_type.should eql "CharacterProxy"
+      activity.target_type.should eql "Character"
       activity.action.should eql 'created'
     end
   end
@@ -126,7 +126,7 @@ describe WowCharactersController do
 
     it "should create an Activity when attributes change" do
       activity = Activity.last
-      activity.target_type.should eql "CharacterProxy"
+      activity.target_type.should eql "Character"
       activity.action.should eql 'edited'
     end
   end

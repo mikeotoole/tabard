@@ -42,7 +42,7 @@ describe Announcement do
     it "should required" do
       build(:announcement, :user_profile => nil).should_not be_valid
     end
-  end  
+  end
 
   describe "community" do
     it "should required" do
@@ -52,7 +52,7 @@ describe Announcement do
 
   describe "character_is_valid_for_user_profile" do
     it "should be optional" do
-      build(:announcement, :character_proxy_id => nil).should be_valid
+      build(:announcement, :character_id => nil).should be_valid
     end
   end
 

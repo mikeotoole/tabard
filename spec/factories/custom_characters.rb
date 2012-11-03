@@ -2,5 +2,6 @@
 
 FactoryGirl.define do
   factory :custom_character do
+    name "Custom Charcter Name"
   end
 end

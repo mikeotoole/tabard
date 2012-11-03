@@ -15,8 +15,8 @@ FactoryGirl.define do
   factory :user_profile_with_characters, :parent => :user_profile do
     after(:create) do |profile|
       3.times do
-        FactoryGirl.create(:character_proxy_with_wow_character, :user_profile => profile)
-        FactoryGirl.create(:character_proxy_with_swtor_character, :user_profile => profile)
+        FactoryGirl.create(:wow_character, :user_profile => profile)
+        FactoryGirl.create(:swtor_character, :user_profile => profile)
       end
     end
   end
