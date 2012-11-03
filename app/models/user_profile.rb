@@ -176,7 +176,7 @@ class UserProfile < ActiveRecord::Base
     return self.characters unless community
     available_characters = Array.new
     community_profile = self.community_profiles.where{community_id == community.id}.first
-    available_characters.concat community_profile.approved_characters.includes(:character) if community_profile
+    available_characters.concat community_profile.approved_characters if community_profile
     if game
       if game.class == CommunityGame
         available_characters = available_characters.delete_if{|character| character.game.class.to_s != game.game.class.to_s}
