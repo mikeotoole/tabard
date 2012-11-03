@@ -55,7 +55,7 @@ class UserProfile < ActiveRecord::Base
 
   has_many :characters, through: :played_games
 
-  has_many :approved_character_proxies, through: :community_profiles
+  has_many :approved_characters, through: :community_profiles
   has_many :communities, through: :community_profiles, order: 'LOWER(name)'
   has_many :announcements, through: :community_profiles
   has_many :acknowledgements, through: :community_profiles
@@ -161,7 +161,7 @@ class UserProfile < ActiveRecord::Base
   end
 
   ###
-  # This method gets all of character proxies that are compatable with the communities Community games.
+  # This method gets all of characters that are compatable with the communities Community games.
   # [Returns] An array that contains all of the compatable character proxies.
   ###
   def compatable_characters(community)
@@ -308,7 +308,7 @@ class UserProfile < ActiveRecord::Base
   ###
   def active_profile_helper_collection(community, game)
     if community
-      return (Array.new() << (self)).concat(self.available_character_proxies(community,game).map{|proxy| proxy.character})
+      return (Array.new() << (self)).concat(self.available_characters(community,game))
     else
       return (Array.new() << (self)).concat(self.characters)
     end
@@ -446,8 +446,6 @@ end
 # Table name: user_profiles
 #
 #  id                :integer          not null, primary key
-#  first_name        :string(255)
-#  last_name         :string(255)
 #  avatar            :string(255)
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
@@ -457,5 +455,7 @@ end
 #  title             :string(255)
 #  location          :string(255)
 #  full_name         :string(255)
+#  gamer_tag         :string(255)
+#  slug              :string(255)
 #
 

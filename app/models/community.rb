@@ -47,7 +47,7 @@ class Community < ActiveRecord::Base
   has_many :community_invites, inverse_of: :community
   has_many :community_games, dependent: :destroy
   has_many :community_profiles, dependent: :destroy, inverse_of: :community
-  has_many :approved_character_proxies, through: :community_profiles
+  has_many :approved_characters, through: :community_profiles
   has_many :member_profiles, through: :community_profiles, class_name: "UserProfile", source: "user_profile", order: 'LOWER(user_profiles.display_name)'
   has_many :roster_assignments, through: :community_profiles
   has_many :pending_roster_assignments, through: :community_profiles
@@ -318,13 +318,13 @@ class Community < ActiveRecord::Base
   # This method gets the current communtiy roster. An option game may be specified.
   # [Args]
   #   * +game+ -> The user profile you would like to promote to a member.
-  # [Returns] An array of character_proxies, optionly filtered by game.
+  # [Returns] An array of characters, optionly filtered by game.
   ###
   def get_current_community_roster(game = nil)
     if game
-      return self.approved_character_proxies.reject{|cp| cp.game != game }
+      return self.approved_characters.reject{|character| character.game != game }
     else
-      return self.approved_character_proxies
+      return self.approved_characters
     end
   end
 
