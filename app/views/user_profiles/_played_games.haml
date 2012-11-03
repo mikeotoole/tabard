@@ -8,6 +8,6 @@
       = link_to "Add Character", new_played_game_characters_url([played_game]) if can? :create, Character.new(played_game_id: played_game.id)
     -if played_game.characters.any?
       %ul.characters
-        = render partial: "#{played_game.game_type.downcase}_characters/li", collection: played_game.characters, as: :character
+        = render partial: "characters/#{played_game.game_type.downcase}/li", collection: played_game.characters, as: :character
 - else
   %p None

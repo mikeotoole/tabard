@@ -3,6 +3,6 @@
 = simple_form_for [@played_game, @character], html: {novalidate: true} do |f|
   %fieldset
     %ol
-      = render "#{@character.class.to_s.underscore.pluralize}/fields", f: f, character: @character
+      = render "characters/#{@played_game.game_type.downcase}/fields", f: f, character: @character
     .submit
       %button{ type: 'submit' } Create character
