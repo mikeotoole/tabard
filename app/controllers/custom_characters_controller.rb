@@ -8,6 +8,10 @@
 class CustomCharactersController < CharactersController
   load_and_authorize_resource
 
+  def edit
+    @character = @custom_character
+  end
+
   def update
     @custom_character.update_attributes(params[:custom_character])
     redirect_to user_profile_url(current_user, anchor: "games", subdomain: "www")

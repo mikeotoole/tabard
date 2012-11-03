@@ -1,2 +1,8 @@
-%h1 Characters#new
-= render "#{@character.class.to_s.underscore.pluralize}/form", character: @character, played_game: @played_game
+%h1 New #{@character.game_name.to_s} Character
+
+= simple_form_for [@played_game, @character], html: {novalidate: true} do |f|
+  %fieldset
+    %ol
+      = render "#{@character.class.to_s.underscore.pluralize}/fields", f: f, character: @character
+    .submit
+      %button{ type: 'submit' } Create character

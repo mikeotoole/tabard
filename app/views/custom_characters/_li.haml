@@ -1,0 +1,3 @@
+%li.custom.character
+  %h3= link_to_if (can? :update, character), character.name, edit_custom_character_url(character)
+  .avatar= image_tag character.avatar_url :small

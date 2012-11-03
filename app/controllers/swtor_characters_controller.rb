@@ -8,6 +8,10 @@
 class SwtorCharactersController < CharactersController
   load_and_authorize_resource
 
+  def edit
+    @character = @swtor_character
+  end
+
   def update
     @swtor_character.update_attributes(params[:swtor_character])
     redirect_to user_profile_url(current_user, anchor: "games", subdomain: "www")

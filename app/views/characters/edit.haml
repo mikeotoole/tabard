@@ -1,2 +1,9 @@
-%h1 Characters#edit
-%p Find me in app/views/characters/edit.html.haml
+%h1 Editing #{@character.game_name.to_s} Character
+
+= simple_form_for [@played_game, @character], html: {novalidate: true} do |f|
+  %fieldset
+    %ol
+      = render "#{@character.class.to_s.underscore.pluralize}/fields", f: f, character: @character
+    .submit
+      %button{ type: 'submit' } Create character
+      = link_to 'Remove Character', @character, method: :delete, confirm: 'This cannot be undone. Are you sure you want to remove this character?', class: 'secondary'

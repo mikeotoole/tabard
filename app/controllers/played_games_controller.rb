@@ -26,7 +26,7 @@ class PlayedGamesController < ApplicationController
 
   def create
     if @played_game.save
-      redirect_to user_profile_url(@user_profile, anchor: "played_games", subdomain: "www")
+      redirect_to user_profile_url(@user_profile, anchor: "games", subdomain: "www")
     else
       render :new
     end

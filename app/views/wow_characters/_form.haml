@@ -1,7 +1,0 @@
-%h2 Wow
-= simple_form_for [played_game,character], html: {novalidate: true} do |f|
-  %fieldset
-    %ol
-      = render 'wow_characters/fields', f: f, wow_character: character
-      %li
-        %button{ type: 'submit' } Create character

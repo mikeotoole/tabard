@@ -1,7 +1,0 @@
-%h2 Minecraft
-= simple_form_for [played_game,character], html: {novalidate: true} do |f|
-  %fieldset
-    %ol
-      = render 'minecraft_characters/fields', f: f, minecraft_character: character
-      %li
-        %button{ type: 'submit' } Create character

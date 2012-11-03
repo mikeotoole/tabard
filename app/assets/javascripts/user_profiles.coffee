@@ -74,7 +74,5 @@ jQuery(document).ready ($) ->
 
   # Games/Charactesr
   $('#body')
-    .on 'click', '#tabs dt.games + dd h2', ->
-      $(@).toggleClass 'closed'
-    .on 'click', '#tabs dt.games + dd h2 a', ->
-      event.stopPropagation()
+    .on 'click', '#tabs dt.games + dd h2', (e) ->
+      $(@).toggleClass 'closed' if @ is e.target
