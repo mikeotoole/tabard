@@ -1,4 +1,57 @@
-%p
-  %strong= "Welcome to Tabard™, #{@resource.is_a?(User) ? @resource.display_name : @resource.email}!"
+%h2
+  %font{ color: '#333' }= "Welcome to Tabard, #{@resource.is_a?(User) ? @resource.display_name : @resource.email}!"
 %p You can confirm your account through the link below:
-%p= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @resource.confirmation_token), style: 'color: #BE4124'
+%p
+  %strong= link_to 'Confirm your account', confirmation_url(@resource, confirmation_token: @resource.confirmation_token), style: 'color: #BE4124'
+%p= confirmation_url(@resource, confirmation_token: @resource.confirmation_token)
+%hr
+%h2
+  %font{ color: '#333' } Getting started with Tabard
+%p
+  You are now among the elite, a new generation of enthusiasts.
+  Welcome to Tabard. Let's get you started with the essentials.
+  You're likely either looking to join a community or start your own.
+%h2
+  %font{ color: '#333' } Finding a Community
+%p
+  If a friend invited you to join their community,
+  you will likely see a
+  %strong message notification
+  (red badge) in your action bar after logging in.
+  Click that link and follow the instructions of that message.
+%p
+  If you don't have any notifications, you can still find a community by
+  %strong  searching
+  for a
+  %strong community name
+  or
+  %strong game name
+  on the
+  = link_to 'search page', search_url
+%h2
+  %font{ color: '#333' } Creating a Community
+%p
+  %strong Or maybe you're the kind of gamer that starts things.
+  %br
+  You're not one to take direction from the other players.
+  You're a leader, a champion, a creator of your own destiny.
+%p
+  = link_to 'Create a community', new_community_url
+  by logging in and selecting "Add a Community" from "My Communities" dropdown in your action bar.
+%h2
+  %font{ color: '#333' } Getting Help
+%p
+  If you get stuck, or something seems confusing, we're here to help.
+  Open a support request by clicking
+  = link_to 'customer support', support_index_url
+  in the footer of any page.
+%hr
+%h2
+  %font{ color: '#333' } Thank You
+%p
+  We are stoked to have you as a new user.
+  Seriously, you made our day brighter by bringing your enthusiasm for games to Tabard.
+  We look forward to using your feedback and experiences to make Tabard better every day.
+  Good luck out there.
+%p
+  &mdash; The Tabard Team
