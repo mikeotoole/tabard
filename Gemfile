@@ -34,7 +34,7 @@ ruby '1.9.3'
   gem 'memcachier'#                                                                         No License
 
 # Form Handling
-  gem 'simple_form', git: 'git://github.com/dw2/simple_form.git'#                           MIT - https://github.com/plataformatec/simple_form
+  gem 'simple_form'#                                                                        MIT - https://github.com/plataformatec/simple_form
   gem 'client_side_validations'#                                                            MIT - https://github.com/bcardarella/client_side_validations
   gem 'country_select'#                                                                     MIT - https://github.com/stefanpenner/country_select
 

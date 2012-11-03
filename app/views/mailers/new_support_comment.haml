@@ -1,5 +1,5 @@
-%p
-  %strong Hello from #{@user_profile.full_name},
+%h2
+  %font{ color: '#333' } Hello from #{@user_profile.full_name},
 %p
   I have added the following comment for support ticket ##{@support_ticket.id}:
 %hr
@@ -10,4 +10,5 @@
 
 %hr
 %p Help this user out by clicking the link below:
-%p= link_to 'View Support Ticket', @url, style: 'color: #BE4124'
+%p
+  %strong= link_to 'View Support Ticket', @url, style: 'color: #BE4124'

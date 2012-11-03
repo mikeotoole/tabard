@@ -1,5 +1,5 @@
-%p
-  %strong Hello #{@user_profile.full_name},
+%h2
+  %font{ color: '#333' } Hello #{@user_profile.full_name},
 %p
   We have been unsuccessful in billing your card on file.
   This usually happens when a card expires.
@@ -20,4 +20,4 @@
   %br
   %strong Please update your card and Tabard subscription here:
 %p
-  = link_to @url, @url, style: 'color: #BE4124'
+  %strong= link_to @url, @url, style: 'color: #BE4124'

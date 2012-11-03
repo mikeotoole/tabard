@@ -97,7 +97,7 @@ class CommunityApplication < ActiveRecord::Base
       community_profile = self.community.promote_user_profile_to_member(self.user_profile)
       community_profile.update_attributes({community_application_id: self.id},without_protection: true)
       default_url_options[:host] = "#{community.subdomain}.#{ENV['BV_HOST_URL']}"
-      message = Message.create_system(subject: "Application Accepted",
+      message = Message.create_system(subject: "Application Accepted to #{self.community.name}",
                   body: "Your application to [#{self.community.name}](#{root_url(subdomain: self.community_subdomain)}) has been accepted.",
                   to: [self.user_profile_id])
 
