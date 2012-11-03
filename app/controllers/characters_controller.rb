@@ -21,6 +21,11 @@ class CharactersController < ApplicationController
     redirect_to user_profile_url(current_user, anchor: "games", subdomain: "www")
   end
 
+  def destroy
+    flash[:notice] = 'Character has been removed.' if @character.destroy
+    redirect_to user_profile_url(current_user, anchor: "games", subdomain: "www")
+  end
+
 protected
   def create_or_find_character
     @character = @played_game.characters.find_by_id(params[:id])
