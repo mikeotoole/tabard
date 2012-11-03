@@ -81,7 +81,6 @@ class User < ActiveRecord::Base
   delegate :unread_announcements, to: :user_profile, allow_nil: true
   delegate :available_characters, to: :user_profile, allow_nil: true
   delegate :has_seen?, to: :user_profile, allow_nil: true
-  delegate :default_character_proxy_for_a_game, to: :user_profile, allow_nil: true
   delegate :is_member?, to: :user_profile, allow_nil: true
   delegate :application_pending?, to: :user_profile, allow_nil: true
   delegate :in_community, to: :user_profile, allow_nil: true

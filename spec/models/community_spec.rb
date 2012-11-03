@@ -73,8 +73,8 @@ describe Community do
       user_profile = create(:user_profile)
       app = some_community.community_applications.new
       app.prep(user_profile, some_community.community_application_form)
-      user_profile.character_proxies.each do |cp|
-        app.character_proxies << cp if cp.compatable_with_community?(some_community)
+      user_profile.characters.each do |character|
+        app.characters << cp if character.compatable_with_community?(some_community)
       end
       app.save!
       app.submission.custom_form.questions.each do |q|
@@ -226,7 +226,7 @@ describe Community do
 
   describe "is_protected_roster" do
     let(:community_profile) { create(:community_profile_with_characters, :community => create(:community_with_community_games)) }
-    let(:new_proxy) { create(:character_proxy_with_wow_character, :user_profile => community_profile.user_profile)}
+    let(:new_character) { create(:wow_character, :user_profile => community_profile.user_profile)}
 
     it "should be false by default" do
       community.is_protected_roster.should be_false
@@ -235,7 +235,7 @@ describe Community do
     describe "when true" do
       it "should make roster changes pending" do
         community_profile.community.update_column(:is_protected_roster, true)
-        ra = community_profile.roster_assignments.create!(:character_proxy => new_proxy, :is_pending => false, :community_game => community_profile.community.community_games.where(:game_type => "Wow").first )
+        ra = community_profile.roster_assignments.create!(:character => new_character, :is_pending => false, :community_game => community_profile.community.community_games.where(:game_type => "Wow").first )
         ra.is_pending.should be_true
       end
     end
@@ -243,7 +243,7 @@ describe Community do
     describe "when false" do
       it "should not make roster changes pending" do
         community_profile.community.update_column(:is_protected_roster, true)
-        ra = community_profile.roster_assignments.create!(:character_proxy => new_proxy, :is_pending => true, :community_game => community_profile.community.community_games.where(:game_type => "Wow").first )
+        ra = community_profile.roster_assignments.create!(:character => new_character, :is_pending => true, :community_game => community_profile.community.community_games.where(:game_type => "Wow").first )
         ra.community_profile.community.is_protected_roster.should be_true
         RosterAssignment.find_by_id(ra.id).is_pending.should be_true
       end
@@ -257,37 +257,37 @@ describe Community do
     let(:community) { community_profile2.community }
 
     it "should return all rostered characters when game is nil" do
-      expected_size = community_profile.approved_character_proxies.size + community_profile2.approved_character_proxies.size
+      expected_size = community_profile.approved_characters.size + community_profile2.approved_characters.size
       community_roster = community.get_current_community_roster
-      community_profile.approved_character_proxies.each do |proxy|
-        community_roster.include?(proxy).should be_true
+      community_profile.approved_characters.each do |character|
+        community_roster.include?(character).should be_true
       end
-      community_profile.pending_character_proxies.each do |proxy|
-        community_roster.include?(proxy).should be_false
+      community_profile.pending_characters.each do |character|
+        community_roster.include?(character).should be_false
       end
-      community_profile2.approved_character_proxies.each do |proxy|
-        community_roster.include?(proxy).should be_true
+      community_profile2.approved_characters.each do |character|
+        community_roster.include?(character).should be_true
       end
-      community_profile2.pending_character_proxies.each do |proxy|
-        community_roster.include?(proxy).should be_false
+      community_profile2.pending_characters.each do |character|
+        community_roster.include?(character).should be_false
       end
       community_roster.size.should eq(expected_size)
     end
 
     it "should return only rostered characters that match game when game is specified" do
-      expected_size = community_profile.approved_character_proxies.delete_if{|proxy| proxy.game != wow}.size + community_profile2.approved_character_proxies.delete_if{|proxy| proxy.game != wow}.size
+      expected_size = community_profile.approved_characters.delete_if{|character| character.game != wow}.size + community_profile2.approved_characters.delete_if{|character| character.game != wow}.size
       community_roster = community.get_current_community_roster(wow)
-      community_profile.approved_character_proxies.delete_if{|proxy| proxy.game != wow}.each do |proxy|
-        community_roster.include?(proxy).should be_true
+      community_profile.approved_characters.delete_if{|character| character.game != wow}.each do |character|
+        community_roster.include?(character).should be_true
       end
-      community_profile.pending_character_proxies.delete_if{|proxy| proxy.game != wow}.each do |proxy|
-        community_roster.include?(proxy).should be_false
+      community_profile.pending_characters.delete_if{|character| character.game != wow}.each do |character|
+        community_roster.include?(character).should be_false
       end
-      community_profile2.approved_character_proxies.delete_if{|proxy| proxy.game != wow}.each do |proxy|
-        community_roster.include?(proxy).should be_true
+      community_profile2.approved_characters.delete_if{|character| character.game != wow}.each do |character|
+        community_roster.include?(character).should be_true
       end
-      community_profile2.pending_character_proxies.delete_if{|proxy| proxy.game != wow}.each do |proxy|
-        community_roster.include?(proxy).should be_false
+      community_profile2.pending_characters.delete_if{|character| character.game != wow}.each do |character|
+        community_roster.include?(character).should be_false
       end
       community_roster.size.should eq(expected_size)
     end

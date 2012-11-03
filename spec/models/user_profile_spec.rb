@@ -137,7 +137,7 @@ describe UserProfile do
   it "characters should return all characters" do
     billy = create(:billy)
     billy.user_profile.should_not be_nil
-    total = CharacterProxy.all_characters.count
+    total = Character.all.count
     billy.user_profile.characters.count.should eq(total)
   end
 
@@ -302,33 +302,33 @@ describe UserProfile do
     end
   end
 
-  describe "available_character_proxies" do
+  describe "available_characters" do
     before(:each) do
       @community_profile = create(:community_profile_with_characters)
       @member_profile = @community_profile.user_profile
       @community = @community_profile.community
     end
     it "should return all approved character proxies for a community" do
-      expected_proxies = @community_profile.approved_character_proxies
-      not_expected_proxies = @community_profile.pending_character_proxies
-      available_proxies = @member_profile.available_character_proxies(@community)
-      expected_proxies.each do |proxy|
-        available_proxies.include?(proxy).should be_true
+      expected_characters = @community_profile.approved_characters
+      not_expected_characters = @community_profile.pending_characters
+      available_characters = @member_profile.available_characters(@community)
+      expected_characters.each do |character|
+        available_characters.include?(character).should be_true
       end
-      not_expected_proxies.each do |proxy|
-        available_proxies.include?(proxy).should be_false
+      not_expected_characters.each do |character|
+        available_characters.include?(character).should be_false
       end
     end
-    it "should return all approved character proxies for a community and game" do
+    it "should return all approved characters for a community and game" do
       game = DefaultObjects.wow
-      expected_proxies = @community_profile.approved_character_proxies.delete_if{ |proxy| proxy.game != game}
-      not_expected_proxies = @community_profile.approved_character_proxies.delete_if{ |proxy| expected_proxies.include?(proxy) }
-      available_proxies = @member_profile.available_character_proxies(@community, game)
-      expected_proxies.each do |proxy|
-        available_proxies.include?(proxy).should be_true
+      expected_characters = @community_profile.approved_characters.delete_if{ |character| character.game != game}
+      not_expected_characters = @community_profile.approved_characters.delete_if{ |character| expected_characters.include?(character) }
+      available_characters = @member_profile.available_characters(@community, game)
+      expected_characters.each do |character|
+        available_characters.include?(character).should be_true
       end
-      not_expected_proxies.each do |proxy|
-        available_proxies.include?(proxy).should be_false
+      not_expected_characters.each do |character|
+        available_characters.include?(character).should be_false
       end
     end
   end
@@ -419,13 +419,13 @@ describe UserProfile do
       end
     end
 
-    it "should mark user_profile's character_proxies as is_removed" do
+    it "should mark user_profile's characters as is_removed" do
       profile = create(:wow_char_profile).user_profile
-      character_proxies = profile.character_proxies.all
+      characters = profile.characters.all
       profile.destroy
-      character_proxies.should_not be_empty
-      character_proxies.each do |character_proxy|
-        character_proxy.reload.is_removed.should be_true
+      characters.should_not be_empty
+      characters.each do |character|
+        character.reload.is_removed.should be_true
       end
     end
 
@@ -524,13 +524,13 @@ describe UserProfile do
       end
     end
 
-    it "should delete user_profile's character_proxies" do
+    it "should delete user_profile's characters" do
       profile = create(:wow_char_profile).user_profile
-      character_proxies = profile.character_proxies.all
+      characters = profile.characters.all
       profile.nuke
-      character_proxies.should_not be_empty
-      character_proxies.each do |character_proxy|
-        CharacterProxy.exists?(character_proxy).should be_false
+      characters.should_not be_empty
+      characters.each do |character|
+        Character.exists?(character).should be_false
       end
     end
 

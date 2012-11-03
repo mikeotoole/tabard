@@ -103,16 +103,18 @@ describe CommunityApplication do
     end
 
     it "should automaticaly add and approve the characters used for the application" do
-      proxy_map = Hash.new
-      community_application.character_proxies.each do |proxy|
-        proxy_map[proxy.id.to_s] = community_application.community.community_games.where(:game_type => proxy.game.class.name).first.id
+      characters_to_add = []
+      community_application.characters.each do |character|
+        cg = community_application.community.community_games.where(:game_id => character.game.id).first
+        characters_to_add << character if cg
       end
-      community_application.accept_application(community.admin_profile, proxy_map).should be_true
+      community_application.accept_application(community.admin_profile, characters_to_add).should be_true
+
       community_profile = user_profile.community_profiles.where(:community == community).first
-      community_application.character_proxies.each do |proxy|
-        community_profile.approved_character_proxies.include?(proxy).should be_true
+      community_application.characters.each do |character|
+        community_profile.approved_characters.include?(character).should be_true
       end
-      community_profile.pending_character_proxies.size.should eq(0)
+      community_profile.pending_characters.size.should eq(0)
     end
 
     it "should set the application to the accepted status" do

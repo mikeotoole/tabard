@@ -10,7 +10,7 @@ class DefaultObjects
         :community => DefaultObjects.community,
         :user_profile => @user_profile,
         :submission => FactoryGirl.create(:submission, :custom_form => DefaultObjects.community.community_application_form, :user_profile => @user_profile),
-        :character_proxies => []
+        :characters => []
       )
       app.accept_application(DefaultObjects.community.admin_profile)
       if not @user_profile.is_member?(DefaultObjects.community_two)
@@ -18,7 +18,7 @@ class DefaultObjects
           :community => DefaultObjects.community_two,
           :user_profile => @user_profile,
           :submission => FactoryGirl.create(:submission, :custom_form => DefaultObjects.community_two.community_application_form, :user_profile => @user_profile),
-          :character_proxies => @user_profile.character_proxies
+          :characters => @user_profile.characters
         )
       appTwo.accept_application(DefaultObjects.community_two.admin_profile)
     end
@@ -43,7 +43,7 @@ class DefaultObjects
           :community => DefaultObjects.community,
           :user_profile => @additional_community_user_profile,
           :submission => FactoryGirl.create(:submission, :custom_form => DefaultObjects.community.community_application_form, :user_profile => @additional_community_user_profile),
-          :character_proxies => @additional_community_user_profile.character_proxies
+          :characters => @additional_community_user_profile.characters
         )
       app.accept_application(DefaultObjects.community.admin_profile)
     end
@@ -52,7 +52,7 @@ class DefaultObjects
           :community => DefaultObjects.community_two,
           :user_profile => @additional_community_user_profile,
           :submission => FactoryGirl.create(:submission, :custom_form => DefaultObjects.community_two.community_application_form, :user_profile => @additional_community_user_profile),
-          :character_proxies => @additional_community_user_profile.character_proxies.reject{|cp| cp.game_name != "Star Wars: The Old Republic" }
+          :characters => @additional_community_user_profile.characters.reject{|cp| cp.game_name != "Star Wars: The Old Republic" }
         )
       appTwo.accept_application(DefaultObjects.community_two.admin_profile)
     end
@@ -75,12 +75,12 @@ class DefaultObjects
     @minecraft ||= FactoryGirl.create(:minecraft)
   end
 
-  def self.wow_character_proxy
-    @wow_character_proxy ||= FactoryGirl.create(:character_proxy_with_wow_character)
+  def self.wow_character
+    @wow_character ||= FactoryGirl.create(:wow_character)
   end
 
-  def self.swtor_character_proxy
-    @swtor_character_proxy ||= FactoryGirl.create(:character_proxy_with_swtor_character)
+  def self.swtor_character
+    @swtor_character ||= FactoryGirl.create(:swtor_character)
   end
 
   def self.community
@@ -199,8 +199,8 @@ class DefaultObjects
     @random_discussion = nil
     @custom_form = nil
     @community_admin = nil
-    @wow_character_proxy = nil
-    @swtor_character_proxy = nil
+    @wow_character = nil
+    @swtor_character= nil
     @discussion_space = nil
     @discussion = nil
     @page_space = nil

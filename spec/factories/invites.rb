@@ -13,10 +13,10 @@ FactoryGirl.define do
 #   end
 #
 #   factory :invite_to_wow_char, :parent => :invite do
-#     character_proxy_id { create(:character_proxy_with_wow_character).id }
+#     character_id { create(:wow_character).id }
 #   end
 #
 #   factory :invite_to_swtor_char, :parent => :invite do
-#     character_proxy_id { create(:character_proxy_with_swtor_character).id }
+#     character_id { create(:swtor_character).id }
 #   end
 end

@@ -72,23 +72,12 @@ class SwtorCharacter < Character
 ###
 # Attribute accessible
 ###
-  attr_accessible :name
+  attr_accessible :name, :char_class, :advanced_class, :species, :level, :gender, :faction, :server_name
 ###
 # H-Store
 ###
-  # Dynamicly add setter, getter, attr_accessible and scope for stored keys.
-  %w[char_class advanced_class species level gender faction server_name].each do |key|
-    attr_accessible key
-    scope "has_#{key}", lambda { |value| where("info @> (? => ?)", key, value) }
-
-    define_method(key) do
-      info && info[key]
-    end
-
-    define_method("#{key}=") do |value|
-      self.info = (info || {}).merge(key => value)
-    end
-  end
+  # Dynamicly add setter, getter, and scopes for keys (See lib/hstore_accessor.rb).
+  hstore_accessor :info, :char_class, :advanced_class, :species, :level, :gender, :faction, :server_name
 
 ###
 # Validators

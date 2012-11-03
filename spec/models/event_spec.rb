@@ -99,7 +99,7 @@ describe Event do
 #       event.should respond_to(:attendees)
 #       participant = create(:participant_as_wow_char)
 #       event.attendees.count.should eq(1)
-#       event.attendees.first.should eq(participant.character_proxy.character)
+#       event.attendees.first.should eq(participant.character)
 #     end
 #   end
 #
@@ -115,7 +115,7 @@ describe Event do
 #       event.should respond_to(:invitees)
 #       invite = create(:invite_to_wow_char)
 #       event.invitees.count.should eq(1)
-#       event.invitees.first.should eq(invite.character_proxy.character)
+#       event.invitees.first.should eq(invite.character)
 #     end
 #   end
 

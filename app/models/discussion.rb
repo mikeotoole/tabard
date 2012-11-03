@@ -22,7 +22,7 @@ class Discussion < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :body, :character_proxy_id, :is_locked, :has_been_edited, :comments_enabled
+  attr_accessible :name, :body, :character_id, :is_locked, :has_been_edited, :comments_enabled
 
   # This is a virtual attribute to determine if comments are enabled.
   attr_accessor :comments_enabled
@@ -71,7 +71,7 @@ class Discussion < ActiveRecord::Base
 # Instance Methods
 ###
   ###
-  # This method gets the poster of this discussion. If character proxy is not nil
+  # This method gets the poster of this discussion. If character is not nil
   # the character is returned. Otherwise the user profile is returned. These should
   # both respond to a common interface for things like display name and avatar.
   # [Returns] The poster, A character or user profile.

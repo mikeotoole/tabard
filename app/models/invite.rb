@@ -22,7 +22,7 @@ class Invite < ActiveRecord::Base
 # Attribute accessible
 ###
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :status, :comment_body, :user_profile, :character_proxy, :user_profile_id, :character_proxy_id, :event_id
+  attr_accessible :status, :comment_body, :user_profile, :character, :user_profile_id, :character_id, :event_id
 
 ###
 # Associations

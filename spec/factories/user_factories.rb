@@ -28,7 +28,7 @@ FactoryGirl.define do
     date_of_birth 35.years.ago.to_date
     terms "1"
     after(:create) do |u|
-      FactoryGirl.create(:character_proxy_with_swtor_character, :user_profile => u.user_profile)
+      FactoryGirl.create(:swtor_character, :user_profile => u.user_profile)
     end
   end
 

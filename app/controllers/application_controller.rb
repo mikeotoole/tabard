@@ -128,7 +128,7 @@ protected
     session[:poster_type] = profile.class.to_s
     session[:poster_id] = profile.id.to_s
   end
-  # This method gets the character proxy id of the last posted character
+  # This method gets the character id of the last posted character
   def last_posted_as_character_id
     return nil if !session[:poster_type] or !session[:poster_id] or !!(session[:poster_type] =~ /UserProfile/)
     return session[:poster_id].to_i
@@ -141,7 +141,7 @@ protected
   end
   helper_method :last_posted_as_user_profile?
 
-  # This determines if the provided proxy was the one that was used to post last.
+  # This determines if the provided was the one that was used to post last.
   def last_posted_as_character?(poster)
     return (poster.class.to_s == session[:poster_type].to_s and poster.id.to_s == session[:poster_id].to_s)
   end

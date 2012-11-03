@@ -34,9 +34,9 @@ describe Invite do
     end
   end
 
-  describe "character_proxy" do
+  describe "character" do
     it "should not be required" do
-      build(:invite, :character_proxy => nil).should be_valid
+      build(:invite, :character => nil).should be_valid
     end
   end
 
