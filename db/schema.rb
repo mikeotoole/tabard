@@ -424,6 +424,7 @@ ActiveRecord::Schema.define(:version => 20121103162800) do
     t.datetime "updated_at", :null => false
     t.string   "type"
     t.hstore   "info"
+    t.string   "aliases"
   end
 
   add_index "games", ["info"], :name => "games_info"

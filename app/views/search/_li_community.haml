@@ -7,4 +7,4 @@
     %span.games
       %strong Games
       - community.games.each do |game|
-        = link_to game.short_name, search_url(term: game.short_name)
+        = link_to game.name, search_url(term: game.name)

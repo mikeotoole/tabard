@@ -364,7 +364,13 @@ protected
   # [Returns] A scoped query
   ###
   def self.search(search)
-    return scoped # TODO Fix this
+    if search
+      community_ids = CommunityGame.search_by_game_name(search).pluck(:community_id)
+      search = "%#{search}%"
+      return where{(name =~ search) | (slogan =~ search) | (id.in(community_ids))}
+    else
+      return scoped
+    end
   end
 
 ###

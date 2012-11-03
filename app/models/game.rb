@@ -14,7 +14,7 @@ class Game < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name
+  attr_accessible :name, :aliases
 
 ###
 # Associations
@@ -36,6 +36,15 @@ class Game < ActiveRecord::Base
 ###
 
 ###
+# Class Methods
+###
+  # Search game name and aliases for given term.
+  def self.search(search)
+    game_name = "%#{search}%"
+    Game.where{(name =~ game_name) | (aliases =~ game_name)}
+  end
+
+###
 # H-Store
 ###
   # Setup info to use Hstore. This should not be needed for Rails 4.
@@ -52,5 +61,6 @@ end
 #  updated_at :datetime         not null
 #  type       :string(255)
 #  info       :hstore
+#  aliases    :string(255)
 #
 
