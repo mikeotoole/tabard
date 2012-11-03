@@ -86,13 +86,13 @@ class DefaultObjects
   def self.community
     @community ||= FactoryGirl.create(:community, :name => "Default Community")
     unless @community.games.include?(DefaultObjects.wow)
-      @community.community_games.create!(:name => "Test WoW Game", :game_id => DefaultObjects.wow, :game_type => "Wow")
+      @community.community_games.create!(:game => DefaultObjects.wow)
     end
     unless @community.games.include?(DefaultObjects.swtor)
-      @community.community_games.create!(:name => "Test SWTOR Game", :game_id => DefaultObjects.swtor, :game_type => "Swtor")
+      @community.community_games.create!(:game => DefaultObjects.swtor)
     end
     unless @community.games.include?(DefaultObjects.minecraft)
-      @community.community_games.create!(:name => "Test Minecraft Game", :game_id => DefaultObjects.minecraft, :game_type => "Minecraft")
+      @community.community_games.create!(:game => DefaultObjects.minecraft)
     end
     unless @community.announcements.size > 0
       announcement1 = @community.announcements.new(:name => "Announcement 1",
@@ -138,7 +138,7 @@ class DefaultObjects
   def self.community_two
     @community_two ||= FactoryGirl.create(:community, :name => "Default Community Two")
     unless @community_two.games.include?(DefaultObjects.swtor)
-      @community_two.community_games.create!(:name => "Test Game", :game_id => DefaultObjects.swtor, :game_type => "Swtor")
+      @community_two.community_games.create!(:game => DefaultObjects.swtor)
     end
     @community_two
   end

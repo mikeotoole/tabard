@@ -109,7 +109,6 @@ ruby '1.9.3'
 
 # Development and Test Specific Gems
   group :development, :test do
-    gem 'sqlite3'#                                                                          Custom - https://github.com/luislavena/sqlite3-ruby
     gem 'rspec-rails'#                                                                      MIT - https://github.com/rspec/rspec-rails
     gem 'factory_girl_rails'#                                                               MIT - https://github.com/thoughtbot/factory_girl_rails
     gem 'debugger'

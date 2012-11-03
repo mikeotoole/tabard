@@ -11,7 +11,6 @@ class GamesController < ApplicationController
   def autocomplete
     game_name = "%#{params[:term]}%"
     @games = Game.where{name =~ game_name}
-    logger.debug @games.to_yaml
     render json: @games.map(&:name)
   end
 end

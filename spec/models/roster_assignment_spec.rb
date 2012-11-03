@@ -4,7 +4,7 @@
 #
 #  id                   :integer          not null, primary key
 #  community_profile_id :integer
-#  character_proxy_id   :integer
+#  character_id         :integer
 #  is_pending           :boolean          default(TRUE)
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
