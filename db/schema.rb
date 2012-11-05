@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121103195326) do
+ActiveRecord::Schema.define(:version => 20121105194215) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -150,6 +150,7 @@ ActiveRecord::Schema.define(:version => 20121103195326) do
     t.string   "type"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+    t.boolean  "is_removed"
   end
 
   create_table "characters_community_applications", :id => false, :force => true do |t|

@@ -54,6 +54,7 @@ class MinecraftCharacter < Character
   def self.search(search)
     scoped # TODO Fix this
   end
+
 end
 
 # == Schema Information
@@ -69,5 +70,6 @@ end
 #  type           :string(255)
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
+#  is_removed     :boolean
 #
 

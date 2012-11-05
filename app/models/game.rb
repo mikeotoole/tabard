@@ -70,6 +70,10 @@ class Game < ActiveRecord::Base
     super
   end
 
+  def new_character(params)
+    raise "Tyrone, forgot to write new character method when adding new game."
+  end
+
 ###
 # Instance Methods
 ###

@@ -196,6 +196,7 @@ class SwtorCharacter < Character
   def self.search(search)
     scoped # TODO fix this
   end
+
 ###
 # Validator Methods
 ###
@@ -228,5 +229,6 @@ end
 #  type           :string(255)
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
+#  is_removed     :boolean
 #
 

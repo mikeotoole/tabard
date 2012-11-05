@@ -18,6 +18,12 @@ class PlayedGame < ActiveRecord::Base
       self.game = some_game
     end
   end
+
+  def new_character(params)
+    character = self.game.new_character(params)
+    character.played_game = self
+    return character
+  end
 end
 
 # == Schema Information

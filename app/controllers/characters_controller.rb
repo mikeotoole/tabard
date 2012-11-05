@@ -1,7 +1,7 @@
 class CharactersController < ApplicationController
   respond_to :html, :js
   load_and_authorize_resource :played_game, only: [:new, :create]
-  before_filter :create_or_find_character, only: [:new, :create]
+  before_filter :create_character, only: [:new, :create]
   load_resource :character, only: [:edit, :update, :destroy]
   authorize_resource :character
 
@@ -32,20 +32,7 @@ class CharactersController < ApplicationController
   end
 
 protected
-  def create_or_find_character
-    @character = @played_game.characters.find_by_id(params[:id])
-    if @character.blank?
-      case @played_game.game.name
-        when Wow.game_name
-          @character = WowCharacter.new(params[:character])
-        when Swtor.game_name
-          @character = SwtorCharacter.new(params[:character])
-        when Minecraft.game_name
-          @character = MinecraftCharacter.new(params[:character])
-        else
-          @character = CustomCharacter.new(params[:character])
-      end
-      @character.played_game = @played_game
-    end
+  def create_character
+      @character = @played_game.new_character(params[:character])
   end
 end
