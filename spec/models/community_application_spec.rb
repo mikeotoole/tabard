@@ -103,12 +103,12 @@ describe CommunityApplication do
     end
 
     it "should automaticaly add and approve the characters used for the application" do
-      characters_to_add = []
+      mapping = Hash.new
       community_application.characters.each do |character|
         cg = community_application.community.community_games.where(:game_id => character.game.id).first
-        characters_to_add << character if cg
+        mapping[character.id.to_s] = cg.id.to_s if cg
       end
-      community_application.accept_application(community.admin_profile, characters_to_add).should be_true
+      community_application.accept_application(community.admin_profile, mapping).should be_true
 
       community_profile = user_profile.community_profiles.where(:community == community).first
       community_application.characters.each do |character|

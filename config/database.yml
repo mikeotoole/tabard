@@ -24,6 +24,7 @@ test:
   adapter: postgresql
   database: dabvrailstest
   host: localhost
+  pool: 10
 
 production:
   adapter: sqlite3

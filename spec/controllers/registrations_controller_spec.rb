@@ -53,7 +53,7 @@ describe RegistrationsController do
 
       it "marks user as is_user_disabled" do
         delete :destroy, :user => {:current_password => "Password"}
-        response.should redirect_to(root_url("www"))
+        response.should redirect_to(root_url(subdomain: 'www'))
         updated_user = User.find(user)
         updated_user.user_disabled_at.should_not be_nil
         updated_user.admin_disabled_at.should be_nil
@@ -102,7 +102,7 @@ describe RegistrationsController do
 
       it "redirects to the root_url when authenticated as owner" do
         delete :destroy, :user => {:current_password => "Password"}
-        response.should redirect_to(root_url("www"))
+        response.should redirect_to(root_url(subdomain: 'www'))
       end
     end
 

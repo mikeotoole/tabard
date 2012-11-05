@@ -20,7 +20,7 @@ describe AnnouncementsController do
       mapping = Hash.new
       application.characters.each do |character|
         cg = community.community_games.where(:game_id => character.game.id).first
-        mapping[character.id.to_s] = cg.id if cg
+        mapping[character.id.to_s] = cg.id.to_s if cg
       end
       application.accept_application(community.admin_profile, mapping)
     end

@@ -30,9 +30,9 @@ class SiteConfigurationController < ApplicationController
         SiteConfiguration.current_configuration.update_attributes(is_maintenance: true)
       end
       notice = (SiteConfiguration.is_maintenance? ? "Maintenance Mode ON" : "Maintenance Mode OFF")
-      redirect_to admin_dashboard_url, notice: notice
+      redirect_to alexandria_dashboard_url, notice: notice
     else
-      redirect_to admin_dashboard_url, alert: "You are not authorized!"
+      redirect_to alexandria_dashboard_url, alert: "You are not authorized!"
     end
   end
 end
