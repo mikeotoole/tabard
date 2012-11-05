@@ -33,6 +33,13 @@ class Character < ActiveRecord::Base
 ###
 # Validators
 ###
+  validates :name,  presence: true,
+                    length: { maximum: 100 }
+  validates :avatar,
+      if: :avatar?,
+      file_size: {
+        maximum: 5.megabytes.to_i
+      }
 
 ###
 # Public Methods
@@ -92,10 +99,42 @@ class Character < ActiveRecord::Base
     return community.community_games.exists?(game_id: self.game.id) if community
   end
 
+  def is_disabled?
+    self.is_removed or self.user_profile.is_disabled?
+  end
+
   # This method determines if this character proxy is compatable with the provided community_game.
   def compatable_with_community_game?(community_game)
     return true if community_game == nil
     return community_game.game_type == self.game.class.to_s
+  end
+
+  # Overrides the destroy to only mark as deleted and removes chaacter from any rosters.
+  def destroy
+    self.roster_assignments.clear if self.roster_assignments
+    self.update_column(:is_removed, true)
+    self.remove_avatar!
+  end
+
+  ###
+  # This method is added for removing an avatar. Code snippet I found on the internet to prevent noisy file not found errors. -JW
+  ###
+  def remove_avatar!
+    begin
+      super
+    rescue Fog::Storage::Rackspace::NotFound
+    end
+  end
+
+  ###
+  # This method is added for removing a previously stored avatar. Code snippet I found on the internet to prevent noisy file not found errors. -JW
+  ###
+  def remove_previously_stored_avatar
+    begin
+      super
+    rescue Fog::Storage::Rackspace::NotFound
+      @previous_model_for_avatar = nil
+    end
   end
 end
 
@@ -112,5 +151,6 @@ end
 #  type           :string(255)
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
+#  is_removed     :boolean
 #
 

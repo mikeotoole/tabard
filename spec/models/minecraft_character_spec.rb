@@ -11,6 +11,7 @@
 #  type           :string(255)
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
+#  is_removed     :boolean
 #
 
 require 'spec_helper'
