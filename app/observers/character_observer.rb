@@ -8,6 +8,13 @@
 class CharacterObserver < ActiveRecord::Observer
   observe :wow_character, :swtor_character, :minecraft_character
 
+  # Creates an activity when a character is created.
+  def after_create(character)
+    Activity.create!( {user_profile: character.user_profile,
+                      target: character
+                      action: "created"}, without_protection: true)
+  end
+
   # Creates an activity when a character is updated.
   def after_update(character)
     if character.changed?

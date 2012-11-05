@@ -34,7 +34,7 @@
           %label{ for: "community_application_character_ids_#{character.id}" }
             = image_tag character.avatar_url(:tiny), class: 'avatar'
             = character.name
-        .select.picker= f.input :character_proxy_ids, as: :check_boxes, label: false, wrapper: false, collection: current_user.compatable_characters(current_community).collect{|character| character = [raw(image_tag(character.avatar_url(:tiny), class: 'avatar')) + character.name, character.id]}
+        .select.picker= f.input :character_ids, as: :check_boxes, label: false, wrapper: false, collection: current_user.compatable_characters(current_community).collect{|character| character = [raw(image_tag(character.avatar_url(:tiny), class: 'avatar')) + character.name, character.id]}
     .instructions
       - unless community_application.custom_form_instructions.empty?
         %h2 Instructions

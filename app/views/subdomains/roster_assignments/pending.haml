@@ -16,9 +16,9 @@
               = check_box_tag "ids[#{roster_assignment.id}]", true, false, id: "roster_assignment_id_#{roster_assignment.id}"
               %label{ for: "roster_assignment_id_#{roster_assignment.id}" }
             %td.cinch
-              = image_tag roster_assignment.character_proxy_avatar_url(:tiny), class: 'avatar'
+              = image_tag roster_assignment.character_avatar_url(:tiny), class: 'avatar'
             %td.character
-              %h3= roster_assignment.character_proxy_name
+              %h3= roster_assignment.character_name
               %strong= roster_assignment.community_game_smart_name
               %p.meta
                 Requested by
@@ -29,9 +29,9 @@
             %td.actions
               %div
                 - if can? :approve, roster_assignment
-                  = link_to 'Approve', approve_roster_assignment_path(roster_assignment), method: :put, class: 'approve', meta: "Approve #{roster_assignment.character_proxy_name}"
+                  = link_to 'Approve', approve_roster_assignment_path(roster_assignment), method: :put, class: 'approve', meta: "Approve #{roster_assignment.character_name}"
                 - if can? :reject, roster_assignment
-                  = link_to 'Reject', reject_roster_assignment_path(roster_assignment), confirm: 'Are you sure you want to reject this character?', method: :put, class: 'reject', meta: "Reject #{roster_assignment.character_proxy_name}"
+                  = link_to 'Reject', reject_roster_assignment_path(roster_assignment), confirm: 'Are you sure you want to reject this character?', method: :put, class: 'reject', meta: "Reject #{roster_assignment.character_name}"
       %tfoot
         %tr
           %td{ colspan: 4, class: 'batch' }
