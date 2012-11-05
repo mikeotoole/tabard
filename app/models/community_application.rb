@@ -83,7 +83,7 @@ class CommunityApplication < ActiveRecord::Base
   # This method accepts this application and does all of the magic to make the applicant a member.
   # [Returns] True if this action was successful, otherwise false.
   ###
-  def accept_application(accepted_by_user_profile, character_map = Hash.new) # TODO Make this better!
+  def accept_application(accepted_by_user_profile, character_map=Hash.new) # TODO Make this better!
     return false if self.accepted? or self.applicant_is_a_member?
     error_count = 0
     self.characters.each do |charatcer|

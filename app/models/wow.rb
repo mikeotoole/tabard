@@ -64,9 +64,11 @@ class Wow < Game
   ###
   def server_array
     array = []
-    self.servers.split(",").each do |server|
-      a_server = server.split("|")
-      array << {name: a_server[0].strip, type: a_server[1].strip, region: a_server[2].strip}
+    if self.servers.present?
+      self.servers.split(",").each do |server|
+        a_server = server.split("|")
+        array << {name: a_server[0].strip, type: a_server[1].strip, region: a_server[2].strip}
+      end
     end
     array
   end

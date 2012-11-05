@@ -17,12 +17,12 @@ describe AnnouncementsController do
           :submission => FactoryGirl.create(:submission, :custom_form => community.community_application_form, :user_profile => member.user_profile),
           :characters => member.user_profile.characters
         )
-      chars_to_add = []
+      mapping = Hash.new
       application.characters.each do |character|
         cg = community.community_games.where(:game_id => character.game.id).first
-        chars_to_add << character if cg
+        mapping[character.id.to_s] = cg.id if cg
       end
-      application.accept_application(community.admin_profile, chars_to_add)
+      application.accept_application(community.admin_profile, mapping)
     end
   end
 

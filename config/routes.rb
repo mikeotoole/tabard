@@ -69,7 +69,7 @@ DaBvRails::Application.routes.draw do
 
   # Characer and PlayedGames
   resources :played_games, only: [:new, :create, :update, :destroy] do
-    resource :characters, only: [:new, :edit, :create]
+    resource :characters, only: [:new, :create]
     collection do
       get :autocomplete
     end
