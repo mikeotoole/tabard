@@ -46,6 +46,17 @@ def create_community(admin_user_full_name, name, slogan, game_array)
   end
   puts "#{admin_user.name} is applying #{theme.name} theme to #{community.name} Community"
   community.update_column(:theme_id, theme.id)
+  puts "#{admin_user.name} is adding characters to the roster"
+  admin_user.characters.each do |character|
+    community_profile = community.community_profiles.find_by_user_profile_id(admin_user.id)
+    community_game = community.community_games.find_by_game_id(character.game_id)
+    next if community_game.blank? or community_profile.blank?
+    begin
+      community_profile.roster_assignments.create!({community_game_id: community_game.id, character: character}, without_protection: true).approve(false)
+    rescue ActiveRecord::RecordInvalid => invalid
+      logger.error invalid.record.errors
+    end
+  end
   return community
 end
 

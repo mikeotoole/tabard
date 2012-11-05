@@ -6,7 +6,7 @@
       %ol
         = invitef.input :character_id, as: :radio_buttons, label: false, collection: [[invitef.object.user_profile_display_name, '']]
   %td.characters
-    = invitef.input :character_id, as: :radio_buttons, label: false, wrapper: false, collection: invitef.object.user_profile.available_character(community, community_game).collect{|character| character = [image_tag(character.avatar_url(:icon), class: "avatar icon #{roster_assignments.map{|ra| "sg_#{ra.community_game_id}"}.join(' ')}") + character.name, character.id] }
+    = invitef.input :character_id, as: :radio_buttons, label: false, wrapper: false, collection: invitef.object.user_profile.available_characters(community, community_game).collect{|character| character = [image_tag(character.avatar_url(:icon), class: "avatar icon #{character.roster_assignments.map{|ra| "sg_#{ra.community_game_id}"}.join(' ')}") + character.name, character.id] }
   %td.actions
     %div
       %a{ class: "toggle #{(invitef.object.persisted? or not invitef.object.marked_for_destruction?) ? 'approve' : 'reject'}", meta: 'Invite/Uninvite' } Toggle

@@ -111,11 +111,6 @@ class Ability
     can :manage, PlayedGame, user_profile: { id: user.user_profile_id }
     # Character Rules
     can :manage, Character, played_game: {user_profile_id: user.user_profile_id }
-    # Character Rules
-    can :create, BaseCharacter
-    can [:update, :destroy], BaseCharacter do |character|
-      character.user_profile.id == user.user_profile_id
-    end
 
     #Discussion Rules
     can [:update, :destroy], Discussion do |discussion|

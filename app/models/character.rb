@@ -20,6 +20,7 @@ class Character < ActiveRecord::Base
 ###
   belongs_to :played_game
   has_one :user_profile, through: :played_game
+  has_many :roster_assignments
 
 ###
 # Delegates
