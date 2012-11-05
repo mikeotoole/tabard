@@ -84,6 +84,21 @@ class Swtor < Game
   def new_character(params)
     SwtorCharacter.new(params)
   end
+
+  def set_specific_community_game_attributes
+    return true
+  end
+
+  def update_community_game_attributes(community_game)
+    server = nil
+    server_array.each do |server_info|
+      if server_info[:name] == community_game.server_name
+        server = server_info
+        break
+      end
+    end
+    community_game.server_type = server[:type] unless server.blank?
+  end
 end
 
 # == Schema Information

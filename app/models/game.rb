@@ -74,6 +74,10 @@ class Game < ActiveRecord::Base
     raise "Tyrone, forgot to write new character method when adding new game."
   end
 
+  def set_specific_community_game_attributes
+    return false
+  end
+
 ###
 # Instance Methods
 ###
