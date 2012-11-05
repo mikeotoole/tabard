@@ -446,6 +446,8 @@ end
 # Table name: user_profiles
 #
 #  id                :integer          not null, primary key
+#  first_name        :string(255)
+#  last_name         :string(255)
 #  avatar            :string(255)
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
@@ -455,7 +457,5 @@ end
 #  title             :string(255)
 #  location          :string(255)
 #  full_name         :string(255)
-#  gamer_tag         :string(255)
-#  slug              :string(255)
 #
 

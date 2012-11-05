@@ -30,6 +30,7 @@ class CommunityGame < ActiveRecord::Base
 # Callbacks
 ###
   after_create :remove_action_item
+  before_save :update_with_game_specific_attributes, if: Proc.new { |cg| not cg.game.blank? and cg.game.set_specific_community_game_attributes}
 
 ###
 # Delegates
@@ -123,6 +124,15 @@ protected
       self.community.action_items.delete(:add_community_game)
       self.community.save
     end
+  end
+
+  ###
+  # _before_save_
+  #
+  # This method lets games set attributes.
+  ###
+  def update_with_game_specific_attributes
+    self.game.update_community_game_attributes(self)
   end
 end
 
