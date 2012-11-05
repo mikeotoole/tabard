@@ -26,7 +26,7 @@
                     - if af.object.errors.any?
                       %mark.error= af.object.errors.full_messages.first
   .sidebar
-    - if current_user.compatable_character_proxies(current_community).size > 0
+    - if current_user.compatable_characters(current_community).size > 0
       .characters
         %h2 Characters
         %p Select which of your characters you are applying with:

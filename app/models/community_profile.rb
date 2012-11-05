@@ -36,7 +36,7 @@ class CommunityProfile < ActiveRecord::Base
   has_many :approved_roster_assignments, class_name: "RosterAssignment", conditions: {is_pending: false}
   has_many :approved_characters, through: :approved_roster_assignments, source: "character"
   has_many :pending_roster_assignments, class_name: "RosterAssignment", conditions: {is_pending: true}
-  has_many :pending_character_proxies, through: :pending_roster_assignments, source: "character"
+  has_many :pending_characters, through: :pending_roster_assignments, source: "character"
 
 ###
 # Callbacks

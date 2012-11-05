@@ -11,7 +11,7 @@ class CharacterObserver < ActiveRecord::Observer
   # Creates an activity when a character is created.
   def after_create(character)
     Activity.create!( {user_profile: character.user_profile,
-                      target: character
+                      target: character,
                       action: "created"}, without_protection: true)
   end
 
