@@ -47,6 +47,10 @@ class Minecraft < Game
   def minecraft_characters
     self.class.minecraft_characters
   end
+
+  def new_character(params)
+    MinecraftCharacter.new(params)
+  end
 end
 
 # == Schema Information

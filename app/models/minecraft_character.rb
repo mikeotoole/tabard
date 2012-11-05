@@ -54,6 +54,7 @@ class MinecraftCharacter < Character
   def self.search(search)
     scoped # TODO Fix this
   end
+
 end
 
 # == Schema Information

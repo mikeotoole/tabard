@@ -6,6 +6,11 @@
 # This class represents a Custom Game.
 ###
 class CustomGame < Game
+
+  def new_character(params)
+    CustomCharacter.new(params)
+  end
+
 end
 
 # == Schema Information

@@ -81,6 +81,10 @@ class Wow < Game
   def factions
     self.class.factions
   end
+
+  def new_character(params)
+    WowCharacter.new(params)
+  end
 end
 
 # == Schema Information

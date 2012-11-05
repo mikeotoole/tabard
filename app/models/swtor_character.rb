@@ -196,6 +196,7 @@ class SwtorCharacter < Character
   def self.search(search)
     scoped # TODO fix this
   end
+
 ###
 # Validator Methods
 ###
