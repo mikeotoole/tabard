@@ -27,8 +27,8 @@ describe Subdomains::RosterAssignmentsController do
   let(:community_profile) { admin_user.community_profiles.first }
   let(:character) { create(:wow_character, :user_profile => admin_user.user_profile)}
   let(:character2) { create(:wow_character, :user_profile => admin_user.user_profile)}
-  let(:roster_assignment) { create(:roster_assignment, :community_profile => community_profile, :character => character, :community_game => community.community_games.where(:game_type => "Wow").first)}
-  let(:roster_assignment2) { create(:roster_assignment, :community_profile => community_profile, :character => character2, :community_game => community.community_games.where(:game_type => "Wow").first)}
+  let(:roster_assignment) { create(:roster_assignment, :community_profile => community_profile, :character => character, :community_game => community.community_games.where(:game_id => DefaultObjects.wow).first)}
+  let(:roster_assignment2) { create(:roster_assignment, :community_profile => community_profile, :character => character2, :community_game => community.community_games.where(:game_id => DefaultObjects.wow).first)}
   let(:roster_assignment_id_array) { [[roster_assignment.id], [roster_assignment2.id]] }
   let(:roster_assignment_att) { attributes_for(:roster_assignment, :community_profile => community_profile, :character => character) }
 
