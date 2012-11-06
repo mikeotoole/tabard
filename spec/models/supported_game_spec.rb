@@ -18,35 +18,28 @@ require 'spec_helper'
 describe CommunityGame do
   let(:community) { create(:community) }
   let(:wow) { DefaultObjects.wow }
-  let(:community_game) { community.community_games.create!(:game_id => wow.id, :game_type => "Wow", :name => "Test Supported Game") }
+  let(:community_game) { community.community_games.create!(:game => wow, :name => "Test Supported Game") }
 
   it "should create a new instance given valid attributes" do
     community_game.should be_valid
   end
 
   it "should require community" do
-    community_game = CommunityGame.new(:game_id => wow.id, :game_type => "Wow", :name => "Test Supported Game")
+    community_game = CommunityGame.new(:game => wow, :name => "Test Supported Game")
     community_game.community = nil
     community_game.save
     community_game.should_not be_valid
   end
 
   it "should require game" do
-    community_game = CommunityGame.new(:game_id => nil, :game_type => "Wow", :name => "Test Supported Game")
+    community_game = CommunityGame.new(:game => nil, :name => "Test Supported Game")
     community_game.community = community
     community_game.save
     community_game.should_not be_valid
-    community_game = CommunityGame.new(:game_id => wow.id, :game_type => nil, :name => "Test Supported Game")
+    community_game = CommunityGame.new(:game => wow, :name => "Test Supported Game")
     community_game.community = community
     community_game.save
     community_game.should raise_error
-  end
-
-  it "should require name" do
-    community_game = CommunityGame.new(:game_id => wow.id, :game_type => "Wow", :name => nil)
-    community_game.community = community
-    community_game.save
-    community_game.should_not be_valid
   end
 
   describe "destroy" do

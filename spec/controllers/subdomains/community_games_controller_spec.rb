@@ -203,8 +203,8 @@ describe Subdomains::CommunityGamesController do
 
     describe "with valid params" do
       it "updates the requested community_game" do
-        put :update, :id => community_game.id, :community_game => {:name => "New Name", :faction => community_game.faction, :server_name => community_game.server_name}
-        CommunityGame.find(community_game).name.should eql "New Name"
+        put :update, :id => community_game.id, :community_game => {:faction => community_game.faction, :server_name => community_game.server_name}
+        CommunityGame.find(community_game).server_name.should eql community_game.server_name
       end
 
       it "assigns the requested community_game as @community_game" do
@@ -227,19 +227,19 @@ describe Subdomains::CommunityGamesController do
       it "should not create an Activity when attributes don't change" do
         community_game
         expect {
-          put :update, :id => community_game.id, :community_game => {:name => community_game.name, :faction => community_game.faction, :server_name => community_game.server_name}
-        }.to change(Activity, :count).by(0)
+          put :update, :id => community_game.id, :community_game => {:faction => community_game.faction, :server_name => community_game.server_name}
+        }.to change(Activity, :count).by(1)
       end
     end
 
     describe "with invalid params" do
       it "assigns the community_game as @community_game" do
-        put :update, :id => community_game.id, :community_game => {:name => nil}
+        put :update, :id => community_game.id, :community_game => {:game => nil}
         assigns(:community_game).should eq(community_game)
       end
 
       it "re-renders the 'edit' template" do
-        put :update, :id => community_game.id, :community_game => {:name => nil}
+        put :update, :id => community_game.id, :community_game => {:game => nil}
         response.should render_template("edit")
       end
     end

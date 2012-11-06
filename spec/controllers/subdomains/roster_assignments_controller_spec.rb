@@ -34,7 +34,7 @@ describe Subdomains::RosterAssignmentsController do
 
   before(:each) do
     community.update_column(:is_public_roster, false)
-    @request.host = "#{community.subdomain}.lvh.me"
+    @request.host = "#{community.subdomain}.lvh.me:3000"
   end
 
   describe "GET 'index'" do

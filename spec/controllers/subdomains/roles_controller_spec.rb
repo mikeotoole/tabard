@@ -13,7 +13,7 @@ describe Subdomains::RolesController do
   let(:pro_role_att) { attributes_for(:role, :name => "TestName", :community_id => pro_community.id) }
 
   before(:each) do
-    @request.host = "#{community.subdomain}.lvh.me"
+    @request.host = "#{community.subdomain}.lvh.me:3000"
   end
 
   describe "GET 'index'" do
