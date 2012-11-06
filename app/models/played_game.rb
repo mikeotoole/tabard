@@ -2,7 +2,7 @@ class PlayedGame < ActiveRecord::Base
   attr_accessible :game_id, :user_profile_id, :game_name
   belongs_to :game
   belongs_to :user_profile
-  has_many :characters
+  has_many :characters, dependent: :destroy, order: 'LOWER(name)' #, conditions: {is_removed: false} #TODO: Is this needed??
 
 
   delegate :type, to: :game, prefix: true, allow_nil: true

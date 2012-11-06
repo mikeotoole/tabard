@@ -51,8 +51,8 @@ describe UserProfile do
     build(:user_profile, :location => "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").should_not be_valid
   end
 
-  it "should require a display name" do
-    build(:user_profile, :display_name => nil).should_not be_valid
+  it "should not require a display name" do
+    build(:user_profile, :display_name => nil).should be_valid
   end
 
   it "should ensure display names are not unique" do
@@ -274,11 +274,11 @@ describe UserProfile do
     end
 
     it "should contain the users inbox folder" do
-      profile.folders.first.name.should eq("Inbox")
+      profile.folders.order(:id).first.name.should eq("Inbox")
     end
 
     it "should contain the users trash folder" do
-      profile.folders.last.name.should eq("Trash")
+      profile.folders.order(:id).last.name.should eq("Trash")
     end
   end
 
@@ -383,7 +383,7 @@ describe UserProfile do
     end
 
     it "should call remove_avatar! on all characters" do
-      character = create(:wow_char_profile)
+      character = create(:wow_character)
       profile = character.user_profile
       character = profile.characters.first
       character.should_receive(:remove_avatar!)
@@ -420,7 +420,7 @@ describe UserProfile do
     end
 
     it "should mark user_profile's characters as is_removed" do
-      profile = create(:wow_char_profile).user_profile
+      profile = create(:wow_character).user_profile
       characters = profile.characters.all
       profile.destroy
       characters.should_not be_empty
@@ -504,28 +504,10 @@ describe UserProfile do
   end
 
   describe "nuke" do
-    it "should delete user_profile's swtor_characters" do
-      profile = create(:swtor_char_profile).user_profile
-      swtor_characters = profile.swtor_characters.all
-      profile.nuke
-      swtor_characters.should_not be_empty
-      swtor_characters.each do |swtor_character|
-        SwtorCharacter.exists?(swtor_character).should be_false
-      end
-    end
-
-    it "should delete user_profile's wow_characters" do
-      profile = create(:wow_char_profile).user_profile
-      wow_characters = profile.wow_characters.all
-      profile.nuke
-      wow_characters.should_not be_empty
-      wow_characters.each do |wow_character|
-        WowCharacter.exists?(wow_character).should be_false
-      end
-    end
-
     it "should delete user_profile's characters" do
-      profile = create(:wow_char_profile).user_profile
+      profile = create(:wow_character).user_profile
+      create(:swtor_character, user_profile: profile)
+      profile.reload
       characters = profile.characters.all
       profile.nuke
       characters.should_not be_empty

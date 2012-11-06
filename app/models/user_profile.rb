@@ -51,8 +51,7 @@ class UserProfile < ActiveRecord::Base
   has_many :community_invite_sponsors, class_name: "CommunityInvite", foreign_key: "sponsor_id", inverse_of: :sponsor, dependent: :destroy
 
 #Games
-  has_many :played_games
-
+  has_many :played_games, dependent: :destroy
   has_many :characters, through: :played_games
 
   has_many :approved_characters, through: :community_profiles
@@ -343,7 +342,7 @@ class UserProfile < ActiveRecord::Base
   def remove_all_avatars
     self.remove_avatar!
     self.update_column(:avatar, nil)
-    characters.each do |character|
+    self.characters.each do |character|
       character.remove_avatar!
       character.update_column(:avatar, nil)
     end
@@ -351,8 +350,6 @@ class UserProfile < ActiveRecord::Base
 
   # This will destroy forever this user profile and all its associated resources.
   def nuke
-    self.swtor_characters.each{|swtor_character| swtor_character.delete}
-    self.wow_characters.each{|wow_character| wow_character.delete}
     self.characters.each{|character| character.delete}
 
     self.owned_communities.each{|community| community.nuke}
