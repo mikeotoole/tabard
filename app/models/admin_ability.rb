@@ -42,9 +42,8 @@ class AdminAbility
       can [:update, :destroy], DiscussionSpace
       can [:read, :destroy, :remove_comment], Discussion
       can [:read, :update], CommunityGame
-      can [:read], SwtorCharacter
-      can [:read], WowCharacter
-      can [:read], MinecraftCharacter
+      can [:read], Character
+      can [:read], Game
       can [:update_account, :edit_account], AdminUser do |admin_user|
         admin_user == user
       end
@@ -53,14 +52,10 @@ class AdminAbility
     # Rules for admin user. (Inherits rules from moderator).
     if user.role? :admin
       can [:nuke, :reset_all_passwords, :sign_out_all_users], User
-      can [:destroy], SwtorCharacter
-      can [:destroy], WowCharacter
-      can [:destroy], MinecraftCharacter
       can [:destroy], Community
       can [:destroy], CommunityGame
-      can [:read, :create, :update], [Wow, 'Wow']
-      can [:read, :create, :update], [Swtor, 'Swtor']
-      can [:read, :create, :update], [Minecraft, 'Minecraft']
+      can [:destroy], Character
+      can [:read, :create, :update], [Game, 'Game']
       can [:toggle_maintenance_mode], SiteConfigurationController
       can :manage, ArtworkUpload
       can [:read, :update], SupportTicket

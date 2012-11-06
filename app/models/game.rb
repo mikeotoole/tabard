@@ -14,7 +14,7 @@ class Game < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
-  attr_accessible :name, :aliases
+  attr_accessible :name, :aliases, :info
 
 ###
 # Associations
