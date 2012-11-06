@@ -136,7 +136,7 @@ describe CharactersController do
       name = character.name
       expect {
         put 'update', :id => character, :character => { :name => name }
-      }.to change(Activity, :count).by(0)
+      }.to change(Activity, :count).by(1)
     end
   end
 

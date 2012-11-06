@@ -64,7 +64,8 @@ describe SentMessagesController do
 
     it "should raise error when authenticated as not the owner" do
       sign_in receiver
-      lambda { get :show, :id => message }.should raise_error(ActiveRecord::RecordNotFound)
+      get :show, :id => message
+      response.should be_forbidden
     end
   end
 

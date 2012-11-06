@@ -33,59 +33,59 @@ describe MessagesController do
       get :show, :id => rec_message
       assigns(:message).should eq(rec_message)
     end
-    
+
     it "should render the 'show' template when authenticated as owner" do
       sign_in receiver
       get :show, :id => rec_message
       response.should render_template("show")
     end
-    
+
     it "should redirect to new user session path when not authenticated as a user" do
       get :show, :id => rec_message
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-    
+
     it "should raise error when authenticated as not the owner" do
       sign_in sender
       get :show, :id => rec_message
       response.should redirect_to(inbox_url)
     end
   end
-  
+
   describe "POST mark_read" do
     it "assigns the requested message as @message when authenticated as owner" do
       sign_in receiver
       post :mark_read, :id => rec_message, :return_url => inbox_url
       assigns(:message).should eq(rec_message)
     end
-    
+
     it "should mark message as read when authenticated as owner" do
       sign_in receiver
       rec_message.has_been_read.should be_false
       post :mark_read, :id => rec_message, :return_url => inbox_url
       assigns(:message).has_been_read.should be_true
     end
-    
+
     it "redirects to the return_url when authenticated as owner" do
       sign_in receiver
       post :mark_read, :id => rec_message, :return_url => user_profile_path(receiver.user_profile)
       response.should redirect_to(user_profile_path(receiver.user_profile))
     end
-    
+
     it "should raise error when authenticated as not the owner" do
       sign_in sender
       get :show, :id => rec_message, :return_url => inbox_url
       response.should redirect_to(inbox_url)
     end
   end
-  
+
   describe "POST mark_unread" do
     it "assigns the requested message as @message when authenticated as owner" do
       sign_in receiver
       post :mark_unread, :id => rec_message, :return_url => inbox_url
       assigns(:message).should eq(rec_message)
     end
-    
+
     it "should mark message as read when authenticated as owner" do
       sign_in receiver
       rec_message.has_been_read = true
@@ -93,26 +93,26 @@ describe MessagesController do
       post :mark_unread, :id => rec_message, :return_url => inbox_url
       assigns(:message).has_been_read.should be_false
     end
-    
+
     it "redirects to the return_url when authenticated as owner" do
       sign_in receiver
       post :mark_unread, :id => rec_message, :return_url => user_profile_path(receiver.user_profile)
       response.should redirect_to(user_profile_path(receiver.user_profile))
     end
-    
+
     it "should raise error when authenticated as not the owner" do
       sign_in sender
       get :show, :id => rec_message, :return_url => inbox_url
       response.should redirect_to(inbox_url)
     end
   end
-  
+
   describe "PUT move when authenticated as owner" do
     before(:each) {
       sign_in receiver
       request.env["HTTP_REFERER"] = "/"
     }
-  
+
     it "moves the requested message" do
       rec_message
       MessageAssociation.any_instance.should_receive(:update_attributes).with({:folder_id => receiver.trash.id, :has_been_read => true})
@@ -134,19 +134,19 @@ describe MessagesController do
         put :move, :id => rec_message.id, :folder_id => 0
         assigns(:message).should eq(nil)
       end
-    
+
       it "should respond forbidden" do
         put :move, :id => rec_message.id, :folder_id => 0
         response.should be_forbidden
       end
     end
-    
+
     describe "with invalid message" do
       it "assigns the message as @message" do
         put :move, :id => 0, :folder_id => receiver.trash
         assigns(:message).should eq(nil)
       end
-    
+
       it "should respond forbidden" do
         put :move, :id => 0, :folder_id => receiver.trash
         response.should be_forbidden
@@ -159,17 +159,17 @@ describe MessagesController do
       put :move, :id => rec_message.id, :folder_id => receiver.trash
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-    
+
     it "should respond forbidden when not owner" do
       sign_in sender
       put :move, :id => rec_message.id, :folder_id => receiver.trash
       response.should be_forbidden
-    end 
+    end
   end
 
   describe "PUT batch_move" do
     it "moves all requested messages" do
-      sign_in receiver     
+      sign_in receiver
       rec_message.folder.should_not eq(receiver.trash)
       rec_message_2.folder.should_not eq(receiver.trash)
       put :batch_move, :ids => rec_message_id_array, :folder_id => receiver.trash
@@ -180,17 +180,17 @@ describe MessagesController do
     it "redirects to the inbox_url" do
       sign_in receiver
       put :batch_move, :ids => rec_message_id_array, :folder_id => receiver.trash
-      response.should redirect_to(inbox_url)      
+      response.should redirect_to(inbox_url)
     end
 
-    describe "with invalid folder" do    
+    describe "with invalid folder" do
       it "should respond forbidden" do
         sign_in receiver
         put :batch_move, :ids => rec_message_id_array, :folder_id => 0
         response.should be_forbidden
       end
     end
-    
+
     describe "with invalid message" do
       it "should respond forbidden" do
         sign_in receiver
@@ -202,7 +202,7 @@ describe MessagesController do
 
   describe "PUT batch_mark_read" do
     it "marks all requested messages as read" do
-      sign_in receiver     
+      sign_in receiver
       rec_message.folder.should_not eq(receiver.trash)
       rec_message_2.folder.should_not eq(receiver.trash)
       rec_message_id_array.each do |id|
@@ -220,9 +220,9 @@ describe MessagesController do
     it "redirects to the inbox_url" do
       sign_in receiver
       put :batch_mark_read, :ids => rec_message_id_array
-      response.should redirect_to(inbox_url)      
+      response.should redirect_to(inbox_url)
     end
-    
+
     describe "with invalid message" do
       it "should respond forbidden" do
         sign_in receiver
@@ -234,7 +234,7 @@ describe MessagesController do
 
   describe "PUT batch_mark_unread" do
     it "marks all requested messages as unread" do
-      sign_in receiver     
+      sign_in receiver
       rec_message.folder.should_not eq(receiver.trash)
       rec_message_2.folder.should_not eq(receiver.trash)
       rec_message_id_array.each do |id|
@@ -252,9 +252,9 @@ describe MessagesController do
     it "redirects to the inbox_url" do
       sign_in receiver
       put :batch_mark_unread, :ids => rec_message_id_array
-      response.should redirect_to(inbox_url)      
+      response.should redirect_to(inbox_url)
     end
-    
+
     describe "with invalid message" do
       it "should respond forbidden" do
         sign_in receiver
@@ -270,36 +270,36 @@ describe MessagesController do
       get :reply, :id => rec_message.message_id
       assigns(:original).should eq(rec_message)
     end
-    
+
     it "assigns a new message as @message when authenticated as owner" do
       sign_in receiver
       get :reply, :id => rec_message.message_id
       assigns(:message).should be_new_record
     end
-    
+
     it "@message author is set to the receiver when authenticated as owner" do
       sign_in receiver
       get :reply, :id => rec_message.message_id
       assigns(:message).author.should eq(receiver.user_profile)
     end
-    
+
     it "@message to is set to the author when authenticated as owner" do
       sign_in receiver
       get :reply, :id => rec_message.message_id
       assigns(:message).to.should eq(["#{rec_message.author.id}"])
     end
-    
+
     it "should render the 'show' template when authenticated as owner" do
       sign_in receiver
       get :reply, :id => rec_message.message_id
       response.should render_template("sent_messages/new")
     end
-    
+
     it "should redirect to new user session path when not authenticated as a user" do
       get :reply, :id => rec_message.message_id
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-    
+
     it "should redirect to inbox when not authenticated" do
       sign_in sender
       get :reply, :id => rec_message.message_id
@@ -314,19 +314,19 @@ describe MessagesController do
       get :reply_all, :id => multi_mess
       assigns(:original).should eq(multi_mess)
     end
-    
+
     it "assigns a new message as @message when authenticated as owner" do
       sign_in receiver
       get :reply_all, :id => create(:message_with_muti_to).message_associations.last.message_id
       assigns(:message).should be_new_record
     end
-    
+
     it "@message author is set to the receiver when authenticated as owner" do
       sign_in receiver
       get :reply_all, :id => create(:message_with_muti_to).message_associations.last.message_id
       assigns(:message).author.should eq(receiver.user_profile)
     end
-    
+
     it "@message to is set to the author and all @original recipients when authenticated as owner" do
       message = create(:message_with_muti_to)
       mess_id = message.message_associations.last.message_id
@@ -336,23 +336,23 @@ describe MessagesController do
       get :reply_all, :id => mess_id
       assigns(:message).to.should eq(["#{message.message_associations.first.recipient.id}", "#{message.author.id}"])
     end
-    
+
     it "should render the 'show' template when authenticated as owner" do
       sign_in receiver
       get :reply_all, :id => create(:message_with_muti_to).message_associations.last.message_id
       response.should render_template("sent_messages/new")
     end
-    
+
     it "should redirect to new user session path when not authenticated as a user" do
       get :reply_all, :id => create(:message_with_muti_to).message_associations.first.message_id
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-    
+
     it "should redirect to inbox when not authenticated" do
       sign_in sender
       get :reply_all, :id => create(:message_with_muti_to).message_associations.first.message_id
       response.should redirect_to(inbox_url)
-    end  
+    end
   end
 
   describe "GET forward" do
@@ -361,41 +361,41 @@ describe MessagesController do
       get :forward, :id => rec_message.message_id
       assigns(:original).should eq(rec_message)
     end
-    
+
     it "assigns a new message as @message when authenticated as owner" do
       sign_in receiver
       get :forward, :id => rec_message.message_id
       assigns(:message).should be_new_record
     end
-    
+
     it "@message author is set to the receiver when authenticated as owner" do
       sign_in receiver
       get :forward, :id => rec_message.message_id
       assigns(:message).author.should eq(receiver.user_profile)
     end
-    
+
     it "@message to is set to -1 when authenticated as owner" do
       sign_in receiver
       get :forward, :id => rec_message.message_id
       assigns(:message).to.should eq([-1])
     end
-    
+
     it "should render the 'show' template when authenticated as owner" do
       sign_in receiver
       get :forward, :id => rec_message.message_id
       response.should render_template("sent_messages/new")
     end
-    
+
     it "should redirect to new user session path when not authenticated as a user" do
       get :forward, :id => rec_message.message_id
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-    
+
     it "should redirect to inbox when not authenticated" do
       sign_in other_user
       get :forward, :id => rec_message.message_id
       response.should redirect_to(inbox_url)
-    end 
+    end
   end
 
   describe "DELETE destroy" do
@@ -404,37 +404,32 @@ describe MessagesController do
       delete :destroy, :id => rec_message
       MessageAssociation.find(rec_message).is_removed.should be_true
     end
-    
+
     it "sets the requested message folder to nil when authenticated as a owner" do
       sign_in receiver
       delete :destroy, :id => rec_message
       MessageAssociation.find(rec_message).folder.should be_nil
     end
-    
+
     it "does not destroy the requested message when authenticated as a owner" do
       rec_message
       sign_in receiver
       expect {
         delete :destroy, :id => rec_message
       }.to change(MessageAssociation, :count).by(0)
-    end    
+    end
 
     it "redirects to the trash folder when authenticated as a owner" do
       sign_in receiver
       delete :destroy, :id => rec_message
       response.should redirect_to(trash_url)
     end
-    
+
     it "should redirected to new user session path when not authenticated as a user" do
       delete :destroy, :id => rec_message
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-    
-    it "should raise error when authenticated as not the owner" do
-      sign_in sender
-      lambda { delete :destroy, :id => rec_message }.should raise_error(ActiveRecord::RecordNotFound)
-    end  
-  
+
     it "should set all messages in trash folder as is_removed when no message is given and authenticated as a owner" do
       message_two = create(:message).message_associations.first
       message_two.folder = receiver.user_profile.trash
@@ -446,7 +441,7 @@ describe MessagesController do
       MessageAssociation.find(message_two).is_removed.should be_true
       MessageAssociation.find(rec_message).is_removed.should be_true
     end
-    
+
     it "should set all messages in trash folder folder to nil when no message is given and authenticated as a owner" do
       message_two = create(:message).message_associations.first
       message_two.folder = receiver.user_profile.trash
@@ -458,15 +453,15 @@ describe MessagesController do
       MessageAssociation.find(message_two).folder.should be_nil
       MessageAssociation.find(rec_message).folder.should be_nil
     end
-  
+
     it "redirects to the inbox folder when no message is given and authenticated as a owner" do
       sign_in receiver
       delete :destroy
       response.should redirect_to(inbox_url)
     end
-  
+
   end
-  
+
   describe "DELETE batch_destroy" do
     it "sets all requested messages as is_removed when authenticated as a owner" do
       sign_in receiver
@@ -474,14 +469,14 @@ describe MessagesController do
       MessageAssociation.find(rec_message).is_removed.should be_true
       MessageAssociation.find(rec_message_2).is_removed.should be_true
     end
-    
+
     it "sets all requested messages folders to nil when authenticated as a owner" do
       sign_in receiver
       delete :batch_destroy, :ids => rec_message_id_array
       MessageAssociation.find(rec_message).folder.should be_nil
       MessageAssociation.find(rec_message_2).folder.should be_nil
     end
-    
+
     it "does not destroy the requested messages when authenticated as a owner" do
       rec_message
       rec_message_2
@@ -489,24 +484,24 @@ describe MessagesController do
       expect {
         delete :batch_destroy, :ids => rec_message_id_array
       }.to change(MessageAssociation, :count).by(0)
-    end    
+    end
 
     it "redirects to the trash folder when authenticated as a owner" do
       sign_in receiver
       delete :batch_destroy, :ids => rec_message_id_array
       response.should redirect_to(trash_url)
     end
-    
+
     it "should redirected to new user session path when not authenticated as a user" do
       delete :batch_destroy, :ids => rec_message_id_array
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-    
+
     it "should responded forbidden when authenticated as not the owner" do
       sign_in sender
       delete :batch_destroy, :ids => rec_message_id_array
       response.should be_forbidden
-    end 
+    end
   end
-  
+
 end

@@ -22,7 +22,7 @@ class SentMessagesController < MailboxController
 
   # GET /mail/sent/:id(.:format)
   def show
-    @message = current_user.sent_messages.find(params[:id])
+    @message = Message.find(params[:id])
     authorize!(:read, @message)
     @mailbox_view_state = 'sent'
     respond_to do |format|
