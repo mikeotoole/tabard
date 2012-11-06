@@ -235,7 +235,7 @@ describe Community do
     describe "when true" do
       it "should make roster changes pending" do
         community_profile.community.update_column(:is_protected_roster, true)
-        ra = community_profile.roster_assignments.create!(:character => new_character, :is_pending => false, :community_game => community_profile.community.community_games.where(:game_type => "Wow").first )
+        ra = community_profile.roster_assignments.create!(:character => new_character, :is_pending => false, :community_game => community_profile.community.community_games.where(:game_id => DefaultObjects.wow).first )
         ra.is_pending.should be_true
       end
     end
@@ -243,7 +243,7 @@ describe Community do
     describe "when false" do
       it "should not make roster changes pending" do
         community_profile.community.update_column(:is_protected_roster, true)
-        ra = community_profile.roster_assignments.create!(:character => new_character, :is_pending => true, :community_game => community_profile.community.community_games.where(:game_type => "Wow").first )
+        ra = community_profile.roster_assignments.create!(:character => new_character, :is_pending => true, :community_game => community_profile.community.community_games.where(:game_id => DefaultObjects.wow).first )
         ra.community_profile.community.is_protected_roster.should be_true
         RosterAssignment.find_by_id(ra.id).is_pending.should be_true
       end

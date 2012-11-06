@@ -84,6 +84,18 @@ class SwtorCharacter < Character
 ###
   validates :name, presence: true,
                    length: { maximum: MAX_NAME_LENGTH }
+  validates :faction, presence: true,
+                              inclusion: { in: ["Republic","Empire"].flatten , message: "%{value} is not a valid advanced class." }
+  validates :char_class,  presence: true
+  validates :char_class,  inclusion: { in: VALID_REPUBLIC_CLASSES , message: "%{value} is not a valid class for your faction." }, if: Proc.new {|c| c.faction == "Republic"}
+  validates :char_class,  inclusion: { in: VALID_EMPIRE_CLASSES , message: "%{value} is not a valid class for your faction." }, if: Proc.new {|c| c.faction == "Empire"}
+  validates :advanced_class,  presence: true,
+                              inclusion: { in: VALID_ADVANCED_CLASSES, message: "%{value} is not a valid advanced class." }
+  validates :species,  presence: true
+  validate :species_and_class_is_valid_for_advanced_class
+  validates :gender, presence: true,
+                     inclusion: {in: VALID_GENDERS}
+  validates :level, numericality: {only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 50}
 ###
 # Public Methods
 ###
@@ -206,14 +218,15 @@ class SwtorCharacter < Character
   #
   # Checks species is valid for the given advanced_class
   ###
-  #def species_is_valid_for_advanced_class
-  #  species_array = SwtorCharacter.species_class_collection.select{|item| item[0] == self.advanced_class }
-  #  vaild_species = species_array[0][1] if species_array and species_array[0]
-#
- #   if not vaild_species or not vaild_species.include?(self.species)
-  #    self.errors.add(:species, "is not valid for given class")
-   # end
- # end
+  def species_and_class_is_valid_for_advanced_class
+    species_array = SwtorCharacter.species_class_collection.select{|item| item[0] == self.advanced_class }
+    vaild_species = species_array[0][1] if species_array and species_array[0]
+
+    if not vaild_species or not vaild_species.include?(self.species)
+      self.errors.add(:species, "is not valid for given class")
+    end
+    self.errors.add(:advanced_class, "is not valid for given class") if SwtorCharacter.char_class(self.advanced_class) != self.char_class
+  end
 end
 
 # == Schema Information

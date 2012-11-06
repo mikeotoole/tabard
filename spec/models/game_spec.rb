@@ -15,16 +15,12 @@ require 'spec_helper'
 
 describe Game do
   let(:swtor) { create(:swtor) }
+  let(:wow) { create(:wow) }
+  let(:minecraft) { create(:minecraft) }
 
-  it "should not allow new instance of base class" do
-    assert_raises(ActiveRecord::StatementInvalid) do
-      Game.new
-    end
+  it "should allow creation" do
+    swtor.should be_valid
+    wow.should be_valid
+    minecraft.should be_valid
   end
-
-  describe "all games" do
-    it "should return all games" do
-        Game.all_games.should eql Wow.all + Swtor.all
-    end
-  end  
 end

@@ -2,6 +2,7 @@ FactoryGirl.define do
   factory :swtor_character do
     sequence(:name) {|n| "SWTOR Character #{n}" }
     char_class "Bounty Hunter"
+    faction "Empire"
     advanced_class "Powertech"
     species "Cyborg"
     gender "Male"

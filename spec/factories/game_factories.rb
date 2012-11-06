@@ -19,10 +19,10 @@ FactoryGirl.define do
   end
 
   factory :wow_community_game, :parent => :community_game do
-    game_id { DefaultObjects.wow.id }
+    game { DefaultObjects.wow }
   end
 
   factory :swtor_community_game, :parent => :community_game do
-    game_id { DefaultObjects.swtor.id }
+    game { DefaultObjects.swtor }
   end
 end

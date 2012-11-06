@@ -2,21 +2,21 @@
 
 FactoryGirl.define do
   factory :announcement do
-  	community
+    community
     name "MyString"
     body "MyText"
     user_profile { community.admin_profile if community}
     is_locked false
     has_been_edited false
-    
+
     factory :announcement_for_wow do
       community { DefaultObjects.community }
-      community_game { community.community_games.where(:game_type => "Wow").first }
+      community_game { community.community_games.where(:game_id => DefaultObjects.wow.id).first }
     end
-    
+
     factory :announcement_for_swtor do
       community { DefaultObjects.community }
-      community_game { community.community_games.where(:game_type => "Swtor").first }
+      community_game { community.community_games.where(:game_id => DefaultObjects.swtor.id).first }
     end
   end
 end

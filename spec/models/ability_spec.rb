@@ -61,8 +61,8 @@ describe Ability do
         it "should be able to read public profiles" do
           @ability.should be_able_to(:read, create(:user_profile, :publicly_viewable => true))
         end
-        it "should be able to read non public profiles" do
-          @ability.should be_able_to(:read, create(:user_profile, :publicly_viewable => false))
+        it "should not be able to read non public profiles" do
+          @ability.should_not be_able_to(:read, create(:user_profile, :publicly_viewable => false))
         end
       end
     end
@@ -105,12 +105,12 @@ describe Ability do
         it "should be able to read public profiles" do
           @ability.should be_able_to(:read, create(:user_profile, :publicly_viewable => true))
         end
-        it "should be able to read non public profiles" do
-          @ability.should be_able_to(:read, create(:user_profile, :publicly_viewable => false))
+        it "should not be able to read non public profiles" do
+          @ability.should_not be_able_to(:read, create(:user_profile, :publicly_viewable => false))
         end
       end
     end
- 
+
     describe "Site Member Permissions" do
       before(:each) do
         @ability = Ability.new(@user)
@@ -119,7 +119,7 @@ describe Ability do
       it "should be a valid user" do
         @user.persisted?.should be_true
       end
-    
+
       describe "Discussion" do
         it "should be able to update a owned discussion" do
           @ability.should be_able_to(:update, build(:discussion, :user_profile_id => @user.user_profile_id))
@@ -238,14 +238,14 @@ describe Ability do
           it "should not allow update of messages" do
             @ability.should_not be_able_to(:update, @message)
           end
-        end 
+        end
         describe "Message Association" do
           it "should allow management of message associations" do
             @ability.should be_able_to(:manage, @message_association)
           end
         end
       end
-      
+
       describe "Question" do
         it "should allow reading of questions" do
           @ability.should be_able_to(:read, Question)

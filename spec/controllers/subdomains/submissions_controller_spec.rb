@@ -58,7 +58,7 @@ describe Subdomains::SubmissionsController do
         sign_in user
         expect {
           post :create, :custom_form_id => custom_form.id, :submission => attributes_for(:submission)
-        }.to change(Submission, :count).by(1)
+        }.to change(Submission, :count).by(3)
       end
 
       it "assigns a newly created submission as @submission" do
