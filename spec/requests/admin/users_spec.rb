@@ -146,9 +146,9 @@ describe "ActiveAdmin User" do
 
     it "deletes users characters when logged in as superadmin" do
       login_as superadmin
-      create(:wow_character, user_profile: user.user_profile)
-      user.reload
-      characters = user.user_profile.characters
+      character = create(:wow_character)
+      user = character.user_profile.user
+      characters = user.user_profile.characters.all
       page.driver.delete("/alexandria/users/#{user.id}/nuke")
       User.exists?(user).should be_false
 

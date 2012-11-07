@@ -25,12 +25,12 @@ describe "ActiveAdmin Game" do
       current_url.should == alexandria_games_url
     end
 
-    it "returns 403 when logged in as moderator" do
+    it "returns 200 when logged in as moderator" do
       login_as moderator
 
       visit alexandria_games_url
-      page.status_code.should == 403
-      page.should have_content('Forbidden')
+      page.status_code.should == 200
+      current_url.should == alexandria_games_url
     end
 
     it "returns 403 when logged in as regular User" do
@@ -64,12 +64,12 @@ describe "ActiveAdmin Game" do
       current_url.should == alexandria_game_url(:id => game.id)
     end
 
-    it "returns 403 when logged in as moderator" do
+    it "returns 200 when logged in as moderator" do
       login_as moderator
 
       visit alexandria_game_url(:id => game.id)
-      page.status_code.should == 403
-      page.should have_content('Forbidden')
+      page.status_code.should == 200
+      current_url.should == alexandria_game_url(:id => game.id)
     end
 
     it "returns 403 when logged in as regular User" do
@@ -168,21 +168,21 @@ describe "ActiveAdmin Game" do
     it "creates game when logged in as superadmin" do
       login_as superadmin
       expect {
-        page.driver.post("/alexandria/games", { :game => attributes_for(:game, :server => "test_server") } )
+        page.driver.post("/alexandria/games", { :game => attributes_for(:swtor) } )
       }.to change(Game, :count).by(1)
     end
 
     it "creates game when logged in as admin" do
       login_as admin
       expect {
-        page.driver.post("/alexandria/games", { :game => attributes_for(:game, :server => "test_server") } )
+        page.driver.post("/alexandria/games", { :game => attributes_for(:swtor) } )
       }.to change(Game, :count).by(1)
     end
 
     it "returns 403 when logged in as moderator" do
       login_as moderator
       expect {
-        page.driver.post("/alexandria/games", { :game => attributes_for(:game, :server => "test_server") } )
+        page.driver.post("/alexandria/games", { :game => attributes_for(:swtor) } )
       }.to change(Game, :count).by(0)
       page.driver.status_code.should == 403
       page.should have_content('Forbidden')
@@ -191,7 +191,7 @@ describe "ActiveAdmin Game" do
     it "returns 403 when logged in as regular User" do
       login_as user
       expect {
-        page.driver.post("/alexandria/games", { :game => attributes_for(:game, :server => "test_server") } )
+        page.driver.post("/alexandria/games", { :game => attributes_for(:swtor) } )
       }.to change(Game, :count).by(0)
       page.driver.status_code.should == 403
       page.should have_content('Forbidden')
@@ -199,7 +199,7 @@ describe "ActiveAdmin Game" do
 
     it "does not create game when not logged in" do
       expect {
-        page.driver.post("/alexandria/games", { :game => attributes_for(:game, :server => "test_server") } )
+        page.driver.post("/alexandria/games", { :game => attributes_for(:swtor) } )
       }.to change(Game, :count).by(0)
     end
   end
@@ -208,23 +208,23 @@ describe "ActiveAdmin Game" do
     it "updates game when logged in as superadmin" do
       login_as superadmin
 
-      page.driver.put("/alexandria/games/#{game.id}", { :game => { :server_name => "test_case_server" } } )
-      Game.find(game).server_name.should eql "test_case_server"
+      page.driver.put("/alexandria/games/#{game.id}", { :game => { :name => "test_case_name" } } )
+      Game.find(game).name.should eql "test_case_name"
     end
 
     it "updates game when logged in as admin" do
       login_as admin
 
-      page.driver.put("/alexandria/games/#{game.id}", { :game => { :server_name => "test_case_server" } } )
-      Game.find(game).server_name.should eql "test_case_server"
+      page.driver.put("/alexandria/games/#{game.id}", { :game => { :name => "test_case_name" } } )
+      Game.find(game).name.should eql "test_case_name"
     end
 
     it "returns 403 when logged in as moderator" do
       login_as moderator
 
-      orginal_server = game.server_name
-      page.driver.put("/alexandria/games/#{game.id}", { :game => { :server_name => "test_case_server" } } )
-      Game.find(game).server_name.should eql orginal_server
+      orginal_name = game.name
+      page.driver.put("/alexandria/games/#{game.id}", { :game => { :name => "test_case_name" } } )
+      Game.find(game).name.should eql orginal_name
       page.driver.status_code.should == 403
       page.should have_content('Forbidden')
     end
@@ -232,17 +232,17 @@ describe "ActiveAdmin Game" do
     it "returns 403 when logged in as regular User" do
       login_as user
 
-      orginal_server = game.server_name
-      page.driver.put("/alexandria/games/#{game.id}", { :game => { :server_name => "test_case_server" } } )
-      game.find(game).server_name.should eql orginal_server
+      orginal_name = game.name
+      page.driver.put("/alexandria/games/#{game.id}", { :game => { :name => "test_case_name" } } )
+      Game.find(game).name.should eql orginal_name
       page.driver.status_code.should == 403
       page.should have_content('Forbidden')
     end
 
     it "does not update Wow when not logged in" do
-      orginal_server = game.server_name
-      page.driver.put("/alexandria/games/#{game.id}", { :game => { :server_name => "test_case_server" } } )
-      Game.find(game).server_name.should eql orginal_server
+      orginal_name = game.name
+      page.driver.put("/alexandria/games/#{game.id}", { :game => { :name => "test_case_name" } } )
+      Game.find(game).name.should eql orginal_name
     end
   end
 
