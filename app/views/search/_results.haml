@@ -1,14 +1,9 @@
 - results.each do |result|
-  - case result.class.to_s
-  - when 'Community'
-    = render 'li_community', community: result
-  - when 'UserProfile'
-    = render 'li_user_profile', user_profile: result
-  - when 'CustomCharacter'
-    %p=result
-  - when 'MinecraftCharacter'
-    %p=result
-  - when 'SwtorCharacter'
-    %p=result
-  - when 'WowCharacter'
-    %p=result
+  - if result.class.to_s.match /character/i
+    = render "characters/#{result.class.to_s.gsub(/character/i, '').downcase}/li", character: result
+  - else
+    - case result.class.to_s
+    - when 'Community'
+      = render 'li_community', community: result
+    - when 'UserProfile'
+      = render 'li_user_profile', user_profile: result
