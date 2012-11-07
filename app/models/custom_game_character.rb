@@ -1,4 +1,4 @@
-class CustomCharacter < Character
+class CustomGameCharacter < Character
   # attr_accessible :title, :body
 #validates_lengths_from_database except: [:name, :avatar]
 

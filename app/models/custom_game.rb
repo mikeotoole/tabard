@@ -8,7 +8,7 @@
 class CustomGame < Game
 
   def new_character(params)
-    CustomCharacter.new(params)
+    CustomGameCharacter.new(params)
   end
 
 end
