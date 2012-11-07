@@ -32,7 +32,7 @@ ActiveAdmin.register PageSpace do
         end
       end
     end
-    active_admin_comments
+    #active_admin_comments
   end
 
   form do |f|
@@ -40,6 +40,6 @@ ActiveAdmin.register PageSpace do
       f.input :community_game, collection: f.object.community.community_games
       f.input :name
     end
-    f.buttons
+    f.actions
   end
 end

@@ -1,47 +1,47 @@
 require 'spec_helper'
 
-describe "ActiveAdmin Community" do
+describe "ActiveAdmin Character" do
   let(:superadmin) { create(:admin_user) }
   let(:admin) { create(:admin_user, :role => 'admin') }
   let(:moderator) { create(:admin_user, :role => 'moderator') }
   let(:user) { DefaultObjects.user }
-  let(:community) { DefaultObjects.community }
+  let(:character) { create(:swtor_character) }
 
   describe "#index" do
     it "returns 200 when logged in as superadmin" do
       login_as superadmin
 
-      visit alexandria_communities_url
+      visit alexandria_characters_url
       page.status_code.should == 200
-      current_url.should == alexandria_communities_url
+      current_url.should == alexandria_characters_url
     end
 
     it "returns 200 when logged in as admin" do
       login_as admin
 
-      visit alexandria_communities_url
+      visit alexandria_characters_url
       page.status_code.should == 200
-      current_url.should == alexandria_communities_url
+      current_url.should == alexandria_characters_url
     end
 
     it "returns 200 when logged in as moderator" do
       login_as moderator
 
-      visit alexandria_communities_url
+      visit alexandria_characters_url
       page.status_code.should == 200
-      current_url.should == alexandria_communities_url
+      current_url.should == alexandria_characters_url
     end
 
     it "returns 403 when logged in as regular User" do
       login_as user
 
-      visit alexandria_communities_url
+      visit alexandria_characters_url
       page.status_code.should == 403
       page.should have_content('Forbidden')
     end
 
     it "redirects to login page when not logged in" do
-      visit alexandria_communities_url
+      visit alexandria_characters_url
       current_path.should == new_admin_user_session_path
     end
   end
@@ -50,85 +50,85 @@ describe "ActiveAdmin Community" do
     it "returns 200 when logged in as superadmin" do
       login_as superadmin
 
-      visit alexandria_community_url(:id => community.id)
+      visit alexandria_character_url(:id => character.id)
       page.status_code.should == 200
-      current_url.should == alexandria_community_url(:id => community.id)
+      current_url.should == alexandria_character_url(:id => character.id)
     end
 
     it "returns 200 when logged in as admin" do
       login_as admin
 
-      visit alexandria_community_url(:id => community.id)
+      visit alexandria_character_url(:id => character.id)
       page.status_code.should == 200
-      current_url.should == alexandria_community_url(:id => community.id)
+      current_url.should == alexandria_character_url(:id => character.id)
     end
 
     it "returns 200 when logged in as moderator" do
       login_as moderator
 
-      visit alexandria_community_url(:id => community.id)
+      visit alexandria_character_url(:id => character.id)
       page.status_code.should == 200
-      current_url.should == alexandria_community_url(:id => community.id)
+      current_url.should == alexandria_character_url(:id => character.id)
     end
 
     it "returns 403 when logged in as regular User" do
       login_as user
 
-      visit alexandria_community_url(:id => community.id)
+      visit alexandria_character_url(:id => character.id)
       page.status_code.should == 403
       page.should have_content('Forbidden')
     end
 
     it "redirects to login page when not logged in" do
-      visit alexandria_community_url(:id => community.id)
+      visit alexandria_character_url(:id => character.id)
       current_path.should == new_admin_user_session_path
     end
   end
 
   describe "#new" do
     it "raises error ActionNotFound" do
-      lambda { visit new_alexandria_community_url }.should raise_error(AbstractController::ActionNotFound)
+      lambda { visit new_alexandria_character_url }.should raise_error(AbstractController::ActionNotFound)
     end
   end
 
   describe "#create" do
     it "raises error ActionNotFound" do
-      lambda { page.driver.post("/alexandria/communities") }.should raise_error(AbstractController::ActionNotFound)
+      lambda { page.driver.post("/alexandria/characters") }.should raise_error(AbstractController::ActionNotFound)
     end
   end
 
   describe "#edit" do
     it "raises error ActionNotFound" do
-      lambda { visit edit_alexandria_community_url(:id => community.id) }.should raise_error(AbstractController::ActionNotFound)
+      lambda { visit edit_alexandria_character_url(:id => character.id) }.should raise_error(AbstractController::ActionNotFound)
     end
   end
 
   describe "#update" do
     it "raises error ActionNotFound" do
-      lambda { page.driver.put("/alexandria/communities/#{community.id}") }.should raise_error(AbstractController::ActionNotFound)
+      lambda { page.driver.put("/alexandria/characters/#{character.id}") }.should raise_error(AbstractController::ActionNotFound)
     end
   end
 
   describe "#destroy" do
-    it "deletes community when logged in as superadmin" do
+    it "deletes character when logged in as superadmin" do
       login_as superadmin
 
-      page.driver.delete("/alexandria/communities/#{community.id}")
-      Community.exists?(community).should be_false
+      page.driver.delete("/alexandria/characters/#{character.id}")
+      Character.find(character).is_removed.should be_true
     end
 
-    it "deletes community when logged in as admin" do
+    it "deletes character when logged in as admin" do
       login_as admin
 
-      page.driver.delete("/alexandria/communities/#{community.id}")
-      Community.exists?(community).should be_false
+      page.driver.delete("/alexandria/characters/#{character.id}")
+      Character.find(character).is_removed.should be_true
     end
 
     it "returns 403 when logged in as moderator" do
       login_as moderator
 
-      page.driver.delete("/alexandria/communities/#{community.id}")
-      Community.exists?(community).should be_true
+      page.driver.delete("/alexandria/characters/#{character.id}")
+      Character.exists?(character).should be_true
       page.driver.status_code.should == 403
       page.should have_content('Forbidden')
     end
@@ -136,15 +136,15 @@ describe "ActiveAdmin Community" do
     it "returns 403 when logged in as regular User" do
       login_as user
 
-      page.driver.delete("/alexandria/communities/#{community.id}")
-      Community.exists?(community).should be_true
+      page.driver.delete("/alexandria/characters/#{character.id}")
+      Character.exists?(character).should be_true
       page.driver.status_code.should == 403
       page.should have_content('Forbidden')
     end
 
-    it "does not delete community when not logged in" do
-      page.driver.delete("/alexandria/communities/#{community.id}")
-      Community.exists?(community).should be_true
+    it "does not delete character when not logged in" do
+      page.driver.delete("/alexandria/characters/#{character.id}")
+      Character.exists?(character).should be_true
     end
   end
 end

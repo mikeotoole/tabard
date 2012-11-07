@@ -109,6 +109,6 @@ ActiveAdmin.register User do
     rows.insert(2, :user_profile)
     attributes_table *rows
 
-    active_admin_comments
+    #active_admin_comments
   end
 end

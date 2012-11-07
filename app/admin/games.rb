@@ -38,7 +38,7 @@ ActiveAdmin.register Game do
       end
     end
 
-    active_admin_comments
+    #active_admin_comments
   end
 
   form do |f|
@@ -47,6 +47,6 @@ ActiveAdmin.register Game do
       f.input :aliases
       #f.input :info, as: :text
     end
-    f.buttons
+    f.actions
   end
 end

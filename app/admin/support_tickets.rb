@@ -87,11 +87,11 @@ ActiveAdmin.register SupportTicket do
         f.inputs do
           f.input :body, label: false
         end
-        f.buttons
+        f.actions
       end
     end
 
     h3 "Active Admin Comments"
-    active_admin_comments
+    #active_admin_comments
   end
 end

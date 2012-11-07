@@ -7,7 +7,7 @@ ActiveAdmin.register Discussion do
   member_action :remove_comment, method: :put do
     comment = Comment.find(params[:id])
     comment.destroy
-    redirect_to request.referer ? request.referer : admin_dashboard_url
+    redirect_to request.referer ? request.referer : alexandria_dashboard_url
   end
 
   filter :id
@@ -57,6 +57,6 @@ ActiveAdmin.register Discussion do
         end
       end
     end
-    active_admin_comments
+    #active_admin_comments
   end
 end

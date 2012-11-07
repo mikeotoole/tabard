@@ -8,180 +8,180 @@ describe "ActiveAdmin Question" do
   let(:question) { create(:short_answer_question) }
   let(:predefined_answer) { create(:check_box_question).predefined_answers.first }
 
-  describe "#index" do 
+  describe "#index" do
     it "returns 200 when logged in as superadmin" do
       login_as superadmin
 
-      visit admin_questions_url
+      visit alexandria_questions_url
       page.status_code.should == 200
-      current_url.should == admin_questions_url
-    end 
-    
+      current_url.should == alexandria_questions_url
+    end
+
     it "returns 200 when logged in as admin" do
       login_as admin
 
-      visit admin_questions_url
+      visit alexandria_questions_url
       page.status_code.should == 200
-      current_url.should == admin_questions_url
-    end    
-    
+      current_url.should == alexandria_questions_url
+    end
+
     it "returns 200 when logged in as moderator" do
       login_as moderator
 
-      visit admin_questions_url
+      visit alexandria_questions_url
       page.status_code.should == 200
-      current_url.should == admin_questions_url
-    end    
-    
+      current_url.should == alexandria_questions_url
+    end
+
     it "returns 403 when logged in as regular User" do
       login_as user
 
-      visit admin_questions_url
+      visit alexandria_questions_url
       page.status_code.should == 403
       page.should have_content('Forbidden')
     end
-    
-    it "redirects to login page when not logged in" do
-      visit admin_questions_url
-      current_path.should == new_admin_user_session_path
-    end    
-  end 
 
-  describe "#show" do 
+    it "redirects to login page when not logged in" do
+      visit alexandria_questions_url
+      current_path.should == new_admin_user_session_path
+    end
+  end
+
+  describe "#show" do
     it "returns 200 when logged in as superadmin" do
       login_as superadmin
 
-      visit admin_question_url(:id => question.id)
+      visit alexandria_question_url(:id => question.id)
       page.status_code.should == 200
-      current_url.should == admin_question_url(:id => question.id)
-    end 
-    
+      current_url.should == alexandria_question_url(:id => question.id)
+    end
+
     it "returns 200 when logged in as admin" do
       login_as admin
 
-      visit admin_question_url(:id => question.id)
+      visit alexandria_question_url(:id => question.id)
       page.status_code.should == 200
-      current_url.should == admin_question_url(:id => question.id)
-    end    
-    
+      current_url.should == alexandria_question_url(:id => question.id)
+    end
+
     it "returns 200 when logged in as moderator" do
       login_as moderator
 
-      visit admin_question_url(:id => question.id)
+      visit alexandria_question_url(:id => question.id)
       page.status_code.should == 200
-      current_url.should == admin_question_url(:id => question.id)
-    end    
-    
+      current_url.should == alexandria_question_url(:id => question.id)
+    end
+
     it "returns 403 when logged in as regular User" do
       login_as user
 
-      visit admin_question_url(:id => question.id)
+      visit alexandria_question_url(:id => question.id)
       page.status_code.should == 403
       page.should have_content('Forbidden')
     end
-    
+
     it "redirects to login page when not logged in" do
-      visit admin_question_url(:id => question.id)
+      visit alexandria_question_url(:id => question.id)
       current_path.should == new_admin_user_session_path
-    end    
+    end
   end
 
   describe "#new" do
     it "raises error ActionNotFound" do
-      lambda { visit new_admin_question_url }.should raise_error(AbstractController::ActionNotFound)
-    end    
+      lambda { visit new_alexandria_question_url }.should raise_error(AbstractController::ActionNotFound)
+    end
   end
 
   describe "#create" do
     it "raises error ActionNotFound" do
-      lambda { page.driver.post("/admin/questions") }.should raise_error(AbstractController::ActionNotFound)
+      lambda { page.driver.post("/alexandria/questions") }.should raise_error(AbstractController::ActionNotFound)
     end
-  end 
+  end
 
   describe "#edit" do
     it "raises error ActionNotFound" do
-      lambda { visit edit_admin_question_url(:id => question.id) }.should raise_error(AbstractController::ActionNotFound)
-    end  
+      lambda { visit edit_alexandria_question_url(:id => question.id) }.should raise_error(AbstractController::ActionNotFound)
+    end
   end
 
-  describe "#update" do 
+  describe "#update" do
     it "raises error ActionNotFound" do
-      lambda { page.driver.put("/admin/questions/#{question.id}") }.should raise_error(AbstractController::ActionNotFound)
-    end  
+      lambda { page.driver.put("/alexandria/questions/#{question.id}") }.should raise_error(AbstractController::ActionNotFound)
+    end
   end
 
   describe "#destroy" do
     it "deletes question when logged in as superadmin" do
       login_as superadmin
 
-      page.driver.delete("/admin/questions/#{question.id}")
+      page.driver.delete("/alexandria/questions/#{question.id}")
       Question.exists?(question).should be_false
-    end 
-    
+    end
+
     it "deletes question when logged in as admin" do
       login_as admin
 
-      page.driver.delete("/admin/questions/#{question.id}")
+      page.driver.delete("/alexandria/questions/#{question.id}")
       Question.exists?(question).should be_false
-    end    
-    
+    end
+
     it "deletes question when logged in as moderator" do
       login_as moderator
 
-      page.driver.delete("/admin/questions/#{question.id}")
+      page.driver.delete("/alexandria/questions/#{question.id}")
       Question.exists?(question).should be_false
-    end    
-    
+    end
+
     it "returns 403 when logged in as regular User" do
       login_as user
 
-      page.driver.delete("/admin/questions/#{question.id}")
+      page.driver.delete("/alexandria/questions/#{question.id}")
       Question.exists?(question).should be_true
       page.driver.status_code.should == 403
       page.should have_content('Forbidden')
     end
-    
+
     it "does not delete question when not logged in" do
-      page.driver.delete("/admin/questions/#{question.id}")
+      page.driver.delete("/alexandria/questions/#{question.id}")
       Question.exists?(question).should be_true
-    end      
+    end
   end
 
-  describe "#delete_predefined_answer_admin_question" do 
+  describe "#delete_predefined_answer_alexandria_question" do
     it "deletes predefined answer when logged in as superadmin" do
       login_as superadmin
 
-      page.driver.put("/admin/questions/#{predefined_answer.id}/delete_predefined_answer")
+      page.driver.put("/alexandria/questions/#{predefined_answer.id}/delete_predefined_answer")
       PredefinedAnswer.exists?(predefined_answer).should be_false
-    end 
-    
+    end
+
     it "deletes predefined answer when logged in as admin" do
       login_as admin
 
-      page.driver.put("/admin/questions/#{predefined_answer.id}/delete_predefined_answer")
+      page.driver.put("/alexandria/questions/#{predefined_answer.id}/delete_predefined_answer")
       PredefinedAnswer.exists?(predefined_answer).should be_false
-    end    
-    
+    end
+
     it "deletes predefined answer when logged in as moderator" do
       login_as moderator
 
-      page.driver.put("/admin/questions/#{predefined_answer.id}/delete_predefined_answer")
+      page.driver.put("/alexandria/questions/#{predefined_answer.id}/delete_predefined_answer")
       PredefinedAnswer.exists?(predefined_answer).should be_false
-    end    
-    
+    end
+
     it "returns 403 when logged in as regular User" do
       login_as user
 
-      page.driver.put("/admin/questions/#{predefined_answer.id}/delete_predefined_answer")
+      page.driver.put("/alexandria/questions/#{predefined_answer.id}/delete_predefined_answer")
       PredefinedAnswer.exists?(predefined_answer).should be_true
       page.driver.status_code.should == 403
       page.should have_content('Forbidden')
     end
-    
+
     it "does not delete predefined answer when not logged in" do
-      page.driver.put("/admin/questions/#{predefined_answer.id}/delete_predefined_answer")
+      page.driver.put("/alexandria/questions/#{predefined_answer.id}/delete_predefined_answer")
       PredefinedAnswer.exists?(predefined_answer).should be_true
-    end    
-  end  
+    end
+  end
 
 end

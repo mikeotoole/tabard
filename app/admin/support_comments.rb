@@ -25,7 +25,7 @@ ActiveAdmin.register SupportComment do
   form do |f|
     f.inputs "Support Comment Details" do
       f.input :body
-      f.buttons
+      f.actions
     end
   end
 end

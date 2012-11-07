@@ -54,9 +54,9 @@ ActiveAdmin.register Community do
       panel("Community Games") do
         table_for(community.community_games) do
           column "Name" do |community_game|
-            link_to community_game.name, [:alexandria, community_game]
+            link_to community_game.game_name, [:alexandria, community_game]
           end
-          column :game_full_name
+          column :full_name
         end
       end
     end
@@ -101,6 +101,6 @@ ActiveAdmin.register Community do
       end
     end
 
-    active_admin_comments
+    #active_admin_comments
   end
 end

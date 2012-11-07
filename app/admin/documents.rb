@@ -44,7 +44,7 @@ ActiveAdmin.register Document do
   show title: :type do |document|
     attributes_table *default_attribute_table_rows, :is_current?, :acceptance_count
     link_to "View Formatted", view_document_alexandria_document_path(document.id)
-    active_admin_comments
+    #active_admin_comments
   end
 
   form do |f|
@@ -54,6 +54,6 @@ ActiveAdmin.register Document do
       f.input :body
       f.input :is_published
     end
-    f.buttons
+    f.actions
   end
 end

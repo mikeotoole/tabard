@@ -31,7 +31,7 @@ ActiveAdmin.register AdminUser do
     if current_admin_user.update_with_password(params[:admin_user])
       sign_in(current_admin_user, bypass: true)
       flash[:notice] = 'Account updated.'
-      redirect_to admin_dashboard_url
+      redirect_to alexandria_dashboard_url
     else
       @admin_user = current_admin_user
       render action: :edit_account
@@ -81,7 +81,7 @@ ActiveAdmin.register AdminUser do
       end
     end
 
-    active_admin_comments
+    #active_admin_comments
   end
 
   form do |f|
@@ -91,6 +91,6 @@ ActiveAdmin.register AdminUser do
       f.input :avatar, as: :file
       f.input :role, as: :select, collection: AdminUser::ROLES
     end
-    f.buttons
+    f.actions
   end
 end
