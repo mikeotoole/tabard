@@ -82,12 +82,12 @@ class SwtorCharacter < Character
 ###
   validates :faction, presence: true,
                      inclusion: { in: Swtor::VALID_FACTIONS, message: "%{value} is not a valid faction." }
-  validates :char_class,  presence: true,
-  validates :char_class,  inclusion: { in: VALID_REPUBLIC_CLASSES , message: "%{value} is not a valid class for your faction." }, if: Proc.new {|c| c.faction == "Republic"}
-  validates :char_class,  inclusion: { in: VALID_EMPIRE_CLASSES , message: "%{value} is not a valid class for your faction." }, if: Proc.new {|c| c.faction == "Empire"}
-  validates :advanced_class,  presence: true,
-                              inclusion: { in: VALID_ADVANCED_CLASSES, message: "%{value} is not a valid advanced class." }
-  validates :species,  presence: true
+  validates :char_class, presence: true
+  validates :char_class, inclusion: { in: VALID_REPUBLIC_CLASSES , message: "%{value} is not a valid class for your faction." }, if: Proc.new {|c| c.faction == "Republic"}
+  validates :char_class, inclusion: { in: VALID_EMPIRE_CLASSES , message: "%{value} is not a valid class for your faction." }, if: Proc.new {|c| c.faction == "Empire"}
+  validates :advanced_class, presence: true,
+                             inclusion: { in: VALID_ADVANCED_CLASSES, message: "%{value} is not a valid advanced class." }
+  validates :species, presence: true
   validate :species_and_class_is_valid_for_advanced_class
   validates :gender, presence: true,
                      inclusion: {in: VALID_GENDERS}
