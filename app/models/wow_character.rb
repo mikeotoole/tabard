@@ -8,13 +8,9 @@
 class WowCharacter < Character
   #validates_lengths_from_database except: [:name, :avatar]
 
-
 ###
 # Constants
 ###
-  # Used by validator to limit the length of name.
-  MAX_NAME_LENGTH = 12
-
   # All valid genders
   VALID_GENDERS = %w(Male Female)
 
@@ -82,8 +78,15 @@ class WowCharacter < Character
 ###
 # Validators
 ###
-  validates :name, presence: true,
-                   length: { maximum: MAX_NAME_LENGTH }
+  validates :faction, presence: true,
+                     inclusion: { in: Wow::VALID_FACTIONS, message: "%{value} is not a valid faction." }
+  validates :char_class, presence: true,
+                        inclusion: { in: VALID_CLASSES , message: "%{value} is not a valid class." }
+  validates :race, presence: true,
+                   inclusion: { in: VALID_RACES , message: "%{value} is not a valid race." }
+  validates :gender, presence: true,
+                     inclusion: {in: VALID_GENDERS}
+  validates :level, numericality: {only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 90}
 
 ###
 # Public Methods
@@ -92,7 +95,6 @@ class WowCharacter < Character
 ###
 # Class Methods
 ###
-
   # Gets all valid classes.
   def self.all_classes
     VALID_CLASSES
@@ -132,30 +134,8 @@ class WowCharacter < Character
   end
 
 ###
-# Instance Methods
-###
-  ###
-  # This method gets the description for the character.
-  # [Returns] A string that contains the description of the character.
-  ###
-  def description
-    "WoW Character"
-  end
-
-  ###
-  # This method returns a search scoped or simply scoped search helper
-  # [Args]
-  #   * +search+ -> The string search for.
-  # [Returns] An array of characters
-  ###
-  def self.search(search)
-    scoped # TODO Fix this
-  end
-
-###
 # Validator Methods
 ###
-
   ###
   # _validator_
   #

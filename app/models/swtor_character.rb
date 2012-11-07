@@ -11,9 +11,6 @@ class SwtorCharacter < Character
 ###
 # Constants
 ###
-  # Used by validator to limit the length of name.
-  MAX_NAME_LENGTH = 20
-
   # All valid genders
   VALID_GENDERS = %w(Male Female)
 
@@ -73,6 +70,7 @@ class SwtorCharacter < Character
 # Attribute accessible
 ###
   attr_accessible :name, :char_class, :advanced_class, :species, :level, :gender, :faction, :server_name
+
 ###
 # H-Store
 ###
@@ -82,11 +80,9 @@ class SwtorCharacter < Character
 ###
 # Validators
 ###
-  validates :name, presence: true,
-                   length: { maximum: MAX_NAME_LENGTH }
   validates :faction, presence: true,
-                              inclusion: { in: ["Republic","Empire"].flatten , message: "%{value} is not a valid advanced class." }
-  validates :char_class,  presence: true
+                     inclusion: { in: Swtor::VALID_FACTIONS, message: "%{value} is not a valid faction." }
+  validates :char_class,  presence: true,
   validates :char_class,  inclusion: { in: VALID_REPUBLIC_CLASSES , message: "%{value} is not a valid class for your faction." }, if: Proc.new {|c| c.faction == "Republic"}
   validates :char_class,  inclusion: { in: VALID_EMPIRE_CLASSES , message: "%{value} is not a valid class for your faction." }, if: Proc.new {|c| c.faction == "Empire"}
   validates :advanced_class,  presence: true,
@@ -96,6 +92,7 @@ class SwtorCharacter < Character
   validates :gender, presence: true,
                      inclusion: {in: VALID_GENDERS}
   validates :level, numericality: {only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 50}
+
 ###
 # Public Methods
 ###
@@ -103,7 +100,6 @@ class SwtorCharacter < Character
 ###
 # Class Methods
 ###
-
   # Gets all valid classes.
   def self.all_classes
     return VALID_REPUBLIC_CLASSES + VALID_EMPIRE_CLASSES
@@ -188,31 +184,8 @@ class SwtorCharacter < Character
   end
 
 ###
-# Instance Methods
-###
-
-  ###
-  # This method gets the description for the character.
-  # [Returns] A string that contains the description of the character.
-  ###
-  def description
-    "SWTOR Character"
-  end
-
-  ###
-  # This method returns a search scoped or simply scoped search helper
-  # [Args]
-  #   * +search+ -> The string search for.
-  # [Returns] An array of characters
-  ###
-  def self.search(search)
-    scoped # TODO fix this
-  end
-
-###
 # Validator Methods
 ###
-
   ###
   # _validator_
   #
