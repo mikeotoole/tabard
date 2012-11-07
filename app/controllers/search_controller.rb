@@ -60,7 +60,7 @@ class SearchController < ApplicationController
       when 'Character' then {
           label: "<strong>#{r.name}</strong> (#{r.user_profile.name})",
           value: r.name,
-          url: user_profile_url(r.user_profile, anchor: 'characters'),
+          url: user_profile_url(r.user_profile, anchor: 'games'),
           avatar: view_context.image_path(r.avatar_url(:icon))
         }
       end

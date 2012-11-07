@@ -23,7 +23,7 @@
     = link_to "Messages", inbox_url(subdomain: "www"), (current_user.unread_messages.size > 0 ? { meta: current_user.unread_messages.size } : {})
 
 .avatar
-  = link_to image_tag(current_user.avatar_url :tiny), user_profile_url(current_user.user_profile, subdomain: "www", anchor: 'characters')
+  = link_to image_tag(current_user.avatar_url :tiny), user_profile_url(current_user.user_profile, subdomain: "www", anchor: 'games')
   %ul
     %li.profile= link_to 'Edit My Profile', edit_user_profile_url(current_user.user_profile)
     %li.settings= link_to 'Account Settings', account_settings_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"))
