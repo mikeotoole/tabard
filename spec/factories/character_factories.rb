@@ -32,6 +32,8 @@ FactoryGirl.define do
 
   factory :wow_character do
     sequence(:name) {|n| "WOWChar #{n}" }
+    faction { DefaultObjects.wow.factions.first }
+    server_name { DefaultObjects.wow.server_names.first }
     char_class "Mage"
     race "Human"
     level 20

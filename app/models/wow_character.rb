@@ -84,7 +84,12 @@ class WowCharacter < Character
 ###
   validates :name, presence: true,
                    length: { maximum: MAX_NAME_LENGTH }
-
+  validates :race, presence: true
+  validates :char_class, presence: true
+  validate :class_is_valid_for_race
+  validates :gender, presence: true,
+                     inclusion: {in: VALID_GENDERS}
+  validates :level, numericality: {only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 90}
 ###
 # Public Methods
 ###
@@ -162,14 +167,14 @@ class WowCharacter < Character
   # Checks class is valid for race and faction.
   ###
   def class_is_valid_for_race
-   if self.faction and self.race
-     class_array = WowCharacter.faction_race_class_collection.select{|item| item[0] == "#{self.faction}_#{self.race.gsub(/\s/,'_')}" }
-   end
-   valid_classes = class_array[0][1] if class_array and class_array[0]
+    if self.faction and self.race
+      class_array = WowCharacter.faction_race_class_collection.select{|item| item[0] == "#{self.faction}_#{self.race.gsub(/\s/,'_')}" }
+    end
+    valid_classes = class_array[0][1] if class_array and class_array[0]
 
-   if not valid_classes or not valid_classes.include?(self.char_class)
-     self.errors.add(:char_class, "is not valid for given race")
-   end
+    if not valid_classes or not valid_classes.include?(self.char_class)
+      self.errors.add(:char_class, "is not valid for given race")
+    end
   end
 end
 

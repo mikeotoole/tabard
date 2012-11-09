@@ -381,14 +381,6 @@ describe UserProfile do
       profile.should_receive(:remove_avatar!)
       profile.remove_all_avatars
     end
-
-    it "should call remove_avatar! on all characters" do
-      character = create(:wow_character)
-      profile = character.user_profile
-      character = profile.characters.first
-      character.should_receive(:remove_avatar!)
-      profile.remove_all_avatars
-    end
   end
 
   describe "destroy" do
