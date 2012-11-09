@@ -1,13 +1,3 @@
-###
-# Author::    DigitalAugment Inc. (mailto:info@digitalaugment.com)
-# Copyright:: Copyright (c) 2011 DigitalAugment Inc.
-# License::   Proprietary Closed Source
-#
-# This class represents a Minecraft character.
-###
-class MinecraftCharacter < Character
-end
-
 # == Schema Information
 #
 # Table name: characters
@@ -24,3 +14,8 @@ end
 #  is_removed     :boolean
 #
 
+require 'spec_helper'
+
+describe CustomGameCharacter do
+  pending "add some examples to (or delete) #{__FILE__}"
+end

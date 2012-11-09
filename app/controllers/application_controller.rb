@@ -137,6 +137,7 @@ protected
 
   # This method determines is a user profile was last used to post.
   def last_posted_as_user_profile?(poster)
+    return true if session[:poster_type].blank? or session[:poster_id].blank?
     return (poster.class.to_s == session[:poster_type].to_s and poster.id.to_s == session[:poster_id].to_s)
   end
   helper_method :last_posted_as_user_profile?

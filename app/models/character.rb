@@ -10,6 +10,9 @@ class Character < ActiveRecord::Base
 # Constants
 ###
   #VALID_CHARACTERS = [['World of Warcraft', 'Wow'], ['Star Wars: The Old Republic', 'Swtor'], ['Minecraft', 'Minecraft'], ['Custom Game', 'CustomGame']]
+  # Used by validator to limit the length of name.
+  MAX_NAME_LENGTH = 50
+
 ###
 # Attribute accessible
 ###
@@ -34,7 +37,8 @@ class Character < ActiveRecord::Base
 # Validators
 ###
   validates :name,  presence: true,
-                    length: { maximum: 100 }
+                    length: { maximum: MAX_NAME_LENGTH }
+  validates :played_game,  presence: true
   validates :avatar,
       if: :avatar?,
       file_size: {
