@@ -5,5 +5,5 @@
     %ol
       = render "characters/#{@character.game_type.downcase}/fields", f: f, character: @character
     .submit
-      %button{ type: 'submit' } Create character
+      %button{ type: 'submit' } Update character
       = link_to 'Remove Character', @character, method: :delete, confirm: 'This cannot be undone. Are you sure you want to remove this character?', class: 'secondary'
