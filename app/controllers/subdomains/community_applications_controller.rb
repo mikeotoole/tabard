@@ -81,14 +81,21 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   # This accepts the specified application.
   def accept
     params[:character_hash] ||= Hash.new
-    if @community_application.accept_application(current_user.user_profile, params[:character_hash])
-      flash[:success] = "The application to \"#{@community_application.community_name}\" has been accepted."
-      redirect_to community_applications_url
-    else
-      flash[:alert] = "The application was unable to be accepted because your community is full." if current_community.is_at_max_capacity?
+    if @community_application.user_profile.is_disabled?
+      flash[:alert] = "The application was unable to be accepted because the user has disabled their account."
       @community_games = current_community.community_games
       @comments = @community_application.comments.page params[:page]
       render :show
+    else
+      if @community_application.accept_application(current_user.user_profile, params[:character_hash])
+        flash[:success] = "The application to \"#{@community_application.community_name}\" has been accepted."
+        redirect_to community_applications_url
+      else
+        flash[:alert] = "The application was unable to be accepted because your community is full." if current_community.is_at_max_capacity?
+        @community_games = current_community.community_games
+        @comments = @community_application.comments.page params[:page]
+        render :show
+      end
     end
   end
 

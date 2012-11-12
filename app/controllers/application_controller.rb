@@ -397,7 +397,7 @@ protected
     when :user, User
       root_url_hack_helper(user_profile_url(current_user.user_profile, protocol: "http://", subdomain: "www") + '#characters')
     when :admin_user, AdminUser
-      alexandria_dashboard_url(protocol: "http://", subdomain: "www").sub('secure.', '')
+      alexandria_dashboard_url(protocol: "https://", subdomain: "secure")
     else
       user_root_url(current_user)
     end

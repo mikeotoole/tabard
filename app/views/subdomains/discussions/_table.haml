@@ -12,14 +12,15 @@
           %h3= link_to shorten_words(discussion.name, 21), discussion
           %time
             Created by
-            = link_to shorten_words(discussion.poster.name), discussion.poster
+            = link_to shorten_words(discussion.user_profile_name), discussion.user_profile
+            = "as #{discussion.poster_name}" unless discussion.poster == discussion.user_profile
             = time_ago_in_words(discussion.created_at)
             ago
         %td
           - if discussion.comments.any?
             %time
               - last_comment = discussion.comments.last
-              = link_to shorten_words(last_comment.poster_name), last_comment.poster
+              = link_to shorten_words(last_comment.poster_name), last_comment.user_profile
               = time_ago_in_words(last_comment.created_at)
               ago
         %td
