@@ -21,7 +21,6 @@
 #  charged_state_tax_rate       :float            default(0.0)
 #  charged_local_tax_rate       :float            default(0.0)
 #  local_tax_code               :string(255)
-#  billing_address_zip          :string(255)
 #  disputed_date                :datetime
 #  refunded_date                :datetime
 #  refunded_price_in_cents      :integer
@@ -234,6 +233,14 @@ describe Invoice do
       invoice.total_price_in_cents.should eq 555
     end
 
+    it "should include tax and untaxed total when tax is present" do
+      pending
+    end
+
+    it "should include no tax and only untaxed total when tax is not present" do
+      pending
+    end
+
     it "should return zero when no invoice items are present" do
       invoice = create(:invoice)
       invoice.invoice_items.should be_empty
@@ -249,6 +256,30 @@ describe Invoice do
     it "should return total_price_in_cents converted to dollars" do
       invoice.total_price_in_dollars.should eq invoice.total_price_in_cents / 100.0
     end
+  end
+
+  describe "total_price_in_cents_without_tax" do
+    pending
+  end
+
+  describe "total_price_in_dollars_without_tax" do
+    pending
+  end
+
+  describe "total_tax_in_cents" do
+    pending
+  end
+
+  describe "total_tax_in_dollars" do
+    pending
+  end
+
+  describe "should_be_taxed?" do
+    pending
+  end
+
+  describe "tax_rate" do
+    pending
   end
 
   describe "total_recurring_price_per_month_in_cents" do

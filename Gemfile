@@ -82,6 +82,9 @@ ruby '1.9.3'
   gem 'coffee-rails'#                                                                       MIT - https://github.com/rails/coffee-rails
   gem 'uglifier'#                                                                           MIT - https://github.com/lautis/uglifier
 
+# Logging
+  gem 'quiet_assets'#                                                                       MIT - https://github.com/evrone/quiet_assets
+
   group :assets do
 
   end
@@ -104,7 +107,6 @@ ruby '1.9.3'
     gem 'haml-rails'#                                                                       MIT - https://github.com/indirect/haml-rails
     gem 'bullet'#                                                                           MIT - https://github.com/flyerhzm/bullet
     gem 'brakeman'#                                                                         MIT - https://github.com/presidentbeef/brakeman
-    gem 'quiet_assets'#                                                                     MIT - https://github.com/evrone/quiet_assets
   end
 
 # Development and Test Specific Gems

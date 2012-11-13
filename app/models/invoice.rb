@@ -36,7 +36,6 @@ class Invoice < ActiveRecord::Base
   delegate :id, to: :user, prefix: true
   delegate :user_profile, to: :user
   delegate :stripe_customer_token, to: :user, prefix: true
-  delegate :billing_address_zip, to: :user, prefix: true
 
 ###
 # Scopes
@@ -146,7 +145,6 @@ class Invoice < ActiveRecord::Base
                 self.update_column(:charged_state_tax_rate, rate_info["staterate"])
                 self.update_column(:charged_local_tax_rate, rate_info["localrate"])
                 self.update_column(:local_tax_code, rate_info["code"])
-                self.update_column(:billing_address_zip, self.user_billing_address_zip)
                 success = true
               end
             else
@@ -232,9 +230,9 @@ class Invoice < ActiveRecord::Base
         if success
           success = self.save
         else
-          self.errors.add :base, "There was a problem with your credit card"
+          self.errors.add :base, "There was a problem with your credit card. Insure your full billing address is provided."
         end
-        if self.period_end_date < Time.now
+        if success and self.period_end_date < Time.now
           # charge customer now.
           success = self.charge_customer(false)
         end
@@ -530,7 +528,6 @@ end
 #  charged_state_tax_rate       :float            default(0.0)
 #  charged_local_tax_rate       :float            default(0.0)
 #  local_tax_code               :string(255)
-#  billing_address_zip          :string(255)
 #  disputed_date                :datetime
 #  refunded_date                :datetime
 #  refunded_price_in_cents      :integer
