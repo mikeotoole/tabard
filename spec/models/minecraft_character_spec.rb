@@ -28,9 +28,5 @@ describe MinecraftCharacter do
       build(:minecraft_character, :name => nil).should_not be_valid
     end
   end
-  
-  it "should have Minecraft Character description" do
-    minecraft_character.description.should eq("Minecraft Character")
-  end
 end
- 
+

@@ -87,6 +87,7 @@ class WowCharacter < Character
   validates :gender, presence: true,
                      inclusion: {in: VALID_GENDERS}
   validates :level, numericality: {only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 90}
+  validate :class_is_valid_for_race
 
 ###
 # Public Methods
@@ -136,6 +137,21 @@ class WowCharacter < Character
 ###
 # Validator Methods
 ###
+  ###
+  # _validator_
+  #
+  # Checks class is valid for race and faction.
+  ###
+  def race_is_valid_for_faction
+    if self.faction and self.race
+      race_array = WowCharacter.faction_race_collection.select{|item| item[0] == self.faction }
+    end
+
+    if not race_array or not race_array.include?(self.race)
+      self.errors.add(:race, "is not valid for given faction")
+    end
+  end
+
   ###
   # _validator_
   #

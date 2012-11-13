@@ -57,9 +57,5 @@ describe WowCharacter do
       build(:wow_character, :gender => "Male").should be_valid
     end
   end
-
-  it "should have WoW Character description" do
-    wow_character.description.should eq("WoW Character")
-  end
 end
 

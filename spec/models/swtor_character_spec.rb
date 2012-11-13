@@ -80,9 +80,5 @@ describe SwtorCharacter do
       build(:swtor_character, :faction => nil).should_not be_valid
     end
   end
-
-  it "should have SWTOR Character description" do
-    swtor_character.description.should eq("SWTOR Character")
-  end
 end
 

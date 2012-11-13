@@ -120,9 +120,10 @@ describe Discussion do
     end
     it "should not allow a non user's character" do
       another_user_profile = create(:user_profile_with_characters)
+      invalid_character = another_user_profile.characters.first
       build(:discussion, :discussion_space_id => DefaultObjects.general_discussion_space.id,
           :user_profile_id => billy.user_profile_id,
-          :character_id => another_user_profile.characters.first).should_not be_valid
+          :character_id => invalid_character.id).should_not be_valid
     end
   end
 
