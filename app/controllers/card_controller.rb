@@ -37,6 +37,9 @@ class CardController < PaymentController
         if @invoice.period_end_date < Time.now and @invoice.total_price_in_cents > 0
           @invoice.charge_customer(false)
         end
+        @invoice = nil unless (@invoice.period_end_date < Time.now and @invoice.total_price_in_cents > 0)
+      else
+        self.errors.add :base, "There was a problem with your credit card. Insure your full billing address is provided."
       end
     rescue Stripe::StripeError => e
       logger.error "StripeError: #{e.message}"
@@ -44,11 +47,10 @@ class CardController < PaymentController
       @stripe_card_token = nil
     rescue ActiveRecord::StaleObjectError => e
       # ERROR invoice is currently being charged.
-      flash[:alert] = "Your invoice is currently being charged. You can't update your card at this time."
     end
     begin
       @stripe = Stripe::Customer.retrieve(current_user.stripe_customer_token) unless current_user.stripe_customer_token.blank?
-      rescue
+    rescue
     ensure
       @stripe ||= nil
     end

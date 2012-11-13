@@ -232,9 +232,9 @@ class Invoice < ActiveRecord::Base
         if success
           success = self.save
         else
-          self.errors.add :base, "There was a problem with your credit card"
+          self.errors.add :base, "There was a problem with your credit card. Insure your full billing address is provided."
         end
-        if self.period_end_date < Time.now
+        if success and self.period_end_date < Time.now
           # charge customer now.
           success = self.charge_customer(false)
         end

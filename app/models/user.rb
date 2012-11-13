@@ -179,7 +179,7 @@ class User < ActiveRecord::Base
       customer = Stripe::Customer.retrieve(self.stripe_customer_token)
       customer.card = stripe_card_token # obtained with Stripe.js
       customer.email = self.email
-      customer.save!
+      customer.save
       # Retrive customer again and set billing_address_zip.
       customer = Stripe::Customer.retrieve(self.stripe_customer_token)
       self.billing_address_zip = customer.active_card.address_zip
@@ -191,6 +191,10 @@ class User < ActiveRecord::Base
       self.stripe_customer_token = customer.id
       self.billing_address_zip = customer.active_card.address_zip
       self.save!
+    end
+    if customer["active_card"].blank? or customer["active_card"]["address_line1"].blank? or customer["active_card"]["address_city"].blank? or customer["active_card"]["address_zip"].blank?
+      self.errors.add(:base, "Full address is required.")
+      return false
     end
     return true
   end
