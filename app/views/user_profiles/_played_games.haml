@@ -9,5 +9,8 @@
     -if played_game.characters.any?
       %ul.characters
         = render partial: "characters/#{played_game.game_type.downcase}/li", collection: played_game.characters, as: :character
+    - if can? :destroy, played_game
+      = link_to "Remove Game", played_game_url(played_game), confirm: "Are you sure you want to delete #{played_game.game_name} from your played games?", method: :delete
+
 - else
   %p None

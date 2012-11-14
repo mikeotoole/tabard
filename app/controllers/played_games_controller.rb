@@ -32,6 +32,11 @@ class PlayedGamesController < ApplicationController
     end
   end
 
+  def destroy
+    @played_game.destroy
+    redirect_to user_profile_url(@user_profile, anchor: "games", subdomain: "www")
+  end
+
   # GET /played_games/autocomplete
   def autocomplete
     @games = Game.search(params[:term]).pluck(:name)

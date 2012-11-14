@@ -23,7 +23,13 @@ class Character < ActiveRecord::Base
 ###
   belongs_to :played_game
   has_one :user_profile, through: :played_game
-  has_many :roster_assignments
+  has_many :announcements, dependent: :nullify
+  has_many :comments, dependent: :nullify
+  has_many :discussions, dependent: :nullify
+  has_many :invites, dependent: :nullify
+  has_many :roster_assignments, dependent: :destroy
+  has_and_belongs_to_many :community_applications
+
 
 ###
 # Delegates
@@ -111,13 +117,6 @@ class Character < ActiveRecord::Base
   def compatable_with_community_game?(community_game)
     return true if community_game == nil
     return community_game.game_type == self.game.class.to_s
-  end
-
-  # Overrides the destroy to only mark as deleted and removes chaacter from any rosters.
-  def destroy
-    self.roster_assignments.clear if self.roster_assignments
-    self.update_column(:is_removed, true)
-    self.remove_avatar!
   end
 
   ###
