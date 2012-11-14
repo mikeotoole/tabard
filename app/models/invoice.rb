@@ -116,12 +116,14 @@ class Invoice < ActiveRecord::Base
   end
 
   def should_be_taxed?
-    self.tax_rate != 0
+    @should_be_taxed ||= self.tax_rate != 0
+    return @should_be_taxed
   end
 
   def tax_rate
+    return @tax_rate if @tax_rate
     if self.user_stripe_customer_token.blank?
-      return 0.0
+      @tax_rate ||= 0.0
     else
       success = false
       user_address = ""
@@ -158,9 +160,9 @@ class Invoice < ActiveRecord::Base
         logger.debug "ERROR WITH Stripe #{e.to_yaml}"
       end
       if success
-        return (self.charged_state_tax_rate + self.charged_local_tax_rate).round(5)
+        @tax_rate ||= (self.charged_state_tax_rate + self.charged_local_tax_rate).round(5)
       else
-        return 0.0
+        @tax_rate ||= 0.0
       end
     end
   end
