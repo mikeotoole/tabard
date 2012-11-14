@@ -155,6 +155,11 @@ describe User do
       @user.has_accepted_current_terms_of_service?.should be_true
     end
   end
+
+  describe "update_stripe" do
+    pending
+  end
+
   describe "has_accepted_current_privacy_policy?" do
     before(:each) do
       @user = create(:user)

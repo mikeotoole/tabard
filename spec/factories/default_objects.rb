@@ -117,21 +117,39 @@ class DefaultObjects
     end
   end
 
-  def self.community_admin_with_stripe
-    if @community_admin_with_stripe
-      @community_admin_with_stripe
+  def self.community_admin_with_stripe_in_state
+    if @community_admin_with_stripe_in_state
+      @community_admin_with_stripe_in_state
     else
       community = FactoryGirl.create(:community, :name => "Admin with Stripe Comm")
-      @community_admin_with_stripe = community.admin_profile.user
+      @community_admin_with_stripe_in_state = community.admin_profile.user
 
       stripe_customer = Stripe::Customer.create(
         :description => "Customer for test@example.com",
-        :card => DefaultObjects.stripe_card_token.id
+        :card => DefaultObjects.stripe_card_token_in_state.id
       )
-      @community_admin_with_stripe.stripe_customer_token = stripe_customer.id
-      @community_admin_with_stripe.owned_communities << community
-      @community_admin_with_stripe.save!
-      @community_admin_with_stripe
+      @community_admin_with_stripe_in_state.stripe_customer_token = stripe_customer.id
+      @community_admin_with_stripe_in_state.owned_communities << community
+      @community_admin_with_stripe_in_state.save!
+      @community_admin_with_stripe_in_state
+    end
+  end
+
+  def self.community_admin_with_stripe_out_state
+    if @community_admin_with_stripe_out_state
+      @community_admin_with_stripe_out_state
+    else
+      community = FactoryGirl.create(:community, :name => "Admin with Stripe Comm")
+      @community_admin_with_stripe_out_state = community.admin_profile.user
+
+      stripe_customer = Stripe::Customer.create(
+        :description => "Customer for test@example.com",
+        :card => DefaultObjects.stripe_card_token_out_state.id
+      )
+      @community_admin_with_stripe_out_state.stripe_customer_token = stripe_customer.id
+      @community_admin_with_stripe_out_state.owned_communities << community
+      @community_admin_with_stripe_out_state.save!
+      @community_admin_with_stripe_out_state
     end
   end
 
@@ -173,13 +191,32 @@ class DefaultObjects
     @general_page_space ||= FactoryGirl.create(:page_space, :name => "General Stuff")
   end
 
-  def self.stripe_card_token
+  def self.stripe_card_token_out_state
     Stripe::Token.create(
         :card => {
         :number => "4242424242424242",
         :exp_month => 9,
         :exp_year => 2023,
-        :cvc => 314
+        :cvc => 314,
+        :address_line1 => '1421 Ducale DR SE',
+        :address_city => 'Rio Rancho',
+        :address_state => 'NM',
+        :address_zip => '87124'
+      },
+    )
+  end
+
+  def self.stripe_card_token_in_state
+    Stripe::Token.create(
+        :card => {
+        :number => "4242424242424242",
+        :exp_month => 9,
+        :exp_year => 2023,
+        :cvc => 314,
+        :address_line1 => '710 George Washington Way',
+        :address_city => 'Richland',
+        :address_state => 'WA',
+        :address_zip => '99352'
       },
     )
   end
@@ -194,7 +231,8 @@ class DefaultObjects
     @minecraft = nil
     @community = nil
     @community_two = nil
-    @community_admin_with_stripe = nil
+    @community_admin_with_stripe_in_state = nil
+    @community_admin_with_stripe_out_state = nil
     @general_discussion_space = nil
     @random_discussion = nil
     @custom_form = nil
