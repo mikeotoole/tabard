@@ -74,6 +74,7 @@ Devise.setup do |config|
   # without confirming the account, but blocking it after a certain period
   # (ie 2 days).
   config.allow_unconfirmed_access_for = 2.days
+  config.reconfirmable = true
 
   # Defines which key will be used when confirming an account
   # config.confirmation_keys = [ :email ]
