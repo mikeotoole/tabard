@@ -31,7 +31,7 @@ require 'spec_helper'
 describe Invoice do
   let(:invoice_item) { create(:invoice_item) }
   let(:invoice) { invoice_item.invoice.reload }
-  let(:community) { DefaultObjects.community_admin_with_stripe.communities.first }
+  let(:community) { DefaultObjects.community_admin_with_stripe_out_state.communities.first }
   let(:pro_plan) { community.current_community_plan }
   let(:user_pack) { pro_plan.community_upgrades.first }
   let(:invoice_item_attributes) { { "invoice_items_attributes" => { "0" => { "community_id"=>"#{community.id}",

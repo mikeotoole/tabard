@@ -42,7 +42,6 @@ class SubscriptionsController < PaymentController
       else
         @current_plan_invoice_item = @invoice.invoice_items.select{|ii| ii.has_community_plan?}.first
         @all_upgrades_invoice_items = @invoice.invoice_items.recurring.select{|ii| ii.has_community_upgrade?}
-        @invoice.invoice_items.each{|ii| puts ii.errors.full_messages}
       end
     rescue Stripe::StripeError => e
       @invoice.errors.add :base, "There was a problem with your credit card"
@@ -64,6 +63,16 @@ protected
   ###
   # _before_filter_
   #
+  # Loads variables
+  ###
+  def load_variables
+    @available_plans = CommunityPlan.available
+    @invoice = current_user.current_invoice
+  end
+
+  ###
+  # _before_filter_
+  #
   # Loads community used by edit and update.
   ###
   def load_community
@@ -78,15 +87,5 @@ protected
       flash[:notice] = "Your account is currently being processd and no changes can be made at this time."
       redirect_to subscriptions_url
     end
-  end
-
-  ###
-  # _before_filter_
-  #
-  # Loads variables
-  ###
-  def load_variables
-    @available_plans = CommunityPlan.available
-    @invoice = current_user.current_invoice
   end
 end
