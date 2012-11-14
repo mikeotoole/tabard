@@ -5,7 +5,10 @@
 = simple_form_for(@user, url: registration_url(@user, subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), html: { method: :put, autocomplete: :off }) do |f|
   %fieldset
     %ol
-      = f.input :email, required: true
+      -if @user.pending_reconfirmation?
+        = f.input :email, required: true, hint: "#{@user.unconfirmed_email} is awating confirmation"
+      - else
+        = f.input :email, required: true
       %li
         = f.input :is_email_on_message, label: "Send me an email when I receive a message", wrapper_tag: :div
         = f.input :is_email_on_announcement, label: "Send me an email when I receive an announcement", wrapper_tag: :div

@@ -39,11 +39,7 @@ en:
               restriced: "is not allowed"
             avatar:
               size_too_big: "image file size is too large (should be at most 2MB)"
-        swtor_character:
-          attributes:
-            avatar:
-              size_too_big: "image file size is too large (should be at most 2MB)"
-        wow_character:
+        character:
           attributes:
             avatar:
               size_too_big: "image file size is too large (should be at most 2MB)"
