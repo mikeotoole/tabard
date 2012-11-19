@@ -49,12 +49,12 @@ describe UserProfilesController do
       it "show should be successful when authenticated as a non-owner" do
         sign_in non_owner
         get 'show', :id => disabled_user_profile
-        response.should redirect_to(root_url(subdomain: "www"))
+        response.should render_template("inactive_show")
       end
 
       it "show should be successful when not authenticated as a user" do
         get 'show', :id => disabled_user_profile
-        response.should redirect_to(root_url(subdomain: "www"))
+        response.should render_template("inactive_show")
       end
     end
   end

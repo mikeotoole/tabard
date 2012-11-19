@@ -114,14 +114,14 @@ describe "ActiveAdmin Character" do
       login_as superadmin
 
       page.driver.delete("/alexandria/characters/#{character.id}")
-      Character.find(character).is_removed.should be_true
+      Character.exists?(character).should be_false
     end
 
     it "deletes character when logged in as admin" do
       login_as admin
 
       page.driver.delete("/alexandria/characters/#{character.id}")
-      Character.find(character).is_removed.should be_true
+      Character.exists?(character).should be_false
     end
 
     it "returns 403 when logged in as moderator" do
