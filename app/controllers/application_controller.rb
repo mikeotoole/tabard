@@ -130,7 +130,7 @@ protected
   end
   # This method gets the character id of the last posted character
   def last_posted_as_character_id
-    return nil if !session[:poster_type] or !session[:poster_id] or !!(session[:poster_type] =~ /UserProfile/)
+    return nil if session[:poster_type].blank? or session[:poster_id].blank? or !!(session[:poster_type] =~ /UserProfile/)
     return session[:poster_id].to_i
   end
   helper_method :last_posted_as_character_id

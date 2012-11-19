@@ -47,13 +47,6 @@ describe Character do
   end
 
   describe "is_disabled?" do
-    it "should return true when character is removed" do
-      character.is_disabled?.should be_false
-      character.destroy
-      character.is_removed.should_not be_false
-      Character.find(character).is_disabled?.should be_true
-    end
-
     it "should return true when character's owner is disabled" do
       character.user_profile.user.disable_by_admin
       character.user_profile.is_disabled?.should be_true
@@ -69,16 +62,10 @@ describe Character do
   end
 
   describe "destroy" do
-    it "should mark character as is_removed" do
+    it "should delete character" do
       character.should be_valid
       character.destroy.should be_true
-      character.reload.is_removed.should be_true
-    end
-
-    it "should not delete character" do
-      character.should be_valid
-      character.destroy.should be_true
-      Character.exists?(character).should be_true
+      Character.exists?(character).should be_false
     end
   end
 end

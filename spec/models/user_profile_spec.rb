@@ -417,7 +417,7 @@ describe UserProfile do
       profile.destroy
       characters.should_not be_empty
       characters.each do |character|
-        character.reload.is_removed.should be_true
+        Character.exists?(character).should be_false
       end
     end
 
