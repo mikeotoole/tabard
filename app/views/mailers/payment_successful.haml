@@ -24,6 +24,10 @@
             = number_to_currency(invoice_item.price_per_month_in_cents/100.0)
             &nbsp;=&nbsp;
             = number_to_currency(invoice_item.total_price_in_dollars)
+  %p
+    %strong SubTotal: #{number_to_currency(@invoice.total_price_in_dollars - @invoice.total_tax_in_dollars)}
+    %br
+    %strong Tax: #{number_to_currency(@invoice.total_tax_in_dollars)}
   %h3 Total: #{number_to_currency(@invoice.total_price_in_dollars)}
   %p
     DigitalAugment Inc.
