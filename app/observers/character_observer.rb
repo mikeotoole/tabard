@@ -31,6 +31,8 @@ class CharacterObserver < ActiveRecord::Observer
   # removes comment
   def after_destroy(character)
     Activity.where(target_type: character.class.to_s, target_id: character.id).destroy_all
+    session[:poster_type] = nil
+    session[:poster_id] = nil
     return true
   end
 end
