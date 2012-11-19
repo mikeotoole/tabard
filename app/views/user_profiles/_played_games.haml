@@ -1,16 +1,18 @@
-%h2.add
-  &nbsp;
-  = link_to "Add Game", new_played_game_url if can? :create, PlayedGame.new(user_profile_id: user_profile.id)
+- if can? :create, PlayedGame.new(user_profile_id: user_profile.id)
+  %h2.add= link_to "Add Game", new_played_game_url
+
 - if @played_games.any?
   - @played_games.each do |played_game|
     %h2.toggle.closed{ 'data-char-count' => played_game.characters.count}
       = played_game.game_name
-      = link_to "Add Character", new_played_game_characters_url([played_game]) if can? :create, Character.new(played_game_id: played_game.id)
+      %span.menu
+        - if can? :destroy, played_game
+          = link_to "Remove Game", played_game_url(played_game), class: 'remove', confirm: "Are you sure you want to remove #{played_game.game_name} from your played games? All characters will also be removed.", method: :delete
+        - if can? :create, Character.new(played_game_id: played_game.id)
+          = link_to "Add Character", new_played_game_characters_url([played_game]), class: 'add'
     -if played_game.characters.any?
       %ul.characters
         = render partial: "characters/#{played_game.game_type.downcase}/li", collection: played_game.characters, as: :character
-    - if can? :destroy, played_game
-      = link_to "Remove Game", played_game_url(played_game), confirm: "Are you sure you want to delete #{played_game.game_name} from your played games?", method: :delete
 
 - else
   %p None
