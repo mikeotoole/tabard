@@ -289,7 +289,7 @@ body.user_profiles.dashboard
               position: relative
               text-shadow: 0 -2px 1px #fff
               z-index: 2
-              &:after
+              &[data-char-count]:after
                 background: #90B4CA
                 +border_radius(20)
                 content: attr(data-char-count)
@@ -302,6 +302,11 @@ body.user_profiles.dashboard
                 text-shadow: none
               + h2
                 margin-top: 20px
+              .menu
+                +opacity(0)
+                +transition(opacity .2s linear)
+              &:hover .menu
+                +opacity(1)
               a
                 background: #2D7CB4
                 +border_radius(2)
@@ -319,9 +324,10 @@ body.user_profiles.dashboard
                   font: 1.5em Picara
                   padding-right: 5px
                 &:hover
-                  background: #A53E34
+                  background: #1467a1
               &.add
                 background: #eee
+                height: 24px
                 margin-bottom: -20px
                 a
                   background: #666
@@ -338,6 +344,25 @@ body.user_profiles.dashboard
                   color: #226599
               &.closed + ul
                 display: none
+              a.remove
+                background: #A53E34
+                overflow: hidden
+                text-indent: -500em
+                width: 12px
+                &:before
+                  content: '\F001'
+                  font: 1.5em Picara
+                  left: 0
+                  line-height: 100%
+                  padding-right: 0
+                  position: absolute
+                  right: 0
+                  text-align: center
+                  text-indent: 0
+                &:hover
+                  background: #8b3027
+              a.remove + a.add
+                right: 42px
             
             .characters
               margin: 0
