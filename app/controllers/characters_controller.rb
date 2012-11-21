@@ -27,7 +27,13 @@ class CharactersController < ApplicationController
 
   # DELETE /characters/:id
   def destroy
-    flash[:notice] = 'Character has been removed.' if @character.destroy
+    if @character.destroy
+      flash[:notice] = 'Character has been removed.'
+      if last_posted_as_character?(@character)
+        session[:poster_type] = nil
+        session[:poster_id] = nil
+      end
+    end
     redirect_to user_profile_url(current_user.user_profile, anchor: "games", subdomain: "www")
   end
 
