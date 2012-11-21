@@ -153,6 +153,21 @@ class DefaultObjects
     end
   end
 
+  def self.invoice
+    if @invoice
+      @invoice
+    else
+      invoice_item = FactoryGirl.create(:invoice_item)
+      old_invoice = invoice_item.invoice.reload
+      old_invoice.mark_paid_and_close
+      @invoice = old_invoice.user.current_invoice
+      user_pack = invoice_item.community.current_community_plan.community_upgrades.first
+      @invoice.invoice_items.new({community: invoice_item.community, item: user_pack, quantity: 1}, without_protection: true)
+      @invoice.save!
+      @invoice
+    end
+  end
+
   def self.community_two
     @community_two ||= FactoryGirl.create(:community, :name => "Default Community Two")
     unless @community_two.games.include?(DefaultObjects.swtor)
@@ -243,5 +258,6 @@ class DefaultObjects
     @discussion = nil
     @page_space = nil
     @general_page_space = nil
+    @invoice = nil
   end
 end

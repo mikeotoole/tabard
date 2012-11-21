@@ -4,8 +4,8 @@ FactoryGirl.define do
   factory :invoice do
     user_id { DefaultObjects.community_admin_with_stripe_out_state.id }
     stripe_charge_id nil
-    period_start_date Time.now.beginning_of_day
-    period_end_date Time.now.beginning_of_day
+    period_start_date Time.now.utc.beginning_of_day
+    period_end_date Time.now.utc.beginning_of_day
     paid_date nil
     discount_percent_off 0
     discount_discription nil
