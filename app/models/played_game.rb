@@ -5,6 +5,11 @@ class PlayedGame < ActiveRecord::Base
   has_many :characters, dependent: :destroy, order: 'LOWER(name)', conditions: {is_removed: nil} #TODO: Is this needed??
 
 
+###
+# Validators
+###
+  validates :game, presence: true
+
   delegate :type, to: :game, prefix: true, allow_nil: true
 
   def game_name
