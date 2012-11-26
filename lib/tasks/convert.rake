@@ -289,46 +289,48 @@ task :convert => :environment do
     cg.game_announcement_space_id = sg.game_announcement_space_id
     case sg.game_type.to_s
     when "Wow"
+      # Need to get game.
+      # ActiveRecord::Base.connection.execute("SELECT * FROM wows WHERE id = 1")
       cg.game = Wow.first
-      cg.faction = sg.faction
-      cg.server_name = sg.server_name
+      cg.faction = sg.faction #Broken
+      cg.server_name = sg.server_name #Broken
     when "Swtor"
       cg.game = Swtor.first
-      cg.faction = sg.faction
-      cg.server_name = sg.server_name
+      cg.faction = sg.faction #Broken
+      cg.server_name = sg.server_name #Broken
     when "Minecraft"
       cg.game = Minecraft.first
-      cg.server_type = sg.server_type
+      cg.server_type = sg.server_type #Broken
     end
     cg.save!
-    sg.roster_assignments.update_all(community_game_id: cg.id)
-    sg.announcements.update_all(community_game_id: cg.id)
-    sg.discussion_spaces.update_all(community_game_id: cg.id)
-    sg.page_spaces.update_all(community_game_id: cg.id)
-    sg.events.update_all(community_game_id: cg.id)
+    sg.roster_assignments.update_all(community_game_id: cg.id) #Broken add has_many back
+    sg.announcements.update_all(community_game_id: cg.id) #Broken
+    sg.discussion_spaces.update_all(community_game_id: cg.id) #Broken
+    sg.page_spaces.update_all(community_game_id: cg.id) #Broken
+    sg.events.update_all(community_game_id: cg.id) #Broken
   end
   #*Translate all characters
-  CharacterProxy.all.each do |proxy|
-    game = Game.find_by_name(proxy.game_name)
+  CharacterProxy.all.each do |proxy| # Readd model
+    game = Game.find_by_name(proxy.game_name) # Broken
     played_game = proxy.user_profile.played_games.find_or_create_by_game_id(game.id)
     played_game.save!
     new_character = Character.new
-    case game.class.to_sg
+    case game.class.to_s
     when "Wow"
-      new_character = played_game.new_character(proxy.character.attributes.slice!(:name,:avatar,:char_class,:race,:level,:about,:gender))
-      game_info = proxy.game
-      new_character.faction = game_info.faction
-      new_character.server_name = game_info.server_name
+      new_character = played_game.new_character(proxy.character.attributes.slice!(:name,:avatar,:char_class,:race,:level,:about,:gender)) # Broken
+      game_info = proxy.game # Broken
+      new_character.faction = game_info.faction # Broken
+      new_character.server_name = game_info.server_name # Broken
     when "Swtor"
-      new_character = played_game.new_character(proxy.character.attributes.slice!(:name,:avatar,:char_class,:advanced_class,:species,:level,:about,:gender))
+      new_character = played_game.new_character(proxy.character.attributes.slice!(:name,:avatar,:char_class,:advanced_class,:species,:level,:about,:gender)) # Broken
       game_info = proxy.game
-      new_character.faction = game_info.faction
-      new_character.server_name = game_info.server_name
+      new_character.faction = game_info.faction # Broken
+      new_character.server_name = game_info.server_name # Broken
     when "Minecraft"
-      new_character = played_game.new_character(proxy.character.attributes.slice!(:name,:avatar,:about))
+      new_character = played_game.new_character(proxy.character.attributes.slice!(:name,:avatar,:about)) # Broken
       game_info = proxy.game
-      new_character.faction = game_info.faction
-      new_character.server_name = game_info.server_name
+      new_character.faction = game_info.faction # Broken
+      new_character.server_name = game_info.server_name # Broken
     end
     new_character.save!
     proxy.roster_assignments.update_all(character_id: new_character.id)
