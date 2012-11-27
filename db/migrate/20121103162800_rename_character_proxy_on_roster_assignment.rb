@@ -1,5 +1,5 @@
 class RenameCharacterProxyOnRosterAssignment < ActiveRecord::Migration
   def change
-    rename_column :roster_assignments, :character_proxy_id, :character_id
+    add_column :roster_assignments, :character_id, :integer
   end
 end

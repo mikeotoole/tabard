@@ -290,50 +290,61 @@ task :convert => :environment do
     case sg.game_type.to_s
     when "Wow"
       # Need to get game.
-      # ActiveRecord::Base.connection.execute("SELECT * FROM wows WHERE id = 1")
       cg.game = Wow.first
-      cg.faction = sg.faction #Broken
-      cg.server_name = sg.server_name #Broken
+      cg.faction = ActiveRecord::Base.connection.execute("SELECT * FROM wows WHERE id = #{sg.game_id}").first["faction"]
+      cg.server_name = ActiveRecord::Base.connection.execute("SELECT * FROM wows WHERE id = #{sg.game_id}").first["server_name"]
     when "Swtor"
       cg.game = Swtor.first
-      cg.faction = sg.faction #Broken
-      cg.server_name = sg.server_name #Broken
+      cg.faction = ActiveRecord::Base.connection.execute("SELECT * FROM swtors WHERE id = #{sg.game_id}").first["faction"]
+      cg.server_name = ActiveRecord::Base.connection.execute("SELECT * FROM swtors WHERE id = #{sg.game_id}").first["server_name"]
     when "Minecraft"
       cg.game = Minecraft.first
-      cg.server_type = sg.server_type #Broken
+      cg.server_type = ActiveRecord::Base.connection.execute("SELECT * FROM minecrafts WHERE id = #{sg.game_id}").first["server_type"]
     end
     cg.save!
-    sg.roster_assignments.update_all(community_game_id: cg.id) #Broken add has_many back
-    sg.announcements.update_all(community_game_id: cg.id) #Broken
-    sg.discussion_spaces.update_all(community_game_id: cg.id) #Broken
-    sg.page_spaces.update_all(community_game_id: cg.id) #Broken
-    sg.events.update_all(community_game_id: cg.id) #Broken
+    RosterAssignment.where(supported_game_id: sg.id).update_all(community_game_id: cg.id) #Broken add has_many back
+    Announcement.where(supported_game_id: sg.id).update_all(community_game_id: cg.id) #Broken
+    DiscussionSpace.where(supported_game_id: sg.id).update_all(community_game_id: cg.id) #Broken
+    PageSpace.where(supported_game_id: sg.id).update_all(community_game_id: cg.id) #Broken
+    Event.where(supported_game_id: sg.id).update_all(community_game_id: cg.id) #Broken
   end
   #*Translate all characters
   CharacterProxy.all.each do |proxy| # Readd model
-    game = Game.find_by_name(proxy.game_name) # Broken
+    game = Game.new
+    old_character = Hash.new
+    old_game = Hash.new
+    case proxy.character_type.to_s
+    when "wow_character"
+      game = Wow.first
+      old_character = ActiveRecord::Base.connection.execute("SELECT * FROM wow_characters WHERE id = #{proxy.character_id}").first
+      old_game = ActiveRecord::Base.connection.execute("SELECT * FROM wows WHERE id = #{old_character["wow_id"]}").first
+    when "swtor_character"
+      game = Swtor.first
+      old_character = ActiveRecord::Base.connection.execute("SELECT * FROM swtor_characters WHERE id = #{proxy.character_id}").first
+      old_game = ActiveRecord::Base.connection.execute("SELECT * FROM wows WHERE id = #{old_character["swtor_id"]}").first
+    when "minecraft_character"
+      game = Minecraft.first
+      old_character = ActiveRecord::Base.connection.execute("SELECT * FROM minecraft_characters WHERE id = #{proxy.character_id}").first
+      old_game = ActiveRecord::Base.connection.execute("SELECT * FROM wows WHERE id = #{old_character["minecraft_id"]}").first
+    end
     played_game = proxy.user_profile.played_games.find_or_create_by_game_id(game.id)
     played_game.save!
     new_character = Character.new
     case game.class.to_s
     when "Wow"
-      new_character = played_game.new_character(proxy.character.attributes.slice!(:name,:avatar,:char_class,:race,:level,:about,:gender)) # Broken
-      game_info = proxy.game # Broken
-      new_character.faction = game_info.faction # Broken
-      new_character.server_name = game_info.server_name # Broken
+      new_character = played_game.new_character(old_character.slice!(:name,:avatar,:char_class,:race,:level,:about,:gender))
+      new_character.faction = old_game["faction"]
+      new_character.server_name = old_game["server_name"]
     when "Swtor"
-      new_character = played_game.new_character(proxy.character.attributes.slice!(:name,:avatar,:char_class,:advanced_class,:species,:level,:about,:gender)) # Broken
-      game_info = proxy.game
-      new_character.faction = game_info.faction # Broken
-      new_character.server_name = game_info.server_name # Broken
+      new_character = played_game.new_character(old_character.slice!(:name,:avatar,:char_class,:advanced_class,:species,:level,:about,:gender))
+      new_character.faction = old_game["faction"]
+      new_character.server_name = old_game["server_name"]
     when "Minecraft"
-      new_character = played_game.new_character(proxy.character.attributes.slice!(:name,:avatar,:about)) # Broken
-      game_info = proxy.game
-      new_character.faction = game_info.faction # Broken
-      new_character.server_name = game_info.server_name # Broken
+      new_character = played_game.new_character(old_character.slice!(:name,:avatar,:about))
+      new_character.server_type = old_game["server_type"]
     end
     new_character.save!
-    proxy.roster_assignments.update_all(character_id: new_character.id)
+    RosterAssignment.where(character_proxy_id: proxy.id).update_all(character_id: new_character.id)
     Announcement.where(character_proxy_id: proxy.id).update_all(character_id: new_character.id)
     Comment.where(character_proxy_id: proxy.id).update_all(character_id: new_character.id)
     Discussion.where(character_proxy_id: proxy.id).update_all(character_id: new_character.id)

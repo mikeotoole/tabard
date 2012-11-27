@@ -5,7 +5,7 @@
 #  id                        :integer          not null, primary key
 #  body                      :text
 #  user_profile_id           :integer
-#  character_id              :integer
+#  character_proxy_id        :integer
 #  community_id              :integer
 #  commentable_id            :integer
 #  commentable_type          :string(255)
@@ -17,6 +17,7 @@
 #  original_commentable_id   :integer
 #  original_commentable_type :string(255)
 #  deleted_at                :datetime
+#  character_id              :integer
 #
 
 require 'spec_helper'

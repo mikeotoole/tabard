@@ -1,5 +1,5 @@
 class RenameCharacterProxyOnDiscussion < ActiveRecord::Migration
   def change
-    rename_column :discussions, :character_proxy_id, :character_id
+    add_column :discussions, :character_id, :integer
   end
 end

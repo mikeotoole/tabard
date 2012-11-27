@@ -6,13 +6,14 @@
 #  name                :string(255)
 #  body                :text
 #  discussion_space_id :integer
-#  character_id        :integer
+#  character_proxy_id  :integer
 #  user_profile_id     :integer
 #  is_locked           :boolean          default(FALSE)
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  deleted_at          :datetime
 #  has_been_edited     :boolean          default(FALSE)
+#  character_id        :integer
 #
 
 require 'spec_helper'
