@@ -193,10 +193,10 @@ describe Invoice do
   it "should create prorated invoice items after save" do
     start_count = invoice.invoice_items.prorated.count
     Timecop.travel Time.now + 15.days
-    invoice.invoice_items.new({community: community, item: user_pack, quantity: 1}, without_protection: true)
+    ii = invoice.invoice_items.select{|ii| ii.item == user_pack and ii.is_recurring == true}.first
+    ii.quantity = 2
     invoice.save.should be_true
     invoice.reload
-    invoice.invoice_items.to_yaml.should eq "herp"
     invoice.invoice_items.prorated.count.should eq start_count + 1
     invoice.invoice_items.prorated.last.number_of_days.should eq 15
   end
@@ -311,16 +311,6 @@ describe Invoice do
       ii = invoice.plan_invoice_item_for_community(community)
       ii.community.should eq community
       ii.item.should eq pro_plan
-    end
-
-    it "should return non-recurring community plan invoice item when present" do
-      non_recurring = invoice.invoice_items.select{|ii| ii.community_id == community.id and ii.item == pro_plan and ii.is_recurring == true}.first
-      non_recurring.is_recurring = false
-      non_recurring.save.should be_true
-      invoice.reload
-      ii = invoice.plan_invoice_item_for_community(community)
-      ii.should eq non_recurring
-      ii.is_recurring.should be_false
     end
 
     it "should ignore any prorated community plan invoice items present" do
