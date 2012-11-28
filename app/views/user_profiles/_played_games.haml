@@ -15,4 +15,4 @@
         = render partial: "characters/#{played_game.game_type.downcase}/li", collection: played_game.characters, as: :character
 
 - else
-  %p None
+  %p You haven't added any games yet.
