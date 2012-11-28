@@ -283,7 +283,9 @@ task :convert => :environment do
   puts "Creating Minecraft Game..."
   Minecraft.create!(name: "Minecraft") unless Minecraft.count > 0
 
+  puts "! #{SupportedGame.all.count} Supported Games to convert..."
   SupportedGame.all.each do |sg|
+    puts "@ converting #{sg}..."
     cg = CommunityGame.new
     cg.community_id = sg.community_id
     cg.game_announcement_space_id = sg.game_announcement_space_id
@@ -309,7 +311,9 @@ task :convert => :environment do
     Event.where(supported_game_id: sg.id).update_all(community_game_id: cg.id) #Broken
   end
   #*Translate all characters
+  puts "! #{CharacterProxy.all.count} Characters to convert..."
   CharacterProxy.all.each do |proxy| # Readd model
+    puts "@ converting #{proxy}..."
     game = Game.new
     old_character = Hash.new
     old_game = Hash.new
