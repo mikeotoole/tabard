@@ -329,7 +329,7 @@ task :convert => :environment do
     when "MinecraftCharacter"
       game = Minecraft.first
       old_character = ActiveRecord::Base.connection.execute("SELECT * FROM minecraft_characters WHERE id = #{proxy.character_id}").first
-      old_game = ActiveRecord::Base.connection.execute("SELECT * FROM minecrafts WHERE id = #{old_character["minecraft_id"]}").first
+      old_game = ActiveRecord::Base.connection.execute("SELECT * FROM minecrafts").first
     else
       puts "!!!! Charcter type not found. Skipping!!"
       next
@@ -348,7 +348,6 @@ task :convert => :environment do
       new_character.server_name = old_game["server_name"]
     when "Minecraft"
       new_character = played_game.new_character(old_character.slice!(:name,:avatar,:about))
-      new_character.server_type = old_game["server_type"]
     end
     new_character.save!
     RosterAssignment.where(character_proxy_id: proxy.id).update_all(character_id: new_character.id)
