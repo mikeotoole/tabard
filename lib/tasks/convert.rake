@@ -248,7 +248,7 @@ task :convert => :environment do
     Zuljin| PvE| US,
     Zuluhed| PvP| US"
   puts "Creating WoW Game..."
-  Wow.create!(name: "World of Warcraft", servers: VALID_WOW_SERVERS.gsub(/[\r\n]/,""), aliases: "WoW")
+  Wow.create!(name: "World of Warcraft", servers: VALID_WOW_SERVERS.gsub(/[\r\n]/,""), aliases: "WoW") unless Wow.count > 0
 
   VALID_SWTOR_SERVERS =
      # US
@@ -278,10 +278,10 @@ task :convert => :environment do
     Dalborra| PvE| English"
 
   puts "Creating SWTOR Game..."
-  Swtor.create!(name: "Star Wars: The Old Republic", servers: VALID_SWTOR_SERVERS.gsub(/[\r\n]/,""), aliases: "SWTOR SW:TOR")
+  Swtor.create!(name: "Star Wars: The Old Republic", servers: VALID_SWTOR_SERVERS.gsub(/[\r\n]/,""), aliases: "SWTOR SW:TOR") unless Swtor.count > 0
 
   puts "Creating Minecraft Game..."
-  Minecraft.create!(name: "Minecraft")
+  Minecraft.create!(name: "Minecraft") unless Minecraft.count > 0
 
   SupportedGame.all.each do |sg|
     cg = CommunityGame.new

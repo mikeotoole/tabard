@@ -43,7 +43,7 @@ class LeagueOfLegends < Game
   end
 
   def self.champion_names
-    Wow.all.first.try(:champion_names)
+    LeagueOfLegends.all.first.try(:champion_names)
   end
 
   def self.game_name
@@ -81,7 +81,7 @@ class LeagueOfLegends < Game
   end
 
   def new_character(params)
-    #LeagueOfLegendsCharacter.new(params)
+    LeagueOfLegendsCharacter.new(params)
   end
 
   def set_specific_community_game_attributes

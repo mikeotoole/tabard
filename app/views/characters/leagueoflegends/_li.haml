@@ -1,0 +1,8 @@
+%li.leagueoflegends.character
+  %h3= link_to_if (can? :update, character), character.name, edit_character_url(character)
+  .avatar= image_tag character.avatar_url :small
+  %dl.attributes
+    %dt Region
+    %dd= character.region
+    %dt Prefered Champions
+    %dd= character.champions
