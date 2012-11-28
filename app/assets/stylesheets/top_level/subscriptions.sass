@@ -177,6 +177,7 @@
 
 #cc_input
   padding-bottom: 15px
+  position: relative
   blockquote.card-on-file
     margin: 0 20px 20px !important
   menu
@@ -220,3 +221,33 @@
         display: none
     #cc_fields
       display: block
+
+#card_form
+  position: relative
+
+#content .acceptedcards
+  background: #333
+  +border_radius(4)
+  color: #eee
+  padding: 20px
+  position: absolute
+  right: 20px
+  top: 80px
+  width: 280px
+  h2
+    background: #111
+    +border_radius(4,4,0,0)
+    color: #CF4527
+    margin: -20px -20px 10px
+    padding: 20px
+    text-shadow: 0 -1px 1px #000
+  ul
+    padding: 0
+  li
+    margin: 0
+    &:before
+      display: none !important
+    img
+      display: inline-block
+      margin: 0 5px 0 0
+      vertical-align: middle

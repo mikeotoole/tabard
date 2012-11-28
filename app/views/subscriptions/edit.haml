@@ -70,6 +70,7 @@
           = link_to 'Use card on file', 'javascript:;', class: 'onfile'
 
       %fieldset{ id: 'cc_fields', class: card_is_present ? 'hide' : '' }
+        = render 'card/accepted'
         %ol= render 'card/fields'
 
     %p.submit
