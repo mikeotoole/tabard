@@ -325,11 +325,11 @@ task :convert => :environment do
     when "SwtorCharacter"
       game = Swtor.first
       old_character = ActiveRecord::Base.connection.execute("SELECT * FROM swtor_characters WHERE id = #{proxy.character_id}").first
-      old_game = ActiveRecord::Base.connection.execute("SELECT * FROM wows WHERE id = #{old_character["swtor_id"]}").first
+      old_game = ActiveRecord::Base.connection.execute("SELECT * FROM swtors WHERE id = #{old_character["swtor_id"]}").first
     when "MinecraftCharacter"
       game = Minecraft.first
       old_character = ActiveRecord::Base.connection.execute("SELECT * FROM minecraft_characters WHERE id = #{proxy.character_id}").first
-      old_game = ActiveRecord::Base.connection.execute("SELECT * FROM wows WHERE id = #{old_character["minecraft_id"]}").first
+      old_game = ActiveRecord::Base.connection.execute("SELECT * FROM minecrafts WHERE id = #{old_character["minecraft_id"]}").first
     else
       puts "!!!! Charcter type not found. Skipping!!"
       next
