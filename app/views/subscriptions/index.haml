@@ -5,6 +5,8 @@
 = render 'shared/subscriptions_submenu', current: 'subscriptions'
 
 - if @owned_communities.size > 0
+  - if current_user.total_recurring_price_per_month_in_dollars > 0
+    = render "subscriptions/notice"
   %table
     %thead
       %tr
