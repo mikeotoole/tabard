@@ -313,23 +313,26 @@ task :convert => :environment do
   #*Translate all characters
   puts "! #{CharacterProxy.all.count} Characters to convert..."
   CharacterProxy.all.each do |proxy| # Readd model
-    puts "@ converting #{proxy}..."
+    puts "@ converting #{proxy.to_yaml}..."
     game = Game.new
     old_character = Hash.new
     old_game = Hash.new
     case proxy.character_type.to_s
-    when "wow_character"
+    when "WowCharacter"
       game = Wow.first
       old_character = ActiveRecord::Base.connection.execute("SELECT * FROM wow_characters WHERE id = #{proxy.character_id}").first
       old_game = ActiveRecord::Base.connection.execute("SELECT * FROM wows WHERE id = #{old_character["wow_id"]}").first
-    when "swtor_character"
+    when "SwtorCharacter"
       game = Swtor.first
       old_character = ActiveRecord::Base.connection.execute("SELECT * FROM swtor_characters WHERE id = #{proxy.character_id}").first
       old_game = ActiveRecord::Base.connection.execute("SELECT * FROM wows WHERE id = #{old_character["swtor_id"]}").first
-    when "minecraft_character"
+    when "MinecraftCharacter"
       game = Minecraft.first
       old_character = ActiveRecord::Base.connection.execute("SELECT * FROM minecraft_characters WHERE id = #{proxy.character_id}").first
       old_game = ActiveRecord::Base.connection.execute("SELECT * FROM wows WHERE id = #{old_character["minecraft_id"]}").first
+    else
+      puts "!!!! Charcter type not found. Skipping!!"
+      next
     end
     played_game = proxy.user_profile.played_games.find_or_create_by_game_id(game.id)
     played_game.save!

@@ -8,7 +8,8 @@ class PlayedGame < ActiveRecord::Base
 ###
 # Validators
 ###
-  validates :game_id, uniqueness: {scope: :user_profile_id}, presence: true
+  validates :game, presence: true
+  validates :game_id, uniqueness: {scope: :user_profile_id}
 
   delegate :type, to: :game, prefix: true, allow_nil: true
 
