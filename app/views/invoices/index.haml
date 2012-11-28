@@ -5,6 +5,7 @@
 = render 'shared/subscriptions_submenu', current: 'invoices'
 
 - if @invoices.any?
+  = render "subscriptions/notice"
   %table
     %thead
       %tr

@@ -48,7 +48,10 @@
 
     #upgrades.section
       %h1 Add Members
-      %p Scale your community by adding packs of 20 additional users.
+      %p
+        Need room for more than 100 members?
+        %br
+        Let Tabard grow with you by adding additional member packs.
       %ol
         = f.simple_fields_for :invoice_items, @all_upgrades_invoice_items do |sf|
           = sf.input :community_id, as: :hidden
@@ -70,6 +73,7 @@
           = link_to 'Use card on file', 'javascript:;', class: 'onfile'
 
       %fieldset{ id: 'cc_fields', class: card_is_present ? 'hide' : '' }
+        = render 'card/accepted'
         %ol= render 'card/fields'
 
     %p.submit

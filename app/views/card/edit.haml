@@ -4,6 +4,7 @@
 
 - content_for :header do
   %meta{ name: "stripe-key", content: STRIPE_PUBLIC_KEY }
+  = stylesheet_link_tag "top_level/subscriptions"
 
 - content_for :footer do
   %script{ type: 'text/javascript' }
@@ -22,6 +23,7 @@
   = hidden_field_tag 'stripe_card_token'
   %fieldset
     %h1= title
+    = render 'card/accepted'
     %ol= render 'card/fields'
     - if !!@invoice
       %hr
