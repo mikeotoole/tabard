@@ -339,16 +339,17 @@ task :convert => :environment do
     new_character = Character.new
     case game.class.to_s
     when "Wow"
-      new_character = played_game.new_character(old_character.slice!(:name,:avatar,:char_class,:race,:level,:about,:gender))
+      new_character = played_game.new_character(old_character.slice!(:name,:char_class,:race,:level,:about,:gender))
       new_character.faction = old_game["faction"]
       new_character.server_name = old_game["server_name"]
     when "Swtor"
-      new_character = played_game.new_character(old_character.slice!(:name,:avatar,:char_class,:advanced_class,:species,:level,:about,:gender))
+      new_character = played_game.new_character(old_character.slice!(:name,:char_class,:advanced_class,:species,:level,:about,:gender))
       new_character.faction = old_game["faction"]
       new_character.server_name = old_game["server_name"]
     when "Minecraft"
-      new_character = played_game.new_character(old_character.slice!(:name,:avatar,:about))
+      new_character = played_game.new_character(old_character.slice!(:name,:about))
     end
+    new_character.remote_avatar_url = old_character.avatar_url
     new_character.save!
     RosterAssignment.where(character_proxy_id: proxy.id).update_all(character_id: new_character.id)
     Announcement.where(character_proxy_id: proxy.id).update_all(character_id: new_character.id)
