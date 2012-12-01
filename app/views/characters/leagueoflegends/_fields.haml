@@ -4,8 +4,9 @@
 %h3 Prefered Champion
 - LeagueOfLegends.champion_names.each do |name|
   - next if name.blank?
-  = check_box_tag "character[champions][]", name, character.preferes_champion?(name), id: "champion_#{name}"
-  = label_tag "champion_#{name}", name
+  - champion_id = name.downcase.parameterize.underscore
+  = check_box_tag "character[champions][]", name, character.preferes_champion?(name), id: "champion_#{champion_id}"
+  = label_tag "champion_#{champion_id}", name
 = f.input :about
 %li.avatar{ class: f.object.errors.any? ? 'with-errors' : '' }
   - if !character.persisted? or !character.avatar_url.to_s or f.object.errors.any?
