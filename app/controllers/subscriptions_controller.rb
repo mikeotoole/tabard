@@ -31,6 +31,8 @@ class SubscriptionsController < PaymentController
     if @all_upgrades_invoice_items.blank?
       @all_upgrades_invoice_items = @invoice.invoice_items.new({item: CommunityUpgrade.first, quantity: 0, community_id: @community.id}, without_protection: true)
     end
+
+    flash[:success] = "To upgrade to a Pro community, add or update your card on file and click 'Update Subscription'." if params[:upgrade] == 'true'
   end
 
   # PUT /subscriptions/:community_id

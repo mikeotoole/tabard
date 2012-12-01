@@ -29,7 +29,7 @@
           = sf.input :quantity, as: :hidden
 
         - @available_plans.each do |plan|
-          - is_current = plan.id == @current_plan_invoice_item.item_id
+          - is_current = ((params[:upgrade] == 'true' and !plan.is_free_plan?) or (params[:upgrade] != 'true' and plan.id == @current_plan_invoice_item.item_id))
           %input{ id: "community_plan_#{plan.id}", type: 'radio', name: 'invoice[invoice_items_attributes][0][item_id]', data: {price: plan.price_per_month_in_cents, members: plan.max_number_of_users}, value: plan.id, checked: is_current ? 'checked' : nil }
           %label{ for: "community_plan_#{plan.id}", title: plan.description }
             %span.title= plan.title.gsub(/\s*community\s*/i, '')
@@ -75,6 +75,7 @@
       %fieldset{ id: 'cc_fields', class: card_is_present ? 'hide' : '' }
         = render 'card/accepted'
         %ol= render 'card/fields'
+        = render "subscriptions/notice"
 
     %p.submit
       = f.button :submit, 'Update Subscription'
