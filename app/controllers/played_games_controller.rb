@@ -22,6 +22,7 @@ class PlayedGamesController < ApplicationController
   end
 
   def new
+    @popular_games = Game.popular.limit 5
   end
 
   def create
