@@ -65,7 +65,7 @@ class LeagueOfLegends < Game
     if self.champions.present?
       self.champions.split(",").each do |server|
         a_server = server.split("|")
-        array << {name: a_server[0].strip, url: a_server[1].strip, avatar: a_server[2].strip}
+        array << {name: a_server[0].strip}
       end
     end
     array
