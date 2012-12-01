@@ -1,0 +1,30 @@
+@import mixins
+
+#content #new_character
+  fieldset
+    width: 434px
+  textarea
+    width: 880px
+
+#content li.col3,
+#content li.col4
+  padding:  10px 0
+  ul
+    padding: 10px 0 0
+    width: 900px
+  li
+    float: left
+    label
+      font-size: 14px
+  &:after
+    clear: both
+    content: '.'
+    display: block
+    height: 0
+    visibility: hidden
+
+#content li.col3 li
+  width: 280px
+
+#content li.col4 li
+  width: 205px

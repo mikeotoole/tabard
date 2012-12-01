@@ -1,5 +1,8 @@
 %h1 New #{@character.game_name.to_s} Character
 
+- content_for :header do
+  = stylesheet_link_tag "top_level/characters"
+
 = simple_form_for [@played_game, @character], html: {novalidate: true} do |f|
   %fieldset
     %ol
