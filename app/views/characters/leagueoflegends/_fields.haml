@@ -1,12 +1,10 @@
 = f.input :name, label: "Summoner Name"
 = f.input :level
 = f.input :region, as: :radio_buttons, required: true, label: 'Region', collection: LeagueOfLegends.regions, wrapper_html: { class: 'select with-label'}
-%h3 Prefered Champion
-- LeagueOfLegends.champion_names.each do |name|
-  - next if name.blank?
-  - champion_id = name.downcase.parameterize.underscore
-  = check_box_tag "character[champions][]", name, character.preferes_champion?(name), id: "champion_#{champion_id}"
-  = label_tag "champion_#{champion_id}", name
+%li.champions
+  %label Prefered Champions (select 5)
+  %ul
+    = f.collection_check_boxes :prefered_champions_array, LeagueOfLegends.champion_names.map{|champ| [champ, champ]}, :first, :last
 = f.input :about
 %li.avatar{ class: f.object.errors.any? ? 'with-errors' : '' }
   - if !character.persisted? or !character.avatar_url.to_s or f.object.errors.any?

@@ -56,7 +56,7 @@ class LeagueOfLegendsCharacter < Character
     end
   end
 
-  def preferes_champion?(name)
+  def prefers_champion?(name)
     return prefered_champions_array.include?(name)
   end
 
