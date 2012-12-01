@@ -17,6 +17,6 @@
     = link_to 'Add a role', new_role_path, remote: true, data: { type: :text }, class: 'button'
   - if can? :upgrade, current_community and not current_community.is_paid_community?
     %p Need custom roles?
-    = link_to 'Upgrade to Pro', edit_subscription_path(current_community), class: 'button'
+    = link_to 'Upgrade to Pro', edit_subscription_path(current_community, upgrade: true), class: 'button'
 #role
   = render 'form', role: @role ? @role : @roles.first

@@ -38,13 +38,13 @@
               - if recurring.persisted?
                 = link_to 'Edit', edit_subscription_path(community), class: 'edit', meta: 'Edit subscription'
               - else
-                = link_to 'Upgrade', edit_subscription_path(community), class: 'upgrade', meta: 'Upgrade to pro'
+                = link_to 'Upgrade', edit_subscription_path(community, upgrade: true), class: 'upgrade', meta: 'Upgrade to pro'
     %tfoot
       %tr
         %td.r{ colspan: 2 }
           = "Subscription#{@owned_communities.size > 1 ? 's' : ''} Subtotal:"
           %br
-          Your Next Bill:
+          Next scheduled payment (#{@invoice.period_start_date.strftime("%b %e, %Y")}):
         %td.r
           = number_to_currency(current_user.total_recurring_price_per_month_in_dollars)
           %br
