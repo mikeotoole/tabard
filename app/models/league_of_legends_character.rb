@@ -16,7 +16,7 @@ class LeagueOfLegendsCharacter < Character
 # Attribute accessible
 ###
   attr_accessor :champions
-  attr_accessible :name, :region, :champions
+  attr_accessible :name, :region, :champions, :level
 
 ###
 # Callbacks
@@ -27,13 +27,13 @@ class LeagueOfLegendsCharacter < Character
 # H-Store
 ###
   # Dynamicly add setter, getter, and scopes for keys (See lib/hstore_accessor.rb).
-  hstore_accessor :info, :region, :prefered_champions
+  hstore_accessor :info, :region, :level, :prefered_champions
 
 ###
 # Validators
 ###
   validates :name, presence: true
-  # NEED TO CHECK CHAMPIONS
+  validates :level, numericality: {only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 30}
 
 ###
 # Public Methods
