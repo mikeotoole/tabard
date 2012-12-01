@@ -15,13 +15,7 @@ class LeagueOfLegendsCharacter < Character
 ###
 # Attribute accessible
 ###
-  attr_accessor :champions
   attr_accessible :name, :region, :champions, :level
-
-###
-# Callbacks
-###
-  before_save :convert_characters
 
 ###
 # H-Store
@@ -38,10 +32,14 @@ class LeagueOfLegendsCharacter < Character
 ###
 # Public Methods
 ###
-  def convert_characters
-    return if self.champions.blank?
+  def champions
+    prefered_champions_array
+  end
+
+  def champions=(champion_array)
+    return if champion_array.blank?
     clean_champion_array = Array.new
-    champions.to_s.delete("[]").split(',').each do |champion|
+    champion_array.to_s.delete("[]").split(',').each do |champion|
       scrubbed = champion.strip.delete("\"")
       clean_champion_array << scrubbed if not scrubbed.blank? and LeagueOfLegends.champion_names.include?(scrubbed)
     end

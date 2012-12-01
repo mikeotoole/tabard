@@ -165,6 +165,7 @@ class Invoice < ActiveRecord::Base
         @tax_rate ||= 0.0
       end
     end
+    return @tax_rate
   end
 
   ###
