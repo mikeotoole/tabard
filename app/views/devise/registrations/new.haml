@@ -22,10 +22,6 @@
           %mark.error= f.object.errors[:date_of_birth].first
       %li.help{ href: 'javascript:;', onclick: '$.alert({title:"Your Birthday",body:"Tabard is a service exclusively for players 13 years of age and older. We need your birthday to make sure that you are eligible for an account."})' }
         Why is my birthday required?
-      - unless !!cookies[:timezone]
-        = f.input :time_zone, required: false, collection: timezone_collection_hash, as: :radio_buttons, wrapper_html: { class: 'select' }
-    - if !!cookies[:timezone]
-      = f.input :time_zone, as: :hidden, input_html: { value: cookies[:timezone].to_s }
     %p.terms.input.boolean{ class: resource.errors[:terms].any? ? 'with-errors' : '' }
       = check_box_tag 'user[terms]'
       = label_tag :user_terms do
