@@ -15,13 +15,19 @@ class LeagueOfLegendsCharacter < Character
 ###
 # Attribute accessible
 ###
+  attr_accessor :champions
   attr_accessible :name, :region, :champions
+
+###
+# Callbacks
+###
+  before_save :convert_characters
 
 ###
 # H-Store
 ###
   # Dynamicly add setter, getter, and scopes for keys (See lib/hstore_accessor.rb).
-  hstore_accessor :info, :region, :champions
+  hstore_accessor :info, :region, :prefered_champions
 
 ###
 # Validators
@@ -32,6 +38,27 @@ class LeagueOfLegendsCharacter < Character
 ###
 # Public Methods
 ###
+  def convert_characters
+    return if self.champions.blank?
+    clean_champion_array = Array.new
+    champions.to_s.delete("[]").split(',').each do |champion|
+      scrubbed = champion.strip.delete("\"")
+      clean_champion_array << scrubbed if not scrubbed.blank? and LeagueOfLegends.champion_names.include?(scrubbed)
+    end
+    self.prefered_champions = clean_champion_array.to_json
+  end
+
+  def prefered_champions_array
+    if self.prefered_champions.blank?
+      return Array.new
+    else
+      return JSON.parse(self.prefered_champions)
+    end
+  end
+
+  def preferes_champion?(name)
+    return prefered_champions_array.include?(name)
+  end
 
 ###
 # Class Methods
