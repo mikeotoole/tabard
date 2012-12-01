@@ -66,7 +66,7 @@ class Invoice < ActiveRecord::Base
 ###
   # This will call charge_customer on all invoices that have an end_date before today.
   def self.bill_customers
-    today = Time.now.end_of_day
+    today = Time.zone.now.end_of_day
     seven_days_ago = today - 7.days
     invoices_to_bill = Invoice.where{(period_end_date <= today) &
                                      (paid_date == nil) &

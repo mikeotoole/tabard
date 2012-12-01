@@ -202,10 +202,10 @@ class User < ActiveRecord::Base
 
     # A user with an invoice more then 7 days past due has end date set to today. This invoice should only have old prorated items on it.
     if invoice.present? and invoice.first_failed_attempt_date.present?
-      invoice.period_end_date = Time.now.beginning_of_day if  (Time.now - invoice.first_failed_attempt_date) > Invoice::SECONDS_OF_FAILED_ATTEMPTS
+      invoice.period_end_date = Time.zone.now.beginning_of_day if  (Time.now - invoice.first_failed_attempt_date) > Invoice::SECONDS_OF_FAILED_ATTEMPTS
     end
 
-    invoice = self.invoices.new({period_start_date: Time.now.beginning_of_day, period_end_date: Time.now.beginning_of_day}, without_protection: true) if invoice.blank?
+    invoice = self.invoices.new({period_start_date: Time.zone.now.beginning_of_day, period_end_date: Time.zone.now.beginning_of_day}, without_protection: true) if invoice.blank?
     return invoice
   end
 
