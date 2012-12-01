@@ -9,7 +9,7 @@ class Game < ActiveRecord::Base
 ###
 # Constants
 ###
-  VALID_GAMES = [['World of Warcraft', 'Wow'], ['Star Wars: The Old Republic', 'Swtor'], ['Minecraft', 'Minecraft'], ['Custom Game', 'CustomGame']]
+  VALID_GAMES = [['World of Warcraft', 'Wow'], ['Star Wars: The Old Republic', 'Swtor'], ['Minecraft', 'Minecraft'], ['League Of Legends', 'LeagueOfLegends'], ['Custom Game', 'CustomGame']]
 
 ###
 # Attribute accessible
@@ -38,6 +38,9 @@ class Game < ActiveRecord::Base
 ###
 # Class Methods
 ###
+  def self.popular
+    PlayedGame.order(:game_id).group_by(&:game_id).map{|id, pgs| pgs.first.game} #TODO fix this
+  end
   # Search game name and aliases for given term.
   def self.search(search)
     game_name = "%#{search}%"
