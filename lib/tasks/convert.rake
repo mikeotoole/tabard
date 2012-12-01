@@ -342,14 +342,20 @@ task :convert => :environment do
       new_character = played_game.new_character(old_character.slice!(:name,:char_class,:race,:level,:about,:gender))
       new_character.faction = old_game["faction"]
       new_character.server_name = old_game["server_name"]
+      new_character.remote_avatar_url = "https://tabard.s3.amazonaws.com/uploads/wow_character/avatar/#{old_character["id"]}/#{old_character["avatar"]}" unless old_character["avatar"].blank?
     when "Swtor"
       new_character = played_game.new_character(old_character.slice!(:name,:char_class,:advanced_class,:species,:level,:about,:gender))
       new_character.faction = old_game["faction"]
       new_character.server_name = old_game["server_name"]
+      new_character.remote_avatar_url = "https://tabard.s3.amazonaws.com/uploads/swtor_character/avatar/#{old_character["id"]}/#{old_character["avatar"]}" unless old_character["avatar"].blank?
     when "Minecraft"
       new_character = played_game.new_character(old_character.slice!(:name,:about))
+      unless old_character["avatar"].blank?
+        puts "########## Setting avatar:"
+        puts "https://tabard.s3.amazonaws.com/uploads/minecraft_character/avatar/#{old_character["id"]}/#{old_character["avatar"]}"
+        new_character.remote_avatar_url = "https://tabard.s3.amazonaws.com/uploads/minecraft_character/avatar/#{old_character["id"]}/#{old_character["avatar"]}"
+      end
     end
-    new_character.remote_avatar_url = old_character.avatar_url
     new_character.save!
     RosterAssignment.where(character_proxy_id: proxy.id).update_all(character_id: new_character.id)
     Announcement.where(character_proxy_id: proxy.id).update_all(character_id: new_character.id)
