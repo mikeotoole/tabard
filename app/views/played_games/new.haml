@@ -6,8 +6,12 @@
 = simple_form_for @played_game, html: {novalidate: true} do |f|
   %fieldset
     %ol
-      = f.input :game_name, input_html:{ data: {autocomplete_source: autocomplete_played_games_url(subdomain:'www')}}
+      = f.input :game_name, hint: 'WoW, League of Legends, Black Ops, etc.', input_html: {data: {autocomplete_source: autocomplete_played_games_url(subdomain:'www')}}
       %li
         %button{ type: 'submit' } Create Game
 
-= render 'shared/user_account_links'
+.sidelinks
+  %h2 Popular Games
+  %ul
+    - @popular_games.each do |game|
+      %li= game

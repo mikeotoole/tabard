@@ -23,7 +23,7 @@
                 Current
           %td.r
             %strong= number_to_currency(invoice.total_price_in_dollars)
-          %td.nowrap= invoice.is_closed ? 'Closed' : 'Open'
+          %td.nowrap= invoice.is_closed ? !!invoice.paid_date ? 'Paid' : 'Closed' : 'Open'
     %tfoot
       %tr
         %td{ colspan: 3 }

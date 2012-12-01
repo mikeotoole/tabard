@@ -15,13 +15,7 @@ class LeagueOfLegendsCharacter < Character
 ###
 # Attribute accessible
 ###
-  attr_accessor :champions
   attr_accessible :name, :region, :champions, :level
-
-###
-# Callbacks
-###
-  before_save :convert_characters
 
 ###
 # H-Store
@@ -33,15 +27,19 @@ class LeagueOfLegendsCharacter < Character
 # Validators
 ###
   validates :name, presence: true
-  validates :level, numericality: {only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 30}
+  validates :level, presence: true, numericality: {only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 30}
 
 ###
 # Public Methods
 ###
-  def convert_characters
-    return if self.champions.blank?
+  def champions
+    prefered_champions_array
+  end
+
+  def champions=(champion_array)
+    return if champion_array.blank?
     clean_champion_array = Array.new
-    champions.to_s.delete("[]").split(',').each do |champion|
+    champion_array.to_s.delete("[]").split(',').each do |champion|
       scrubbed = champion.strip.delete("\"")
       clean_champion_array << scrubbed if not scrubbed.blank? and LeagueOfLegends.champion_names.include?(scrubbed)
     end
@@ -56,7 +54,7 @@ class LeagueOfLegendsCharacter < Character
     end
   end
 
-  def preferes_champion?(name)
+  def prefers_champion?(name)
     return prefered_champions_array.include?(name)
   end
 
