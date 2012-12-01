@@ -11,7 +11,7 @@ class CharactersController < ApplicationController
 
   # POST /played_games/:played_game_id/characters
   def create
-    flash[:success] = "Your character has been created." if @character.save!
+    flash[:success] = "Your character has been created." if @character.save
     respond_with(@character, location: user_profile_url(current_user.user_profile, anchor: "games", subdomain: "www"))
   end
 

@@ -28,6 +28,7 @@ class LeagueOfLegendsCharacter < Character
 ###
   validates :name, presence: true
   validates :level, presence: true, numericality: {only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 30}
+  validate :no_more_than_5_champions
 
 ###
 # Public Methods
@@ -65,7 +66,9 @@ class LeagueOfLegendsCharacter < Character
 ###
 # Validator Methods
 ###
-
+  def no_more_than_5_champions
+    self.errors.add(:base, "You can have no more than 5 prefered champions") if self.champions.count > 5
+  end
 end
 
 # == Schema Information
