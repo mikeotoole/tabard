@@ -152,16 +152,16 @@ class Invoice < ActiveRecord::Base
               end
             else
               "ERROR WITH WA #{response.to_yaml}"
-              raise WATaxError
+              raise WATaxError, ""
             end
           rescue => e
             logger.debug "ERROR WITH WA REQUEST #{e.to_yaml}"
-            raise WATaxError
+            raise WATaxError, ""
           end
         end
       rescue => e
         logger.debug "ERROR WITH Stripe #{e.to_yaml}"
-        raise WATaxError
+        raise WATaxError, ""
       end
       if success
         @tax_rate ||= (self.charged_state_tax_rate + self.charged_local_tax_rate).round(5)
