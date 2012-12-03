@@ -6,6 +6,7 @@
 # This is a single invoice used for paid services.
 ###
 class Invoice < ActiveRecord::Base
+  include Exceptions
   require 'rest_client'
   # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
   acts_as_paranoid
@@ -151,13 +152,16 @@ class Invoice < ActiveRecord::Base
               end
             else
               "ERROR WITH WA #{response.to_yaml}"
+              raise WATaxError
             end
           rescue => e
             logger.debug "ERROR WITH WA REQUEST #{e.to_yaml}"
+            raise WATaxError
           end
         end
       rescue => e
         logger.debug "ERROR WITH Stripe #{e.to_yaml}"
+        raise WATaxError
       end
       if success
         @tax_rate ||= (self.charged_state_tax_rate + self.charged_local_tax_rate).round(5)

@@ -6,6 +6,7 @@
 # This is the application cotroller.
 ###
 class ApplicationController < ActionController::Base
+  include Exceptions
   # Turn on request forgery protection. Bear in mind that only non-GET, HTML/JavaScript requests are checked.
   protect_from_forgery
 
@@ -52,6 +53,10 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActiveRecord::RecordNotFound do |exception|
     http_status_code(:not_found, exception)
+  end
+
+  rescue_from WATaxError do |exception|
+    render text: "TAX DOWN"
   end
 
   ###
