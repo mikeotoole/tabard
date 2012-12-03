@@ -133,7 +133,7 @@ class RegistrationsController < Devise::RegistrationsController
 ###
   # Where to redirect to after signing up with devise
   def after_sign_up_path_for(resource)
-    root_url_hack_helper(root_url(protocol: "http://", subdomain: "www"))
+    user_profile_url(resource.user_profile, subdomain: "www", anchor: "games")
   end
 
   # Where to redirect to after signing up with devise, and the account is inactive.
