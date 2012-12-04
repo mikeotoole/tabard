@@ -251,7 +251,6 @@ class Community < ActiveRecord::Base
   # OPTIMIZE: We may want to cache max_number_of_users.
   ###
   def max_number_of_users
-    return 20
     plan_users_total = self.current_community_plan.max_number_of_users
     user_pack_upgrades_ii = current_upgrades.joins{community_user_pack_items}
     upgrade_users_total = user_pack_upgrades_ii.map{|u| u.item.number_of_bonus_users * u.quantity}.inject(0,:+)
