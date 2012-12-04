@@ -45,7 +45,7 @@
     You're not one to take direction from the other players.
     You're a leader, a champion, a creator of your own destiny.
   %p
-    = link_to 'Create a community', new_community_url
+    = link_to 'Create a community', new_community_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"))
     by logging in and selecting "Add a Community" from "My Communities" dropdown in your action bar.
   %h2
     %font{ color: '#333' } Getting Help

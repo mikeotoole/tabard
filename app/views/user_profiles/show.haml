@@ -41,7 +41,7 @@
         You do not have any memberships yet.
         = link_to 'Find a community ›', search_url
         %br
-        = link_to 'Create a community ›', new_community_url
+        = link_to 'Create a community ›', new_community_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"))
     - else
       %p
         This user is not a member of any communities.

@@ -12,7 +12,7 @@
         - unless current_user.communities.any?
           = link_to 'Find a community', search_url(subdomain: "www")
         - if current_user.owned_communities.size < Community::MAX_OWNED_COMMUNITIES
-          %li.add= link_to 'Add a community', new_community_url(subdomain: "www")
+          %li.add= link_to 'Add a community', new_community_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"))
 
 %ul.dashboard
   %li.notice
