@@ -1,6 +1,9 @@
+%h1 Invitations
+
 - if invites.any?
   = paginate invites
   = render "invites/table", invites: invites
   = paginate invites
+
 - else
-  You do not have any invites.
+  You do not have any invitations.

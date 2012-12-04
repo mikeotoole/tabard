@@ -1,3 +1,5 @@
+%h1 Roles &amp; Permissions
+
 - if roles.any?
   - roles.group_by{|r| r.community }.each do |community, roles|
     %h2= "#{community.name} roles"
