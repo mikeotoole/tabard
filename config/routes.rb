@@ -265,7 +265,7 @@ DaBvRails::Application.routes.draw do
 
   get '/robots.txt' => 'status_code#robots'
 
-  get '/mu-966b75a4-895e39c0-a6d40536-f8b36f30' => "status_code#blitz"
+  get '/mu-2656c9d8-02082dc2-3904fc4c-9012184b' => "status_code#blitz"
 
   get "/unsupported_browser" => "status_code#unsupported_browser", as: 'unsupported_browser'
   match '/not_found' => 'status_code#not_found', as: 'not_found'
