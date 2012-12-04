@@ -252,11 +252,15 @@
       margin: 0 5px 0 0
       vertical-align: middle
 
-#content h2.paid
+#content h2.paid,
+#content h2.tobepaid
   border-top: 1px solid #ddd
   color: #B03E24
   padding: 5px 0 10px
   &:before
-    content: '\F000'
     font: 1.5em Picara
     padding: 0 10px 0 0
+#content h2.paid:before
+  content: '\F000'
+#content h2.tobepaid:before
+  content: '\F00E'

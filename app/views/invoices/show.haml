@@ -11,6 +11,8 @@
 
 - if @invoice.is_closed? and !!@invoice.paid_date
   %h2.paid PAID on #{@invoice.paid_date.strftime("%b %e, %Y")}
+- else
+  %h2.tobepaid Will be charged on #{@invoice.period_end_date.strftime("%b %e, %Y")}
 
 = render 'shared/subscriptions_submenu'
 
@@ -113,6 +115,8 @@
 
     - if @invoice.is_closed? and !!@invoice.paid_date
       %h2.paid.r PAID on #{@invoice.paid_date.strftime("%b %e, %Y")}
+    - else
+      %h2.tobepaid.r Will be charged on #{@invoice.period_end_date.strftime("%b %e, %Y")}
               
 
 - else

@@ -18,7 +18,7 @@
           %td
             = link_to invoice do
               - if invoice.is_closed?
-                = invoice.period_end_date.strftime("%b %e, %Y")
+                = invoice.period_end_date.strftime("%B %e, %Y")
               - else
                 Current
           %td.r
