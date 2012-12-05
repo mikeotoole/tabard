@@ -81,6 +81,7 @@ class Invoice < ActiveRecord::Base
   def self.charge(invoice_id)
     invoice = Invoice.find_by_id(invoice_id)
     invoice.charge_customer if invoice.present?
+    # TODO If WA is down mark it.
   end
 
 ###
@@ -151,16 +152,16 @@ class Invoice < ActiveRecord::Base
                 success = true
               end
             else
-              "ERROR WITH WA #{response.to_yaml}"
+              logger.error  "ERROR WITH WA #{response.to_yaml}"
               raise WATaxError, ""
             end
           rescue => e
-            logger.debug "ERROR WITH WA REQUEST #{e.to_yaml}"
+            logger.error "ERROR WITH WA REQUEST #{e.to_yaml}"
             raise WATaxError, ""
           end
         end
       rescue => e
-        logger.debug "ERROR WITH Stripe #{e.to_yaml}"
+        logger.error "ERROR WITH Stripe #{e.to_yaml}"
         raise WATaxError, ""
       end
       if success
