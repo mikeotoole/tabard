@@ -55,10 +55,6 @@ class ApplicationController < ActionController::Base
     http_status_code(:not_found, exception)
   end
 
-  rescue_from WATaxError do |exception|
-    http_status_code(:service_unavailable, exception)
-  end
-
   ###
   # This method will attempt to render a status code according to the arguments that are passed to it.
   # [Args]

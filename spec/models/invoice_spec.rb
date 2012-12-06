@@ -24,6 +24,7 @@
 #  disputed_date                :datetime
 #  refunded_date                :datetime
 #  refunded_price_in_cents      :integer
+#  tax_error_occurred           :boolean          default(FALSE)
 #
 
 require 'spec_helper'

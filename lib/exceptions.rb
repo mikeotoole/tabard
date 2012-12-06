@@ -4,6 +4,4 @@ module Exceptions
   class InvalidCollectionAddition < StandardError; end
   # This class represents an invalid removal from an association collection.
   class InvalidCollectionRemoval < StandardError; end
-  # This class represents an WA Tax communication error.
-  class WATaxError < StandardError; end
 end

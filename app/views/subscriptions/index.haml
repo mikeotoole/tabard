@@ -50,6 +50,7 @@
           %br
           = number_to_currency(current_user.current_invoice.total_price_in_dollars)
         %td
+
   %p.r
     = link_to 'View Statement', current_user.invoices.last, meta: 'Current statement', class: 'button'
 

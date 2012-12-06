@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121113203332) do
+ActiveRecord::Schema.define(:version => 20121206191144) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -494,6 +494,7 @@ ActiveRecord::Schema.define(:version => 20121113203332) do
     t.datetime "disputed_date"
     t.datetime "refunded_date"
     t.integer  "refunded_price_in_cents"
+    t.boolean  "tax_error_occurred",           :default => false
   end
 
   create_table "message_associations", :force => true do |t|
