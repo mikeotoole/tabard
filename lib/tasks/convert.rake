@@ -362,6 +362,7 @@ task :convert => :environment do
     Comment.where(character_proxy_id: proxy.id).update_all(character_id: new_character.id)
     Discussion.where(character_proxy_id: proxy.id).update_all(character_id: new_character.id)
     Invite.where(character_proxy_id: proxy.id).update_all(character_id: new_character.id)
+    Activity.where(target_type: "CharacterProxy", target_id: proxy.id).update_all(target_type: "Character", target_id: new_character.id)
     proxy.community_applications.each do |app|
       app.characters << new_character
     end
