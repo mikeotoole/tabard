@@ -201,7 +201,7 @@ GEM
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
     net-ssh (2.5.2)
-    newrelic_rpm (3.4.1)
+    newrelic_rpm (3.5.3.25)
     nilify_blanks (1.0.0)
       activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
