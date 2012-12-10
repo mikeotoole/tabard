@@ -350,6 +350,7 @@ task :convert => :environment do
       new_character.remote_avatar_url = "https://tabard.s3.amazonaws.com/uploads/swtor_character/avatar/#{old_character["id"]}/#{old_character["avatar"]}" unless old_character["avatar"].blank?
     when "Minecraft"
       new_character = played_game.new_character(old_character.slice!(:name,:about))
+      puts "########## old_character avatar: #{old_character["avatar"]}"
       unless old_character["avatar"].blank?
         puts "########## Setting avatar:"
         puts "https://tabard.s3.amazonaws.com/uploads/minecraft_character/avatar/#{old_character["id"]}/#{old_character["avatar"]}"
