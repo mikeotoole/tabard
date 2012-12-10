@@ -338,23 +338,40 @@ task :convert => :environment do
     played_game = proxy.user_profile.played_games.find_or_create_by_game_id(game.id)
     played_game.save!
     new_character = Character.new
+    avatar = old_character["avatar"]
+    old_character_id = old_character["id"]
+    puts "######### Set avatar (#{avatar}) and id (#{old_character_id})"
     case game.class.to_s
     when "Wow"
       new_character = played_game.new_character(old_character.slice!(:name,:char_class,:race,:level,:about,:gender))
       new_character.faction = old_game["faction"]
       new_character.server_name = old_game["server_name"]
-      new_character.remote_avatar_url = "https://tabard.s3.amazonaws.com/uploads/wow_character/avatar/#{old_character["id"]}/#{old_character["avatar"]}" unless old_character["avatar"].blank?
+      unless avatar.blank?
+        begin
+          new_character.remote_avatar_url = "https://tabard.s3.amazonaws.com/uploads/wow_character/avatar/#{old_character_id}/#{avatar}"
+        rescue
+          puts "### ERROR: Could not set avatar."
+        end
+      end
     when "Swtor"
       new_character = played_game.new_character(old_character.slice!(:name,:char_class,:advanced_class,:species,:level,:about,:gender))
       new_character.faction = old_game["faction"]
       new_character.server_name = old_game["server_name"]
-      new_character.remote_avatar_url = "https://tabard.s3.amazonaws.com/uploads/swtor_character/avatar/#{old_character["id"]}/#{old_character["avatar"]}" unless old_character["avatar"].blank?
+      unless avatar.blank?
+        begin
+          new_character.remote_avatar_url = "https://tabard.s3.amazonaws.com/uploads/swtor_character/avatar/#{old_character_id}/#{avatar}"
+        rescue
+          puts "### ERROR: Could not set avatar."
+        end
+      end
     when "Minecraft"
       new_character = played_game.new_character(old_character.slice!(:name,:about))
-      unless old_character["avatar"].blank?
-        puts "########## Setting avatar:"
-        puts "https://tabard.s3.amazonaws.com/uploads/minecraft_character/avatar/#{old_character["id"]}/#{old_character["avatar"]}"
-        new_character.remote_avatar_url = "https://tabard.s3.amazonaws.com/uploads/minecraft_character/avatar/#{old_character["id"]}/#{old_character["avatar"]}"
+      unless avatar.blank?
+        begin
+          new_character.remote_avatar_url = "https://tabard.s3.amazonaws.com/uploads/minecraft_character/avatar/#{old_character_id}/#{avatar}"
+        rescue
+          puts "### ERROR: Could not set avatar."
+        end
       end
     end
     new_character.save!

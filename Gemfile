@@ -92,6 +92,9 @@ ruby '1.9.3'
 # Seeding Data
   gem 'timecop'#                                                                            MIT - https://github.com/jtrupiano/timecop
 
+
+  gem 'simplecov'#                                                                        MIT - https://github.com/colszowka/simplecov
+
 # Production Specific Gems
   group :production do
     gem 'thin'#                                                                             Ruby - https://github.com/macournoyer/thin/
@@ -124,5 +127,4 @@ ruby '1.9.3'
     gem 'guard-rspec'#                                                                      MIT - https://github.com/guard/guard-rspec
     gem 'guard-livereload'#                                                                 MIT - https://github.com/guard/guard-livereload
     #gem 'growl_notify'#                                                                     MIT - https://github.com/scottdavis/growl_notify
-    gem 'simplecov'#                                                                        MIT - https://github.com/colszowka/simplecov
   end

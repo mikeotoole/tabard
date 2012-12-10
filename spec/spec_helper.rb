@@ -1,6 +1,6 @@
-require 'simplecov'
-
 if ENV["COVERAGE"] != 'off'
+  require 'simplecov'
+
   SimpleCov.start 'rails' do
     coverage_dir "doc/reports/test_coverage"
     command_name "RSpec#{rand(100000)}"
