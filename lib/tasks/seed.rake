@@ -33,13 +33,16 @@ namespace :seed do
 
     ANIMAL_NAMES.each do |animal|
       full_name = "#{ADJ_LIST[rand(ADJ_LIST.length)].capitalize} #{animal}"
-      create_user(full_name)
-      create_empire_character(animal, "Darth #{animal}", 'Sith Warrior', 'Marauder', 'Zabrak', 45)
-      create_minecraft_character(animal, "Boxy #{animal}")
-      comm = create_community(animal, "Sith #{animal}s", "The #{ADJ_LIST[rand(ADJ_LIST.length)].capitalize} #{animal}s will PWN you", %w(Empire))
-      generate_application(comm, 'Fox').accept_application(UserProfile.find_by_full_name(full_name))
-      generate_application(headshot, animal).accept_application(billy)
-      generate_application(more_headshot, animal)
+      begin
+        full_name = "#{ADJ_LIST[rand(ADJ_LIST.length)].capitalize} #{animal}"
+      end while not UserProfile.find_by_full_name(full_name).blank?
+      create_user(full_name, full_name.gsub(/\s+|-+/, ""))
+      create_swtor_character(full_name, "Darth #{animal}", 'Sith Warrior', 'Marauder', 'Zabrak', 'Empire', 45, 'Male', Swtor.first.server_names.first)
+      create_minecraft_character(full_name, "Boxy #{animal}")
+      comm = create_community(full_name, "Sith #{full_name}s".slice(0,25), "The #{ADJ_LIST[rand(ADJ_LIST.length)].capitalize} #{animal}s will PWN you", %w(Empire))
+      generate_application(comm, 'Kinky Fox').accept_application(UserProfile.find_by_full_name(full_name))
+      generate_application(headshot, full_name).accept_application(billy)
+      generate_application(more_headshot, full_name)
     end
   end
 
