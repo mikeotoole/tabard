@@ -304,11 +304,12 @@ task :convert => :environment do
       cg.server_type = ActiveRecord::Base.connection.execute("SELECT * FROM minecrafts WHERE id = #{sg.game_id}").first["server_type"]
     end
     cg.save!
-    RosterAssignment.where(supported_game_id: sg.id).update_all(community_game_id: cg.id) #Broken add has_many back
-    Announcement.where(supported_game_id: sg.id).update_all(community_game_id: cg.id) #Broken
-    DiscussionSpace.where(supported_game_id: sg.id).update_all(community_game_id: cg.id) #Broken
-    PageSpace.where(supported_game_id: sg.id).update_all(community_game_id: cg.id) #Broken
-    Event.where(supported_game_id: sg.id).update_all(community_game_id: cg.id) #Broken
+    RosterAssignment.where(supported_game_id: sg.id).update_all(community_game_id: cg.id)
+    Announcement.where(supported_game_id: sg.id).update_all(community_game_id: cg.id)
+    DiscussionSpace.where(supported_game_id: sg.id).update_all(community_game_id: cg.id)
+    PageSpace.where(supported_game_id: sg.id).update_all(community_game_id: cg.id)
+    Event.where(supported_game_id: sg.id).update_all(community_game_id: cg.id)
+    Activity.where(target_type: "SupportedGame", target_id: sg.id).update_all(target_type: "CommunityGame", target_id: cg.id)
   end
   #*Translate all characters
   puts "! #{CharacterProxy.all.count} Characters to convert..."
