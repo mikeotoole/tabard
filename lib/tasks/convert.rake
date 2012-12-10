@@ -313,76 +313,78 @@ task :convert => :environment do
   end
   #*Translate all characters
   puts "! #{CharacterProxy.all.count} Characters to convert..."
-  CharacterProxy.all.each do |proxy| # Readd model
-    puts "@ converting #{proxy.to_yaml}..."
-    game = Game.new
-    old_character = Hash.new
-    old_game = Hash.new
-    case proxy.character_type.to_s
-    when "WowCharacter"
-      game = Wow.first
-      old_character = ActiveRecord::Base.connection.execute("SELECT * FROM wow_characters WHERE id = #{proxy.character_id}").first
-      old_game = ActiveRecord::Base.connection.execute("SELECT * FROM wows WHERE id = #{old_character["wow_id"]}").first
-    when "SwtorCharacter"
-      game = Swtor.first
-      old_character = ActiveRecord::Base.connection.execute("SELECT * FROM swtor_characters WHERE id = #{proxy.character_id}").first
-      old_game = ActiveRecord::Base.connection.execute("SELECT * FROM swtors WHERE id = #{old_character["swtor_id"]}").first
-    when "MinecraftCharacter"
-      game = Minecraft.first
-      old_character = ActiveRecord::Base.connection.execute("SELECT * FROM minecraft_characters WHERE id = #{proxy.character_id}").first
-      old_game = ActiveRecord::Base.connection.execute("SELECT * FROM minecrafts").first
-    else
-      puts "!!!! Charcter type not found. Skipping!!"
-      next
-    end
-    played_game = proxy.user_profile.played_games.find_or_create_by_game_id(game.id)
-    played_game.save!
-    new_character = Character.new
-    avatar = old_character["avatar"]
-    old_character_id = old_character["id"]
-    puts "######### Set avatar (#{avatar}) and id (#{old_character_id})"
-    case game.class.to_s
-    when "Wow"
-      new_character = played_game.new_character(old_character.slice!(:name,:char_class,:race,:level,:about,:gender))
-      new_character.faction = old_game["faction"]
-      new_character.server_name = old_game["server_name"]
-      unless avatar.blank?
-        begin
-          new_character.remote_avatar_url = "https://tabard.s3.amazonaws.com/uploads/wow_character/avatar/#{old_character_id}/#{avatar}"
-        rescue
-          puts "### ERROR: Could not set avatar."
+  Character.observers.disable :all do
+      CharacterProxy.all.each do |proxy| # Readd model
+        puts "@ converting #{proxy.to_yaml}..."
+        game = Game.new
+        old_character = Hash.new
+        old_game = Hash.new
+        case proxy.character_type.to_s
+        when "WowCharacter"
+          game = Wow.first
+          old_character = ActiveRecord::Base.connection.execute("SELECT * FROM wow_characters WHERE id = #{proxy.character_id}").first
+          old_game = ActiveRecord::Base.connection.execute("SELECT * FROM wows WHERE id = #{old_character["wow_id"]}").first
+        when "SwtorCharacter"
+          game = Swtor.first
+          old_character = ActiveRecord::Base.connection.execute("SELECT * FROM swtor_characters WHERE id = #{proxy.character_id}").first
+          old_game = ActiveRecord::Base.connection.execute("SELECT * FROM swtors WHERE id = #{old_character["swtor_id"]}").first
+        when "MinecraftCharacter"
+          game = Minecraft.first
+          old_character = ActiveRecord::Base.connection.execute("SELECT * FROM minecraft_characters WHERE id = #{proxy.character_id}").first
+          old_game = ActiveRecord::Base.connection.execute("SELECT * FROM minecrafts").first
+        else
+          puts "!!!! Charcter type not found. Skipping!!"
+          next
+        end
+        played_game = proxy.user_profile.played_games.find_or_create_by_game_id(game.id)
+        played_game.save!
+        new_character = Character.new
+        avatar = old_character["avatar"]
+        old_character_id = old_character["id"]
+        puts "######### Set avatar (#{avatar}) and id (#{old_character_id})"
+        case game.class.to_s
+        when "Wow"
+          new_character = played_game.new_character(old_character.slice!(:name,:char_class,:race,:level,:about,:gender))
+          new_character.faction = old_game["faction"]
+          new_character.server_name = old_game["server_name"]
+          unless avatar.blank?
+            begin
+              new_character.remote_avatar_url = "https://tabard.s3.amazonaws.com/uploads/wow_character/avatar/#{old_character_id}/#{avatar}"
+            rescue
+              puts "### ERROR: Could not set avatar."
+            end
+          end
+        when "Swtor"
+          new_character = played_game.new_character(old_character.slice!(:name,:char_class,:advanced_class,:species,:level,:about,:gender))
+          new_character.faction = old_game["faction"]
+          new_character.server_name = old_game["server_name"]
+          unless avatar.blank?
+            begin
+              new_character.remote_avatar_url = "https://tabard.s3.amazonaws.com/uploads/swtor_character/avatar/#{old_character_id}/#{avatar}"
+            rescue
+              puts "### ERROR: Could not set avatar."
+            end
+          end
+        when "Minecraft"
+          new_character = played_game.new_character(old_character.slice!(:name,:about))
+          unless avatar.blank?
+            begin
+              new_character.remote_avatar_url = "https://tabard.s3.amazonaws.com/uploads/minecraft_character/avatar/#{old_character_id}/#{avatar}"
+            rescue
+              puts "### ERROR: Could not set avatar."
+            end
+          end
+        end
+        new_character.save!
+        RosterAssignment.where(character_proxy_id: proxy.id).update_all(character_id: new_character.id)
+        Announcement.where(character_proxy_id: proxy.id).update_all(character_id: new_character.id)
+        Comment.where(character_proxy_id: proxy.id).update_all(character_id: new_character.id)
+        Discussion.where(character_proxy_id: proxy.id).update_all(character_id: new_character.id)
+        Invite.where(character_proxy_id: proxy.id).update_all(character_id: new_character.id)
+        Activity.where(target_type: "CharacterProxy", target_id: proxy.id).update_all(target_type: "Character", target_id: new_character.id)
+        proxy.community_applications.each do |app|
+          app.characters << new_character
         end
       end
-    when "Swtor"
-      new_character = played_game.new_character(old_character.slice!(:name,:char_class,:advanced_class,:species,:level,:about,:gender))
-      new_character.faction = old_game["faction"]
-      new_character.server_name = old_game["server_name"]
-      unless avatar.blank?
-        begin
-          new_character.remote_avatar_url = "https://tabard.s3.amazonaws.com/uploads/swtor_character/avatar/#{old_character_id}/#{avatar}"
-        rescue
-          puts "### ERROR: Could not set avatar."
-        end
-      end
-    when "Minecraft"
-      new_character = played_game.new_character(old_character.slice!(:name,:about))
-      unless avatar.blank?
-        begin
-          new_character.remote_avatar_url = "https://tabard.s3.amazonaws.com/uploads/minecraft_character/avatar/#{old_character_id}/#{avatar}"
-        rescue
-          puts "### ERROR: Could not set avatar."
-        end
-      end
-    end
-    new_character.save!
-    RosterAssignment.where(character_proxy_id: proxy.id).update_all(character_id: new_character.id)
-    Announcement.where(character_proxy_id: proxy.id).update_all(character_id: new_character.id)
-    Comment.where(character_proxy_id: proxy.id).update_all(character_id: new_character.id)
-    Discussion.where(character_proxy_id: proxy.id).update_all(character_id: new_character.id)
-    Invite.where(character_proxy_id: proxy.id).update_all(character_id: new_character.id)
-    Activity.where(target_type: "CharacterProxy", target_id: proxy.id).update_all(target_type: "Character", target_id: new_character.id)
-    proxy.community_applications.each do |app|
-      app.characters << new_character
-    end
   end
 end
