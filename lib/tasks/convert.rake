@@ -339,17 +339,17 @@ task :convert => :environment do
     new_character = Character.new
     case game.class.to_s
     when "Wow"
-      new_character = played_game.new_character(old_character.slice!(:name,:char_class,:race,:level,:about,:gender))
+      new_character = played_game.new_character(old_character.slice(:name,:char_class,:race,:level,:about,:gender))
       new_character.faction = old_game["faction"]
       new_character.server_name = old_game["server_name"]
       new_character.remote_avatar_url = "https://tabard.s3.amazonaws.com/uploads/wow_character/avatar/#{old_character["id"]}/#{old_character["avatar"]}" unless old_character["avatar"].blank?
     when "Swtor"
-      new_character = played_game.new_character(old_character.slice!(:name,:char_class,:advanced_class,:species,:level,:about,:gender))
+      new_character = played_game.new_character(old_character.slice(:name,:char_class,:advanced_class,:species,:level,:about,:gender))
       new_character.faction = old_game["faction"]
       new_character.server_name = old_game["server_name"]
       new_character.remote_avatar_url = "https://tabard.s3.amazonaws.com/uploads/swtor_character/avatar/#{old_character["id"]}/#{old_character["avatar"]}" unless old_character["avatar"].blank?
     when "Minecraft"
-      new_character = played_game.new_character(old_character.slice!(:name,:about))
+      new_character = played_game.new_character(old_character.slice(:name,:about))
       puts "########## old_character: #{old_character.to_yaml}"
       unless old_character["avatar"].blank?
         puts "########## Setting avatar:"
