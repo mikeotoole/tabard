@@ -12,7 +12,7 @@
       %tr
         %th Community
         %th Subscription
-        %th Cost
+        %th.r Cost
         %th
     %tbody
       - @owned_communities.each do |community|
@@ -49,6 +49,8 @@
           = number_to_currency(current_user.total_recurring_price_per_month_in_dollars)
           %br
           = number_to_currency(current_user.current_invoice.total_price_in_dollars)
+          - if !@invoice.is_closed? and @invoice.tax_error_occurred
+            (Tax&nbsp;is&nbsp;estimated)
         %td
 
   %p.r

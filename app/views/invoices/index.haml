@@ -10,7 +10,7 @@
     %thead
       %tr
         %th Period
-        %th Amount
+        %th.r Amount
         %th Status
     %tbody
       - @invoices.each do |invoice|
@@ -22,7 +22,10 @@
               - else
                 Current
           %td.r
-            %strong= number_to_currency(invoice.total_price_in_dollars)
+            %strong
+              = number_to_currency(invoice.total_price_in_dollars)
+              - if !invoice.is_closed? and invoice.tax_error_occurred
+                (Tax&nbsp;is&nbsp;estimated)
           %td.nowrap= invoice.is_closed ? !!invoice.paid_date ? 'Paid' : 'Closed' : 'Open'
     %tfoot
       %tr
