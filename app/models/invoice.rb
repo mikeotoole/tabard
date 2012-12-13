@@ -119,8 +119,8 @@ class Invoice < ActiveRecord::Base
   end
 
   def should_be_taxed?
-      @should_be_taxed ||= self.tax_rate != 0
-      return @should_be_taxed
+    @should_be_taxed ||= self.tax_rate != 0
+    return @should_be_taxed
   end
 
   def tax_rate
@@ -217,6 +217,10 @@ class Invoice < ActiveRecord::Base
       invoice_item = self.invoice_items.new({community: community, item: CommunityPlan.default_plan, quantity: 1}, without_protection: true)
     end
     return invoice_item
+  end
+
+  def is_downgrading?(community)
+    true
   end
 
   ###

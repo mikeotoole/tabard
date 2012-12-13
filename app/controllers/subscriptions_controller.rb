@@ -33,6 +33,7 @@ class SubscriptionsController < PaymentController
     end
 
     flash[:success] = "To upgrade to a Pro community, add or update your card on file and click 'Update Subscription'." if params[:upgrade] == 'true'
+    flash[:notice] = "Your #{@community.current_community_plan.title} subscription will be active until #{@invoice.period_end_date.strftime('%B %d, %Y')}." if @invoice.is_downgrading?(@community)
   end
 
   # PUT /subscriptions/:community_id
