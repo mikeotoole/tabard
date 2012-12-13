@@ -220,7 +220,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def is_downgrading?(community)
-    true
+    return (self.plan_invoice_item_for_community(community).item.is_free_plan? and not community.current_community_plan.is_free_plan?)
   end
 
   ###
