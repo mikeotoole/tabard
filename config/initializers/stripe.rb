@@ -1,6 +1,6 @@
 Stripe.api_key = ENV['STRIPE_PRIVATE_KEY']
 STRIPE_PUBLIC_KEY = ENV['STRIPE_PUBLIC_KEY']
-
+StripeEvent::WebhookController.skip_before_filter :block_unauthorized_user!
 StripeEvent.setup do
   subscribe 'charge.failed', 'charge.succeeded', 'charge.refunded', 'charge.disputed' do |event|
     puts "STRIPE_EVENT:CHARGE: #{event.to_yaml}"
