@@ -4,6 +4,7 @@ log/*.log
 log/test.log
 log/production.log
 tmp/**/*
+tmp/rspec_guard_result
 
 .DS_Store
 Icon?

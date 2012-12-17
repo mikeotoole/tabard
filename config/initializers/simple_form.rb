@@ -12,11 +12,11 @@ SimpleForm.setup do |config|
   end
 
   config.wrappers :none, tag: false do |b|
-    b.use :input, class: 'input'
+    b.use :input, :wrap_with => {:class=>"input"}
   end
 
   config.wrappers :hidden, tag: false do |b|
-    b.use :input, class: 'hidden input'
+    b.use :input, :wrap_with => {:class=>"hidden input"}
   end
 
   config.wrappers :slider, tag: :div, class: :slider, hint_class: 'with-hint', error_class: 'with-errors' do |b|

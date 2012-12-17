@@ -16,7 +16,11 @@ DaBvRails::Application.routes.draw do
   resources :invoices, only: [:index, :show], path: :statements
 
   # Admin Users
-  devise_for :admin_users do
+  ActiveAdmin.routes(self)
+  devise_for :admin_users, path: ActiveAdmin.application.default_namespace,
+                           controllers: {sessions: 'alexandria/devise/sessions', passwords: 'alexandria/devise/passwords'},
+                           path_names: { sign_in: 'login', sign_out: "logout" }
+  devise_scope :admin_user do
     get "/alexandria/login" => "alexandria/devise/sessions#new"
     post "/alexandria/login" => "alexandria/devise/sessions#create"
     match "/alexandria/logout" => "alexandria/devise/sessions#destroy"
@@ -27,8 +31,6 @@ DaBvRails::Application.routes.draw do
     get "/admin_users/password/new" => "alexandria/devise/passwords#new"
     post "/admin_users/password" => "alexandria/devise/passwords#create"
   end
-  ActiveAdmin.routes(self)
-  devise_for :admin_users , ActiveAdmin::Devise.config
 
   # Users
   devise_for :users, controllers: { sessions: 'sessions',

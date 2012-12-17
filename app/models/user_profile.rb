@@ -53,6 +53,7 @@ class UserProfile < ActiveRecord::Base
 #Games
   has_many :played_games, dependent: :destroy
   has_many :characters, through: :played_games
+  has_many :games, through: :played_games
 
   has_many :approved_characters, through: :community_profiles
   has_many :communities, through: :community_profiles, order: 'LOWER(name)'
