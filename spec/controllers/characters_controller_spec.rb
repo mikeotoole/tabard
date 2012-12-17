@@ -4,7 +4,7 @@ describe CharactersController do
   let(:valid_attributes) { attributes_for(:swtor_character_att) }
   let(:character) { create(:swtor_character) }
   let(:user) { character.user_profile.user }
-  let(:played_game) { create(:swtor_played_game, user_profile_id: user.user_profile.id) }
+  let(:played_game) { character.played_game }
 
   describe "GET 'show'" do
     it "should throw routing error" do

@@ -144,23 +144,27 @@ describe Subdomains::AnnouncementsController do
     end
 
     it "redirects to the announcements list when authenticated as admin" do
+      announcement
       sign_in admin
       delete :destroy, :id => announcement
       response.should redirect_to(announcements_url)
     end
 
     it "should redirect to new user session path when not authenticated as a user" do
+      announcement
       delete :destroy, :id => announcement
       response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
 
     it "should respond forbidden when not a member" do
+      announcement
       sign_in non_member
       delete :destroy, :id => announcement
       response.should be_forbidden
     end
 
     it "should respond forbidden when a member but not admin" do
+      announcement
       sign_in member
       delete :destroy, :id => announcement
       response.should be_forbidden
