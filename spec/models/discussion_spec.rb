@@ -21,8 +21,9 @@ require 'spec_helper'
 describe Discussion do
   let(:comment) { create(:comment) }
   let(:discussion) { create(:discussion) }
-  let(:wow_discussion) { create(:discussion_by_wow_character) }
   let(:user_profile) { DefaultObjects.user_profile }
+  let(:wow_character) { create(:wow_character) }
+  let(:wow_discussion) { create(:discussion_by_wow_character, character_id: wow_character.id, user_profile_id: wow_character.user_profile.id) }
   let(:billy) { create(:billy) }
 
   it "should create a new instance given valid attributes" do
@@ -117,7 +118,7 @@ describe Discussion do
     it "should allow a user's character" do
       build(:discussion, :discussion_space_id => DefaultObjects.general_discussion_space.id,
           :user_profile_id => billy.user_profile_id,
-          :character_id => billy.characters.first).should be_valid
+          :character_id => billy.characters.first.id).should be_valid
     end
     it "should not allow a non user's character" do
       another_user_profile = create(:user_profile_with_characters)
