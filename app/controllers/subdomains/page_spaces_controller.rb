@@ -64,7 +64,7 @@ class Subdomains::PageSpacesController < SubdomainsController
   # DELETE /page_spaces/:id(.:format)
   def destroy
     flash[:notice] = 'Page space was successfully removed.' if @page_space.destroy
-    respond_with(@page_space)
+    respond_with(@page_space, location: page_spaces_path)
   end
 
   # This method returns the current game that is in scope.

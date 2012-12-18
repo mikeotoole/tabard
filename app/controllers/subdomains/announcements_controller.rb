@@ -68,7 +68,7 @@ class Subdomains::AnnouncementsController < SubdomainsController
   # DELETE /announcements/:id(.:format)
   def destroy
     flash[:notice] = 'Announcement was successfully removed.' if @announcement.destroy
-    respond_with(@announcement)
+    respond_with(@announcement, location: announcements_path)
   end
 
 ###

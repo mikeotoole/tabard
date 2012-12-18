@@ -62,7 +62,7 @@ class Subdomains::CommunityGamesController < SubdomainsController
   # DELETE /community_games/1
   def destroy
     flash[:notice] = 'Game was successfully removed.' if @community_game.destroy
-    respond_with(@community_game)
+    respond_with(@community_game, location: community_games_path)
   end
 
   # GET /community_games/autocomplete(.:format)

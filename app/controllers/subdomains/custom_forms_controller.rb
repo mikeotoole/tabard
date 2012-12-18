@@ -58,7 +58,7 @@ class Subdomains::CustomFormsController < SubdomainsController
     if @custom_form
       flash[:notice] = 'Form was successfully removed.' if @custom_form.destroy
     end
-    respond_with @custom_form
+    respond_with(@custom_form, location: custom_forms_path)
   end
 
   # PUT /custom_forms/:id/publish

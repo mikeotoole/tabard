@@ -63,7 +63,7 @@ class Subdomains::DiscussionSpacesController < SubdomainsController
   # DELETE /discussion_spaces/1
   def destroy
     flash[:notice] = 'Discussion space was successfully removed.' if @discussion_space.delay_destory
-    respond_with(@discussion_space)
+    respond_with(@discussion_space, location: discussion_spaces_path)
   end
 
 ###
