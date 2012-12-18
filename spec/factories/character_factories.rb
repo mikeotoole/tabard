@@ -7,6 +7,7 @@ FactoryGirl.define do
     species "Cyborg"
     gender "Male"
     level 20
+    user_profile
 
     after(:build) do |character|
       if character.user_profile
@@ -42,6 +43,7 @@ FactoryGirl.define do
     race "Human"
     level 20
     gender "Male"
+    user_profile
 
     after(:build) do |character|
       if character.user_profile
@@ -69,7 +71,7 @@ FactoryGirl.define do
   end
 
   factory :minecraft_character do
-    # TODO: Need to be able to pass a user_profile to this... -MO
+    user_profile
     association :played_game, factory: :minecraft_played_game
     sequence(:name) {|n| "MC Character #{n}" }
   end
