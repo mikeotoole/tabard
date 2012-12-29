@@ -102,7 +102,7 @@ GEM
     columnize (0.3.6)
     country_select (1.0.1)
     daemons (1.1.9)
-    dalli (2.6.0)
+    dalli (2.1.0)
     database_cleaner (0.9.1)
     debugger (1.2.2)
       columnize (>= 0.3.1)
@@ -375,7 +375,7 @@ DEPENDENCIES
   client_side_validations
   coffee-rails
   country_select
-  dalli
+  dalli (= 2.1.0)
   database_cleaner
   debugger
   delayed_job_active_record

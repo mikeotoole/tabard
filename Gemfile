@@ -30,7 +30,7 @@ ruby '1.9.3'
   gem 'cancan'#                                                                             MIT - https://github.com/ryanb/cancan
 
 # Caching
-  gem 'dalli' #                                                                    MIT - https://github.com/mperham/dalli
+  gem 'dalli', "2.1.0" #                                                                    MIT - https://github.com/mperham/dalli
   gem 'memcachier'#                                                                         No License
 
 # Form Handling
