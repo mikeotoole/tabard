@@ -17,7 +17,7 @@ FactoryGirl.define do
     end
   end
 
-  factory :community_profile_with_characters, :parent => :community_profile do
+  factory :community_profile_with_characters, :parent => :community_profile_with_community_games do
     community { FactoryGirl.create(:community_with_community_games) }
     after(:create) do |community_profile|
       wow_game = community_profile.community.community_games.joins{:game}.where{games.type == 'Wow'}.first

@@ -40,10 +40,10 @@ FactoryGirl.define do
   end
 
   factory :comment_by_wow_character, :parent => :comment do
-    character_id { create(:wow_character).id }
+    character_id { create(:wow_character, user_profile: DefaultObjects.user_profile ).id }
   end
 
   factory :comment_by_swtor_character, :parent => :comment do
-    character_id { create(:swtor_character).id }
+    character_id { create(:swtor_character, user_profile: DefaultObjects.user_profile).id }
   end
 end
