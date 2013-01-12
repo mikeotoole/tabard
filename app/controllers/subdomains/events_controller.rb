@@ -16,7 +16,7 @@ class Subdomains::EventsController < SubdomainsController
   before_filter :load_event, except: [:new, :create, :index]
   before_filter :create_event, only: [:new, :create]
   before_filter :build_missing_invites, only: [:new, :create, :edit, :update]
-  before_filter :rsvp_flash, only: [:show, :invites]
+  before_filter :rsvp_check, only: [:show, :invites]
   authorize_resource except: [:index, :invites]
   skip_before_filter :limit_subdomain_access
 
@@ -194,9 +194,17 @@ protected
   end
 
   # This adds a little flash notice to reminde the user to RSVP.
-  def rsvp_flash
-    default_url_options[:host] = "#{current_community.subdomain}.#{ENV['BV_HOST_URL']}"
+  def rsvp_check
     invite = current_user.invites.find_by_event_id(@event.id)
-    flash[:notice] = "You have not RSVP'd to this event yet. <a href='#{edit_invite_url(invite)}'>Respond now</a>" if invite != nil and invite.status == nil
+    
+    # If the user is the creator, and they haven't RSVP'd, auto-select RSVP status as 'Attending'
+    if !!invite and current_user.user_profile_id == @event.creator_id
+      invite.update_attributes({ status: 'Attending' })
+
+    # Let the user know that they have not RSVP'd yet
+    else
+      default_url_options[:host] = "#{current_community.subdomain}.#{ENV['BV_HOST_DOMAIN']}"
+      flash[:notice] = "You have not RSVP'd to this event yet. <a href='#{edit_invite_url(invite)}'>Respond now</a>" if invite != nil and invite.status == nil
+    end
   end
 end
