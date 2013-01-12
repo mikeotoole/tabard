@@ -11,8 +11,6 @@
     %table
       %thead
         %tr
-          - if has_invites
-            %th.check
           %th Event
           - if has_invites
             %th RSVP
@@ -25,11 +23,6 @@
         - @events.each do |event|
           - invite = current_user.invites.find_by_event_id(event.id)
           %tr
-            - if has_invites
-              %td.check
-                - if current_user.invited? event
-                  = check_box_tag "ids[#{invite.id}]", true, false, id: "invite_id_#{invite.id}"
-                  %label{ for: "invite_id_#{invite.id}" }
             %td
               = link_to shorten_words(event.name, 21), event
               - if event.community_game
@@ -38,6 +31,8 @@
               %td
                 - if invite.try 'status'
                   = link_to invite.status, edit_invite_url(invite)
+                - else
+                  &mdash;
             %td
               %time= event.start_time.strftime("%a - %b %e, %Y")
             %td
@@ -55,17 +50,7 @@
                   = link_to 'Delete', event, confirm: 'Are you sure?', method: :delete, meta: 'Delete event', class: 'delete'
       %tfoot
         %tr
-          %td{ colspan: has_invites ? 8 : 6 }
-            - if has_invites
-              .select.status
-                %ul
-                  - Invite::VALID_STATUSES.each do |status|
-                    %li
-                      %input{ id: "batch_status_#{status.downcase}", type: 'radio', name: 'status', value: status }
-                      %label{ for: "batch_status_#{status.downcase}" }= status
-              %button{ type: 'submit' } Update Selected
-            - if can? :create, Event
-              = link_to 'Create New', new_event_path, class: 'button'
+          %td{ colspan: has_invites ? 7 : 5 }
   = paginate @events
 
 -else

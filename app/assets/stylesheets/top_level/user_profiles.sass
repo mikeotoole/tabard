@@ -566,39 +566,34 @@ body.user_profiles.dashboard
               text-indent: 0
               top: 0
             &:after
-              color: #999
-              content: attr(title)
+              background: #333
+              +border_radius(2)
+              color: #ccc
+              content: attr(data-hint)
               display: none
-              font-size: 16px
-              height: 35px
-              line-height: 35px
+              font-size: 14px
+              height: 20px
+              line-height: 20px
+              margin: 0 8px 0 0
+              padding: 0 8px
               position: absolute
+              right: 100%
               text-indent: 0
-              top: 0
+              top: 8px
               white-space: nowrap
             &:hover:after
               display: block
 
             &:nth-child(1)
               right: 0
-              &:after
-                right: 215px
             &:nth-child(3)
               right: 41px
-              &:after
-                right: 174px
             &:nth-child(5)
               right: 82px
-              &:after
-                right: 133px
             &:nth-child(7)
               right: 123px
-              &:after
-                right: 92px
             &:nth-child(9)
               right: 164px
-              &:after
-                right: 51px
 
             a
               background: transparent !important

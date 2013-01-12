@@ -64,21 +64,21 @@
     %dl#tabs.tabs
       - if @user_profile.communities.any?
         - if @communities_with_roles_to_assign.any? or is_my_profile
-          %dt{ class: 'roles', title: 'Roles & Permissions' }
+          %dt{ class: 'roles', 'data-hint' => 'Roles & Permissions' }
             = link_to 'Roles & Permissions', roles_user_profile_url(@user_profile, subdomain: "www", format: :js), remote: true, class: 'dynload wait', data: { type: :text, target: '#tabs dt.roles + dd', error: 'Error: unable to load user roles.' }
           %dd
         - if is_my_profile
-          %dt{ class: 'invites', title: 'Invitations' }
+          %dt{ class: 'invites', 'data-hint' => 'Invitations' }
             = link_to 'Invites', invites_user_profile_url(@user_profile, subdomain: "www", format: :js), remote: true, class: 'dynload wait', data: { type: :text, target: '#tabs dt.invites + dd', error: 'Error: unable to load invites.' }
           %dd
-          %dt{ class: 'announcements', title: 'Announcements' }
+          %dt{ class: 'announcements', 'data-hint' => 'Announcements' }
             = link_to 'Announcements', announcements_user_profile_url(@user_profile, subdomain: "www", format: :js), remote: true, class: 'dynload wait', data: { type: :text, target: '#tabs dt.announcements + dd', error: 'Error: unable to load announcements.' }
           %dd
       - unless is_private
-        %dt{ class: 'games', title: 'Games & Characters' }
+        %dt{ class: 'games', 'data-hint' => 'Games & Characters' }
           = link_to 'Games & Characters', user_profile_played_games_url(@user_profile, subdomain: "www", format: :js), remote: true, class: 'dynload wait', data: { type: :text, target: '#tabs dt.games + dd', error: 'Error: unable to load games.' }
         %dd
-        %dt{ class: 'activities current', title: 'Recent Activity' }
+        %dt{ class: 'activities current', 'data-hint' => 'Recent Activity' }
           = link_to 'Recent Activity', activities_user_profile_url(@user_profile, subdomain: "www", format: :js), remote: true, class: 'dynload wait', data: { type: :text, target: '#tabs dt.activities + dd', error: 'Error: unable to load recent activity.' }
         %dd
   - else
