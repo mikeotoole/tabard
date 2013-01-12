@@ -2,7 +2,7 @@ source 'http://rubygems.org'#                                                   
 ruby '1.9.3'
 
 # Rails Gem
-  gem 'rails'#                                                                              MIT - https://github.com/rails/rails
+  gem 'rails', "=3.2.11" #                                                                  MIT - https://github.com/rails/rails
 
 # ActiveRecord extensions
   gem 'rails3_acts_as_paranoid'#                                                            MIT - https://github.com/goncalossilva/rails3_acts_as_paranoid
