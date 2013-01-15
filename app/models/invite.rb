@@ -62,6 +62,7 @@ class Invite < ActiveRecord::Base
   delegate :display_name, to: :user_profile, prefix: true, allow_nil: true
   delegate :avatar_url, to: :user_profile, prefix: true, allow_nil: true
   delegate :avatar_url, to: :character, prefix: true, allow_nil: true
+  delegate :name, to: :character, prefix: true, allow_nil: true
 
 ###
 # Callbacks

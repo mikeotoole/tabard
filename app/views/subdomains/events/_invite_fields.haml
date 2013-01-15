@@ -1,0 +1,12 @@
+%li{ data: {index: _i} }
+  = link_to user_profile_url(user_profile.id), target: '_blank' do
+    - if defined?(character) and !!character
+      = character.name
+    - else
+      = user_profile.display_name
+    %span.close
+  %input{ type: 'hidden', name: "event[invite_attributes][#{_i}][id]", value: user_profile.id }
+  - if defined?(character) and !!character
+    %input{ type: 'hidden', name: "event[invite_attributes][#{_i}][character_id]", value: character.id }
+  - if defined?(invite) and  !!invite and invite.marked_for_destruction?
+    %input{ type: 'hidden', name: "event[invite_attributes][#{_i}][_destroy]", value: 'true' }

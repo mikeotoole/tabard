@@ -109,6 +109,7 @@ class Ability
 
     # Played Games
     can :manage, PlayedGame, user_profile: { id: user.user_profile_id }
+
     # Character Rules
     can :manage, Character, played_game: {user_profile_id: user.user_profile_id }
 
@@ -224,6 +225,8 @@ class Ability
   ###
   def community_member_rules(user, current_community)
     apply_rules_from_roles(user, current_community)
+
+    can :autocomplete_members, Community
 
     can :read, Announcement
 

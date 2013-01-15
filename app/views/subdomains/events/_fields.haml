@@ -24,14 +24,11 @@
     = f.input :is_public, label: 'Viewable by all members?'
 %hr
 %h2 Invitee list
-%table.invites
-  %thead
-    %tr
-      %th.cinch{ colspan: 2 } Players
-      %th.characters Invited Characters
-      %th.check
-  %tbody
-    = f.simple_fields_for :invites do |invitef|
-      = render 'invite_row', invitef: invitef, event: event, community: current_community, community_game: event.community_game
-  %tfoot
-    %td{ colspan: 4 }
+#invites
+  %menu
+    %input{ type: 'text', name: 'term', autocomplete: 'off', placeholder: 'Player or character name', data: { url: autocomplete_members_url(view: 'event-invites') } }
+    %button.all Invite Everyone
+    %button.none Remove All
+  %ul
+    - event.invites.each_with_index do |invite, _i|
+      = render 'invite_fields', invite: invite, user_profile: invite.user_profile, character: invite.character, _i: _i
