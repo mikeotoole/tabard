@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121206191144) do
+ActiveRecord::Schema.define(:version => 20130115205343) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -215,6 +215,9 @@ ActiveRecord::Schema.define(:version => 20121206191144) do
     t.text     "action_items"
     t.integer  "community_plan_id"
     t.integer  "community_profiles_count",        :default => 0
+    t.boolean  "is_charge_exempt",                :default => false
+    t.integer  "charge_exempt_authorizer_id"
+    t.datetime "charge_exempt_start_time"
   end
 
   add_index "communities", ["admin_profile_id"], :name => "index_communities_on_admin_profile_id"

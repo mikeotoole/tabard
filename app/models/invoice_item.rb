@@ -69,13 +69,16 @@ class InvoiceItem < ActiveRecord::Base
   delegate :title, to: :item, prefix: true
   delegate :description, to: :item, prefix: true
   delegate :user, to: :invoice
+  delegate :is_charge_exempt, to: :community
 
 ###
 # Instance Methods
 ###
   # Returns the total price for this item (price each * quantity) in cents.
   def total_price_in_cents
-    if self.is_prorated
+    if self.is_charge_exempt
+      0
+    elsif self.is_prorated
       ((self.price_per_month_in_cents / 30.0) * self.number_of_days * self.quantity).round(0)
     else
       (self.price_per_month_in_cents * self.quantity).round(0)
