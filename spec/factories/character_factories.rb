@@ -13,6 +13,8 @@ FactoryGirl.define do
       if character.user_profile
         unless character.user_profile.games.include?(DefaultObjects.swtor)
           character.played_game = FactoryGirl.create(:swtor_played_game, :user_profile => character.user_profile)
+        else
+          character.played_game = character.user_profile.played_games.where(:game_id == DefaultObjects.swtor.id).first
         end
       else
         character.played_game = FactoryGirl.create(:swtor_played_game)
@@ -49,6 +51,8 @@ FactoryGirl.define do
       if character.user_profile
         unless character.user_profile.games.include?(DefaultObjects.wow)
           character.played_game = FactoryGirl.create(:wow_played_game, :user_profile => character.user_profile)
+        else
+          character.played_game = character.user_profile.played_games.where(:game_id == DefaultObjects.swtor.id).first
         end
       else
         character.played_game = FactoryGirl.create(:wow_played_game)
