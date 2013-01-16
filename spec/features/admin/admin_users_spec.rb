@@ -1,4 +1,5 @@
 require 'spec_helper'
+require "rack/test"
 
 describe "ActiveAdmin AdminUser" do
   let(:superadmin) { create(:admin_user) }
@@ -166,14 +167,14 @@ describe "ActiveAdmin AdminUser" do
     it "creates AdminUser when logged in as superadmin" do
       login_as superadmin
       expect {
-        page.driver.post("/alexandria/admin_users", { :admin_user => attributes_for(:admin_user) } )
+        page.driver.browser.process(:post, "/alexandria/admin_users", { :admin_user => attributes_for(:admin_user) } )
       }.to change(AdminUser, :count).by(1)
     end
 
     it "returns 403 when logged in as admin" do
       login_as admin
       expect {
-        page.driver.post("/alexandria/admin_users", { :admin_user => attributes_for(:admin_user) } )
+        page.driver.browser.process(:post, "/alexandria/admin_users", { :admin_user => attributes_for(:admin_user) } )
       }.to change(AdminUser, :count).by(0)
       page.driver.status_code.should == 403
       page.should have_content('Forbidden')
@@ -182,7 +183,7 @@ describe "ActiveAdmin AdminUser" do
     it "returns 403 when logged in as moderator" do
       login_as moderator
       expect {
-        page.driver.post("/alexandria/admin_users", { :admin_user => attributes_for(:admin_user) } )
+        page.driver.browser.process(:post, "/alexandria/admin_users", { :admin_user => attributes_for(:admin_user) } )
       }.to change(AdminUser, :count).by(0)
       page.driver.status_code.should == 403
       page.should have_content('Forbidden')
@@ -191,7 +192,7 @@ describe "ActiveAdmin AdminUser" do
     it "returns 403 when logged in as regular User" do
       login_as user
       expect {
-        page.driver.post("/alexandria/admin_users", { :admin_user => attributes_for(:admin_user) } )
+        page.driver.browser.process(:post, "/alexandria/admin_users", { :admin_user => attributes_for(:admin_user) } )
       }.to change(AdminUser, :count).by(0)
       page.driver.status_code.should == 403
       page.should have_content('Forbidden')
@@ -199,7 +200,7 @@ describe "ActiveAdmin AdminUser" do
 
     it "does not create AdminUser when not logged in" do
       expect {
-        page.driver.post("/alexandria/admin_users", { :admin_user => attributes_for(:admin_user) } )
+        page.driver.browser.process(:post, "/alexandria/admin_users", { :admin_user => attributes_for(:admin_user) } )
       }.to change(AdminUser, :count).by(0)
     end
   end
@@ -207,14 +208,14 @@ describe "ActiveAdmin AdminUser" do
   describe "#update" do
     it "updates AdminUser when logged in as superadmin" do
       login_as superadmin
-      page.driver.put("/alexandria/admin_users/#{admin.id}", { :admin_user => { :email => "test_case_eamil@example.com" } } )
-      AdminUser.find(admin).email.should eql "test_case_eamil@example.com"
+      page.driver.browser.process(:put, "/alexandria/admin_users/#{admin.id}", { :admin_user => { :email => "test_case_email@example.com" } } )
+      AdminUser.find(admin).email.should eql "test_case_email@example.com"
     end
 
     it "returns 403 when logged in as admin" do
       login_as admin
       orginal_email = moderator.email
-      page.driver.put("/alexandria/admin_users/#{moderator.id}", { :admin_user => { :email => "test_case_eamil@example.com" } } )
+      page.driver.browser.process(:put, "/alexandria/admin_users/#{moderator.id}", { :admin_user => { :email => "test_case_email@example.com" } } )
       AdminUser.find(moderator).email.should eql orginal_email
       page.driver.status_code.should == 403
       page.should have_content('Forbidden')
@@ -223,7 +224,7 @@ describe "ActiveAdmin AdminUser" do
     it "returns 403 when logged in as moderator" do
       login_as moderator
       orginal_email = admin.email
-      page.driver.put("/alexandria/admin_users/#{admin.id}", { :admin_user => { :email => "test_case_eamil@example.com" } } )
+      page.driver.browser.process(:put, "/alexandria/admin_users/#{admin.id}", { :admin_user => { :email => "test_case_email@example.com" } } )
       AdminUser.find(admin).email.should eql orginal_email
       page.driver.status_code.should == 403
       page.should have_content('Forbidden')
@@ -232,7 +233,7 @@ describe "ActiveAdmin AdminUser" do
     it "returns 403 when logged in as regular User" do
       login_as user
       orginal_email = moderator.email
-      page.driver.put("/alexandria/admin_users/#{moderator.id}", { :admin_user => { :email => "test_case_eamil@example.com" } } )
+      page.driver.browser.process(:put, "/alexandria/admin_users/#{moderator.id}", { :admin_user => { :email => "test_case_email@example.com" } } )
       AdminUser.find(moderator).email.should eql orginal_email
       page.driver.status_code.should == 403
       page.should have_content('Forbidden')
@@ -240,7 +241,7 @@ describe "ActiveAdmin AdminUser" do
 
     it "does not update AdminUser when not logged in" do
       orginal_email = admin.email
-      page.driver.put("/alexandria/admin_users/#{admin.id}", { :admin_user => { :email => "test_case_eamil@example.com" } } )
+      page.driver.browser.process(:put, "/alexandria/admin_users/#{admin.id}", { :admin_user => { :email => "test_case_email@example.com" } } )
       AdminUser.find(admin).email.should eql orginal_email
     end
   end
@@ -249,14 +250,14 @@ describe "ActiveAdmin AdminUser" do
     it "deletes AdminUser when logged in as superadmin" do
       login_as superadmin
 
-      page.driver.delete("/alexandria/admin_users/#{admin.id}")
+      page.driver.browser.process(:delete, "/alexandria/admin_users/#{admin.id}")
       AdminUser.exists?(admin).should be_false
     end
 
     it "returns 403 when logged in as admin" do
       login_as admin
 
-      page.driver.delete("/alexandria/admin_users/#{moderator.id}")
+      page.driver.browser.process(:delete, "/alexandria/admin_users/#{moderator.id}")
       AdminUser.exists?(moderator).should be_true
       page.driver.status_code.should == 403
       page.should have_content('Forbidden')
@@ -265,7 +266,7 @@ describe "ActiveAdmin AdminUser" do
     it "returns 403 when logged in as moderator" do
       login_as moderator
 
-      page.driver.delete("/alexandria/admin_users/#{admin.id}")
+      page.driver.browser.process(:delete, "/alexandria/admin_users/#{admin.id}")
       AdminUser.exists?(admin).should be_true
       page.driver.status_code.should == 403
       page.should have_content('Forbidden')
@@ -274,14 +275,14 @@ describe "ActiveAdmin AdminUser" do
     it "returns 403 when logged in as regular User" do
       login_as user
 
-      page.driver.delete("/alexandria/admin_users/#{admin.id}")
+      page.driver.browser.process(:delete, "/alexandria/admin_users/#{admin.id}")
       AdminUser.exists?(admin).should be_true
       page.driver.status_code.should == 403
       page.should have_content('Forbidden')
     end
 
     it "does not delete AdminUser when not logged in" do
-      page.driver.delete("/alexandria/admin_users/#{admin.id}")
+      page.driver.browser.process(:delete, "/alexandria/admin_users/#{admin.id}")
       AdminUser.exists?(admin).should be_true
     end
   end
@@ -329,34 +330,34 @@ describe "ActiveAdmin AdminUser" do
     it "changes password and email when logged in as superadmin" do
       login_as superadmin
 
-      page.driver.put("/alexandria/admin_users/update_account", { :admin_user => { :current_password => "Password", :email => "test-case-email@example.com", :password => "NewPassword", :password_confirmation => "NewPassword" } } )
+      page.driver.browser.process(:put, "/alexandria/admin_users/update_account", { :admin_user => { :current_password => "Password", :email => "test-case-email@example.com", :password => "NewPassword", :password_confirmation => "NewPassword" } } )
       AdminUser.find(superadmin).email.should eql "test-case-email@example.com"
     end
 
     it "changes password and email when logged in as admin" do
       login_as admin
 
-      page.driver.put("/alexandria/admin_users/update_account", { :admin_user => { :current_password => "Password", :email => "test-case-email@example.com", :password => "NewPassword", :password_confirmation => "NewPassword" } } )
+      page.driver.browser.process(:put, "/alexandria/admin_users/update_account", { :admin_user => { :current_password => "Password", :email => "test-case-email@example.com", :password => "NewPassword", :password_confirmation => "NewPassword" } } )
       AdminUser.find(admin).email.should eql "test-case-email@example.com"
     end
 
     it "changes password and email when logged in as moderator" do
       login_as moderator
 
-      page.driver.put("/alexandria/admin_users/update_account", { :admin_user => { :current_password => "Password", :email => "test-case-email@example.com", :password => "NewPassword", :password_confirmation => "NewPassword" } } )
+      page.driver.browser.process(:put, "/alexandria/admin_users/update_account", { :admin_user => { :current_password => "Password", :email => "test-case-email@example.com", :password => "NewPassword", :password_confirmation => "NewPassword" } } )
       AdminUser.find(moderator).email.should eql "test-case-email@example.com"
     end
 
     it "returns 403 when logged in as regular User" do
       login_as user
 
-      page.driver.put("/alexandria/admin_users/update_account", { :admin_user => { :current_password => "Password", :email => "test-case-email@example.com", :password => "NewPassword", :password_confirmation => "NewPassword" } } )
+      page.driver.browser.process(:put, "/alexandria/admin_users/update_account", { :admin_user => { :current_password => "Password", :email => "test-case-email@example.com", :password => "NewPassword", :password_confirmation => "NewPassword" } } )
       page.driver.status_code.should == 403
       page.should have_content('Forbidden')
     end
 
     it "redirects to login page when not logged in" do
-      page.driver.put("/alexandria/admin_users/update_account", { :admin_user => { :current_password => "Password", :email => "test-case-email@example.com", :password => "NewPassword", :password_confirmation => "NewPassword" } } )
+      page.driver.browser.process(:put, "/alexandria/admin_users/update_account", { :admin_user => { :current_password => "Password", :email => "test-case-email@example.com", :password => "NewPassword", :password_confirmation => "NewPassword" } } )
 
       page.driver.status_code.should == 302
     end
@@ -365,7 +366,7 @@ describe "ActiveAdmin AdminUser" do
       login_as admin
 
       old_email = admin.email
-      page.driver.put("/alexandria/admin_users/update_account", { :admin_user => { :current_password => "WrongPassword", :email => "test-case-email@example.com" } } )
+      page.driver.browser.process(:put, "/alexandria/admin_users/update_account", { :admin_user => { :current_password => "WrongPassword", :email => "test-case-email@example.com" } } )
       page.driver.status_code.should == 200
 
       AdminUser.find(admin).email.should eql old_email
@@ -374,7 +375,7 @@ describe "ActiveAdmin AdminUser" do
     it "does not allow changing of role" do
       login_as moderator
 
-      page.driver.put("/alexandria/admin_users/update_account", { :admin_user => { :current_password => "Password", :email => "test-case-email@example.com", :password => "NewPassword", :password_confirmation => "NewPassword", :role => "superadmin" } } )
+      page.driver.browser.process(:put, "/alexandria/admin_users/update_account", { :admin_user => { :current_password => "Password", :email => "test-case-email@example.com", :password => "NewPassword", :password_confirmation => "NewPassword", :role => "superadmin" } } )
 
       AdminUser.find(moderator).role.should eql "moderator"
     end
@@ -385,7 +386,7 @@ describe "ActiveAdmin AdminUser" do
       login_as superadmin
 
       password = admin.encrypted_password
-      page.driver.put("/alexandria/admin_users/#{admin.id}/reset_password")
+      page.driver.browser.process(:put, "/alexandria/admin_users/#{admin.id}/reset_password")
       AdminUser.find(admin).encrypted_password.should_not eql password
       AdminUser.find(admin).reset_password_token.should_not be_nil
     end
@@ -393,7 +394,7 @@ describe "ActiveAdmin AdminUser" do
     it "returns 403 when logged in as admin" do
       login_as admin
 
-      page.driver.put("/alexandria/admin_users/#{moderator.id}/reset_password")
+      page.driver.browser.process(:put, "/alexandria/admin_users/#{moderator.id}/reset_password")
       page.driver.status_code.should eql 403
       page.should have_content('Forbidden')
       AdminUser.find(moderator).reset_password_token.should be_nil
@@ -402,7 +403,7 @@ describe "ActiveAdmin AdminUser" do
     it "returns 403 when logged in as moderator" do
       login_as moderator
 
-      page.driver.put("/alexandria/admin_users/#{admin.id}/reset_password")
+      page.driver.browser.process(:put, "/alexandria/admin_users/#{admin.id}/reset_password")
       page.driver.status_code.should eql 403
       page.should have_content('Forbidden')
       AdminUser.find(admin).reset_password_token.should be_nil
@@ -411,14 +412,14 @@ describe "ActiveAdmin AdminUser" do
     it "returns 403 when logged in as regular User" do
       login_as user
 
-      page.driver.put("/alexandria/admin_users/#{admin.id}/reset_password")
+      page.driver.browser.process(:put, "/alexandria/admin_users/#{admin.id}/reset_password")
       page.driver.status_code.should eql 403
       page.should have_content('Forbidden')
       AdminUser.find(admin).reset_password_token.should be_nil
     end
 
     it "Does not reset_password when not logged in" do
-      page.driver.put("/alexandria/admin_users/#{admin.id}/reset_password")
+      page.driver.browser.process(:put, "/alexandria/admin_users/#{admin.id}/reset_password")
       AdminUser.find(admin).reset_password_token.should be_nil
     end
   end
