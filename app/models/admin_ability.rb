@@ -66,6 +66,7 @@ class AdminAbility
 
     # Rules for superadmin user. (Inherits rules from admin).
     if user.role? :superadmin
+      can [:charge_exempt], Community
       can [:read, :create, :view_document], [Document, 'Document']
       can [:update], Document do |document|
         not document.is_published

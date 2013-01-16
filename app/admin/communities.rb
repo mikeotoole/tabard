@@ -4,12 +4,28 @@ ActiveAdmin.register Community do
 
   actions :index, :show
 
+  action_item only: [:show] do
+    if community.is_charge_exempt
+      link_to "Remove charge exempt status", charge_exempt_alexandria_community_url(community), method: :post
+    else
+      link_to "Grant charge exempt status", charge_exempt_alexandria_community_url(community), method: :post
+    end
+  end
+
   member_action :destroy, method: :delete do
     community = Community.find(params[:id])
     authorize!(:destroy, community)
     Community.delay.destory_community(community.id)
     flash[:notice] = 'Community is being removed.'
     redirect_to action: :index
+  end
+
+  member_action :charge_exempt, method: :post do
+    community = Community.find(params[:id])
+    authorize!(:charge_exempt, community)
+    community.toggle_charge_exempt_status(current_admin_user)
+    flash[:notice] = 'Community has been updated.'
+    redirect_to action: :show
   end
 
   filter :id

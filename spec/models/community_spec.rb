@@ -26,6 +26,9 @@
 #  action_items                    :text
 #  community_plan_id               :integer
 #  community_profiles_count        :integer          default(0)
+#  is_charge_exempt                :boolean          default(FALSE)
+#  charge_exempt_authorizer_id     :integer
+#  charge_exempt_start_time        :datetime
 #
 
 require 'spec_helper'

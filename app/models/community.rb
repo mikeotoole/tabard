@@ -35,6 +35,8 @@ class Community < ActiveRecord::Base
 ###
 # Associations
 ###
+  belongs_to :charge_exempt_authorizer, class_name: "AdminUser"
+
   belongs_to :admin_profile, class_name: "UserProfile"
   belongs_to :member_role, class_name: "Role"
   belongs_to :community_application_form, dependent: :destroy, class_name: "CustomForm", autosave: true
@@ -134,6 +136,16 @@ class Community < ActiveRecord::Base
 ###
 # Instance Methods
 ###
+  #Toggles the charge exempt status of a community
+  def toggle_charge_exempt_status(admin_user)
+    return false if admin_user.blank?
+    if self.is_charge_exempt
+      self.update_attributes({is_charge_exempt: false, charge_exempt_start_time: nil, charge_exempt_authorizer_id: nil}, without_protection: true)
+    else
+      self.update_attributes({is_charge_exempt: true, charge_exempt_start_time: DateTime.now, charge_exempt_authorizer_id: admin_user.id}, without_protection: true)
+    end
+  end
+
   # Returns all games that this community supports
   def games
     # TODO: Can this be changed to a has_may through now? -MO
