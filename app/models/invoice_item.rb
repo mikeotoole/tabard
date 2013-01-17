@@ -78,7 +78,14 @@ class InvoiceItem < ActiveRecord::Base
   def total_price_in_cents
     if self.is_charge_exempt
       0
-    elsif self.is_prorated
+    else
+      self.non_exempt_total_price_in_cents
+    end
+  end
+
+  # This gets the non exempt price.
+  def non_exempt_total_price_in_cents
+    if self.is_prorated
       ((self.price_per_month_in_cents / 30.0) * self.number_of_days * self.quantity).round(0)
     else
       (self.price_per_month_in_cents * self.quantity).round(0)

@@ -218,6 +218,8 @@ ActiveRecord::Schema.define(:version => 20130115205343) do
     t.boolean  "is_charge_exempt",                :default => false
     t.integer  "charge_exempt_authorizer_id"
     t.datetime "charge_exempt_start_time"
+    t.string   "charge_exempt_label"
+    t.text     "charge_exempt_reason"
   end
 
   add_index "communities", ["admin_profile_id"], :name => "index_communities_on_admin_profile_id"

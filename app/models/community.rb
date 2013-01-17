@@ -114,6 +114,10 @@ class Community < ActiveRecord::Base
       file_size: {
         maximum: 5.megabytes.to_i
       }
+  validates :charge_exempt_authorizer, presence: true, if: Proc.new{|community| community.is_charge_exempt }
+  validates :charge_exempt_start_time, presence: true, if: Proc.new{|community| community.is_charge_exempt }
+  validates :charge_exempt_label, presence: true, if: Proc.new{|community| community.is_charge_exempt }
+  validates :charge_exempt_reason, presence: true, if: Proc.new{|community| community.is_charge_exempt }
 ###
 # Uploaders
 ###
@@ -137,12 +141,12 @@ class Community < ActiveRecord::Base
 # Instance Methods
 ###
   #Toggles the charge exempt status of a community
-  def toggle_charge_exempt_status(admin_user)
+  def toggle_charge_exempt_status(admin_user, label = nil, reason = nil)
     return false if admin_user.blank?
     if self.is_charge_exempt
-      self.update_attributes({is_charge_exempt: false, charge_exempt_start_time: nil, charge_exempt_authorizer_id: nil}, without_protection: true)
+      self.update_attributes({is_charge_exempt: false, charge_exempt_start_time: nil, charge_exempt_authorizer_id: nil, charge_exempt_label: label, charge_exempt_reason: reason}, without_protection: true)
     else
-      self.update_attributes({is_charge_exempt: true, charge_exempt_start_time: DateTime.now, charge_exempt_authorizer_id: admin_user.id}, without_protection: true)
+      self.update_attributes({is_charge_exempt: true, charge_exempt_start_time: DateTime.now, charge_exempt_authorizer_id: admin_user.id, charge_exempt_label: label, charge_exempt_reason: reason}, without_protection: true)
     end
   end
 
@@ -416,6 +420,7 @@ protected
   # _validator_
   #
   # This will check that the home page is owned by the community.
+  ###
   def home_page_owned_by_community
     return unless home_page_id
     errors.add(:home_page_id, "is invalid. This page is owned by another community.") unless pages.include?(Page.find_by_id(home_page_id))

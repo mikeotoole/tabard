@@ -1,0 +1,5 @@
+= simple_form_for @community, url: { action: :charge_exempt } do |f|
+  =f.input :charge_exempt_label, hint: "This is what the customer will see."
+  =f.input :charge_exempt_reason, hint: "This is what admins will see."
+  %p.submit
+    = f.button :submit, 'Update'

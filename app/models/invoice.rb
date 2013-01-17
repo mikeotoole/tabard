@@ -88,6 +88,40 @@ class Invoice < ActiveRecord::Base
 ###
 # Instance Methods
 ###
+  # This gets the non exempt price in cents
+  def non_exempt_total_price_in_cents_without_tax
+    invoice_items.empty? ? 0 : invoice_items.map{|ii| ii.non_exempt_total_price_in_cents}.inject(0,:+)
+  end
+
+  # This gets the non exempt price in dollars
+  def non_exempt_total_price_in_dollars_without_tax
+    self.non_exempt_total_price_in_cents_without_tax/100.0
+  end
+
+  ###
+  # Gets the total non exempt price per month in cents for a specific communities plan and upgrades.
+  # This will only count plans and upgrades saved to the database.
+  ###
+  def non_exempt_total_recurring_price_per_month_in_cents(community=nil)
+    price = 0
+    if community.blank?
+      invoice_items = self.invoice_items.recurring
+    else
+      invoice_items = self.invoice_items.recurring.where(community_id: community.id)
+    end
+    price = invoice_items.map{|ii| ii.non_exempt_total_price_in_cents}.inject(0,:+) unless invoice_items.empty?
+    return price
+  end
+
+  ###
+  # Gets the total non exempt price per month in dollars for a specific communities plan and upgrades.
+  # This will only count plans and upgrades saved to the database.
+  ###
+  def non_exempt_total_recurring_price_per_month_in_dollars(community=nil)
+    self.non_exempt_total_recurring_price_per_month_in_cents(community)/100.0
+  end
+
+
   # [Returns] the total cost of all invoice items in cents.
   def total_price_in_cents
     if charged_total_price_in_cents.present?
