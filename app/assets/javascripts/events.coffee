@@ -30,43 +30,8 @@ jQuery(document).ready ($) ->
         else
             chars.show()
         false
-    
-    # Toggle action for rows
-    $('table.invites td.actions a.toggle').click ->
-        row = $(@).closest('tr')
-        if $(@).hasClass('approve')
-            $(@).removeClass('approve').addClass('reject')
-            row.addClass 'dim'
-            row.find('input[name*="_destroy"]').val(true)
-        else
-            $(@).removeClass('reject').addClass('approve')
-            row.removeClass 'dim'
-            row.find('input[name*="_destroy"]').val(false)
-        return false
-    
-    # Global checkbox for rows
-    $('table.invites thead th:last').each ->
-        invitedRows = $(@).closest('table').find('tbody tr')
-        if invitedRows.length > 0
-            checka = $('<a>').appendTo @
-            checka.addClass('checked') if invitedRows.find('td.actions a.approve').length == invitedRows.length
-            checka.click ->
-                if invitedRows.find('td.actions a.approve').length == invitedRows.length
-                    invitedRows
-                        .find('td.actions a.toggle')
-                        .removeClass('reject')
-                        .addClass('approve')
-                        .trigger 'click'
-                else
-                    invitedRows
-                        .find('td.actions a.toggle')
-                        .removeClass('approve')
-                        .addClass('reject')
-                        .trigger 'click'
-                false
-        false
 
-    # Autocomplete invitee list
+    # invitee list
     (->
         cache = []
         list = []
@@ -76,6 +41,12 @@ jQuery(document).ready ($) ->
         $input = $menu.find '> input'
         $ul = $invites.find '> ul'
 
+        # Pre-populate list of user profile ids (if any)
+        $ul.find('li').each ->
+            userProfileId = parseInt $(@).find('input.user_profile').val()
+            list.push userProfileId if userProfileId > 0
+
+        # Auto-suggest users/characters
         $input.autocomplete
             autoFocus: false
             create: (e, ui) ->
@@ -94,10 +65,16 @@ jQuery(document).ready ($) ->
                 collision: 'none'
             select: (e, ui) ->
                 $input.val ''
-                return false if ui.item.value in list
-                list.push ui.item.value
-                console.log ui.item.html
-                $ul.append ui.item.html.replace(/_INDEX_/g, parseInt($ul.find('li:last').attr 'data-index') + 1)
+                if ui.item.value in list
+                    $li = $ul.find("li:has(input.user_profile[value=#{ui.item.value}])")
+                    if $li.length
+                        $li.remove()
+                    else if $li.find('input.destroy').length
+                        return false
+                else 
+                    list.push ui.item.value
+                _i = (parseInt($ul.find('li:last').attr 'data-index') or 0) + 1
+                $ul.append ui.item.html.replace(/_INDEX_/g, _i)
                 return false
             source: (request, response) ->
                 term = request.term
@@ -109,10 +86,57 @@ jQuery(document).ready ($) ->
         $input.data('autocomplete')._renderItem = (ul, item) ->
             $('<li class="with-avatar">').html(item.label).data('item.autocomplete', item).appendTo ul
 
+        # Remove invites
         $ul.on 'click', '.close', ->
-            $(@).closest('li').remove()
-            updateMessageHeaderHeight()
+            $li = $(@).closest 'li'
+            $id = $li.find 'input.id'
+            $profile = $li.find 'input.user_profile'
+            userProfileId = $li.find('input.user_profile').val()
+            if $id.length
+                $destroy = $id.clone()
+                $destroy.attr
+                    class: 'destroy'
+                    name: $id.attr('name').replace '[id]', '[_destroy]'
+                    value: 'true'
+                $li.empty()
+                $li.append $id
+                $li.append $profile
+                $li.append $destroy
+                $li.hide()
+            else
+                $li.remove()
+            list.splice list.indexOf(userProfileId), 1
+            false
 
-        $ul.find('li').each -> list.push parseInt $(@).val()
+        # Remove all
+        $invites.on 'click', '.none', ->
+            $.confirm
+                title: 'Remove all invitations?'
+                actions:
+                    confirm: ->
+                        $ul.find('.close').each -> $(@).trigger 'click'
+            false
+
+        # Add all members
+        $invites.on 'click', '.all', ->
+            return false unless window.communityMembers? and window.communityMembers.length > 0
+            $ul.find('.close').each -> $(@).trigger 'click'
+            for member, _i in window.communityMembers
+                $li = $("<li data-index='#{_i}'></li>")
+                $a = $("<a href='#{member.url}'>#{member.name}</a>").appendTo $li
+                $img = $("<img src='#{member.avatar}' alt=''>").prependTo $a
+                $close = $("<span class='close'></span>").appendTo $a
+                $profile = $("<input type='hidden'>").attr
+                    class: 'user_profile'
+                    name: "event[invites_attributes][#{_i}][user_profile_id]"
+                    value: member.id
+                $profile.appendTo $li
+                $_li = $ul.find("li:has(input.user_profile[value=#{member.id}])")
+                if $_li.length
+                    $_li.find('input.id').clone().appendTo $li
+                    $_li.remove()
+                $li.appendTo $ul
+                list.push member.id
+            false
 
     )()

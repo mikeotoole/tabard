@@ -30,21 +30,22 @@ class AvatarUploader < CarrierWave::Uploader::Base
   def default_url
     #"/images/fallback/" + [version_name, "default.png"].compact.join('_')
     case version_name
+    # TODO: Make sure that addding "/assets/" to the default PNGs below doesn't break production
     when :large
       # "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png?size=240x240"
-      'application/avatar@240.png'
+      '/assets/application/avatar@240.png'
     when :small
       # "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png?size=60x60"
-      'application/avatar@60.png'
+      '/assets/application/avatar@60.png'
     when :tiny
       # "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png?size=40x40"
-      'application/avatar@40.png'
+      '/assets/application/avatar@40.png'
     when :icon
       # "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png?size=20x20"
-      'application/avatar@20.png'
+      '/assets/application/avatar@20.png'
     else
       # "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png"
-      'application/blank.png'
+      '/assets/application/blank.png'
     end
   end
 

@@ -1,12 +1,14 @@
 %li{ data: {index: _i} }
   = link_to user_profile_url(user_profile.id), target: '_blank' do
     - if defined?(character) and !!character
-      = character.name
+      = image_tag character.avatar_url :small
+      = "#{character.name} (#{user_profile.display_name})"
     - else
+      = image_tag user_profile.avatar_url :small
       = user_profile.display_name
     %span.close
-  %input{ type: 'hidden', name: "event[invite_attributes][#{_i}][id]", value: user_profile.id }
+  %input{ class: 'user_profile', type: 'hidden', name: "event[invites_attributes][#{_i}][user_profile_id]", value: user_profile.id }
   - if defined?(character) and !!character
-    %input{ type: 'hidden', name: "event[invite_attributes][#{_i}][character_id]", value: character.id }
-  - if defined?(invite) and  !!invite and invite.marked_for_destruction?
-    %input{ type: 'hidden', name: "event[invite_attributes][#{_i}][_destroy]", value: 'true' }
+    %input{ class: 'character', type: 'hidden', name: "event[invites_attributes][#{_i}][character_id]", value: character.id }
+  - if defined?(invite) and  !!invite
+    %input{ class: 'id', type: 'hidden', name: "event[invites_attributes][#{_i}][id]", value: invite.id }
