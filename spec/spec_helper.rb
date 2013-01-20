@@ -39,6 +39,7 @@ RSpec.configure do |config|
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
+    Devise.mailer = "Devise::Mailer"
   end
   config.before(:each) do
     DatabaseCleaner.start

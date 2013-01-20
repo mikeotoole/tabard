@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable,
-         :confirmable, :lockable
+         :confirmable, :lockable, :async
 
 ###
 # Attribute accessors
