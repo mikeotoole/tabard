@@ -85,30 +85,6 @@ describe "ActiveAdmin Page" do
     end
   end
 
-  describe "#new" do
-    it "raises error ActionNotFound" do
-      lambda { visit new_alexandria_page_url }.should raise_error(AbstractController::ActionNotFound)
-    end
-  end
-
-  describe "#create" do
-    it "raises error ActionNotFound" do
-      lambda { page.driver.post("/alexandria/pages") }.should raise_error(AbstractController::ActionNotFound)
-    end
-  end
-
-  describe "#edit" do
-    it "raises error ActionNotFound" do
-      lambda { visit edit_alexandria_page_url(:id => my_page.id) }.should raise_error(AbstractController::ActionNotFound)
-    end
-  end
-
-  describe "#update" do
-    it "raises error ActionNotFound" do
-      lambda { page.driver.put("/alexandria/pages/#{my_page.id}") }.should raise_error(AbstractController::ActionNotFound)
-    end
-  end
-
   describe "#destroy" do
     it "deletes page when logged in as superadmin" do
       login_as superadmin
