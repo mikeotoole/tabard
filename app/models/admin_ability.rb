@@ -71,7 +71,7 @@ class AdminAbility
       can [:update], Document do |document|
         not document.is_published
       end
-      can :create, [AdminUser, 'Admin User'] # Quoted needed for displaying button in panel.
+      can :create, [AdminUser, 'AdminUser'] # Quoted needed for displaying button in panel.
       can :manage, AdminUser
       cannot [:update_account, :edit_account], AdminUser do |admin_user|
         admin_user != user

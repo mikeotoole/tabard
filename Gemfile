@@ -25,6 +25,7 @@ ruby '1.9.3'
 # User Authentication
   gem 'devise'#                                                                             MIT - https://github.com/plataformatec/devise
   gem 'rotp' #                                                                              MIT - https://github.com/mdp/rotp
+  gem 'devise-async' #                                                                      MIT - https://github.com/mhfs/devise-async
 
 # Permissions/AC
   gem 'cancan'#                                                                             MIT - https://github.com/ryanb/cancan
@@ -121,10 +122,10 @@ ruby '1.9.3'
 
 # Test Specific Gems
   group :test do
-    gem 'capybara'#                                                                         MIT - https://github.com/jnicklas/capybara
+    gem 'capybara', "=1.1.4"#                                                               MIT - https://github.com/jnicklas/capybara
     gem 'database_cleaner'#                                                                 MIT - https://github.com/bmabey/database_cleaner
     gem 'rb-fsevent'#                                                                       MIT - https://github.com/thibaudgg/rb-fsevent
     gem 'guard-rspec'#                                                                      MIT - https://github.com/guard/guard-rspec
     gem 'guard-livereload'#                                                                 MIT - https://github.com/guard/guard-livereload
-    #gem 'growl_notify'#                                                                     MIT - https://github.com/scottdavis/growl_notify
+    #gem 'growl_notify'#                                                                    MIT - https://github.com/scottdavis/growl_notify
   end

@@ -92,7 +92,7 @@ class RosterAssignment < ActiveRecord::Base
 
   # This method validates that the character is compatable with the supported game
   def character_valid_for_community_game
-    errors.add(:base, "That character is not compatible with #{self.community_game.game_short_name}.") if self.character != nil and self.community_game != nil and self.character.game.id != self.community_game.game_id
+    errors.add(:base, "That character is not compatible with #{self.community_game.game_name}.") if self.character != nil and self.community_game != nil and self.character.game_id != self.community_game.game_id
   end
 
 ###
