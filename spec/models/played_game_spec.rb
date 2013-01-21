@@ -12,5 +12,9 @@
 require 'spec_helper'
 
 describe PlayedGame do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "game" do
+    it "should be required" do
+      build(:wow_played_game, game: nil).should_not be_valid
+    end
+  end
 end

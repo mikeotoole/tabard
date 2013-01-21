@@ -1,7 +1,6 @@
 FactoryGirl.define do
   factory :swtor_character do
     sequence(:name) {|n| "SWTOR Character #{n}" }
-    char_class "Bounty Hunter"
     faction "Empire"
     advanced_class "Powertech"
     species "Cyborg"
@@ -29,7 +28,6 @@ FactoryGirl.define do
   factory :swtor_character_att, :class => :swtor_character do
     sequence(:name) {|n| "SWTOR Character #{n}" }
     server_name { DefaultObjects.swtor.server_names.first }
-    char_class "Bounty Hunter"
     faction "Empire"
     advanced_class "Powertech"
     species "Cyborg"
