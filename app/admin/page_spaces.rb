@@ -21,7 +21,7 @@ ActiveAdmin.register PageSpace do
     column :created_at
   end
 
-  show title: proc{"#{page_space.community_name} - #{page_space.name}"} do
+  show title: :name do
     attributes_table *default_attribute_table_rows
     div do
       panel("Pages") do

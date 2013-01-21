@@ -245,10 +245,4 @@ describe "ActiveAdmin Game" do
       Game.find(game).name.should eql orginal_name
     end
   end
-
-  describe "#destroy" do
-    it "raises error ActionNotFound" do
-      lambda { page.driver.delete("/alexandria/games/#{game.id}") }.should raise_error(AbstractController::ActionNotFound)
-    end
-  end
 end

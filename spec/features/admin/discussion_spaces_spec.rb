@@ -86,12 +86,6 @@ describe "ActiveAdmin DiscussionSpace" do
     end
   end
 
-  describe "#new" do
-    it "raises error ActionNotFound" do
-      lambda { visit new_alexandria_discussion_space_url }.should raise_error(AbstractController::ActionNotFound)
-    end
-  end
-
   describe "#edit" do
     it "returns 200 when logged in as superadmin" do
       login_as superadmin
@@ -128,12 +122,6 @@ describe "ActiveAdmin DiscussionSpace" do
     it "redirects to login page when not logged in" do
       visit edit_alexandria_discussion_space_url(:id => discussion_space.id)
       current_path.should == new_admin_user_session_path
-    end
-  end
-
-  describe "#create" do
-    it "raises error ActionNotFound" do
-      lambda { page.driver.post("/alexandria/discussion_spaces") }.should raise_error(AbstractController::ActionNotFound)
     end
   end
 

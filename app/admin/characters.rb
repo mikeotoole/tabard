@@ -30,7 +30,7 @@ ActiveAdmin.register Character do
     end
   end
 
-  show title: proc{"#{character.user_profile.display_name} - #{character.name}"} do
+  show title: :name do
     attributes_table *default_attribute_table_rows, :game, :user_profile
     #active_admin_comments
   end

@@ -85,30 +85,6 @@ describe "ActiveAdmin Character" do
     end
   end
 
-  describe "#new" do
-    it "raises error ActionNotFound" do
-      lambda { visit new_alexandria_character_url }.should raise_error(AbstractController::ActionNotFound)
-    end
-  end
-
-  describe "#create" do
-    it "raises error ActionNotFound" do
-      lambda { page.driver.post("/alexandria/characters") }.should raise_error(AbstractController::ActionNotFound)
-    end
-  end
-
-  describe "#edit" do
-    it "raises error ActionNotFound" do
-      lambda { visit edit_alexandria_character_url(:id => character.id) }.should raise_error(AbstractController::ActionNotFound)
-    end
-  end
-
-  describe "#update" do
-    it "raises error ActionNotFound" do
-      lambda { page.driver.put("/alexandria/characters/#{character.id}") }.should raise_error(AbstractController::ActionNotFound)
-    end
-  end
-
   describe "#destroy" do
     it "deletes character when logged in as superadmin" do
       login_as superadmin

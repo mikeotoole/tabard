@@ -85,34 +85,4 @@ describe "ActiveAdmin UserProfile" do
     end
   end
 
-  describe "#new" do
-    it "raises error ActionNotFound" do
-      lambda { visit new_alexandria_user_profile_url }.should raise_error(AbstractController::ActionNotFound)
-    end
-  end
-
-  describe "#create" do
-    it "raises error ActionNotFound" do
-      lambda { page.driver.post("/alexandria/user_profiles") }.should raise_error(AbstractController::ActionNotFound)
-    end
-  end
-
-  describe "#edit" do
-    it "raises error ActionNotFound" do
-      lambda { visit edit_alexandria_user_profile_url(:id => user_profile.id) }.should raise_error(AbstractController::ActionNotFound)
-    end
-  end
-
-  describe "#update" do
-    it "raises error ActionNotFound" do
-      lambda { page.driver.put("/alexandria/user_profiles/#{user_profile.id}") }.should raise_error(AbstractController::ActionNotFound)
-    end
-  end
-
-  describe "#destroy" do
-    it "raises error ActionNotFound" do
-      lambda { page.driver.delete("/alexandria/user_profiles/#{user_profile.id}") }.should raise_error(AbstractController::ActionNotFound)
-    end
-  end
-
 end

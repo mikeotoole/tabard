@@ -85,30 +85,6 @@ describe "ActiveAdmin CommunityGame" do
     end
   end
 
-  describe "#new" do
-    it "raises error ActionNotFound" do
-      lambda { visit new_alexandria_community_game_url }.should raise_error(AbstractController::ActionNotFound)
-    end
-  end
-
-  describe "#edit" do
-    it "raises error ActionNotFound" do
-      lambda { visit edit_alexandria_community_game_url(:id => community_game.id) }.should raise_error(AbstractController::ActionNotFound)
-    end
-  end
-
-  describe "#update" do
-    it "raises error ActionNotFound" do
-      lambda { page.driver.put("/alexandria/community_games/#{community_game.id}") }.should raise_error(AbstractController::ActionNotFound)
-    end
-  end
-
-  describe "#create" do
-    it "raises error ActionNotFound" do
-      lambda { page.driver.post("/alexandria/community_games") }.should raise_error(AbstractController::ActionNotFound)
-    end
-  end
-
   describe "#destroy" do
     it "deletes community_game when logged in as superadmin" do
       login_as superadmin
