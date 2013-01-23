@@ -1,6 +1,5 @@
 require 'spec_helper'
-include Warden::Test::Helpers
-Warden.test_mode!
+
 describe "Communities" do
   let(:billy) { create(:billy) }
   describe "new" do

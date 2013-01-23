@@ -62,6 +62,8 @@ RSpec.configure do |config|
 
   # Adds helpers for use in request tests
   config.include Warden::Test::Helpers
+  # Adds log in reset
+  config.after(:each) { Warden.test_reset! }
 
   # Lets you write create(:factroy_name) instead of Factory.create(:factroy_name)
   config.include FactoryGirl::Syntax::Methods
