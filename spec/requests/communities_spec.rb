@@ -7,11 +7,11 @@ describe "Communities" do
       login_as(billy, :scope => :user)
       visit new_community_url(subdomain: "secure")
       page.should have_content("Create a Community")
-      Warden.test_reset!
     end
     it "should not be accessable if signed in" do
       visit new_community_url(subdomain: "secure")
       page.should_not have_content("Create a Community")
+      page.should have_content("Sign in")
     end
   end
 
