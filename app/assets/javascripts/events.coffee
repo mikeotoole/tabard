@@ -121,6 +121,7 @@ jQuery(document).ready ($) ->
         $invites.on 'click', '.all', ->
             return false unless window.communityMembers? and window.communityMembers.length > 0
             $ul.find('.close').each -> $(@).trigger 'click'
+            list = []
             for member, _i in window.communityMembers
                 $li = $("<li data-index='#{_i}'></li>")
                 $a = $("<a href='#{member.url}'>#{member.name}</a>").appendTo $li
@@ -136,7 +137,7 @@ jQuery(document).ready ($) ->
                     $_li.find('input.id').clone().appendTo $li
                     $_li.remove()
                 $li.appendTo $ul
-                list.push member.id
+                list.push parseInt member.id
             false
 
     )()
