@@ -24,7 +24,7 @@ class CardController < PaymentController
       @stripe ||= nil
     end
     @invoice = current_user.current_invoice
-    @invoice = nil unless (@invoice.period_end_date < Time.now and @invoice.total_price_in_cents > 0)
+    @invoice = nil unless @invoice.persisted? and (@invoice.period_end_date < Time.now and @invoice.total_price_in_cents > 0)
   end
 
   # PUT /card
@@ -34,10 +34,11 @@ class CardController < PaymentController
       if current_user.update_stripe(@stripe_card_token)
         flash[:success] = "Your card has been updated"
         @invoice = current_user.current_invoice
-        if @invoice.period_end_date < Time.now and @invoice.total_price_in_cents > 0
+        if @invoice.persisted? and @invoice.period_end_date < Time.now and @invoice.total_price_in_cents > 0
           @invoice.charge_customer(false)
+        else
+          @invoice = nil
         end
-        @invoice = nil unless (@invoice.period_end_date < Time.now and @invoice.total_price_in_cents > 0)
       else
         self.errors.add :base, "There was a problem with your credit card. Insure your full billing address is provided."
       end

@@ -270,12 +270,6 @@ describe "ActiveAdmin Document" do
     end
   end
 
-  describe "#destroy" do
-    it "raises error ActionNotFound" do
-      lambda { page.driver.delete("/alexandria/documents/#{privacy_policy.id}") }.should raise_error(AbstractController::ActionNotFound)
-    end
-  end
-
   describe "#view_document" do
     it "returns 200 when logged in as superadmin" do
       login_as superadmin

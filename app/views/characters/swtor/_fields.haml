@@ -1,5 +1,5 @@
 = f.input :name, input_html: { maxlength: SwtorCharacter::MAX_NAME_LENGTH }
-= f.input :server_name, as: :radio_buttons, label: 'Server', required: true, collection: Swtor.server_names, wrapper_html: { class: 'select with-label' }, input_html: { name: 'server_name' }
+= f.input :server_name, as: :radio_buttons, label: 'Server', required: true, collection: Swtor.server_names, wrapper_html: { class: 'select with-label' }
 = f.input :advanced_class, as: :radio_buttons, label: 'Class', collection: SwtorCharacter.all_advanced_classes, wrapper_html: { class: 'select with-label', affects: 'species' }
 = render partial: 'shared/affected_dropdown', locals: { f: f, affected_by: 'advanced_class', affected_by_value: character.advanced_class, label: 'Species', field: 'species', field_value: character.species, collection: SwtorCharacter.species_class_collection }
 = f.input :level, as: :string, input_html: { maxlength: 2 }, wrapper_html: { class: 'short' }

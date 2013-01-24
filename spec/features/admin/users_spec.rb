@@ -86,30 +86,6 @@ describe "ActiveAdmin User" do
     end
   end
 
-  describe "#new" do
-    it "raises error ActionNotFound" do
-      lambda { visit new_alexandria_user_url }.should raise_error(AbstractController::ActionNotFound)
-    end
-  end
-
-  describe "#create" do
-    it "raises error ActionNotFound" do
-      lambda { page.driver.post("/alexandria/users") }.should raise_error(AbstractController::ActionNotFound)
-    end
-  end
-
-  describe "#edit" do
-    it "raises error ActionNotFound" do
-      lambda { visit edit_alexandria_user_url(:id => user.id) }.should raise_error(AbstractController::ActionNotFound)
-    end
-  end
-
-  describe "#update" do
-    it "raises error ActionNotFound" do
-      lambda { page.driver.put("/alexandria/users/#{user.id}") }.should raise_error(AbstractController::ActionNotFound)
-    end
-  end
-
   describe "#nuke" do
     it "deletes user when logged in as superadmin" do
       login_as superadmin
@@ -121,7 +97,7 @@ describe "ActiveAdmin User" do
     it "deletes users discussions when logged in as superadmin" do
       login_as superadmin
       community_admin.user_profile.discussions << create(:discussion)
-      discussions = community_admin.user_profile.discussions
+      discussions = community_admin.user_profile.discussions.all
       page.driver.delete("/alexandria/users/#{community_admin.id}/nuke")
       User.exists?(community_admin).should be_false
 
@@ -134,7 +110,7 @@ describe "ActiveAdmin User" do
     it "deletes users comments when logged in as superadmin" do
       login_as superadmin
       community_admin.user_profile.comments << create(:comment)
-      comments = community_admin.user_profile.comments
+      comments = community_admin.user_profile.comments.all
       page.driver.delete("/alexandria/users/#{community_admin.id}/nuke")
       User.exists?(community_admin).should be_false
 
@@ -169,7 +145,7 @@ describe "ActiveAdmin User" do
 
     it "deletes users community profiles when logged in as superadmin" do
       login_as superadmin
-      community_profiles = community_admin.user_profile.community_profiles
+      community_profiles = community_admin.user_profile.community_profiles.all
       page.driver.delete("/alexandria/users/#{community_admin.id}/nuke")
       User.exists?(community_admin).should be_false
 
