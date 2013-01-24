@@ -11,12 +11,10 @@ def create_swtor_character(user_full_name, char_name, character_class, advanced_
   pg = user_profile.played_games.where{(game_id == cgi)}.first_or_create
   SwtorCharacter.create!({
     name: char_name,
-    char_class: character_class,
     advanced_class: advanced_class,
     species: species,
     level: level,
     gender: gender,
-    faction: faction,
     server_name: server_name,
     played_game: pg
     }, without_protection: true)

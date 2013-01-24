@@ -27,7 +27,7 @@ ActiveAdmin.register CommunityGame do
     end
   end
 
-  show title: proc{"#{community_game.community_name} - #{community_game.game_name}"} do
+  show title: :game_name do
     attributes_table *default_attribute_table_rows
     #active_admin_comments
   end

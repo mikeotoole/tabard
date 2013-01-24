@@ -86,30 +86,6 @@ describe "ActiveAdmin Discussion" do
     end
   end
 
-  describe "#new" do
-    it "raises error ActionNotFound" do
-      lambda { visit new_alexandria_discussion_url }.should raise_error(AbstractController::ActionNotFound)
-    end
-  end
-
-  describe "#create" do
-    it "raises error ActionNotFound" do
-      lambda { page.driver.post("/alexandria/discussions") }.should raise_error(AbstractController::ActionNotFound)
-    end
-  end
-
-  describe "#edit" do
-    it "raises error ActionNotFound" do
-      lambda { visit visit edit_alexandria_discussion_url(:id => discussion.id) }.should raise_error(AbstractController::ActionNotFound)
-    end
-  end
-
-  describe "#update" do
-    it "raises error ActionNotFound" do
-      lambda { page.driver.put("/alexandria/discussions/#{discussion.id}") }.should raise_error(AbstractController::ActionNotFound)
-    end
-  end
-
   describe "#destroy" do
     it "deletes discussion when logged in as superadmin" do
       login_as superadmin

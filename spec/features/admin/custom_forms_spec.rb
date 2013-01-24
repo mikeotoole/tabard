@@ -86,30 +86,6 @@ describe "ActiveAdmin CustomForm" do
     end
   end
 
-  describe "#new" do
-    it "raises error ActionNotFound" do
-      lambda { visit new_alexandria_custom_form_url }.should raise_error(AbstractController::ActionNotFound)
-    end
-  end
-
-  describe "#create" do
-    it "raises error ActionNotFound" do
-      lambda { page.driver.post("/alexandria/custom_forms") }.should raise_error(AbstractController::ActionNotFound)
-    end
-  end
-
-  describe "#edit" do
-    it "raises error ActionNotFound" do
-      lambda { visit edit_alexandria_custom_form_url(:id => custom_form.id) }.should raise_error(AbstractController::ActionNotFound)
-    end
-  end
-
-  describe "#update" do
-    it "raises error ActionNotFound" do
-      lambda { page.driver.put("/alexandria/custom_forms/#{custom_form.id}") }.should raise_error(AbstractController::ActionNotFound)
-    end
-  end
-
   describe "#destroy" do
     it "deletes custom_form when logged in as superadmin" do
       login_as superadmin

@@ -39,7 +39,7 @@ ActiveAdmin.register CustomForm do
     end
   end
 
-  show title: proc{ "#{custom_form.community_name} - #{custom_form.name}" } do
+  show title: :name do
     attributes_table *default_attribute_table_rows
     div do
       panel("Questions") do
