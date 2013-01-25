@@ -62,6 +62,39 @@ class Subdomains::CommunitiesController < SubdomainsController
     end
   end
 
+  # GET /autocomplete-members(.:format)
+  def autocomplete_members
+    @user_profiles = current_community.member_profiles.search params[:term]
+    @characters = current_community.approved_characters.search params[:term]
+    view = params[:view]
+
+    results =
+      @user_profiles.map{|profile|
+        hash = {
+          label: "<a>#{view_context.image_tag(view_context.image_path(profile.avatar_url(:icon)))} <strong>#{profile.display_name}</strong></a>",
+          value: profile.id,
+          display_name: profile.display_name
+        }
+        case view
+          when 'event-invites' then hash[:html] = render_to_string partial: 'subdomains/events/invite_fields', locals: { _i: '_INDEX_', user_profile: profile }
+        end
+        hash
+      } +
+      @characters.map{|character|
+        hash = {
+          label: "<a>#{view_context.image_tag(view_context.image_path(character.avatar_url(:icon)))} <strong>#{character.name}</strong> (#{character.user_profile.display_name})</a>",
+          value: character.user_profile.id,
+          display_name: character.user_profile.display_name
+        }
+        case view
+          when 'event-invites' then hash[:html] = render_to_string partial: 'subdomains/events/invite_fields', locals: { _i: '_INDEX_', user_profile: character.user_profile, character: character }
+        end
+        hash
+      }
+
+    render json: results
+  end
+
   # This clears the action items for the community
   def clear_action_items
     authorize! :update, @community

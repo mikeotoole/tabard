@@ -127,6 +127,7 @@ DaBvRails::Application.routes.draw do
       match "/community_settings" => "communities#update", as: "update_community_settings", via: :put
       match "/clear_action_items" => "communities#clear_action_items", as: "clear_action_items"
       get "/activities" => "communities#activities", as: "community_activities"
+      get "/autocomplete-members" => "communities#autocomplete_members", as: "autocomplete_members"
 
       # Roles and Permissions
       resources :roles, except: [:show]
