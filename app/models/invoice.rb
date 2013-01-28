@@ -188,27 +188,27 @@ class Invoice < ActiveRecord::Base
             when "0","1","2"
               rate_info = kickback_hash["response"]["rate"].last
               unless rate_info["code"].blank? or rate_info["staterate"].blank? or rate_info["localrate"].blank?
-                self.update_column(:charged_state_tax_rate, rate_info["staterate"])
-                self.update_column(:charged_local_tax_rate, rate_info["localrate"])
-                self.update_column(:local_tax_code, rate_info["code"])
+                self.update_column(:charged_state_tax_rate, rate_info["staterate"]) if self.persisted?
+                self.update_column(:charged_local_tax_rate, rate_info["localrate"]) if self.persisted?
+                self.update_column(:local_tax_code, rate_info["code"]) if self.persisted?
                 success = true
               end
             else
               logger.error  "ERROR WITH WA #{response.to_yaml}"
-              self.update_column(:tax_error_occurred, true)
+              self.update_column(:tax_error_occurred, true) if self.persisted?
             end
           rescue => e
             logger.error "ERROR WITH WA REQUEST #{e.to_yaml}"
-            self.update_column(:tax_error_occurred, true)
+            self.update_column(:tax_error_occurred, true) if self.persisted?
           end
         end
       rescue => e
         logger.error "ERROR WITH Stripe #{e.to_yaml}"
-        self.update_column(:tax_error_occurred, true)
+        self.update_column(:tax_error_occurred, true) if self.persisted?
       end
       if success
         @tax_rate ||= (self.charged_state_tax_rate + self.charged_local_tax_rate).round(5)
-        self.update_column(:tax_error_occurred, false)
+        self.update_column(:tax_error_occurred, false) if self.persisted?
       else
         @tax_rate ||= 0.0
       end
