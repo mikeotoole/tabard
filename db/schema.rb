@@ -215,6 +215,11 @@ ActiveRecord::Schema.define(:version => 20130128185437) do
     t.text     "action_items"
     t.integer  "community_plan_id"
     t.integer  "community_profiles_count",        :default => 0
+    t.boolean  "is_charge_exempt",                :default => false
+    t.integer  "charge_exempt_authorizer_id"
+    t.datetime "charge_exempt_start_time"
+    t.string   "charge_exempt_label"
+    t.text     "charge_exempt_reason"
   end
 
   add_index "communities", ["admin_profile_id"], :name => "index_communities_on_admin_profile_id"
@@ -464,12 +469,15 @@ ActiveRecord::Schema.define(:version => 20130128185437) do
     t.string   "item_type"
     t.integer  "item_id"
     t.integer  "community_id"
-    t.boolean  "is_recurring", :default => true
-    t.boolean  "is_prorated",  :default => false
+    t.boolean  "is_recurring",         :default => true
+    t.boolean  "is_prorated",          :default => false
     t.integer  "invoice_id"
     t.datetime "deleted_at"
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
+    t.boolean  "was_charge_exempt",    :default => false
+    t.string   "charge_exempt_label"
+    t.text     "charge_exempt_reason"
   end
 
   create_table "invoices", :force => true do |t|

@@ -88,6 +88,40 @@ class Invoice < ActiveRecord::Base
 ###
 # Instance Methods
 ###
+  # This gets the non exempt price in cents
+  def non_exempt_total_price_in_cents_without_tax
+    invoice_items.empty? ? 0 : invoice_items.map{|ii| ii.non_exempt_total_price_in_cents}.inject(0,:+)
+  end
+
+  # This gets the non exempt price in dollars
+  def non_exempt_total_price_in_dollars_without_tax
+    self.non_exempt_total_price_in_cents_without_tax/100.0
+  end
+
+  ###
+  # Gets the total non exempt price per month in cents for a specific communities plan and upgrades.
+  # This will only count plans and upgrades saved to the database.
+  ###
+  def non_exempt_total_recurring_price_per_month_in_cents(community=nil)
+    price = 0
+    if community.blank?
+      invoice_items = self.invoice_items.recurring
+    else
+      invoice_items = self.invoice_items.recurring.where(community_id: community.id)
+    end
+    price = invoice_items.map{|ii| ii.non_exempt_total_price_in_cents}.inject(0,:+) unless invoice_items.empty?
+    return price
+  end
+
+  ###
+  # Gets the total non exempt price per month in dollars for a specific communities plan and upgrades.
+  # This will only count plans and upgrades saved to the database.
+  ###
+  def non_exempt_total_recurring_price_per_month_in_dollars(community=nil)
+    self.non_exempt_total_recurring_price_per_month_in_cents(community)/100.0
+  end
+
+
   # [Returns] the total cost of all invoice items in cents.
   def total_price_in_cents
     if charged_total_price_in_cents.present?
@@ -154,27 +188,27 @@ class Invoice < ActiveRecord::Base
             when "0","1","2"
               rate_info = kickback_hash["response"]["rate"].last
               unless rate_info["code"].blank? or rate_info["staterate"].blank? or rate_info["localrate"].blank?
-                self.update_column(:charged_state_tax_rate, rate_info["staterate"])
-                self.update_column(:charged_local_tax_rate, rate_info["localrate"])
-                self.update_column(:local_tax_code, rate_info["code"])
+                self.update_column(:charged_state_tax_rate, rate_info["staterate"]) if self.persisted?
+                self.update_column(:charged_local_tax_rate, rate_info["localrate"]) if self.persisted?
+                self.update_column(:local_tax_code, rate_info["code"]) if self.persisted?
                 success = true
               end
             else
               logger.error  "ERROR WITH WA #{response.to_yaml}"
-              self.update_column(:tax_error_occurred, true)
+              self.update_column(:tax_error_occurred, true) if self.persisted?
             end
           rescue => e
             logger.error "ERROR WITH WA REQUEST #{e.to_yaml}"
-            self.update_column(:tax_error_occurred, true)
+            self.update_column(:tax_error_occurred, true) if self.persisted?
           end
         end
       rescue => e
         logger.error "ERROR WITH Stripe #{e.to_yaml}"
-        self.update_column(:tax_error_occurred, true)
+        self.update_column(:tax_error_occurred, true) if self.persisted?
       end
       if success
         @tax_rate ||= (self.charged_state_tax_rate + self.charged_local_tax_rate).round(5)
-        self.update_column(:tax_error_occurred, false)
+        self.update_column(:tax_error_occurred, false) if self.persisted?
       else
         @tax_rate ||= 0.0
       end
@@ -386,6 +420,9 @@ class Invoice < ActiveRecord::Base
   def mark_paid_and_close(charge_id=nil)
     success = self.update_attributes({is_closed: true, paid_date: Time.now, stripe_charge_id: charge_id}, without_protection: true)
     logger.error "ERROR Tax was overridden INVOICE: #{self.id}" if self.tax_error_occurred
+    self.invoice_items.each do |item|
+      item.mark_paid_and_close
+    end
     # Set boolean on user that payment failed to false.
     self.user.mark_as_good_standing_account if success
     InvoiceMailer.delay.payment_successful(self.id) if charge_id.present?

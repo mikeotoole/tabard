@@ -35,6 +35,8 @@ class Community < ActiveRecord::Base
 ###
 # Associations
 ###
+  belongs_to :charge_exempt_authorizer, class_name: "AdminUser"
+
   belongs_to :admin_profile, class_name: "UserProfile"
   belongs_to :member_role, class_name: "Role"
   belongs_to :community_application_form, dependent: :destroy, class_name: "CustomForm", autosave: true
@@ -112,6 +114,10 @@ class Community < ActiveRecord::Base
       file_size: {
         maximum: 5.megabytes.to_i
       }
+  validates :charge_exempt_authorizer, presence: true, if: Proc.new{|community| community.is_charge_exempt }
+  validates :charge_exempt_start_time, presence: true, if: Proc.new{|community| community.is_charge_exempt }
+  validates :charge_exempt_label, presence: true, if: Proc.new{|community| community.is_charge_exempt }
+  validates :charge_exempt_reason, presence: true, if: Proc.new{|community| community.is_charge_exempt }
 ###
 # Uploaders
 ###
@@ -134,6 +140,16 @@ class Community < ActiveRecord::Base
 ###
 # Instance Methods
 ###
+  #Toggles the charge exempt status of a community
+  def toggle_charge_exempt_status(admin_user, label = nil, reason = nil)
+    return false if admin_user.blank?
+    if self.is_charge_exempt
+      self.update_attributes({is_charge_exempt: false, charge_exempt_start_time: nil, charge_exempt_authorizer_id: nil, charge_exempt_label: label, charge_exempt_reason: reason}, without_protection: true)
+    else
+      self.update_attributes({is_charge_exempt: true, charge_exempt_start_time: DateTime.now, charge_exempt_authorizer_id: admin_user.id, charge_exempt_label: label, charge_exempt_reason: reason}, without_protection: true)
+    end
+  end
+
   # Returns all games that this community supports
   def games
     # TODO: Can this be changed to a has_may through now? -MO
@@ -404,6 +420,7 @@ protected
   # _validator_
   #
   # This will check that the home page is owned by the community.
+  ###
   def home_page_owned_by_community
     return unless home_page_id
     errors.add(:home_page_id, "is invalid. This page is owned by another community.") unless pages.include?(Page.find_by_id(home_page_id))
@@ -590,5 +607,10 @@ end
 #  action_items                    :text
 #  community_plan_id               :integer
 #  community_profiles_count        :integer          default(0)
+#  is_charge_exempt                :boolean          default(FALSE)
+#  charge_exempt_authorizer_id     :integer
+#  charge_exempt_start_time        :datetime
+#  charge_exempt_label             :string(255)
+#  charge_exempt_reason            :text
 #
 

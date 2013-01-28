@@ -20,6 +20,10 @@
         %tr
           %td
             %h3= link_to shorten_words(community.name, 21), edit_subscription_path(community)
+            - if community.is_charge_exempt
+              %p
+                %strong Discount:
+                = community.charge_exempt_label
           %td.nowrap
             - if recurring.persisted? and community.current_community_plan_title != community.recurring_community_plan_title
               %strike= community.current_community_plan_title
@@ -32,6 +36,9 @@
             - else
               %strong= community.current_community_plan_title
           %td.r
+            - if community.is_charge_exempt
+              %strike= number_to_currency(@invoice.non_exempt_total_recurring_price_per_month_in_dollars(community))
+              %br
             %strong= number_to_currency(@invoice.total_recurring_price_per_month_in_dollars(community))
           %td.actions
             %div

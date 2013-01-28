@@ -17,12 +17,14 @@ describe "Communities" do
     it "should create a new one and go to the setting page", js: true do
       set_host "lvh.me:1337"
       login_as(billy, :scope => :user)
+      CommunityPlan.default_plan
+      create(:pro_community_plan)
       visit new_community_url(subdomain: "secure")
-      fill_in "Community name", with: "herp"
-      page.driver.render('screenshots/community.png', full: true)
+      page.driver.render('screenshots/step1.png', full: true)
+      fill_in "Community name", with: "herpaderpa"
+      page.driver.render('screenshots/step2.png', full: true)
       click_button "Create Community"
-      page.driver.render('screenshots/community2.png', full: true)
-      page.should have_content("Community Settings")
+      page.
     end
   end
 
