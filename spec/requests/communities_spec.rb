@@ -24,7 +24,6 @@ describe "Communities" do
       fill_in "Community name", with: "herpaderpa"
       page.driver.render('screenshots/step2.png', full: true)
       click_button "Create Community"
-      page.
     end
   end
 
