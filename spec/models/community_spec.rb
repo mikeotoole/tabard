@@ -176,7 +176,7 @@ describe Community do
     end
 
     it "should reject all restricted values" do
-      excluded_names = %w{ www WWW wWw w\ w\ w tabard.co Tabard.co Tabard tabard admin blog }
+      excluded_names = %w{ www WWW wWw w\ w\ w tabard.com Tabard.com Tabard tabard admin blog }
       excluded_names.each do |name|
         build(:community, :name => name).should_not be_valid
       end

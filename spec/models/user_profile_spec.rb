@@ -60,7 +60,7 @@ describe UserProfile do
   end
 
   it "display name should reject company and administration restricted values" do
-    excluded_names = %w{ tabard.co Tabard.co Tabard tabard admin da }
+    excluded_names = %w{ tabard.com Tabard.com Tabard tabard admin da }
     excluded_names.each do |name|
       build(:user_profile, :display_name => name).should_not be_valid
     end
