@@ -61,7 +61,7 @@
                   - if is_charge_exempt
                     %p
                       %strong Discount:
-                      = community.charge_exempt_label
+                      = invoice_item.charge_exempt_label
                 %td.r
                   - if is_charge_exempt
                     %strike= number_to_currency(invoice_item.non_exempt_total_price_in_dollars)
