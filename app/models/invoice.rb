@@ -420,6 +420,9 @@ class Invoice < ActiveRecord::Base
   def mark_paid_and_close(charge_id=nil)
     success = self.update_attributes({is_closed: true, paid_date: Time.now, stripe_charge_id: charge_id}, without_protection: true)
     logger.error "ERROR Tax was overridden INVOICE: #{self.id}" if self.tax_error_occurred
+    self.invoice_items.each do |item|
+      item.mark_paid_and_close
+    end
     # Set boolean on user that payment failed to false.
     self.user.mark_as_good_standing_account if success
     InvoiceMailer.delay.payment_successful(self.id) if charge_id.present?
