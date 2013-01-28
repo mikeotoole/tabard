@@ -43,9 +43,10 @@
 
             - invoice_items.each do |invoice_item|
               - period_subtotal = period_subtotal + invoice_item.total_price_in_dollars
-              - normal_price = number_to_currency(invoice_item.price_per_month_in_cents/100.0*invoice_item.quantity)
+              - normal_price = number_to_currency(invoice_item.price_per_month_in_dollars * invoice_item.quantity)
               - actual_price = number_to_currency(invoice_item.total_price_in_dollars)
               - show_prorated = (invoice_item.is_prorated and normal_price != actual_price)
+              - is_charge_exempt = ((@invoice.is_closed? and invoice_item.was_charge_exempt) or (!@invoice.is_closed? and invoice_item.is_charge_exempt))
               %tr
                 %td
                   %strong
@@ -57,7 +58,16 @@
                       Recurring Subscription
                   %br
                   = invoice_item.item_description
-                %td.r= number_to_currency(invoice_item.price_per_month_in_cents/100.0)
+                  - if is_charge_exempt
+                    %p
+                      %strong Discount:
+                      = community.charge_exempt_label
+                %td.r
+                  - if is_charge_exempt
+                    %strike= number_to_currency(invoice_item.non_exempt_total_price_in_dollars)
+                    $0.00
+                  - else
+                    = number_to_currency(invoice_item.price_per_month_in_dollars)
                 %td
                   &times;
                   = invoice_item.quantity

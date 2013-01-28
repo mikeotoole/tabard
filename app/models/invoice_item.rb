@@ -70,14 +70,14 @@ class InvoiceItem < ActiveRecord::Base
   delegate :description, to: :item, prefix: true
   delegate :user, to: :invoice
   delegate :is_charge_exempt, to: :community
-  delegate :is_closed, to: :community
+  delegate :is_closed, to: :invoice
 
 ###
 # Instance Methods
 ###
   # Returns the total price for this item (price each * quantity) in cents.
   def total_price_in_cents
-    if ((not self.is_closed and self.self.is_charge_exempt) or (self.is_closed and self.was_charge_exempt))
+    if ((not self.is_closed and self.is_charge_exempt) or (self.is_closed and self.was_charge_exempt))
       0
     else
       self.non_exempt_total_price_in_cents
@@ -91,6 +91,11 @@ class InvoiceItem < ActiveRecord::Base
     else
       (self.price_per_month_in_cents * self.quantity).round(0)
     end
+  end
+
+  # Returns the non exempt total price for this item (price each * quantity) in dollars.
+  def non_exempt_total_price_in_dollars
+    self.non_exempt_total_price_in_cents / 100.0
   end
 
   # Returns the total price for this item (price each * quantity) in dollars.
@@ -292,19 +297,19 @@ end
 #
 # Table name: invoice_items
 #
-#  id                  :integer          not null, primary key
-#  quantity            :integer
-#  start_date          :datetime
-#  end_date            :datetime
-#  item_type           :string(255)
-#  item_id             :integer
-#  community_id        :integer
-#  is_recurring        :boolean          default(TRUE)
-#  is_prorated         :boolean          default(FALSE)
-#  invoice_id          :integer
-#  deleted_at          :datetime
-#  created_at          :datetime         not null
-#  updated_at          :datetime         not null
-#  was_charging_exempt :boolean          default(FALSE)
+#  id                :integer          not null, primary key
+#  quantity          :integer
+#  start_date        :datetime
+#  end_date          :datetime
+#  item_type         :string(255)
+#  item_id           :integer
+#  community_id      :integer
+#  is_recurring      :boolean          default(TRUE)
+#  is_prorated       :boolean          default(FALSE)
+#  invoice_id        :integer
+#  deleted_at        :datetime
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  was_charge_exempt :boolean          default(FALSE)
 #
 

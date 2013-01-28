@@ -35,7 +35,7 @@
             %span.title= plan.title.gsub(/\s*community\s*/i, '')
             %span.price
               - if plan.price_per_month_in_cents > 0
-                = "$#{plan.price_per_month_in_cents/100}/month"
+                = "$#{plan.price_per_month_in_dollars}/month"
               - else
                 This one is on us
             %span.meta
