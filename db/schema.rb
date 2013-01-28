@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130128175334) do
+ActiveRecord::Schema.define(:version => 20130128185437) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -469,13 +469,15 @@ ActiveRecord::Schema.define(:version => 20130128175334) do
     t.string   "item_type"
     t.integer  "item_id"
     t.integer  "community_id"
-    t.boolean  "is_recurring",      :default => true
-    t.boolean  "is_prorated",       :default => false
+    t.boolean  "is_recurring",         :default => true
+    t.boolean  "is_prorated",          :default => false
     t.integer  "invoice_id"
     t.datetime "deleted_at"
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
-    t.boolean  "was_charge_exempt", :default => false
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
+    t.boolean  "was_charge_exempt",    :default => false
+    t.string   "charge_exempt_label"
+    t.text     "charge_exempt_reason"
   end
 
   create_table "invoices", :force => true do |t|

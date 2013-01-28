@@ -159,7 +159,9 @@ class InvoiceItem < ActiveRecord::Base
   end
 
   def mark_paid_and_close
-    update_attributes({was_charge_exempt: true}) if self.community.is_charge_exempt
+    if self.community.is_charge_exempt
+      update_attributes({was_charge_exempt: true, charge_exempt_label: self.community.charge_exempt_label, charge_exempt_reason: self.community.charge_exempt_reason})
+    end
   end
 
 ###
@@ -297,19 +299,21 @@ end
 #
 # Table name: invoice_items
 #
-#  id                :integer          not null, primary key
-#  quantity          :integer
-#  start_date        :datetime
-#  end_date          :datetime
-#  item_type         :string(255)
-#  item_id           :integer
-#  community_id      :integer
-#  is_recurring      :boolean          default(TRUE)
-#  is_prorated       :boolean          default(FALSE)
-#  invoice_id        :integer
-#  deleted_at        :datetime
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
-#  was_charge_exempt :boolean          default(FALSE)
+#  id                   :integer          not null, primary key
+#  quantity             :integer
+#  start_date           :datetime
+#  end_date             :datetime
+#  item_type            :string(255)
+#  item_id              :integer
+#  community_id         :integer
+#  is_recurring         :boolean          default(TRUE)
+#  is_prorated          :boolean          default(FALSE)
+#  invoice_id           :integer
+#  deleted_at           :datetime
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  was_charge_exempt    :boolean          default(FALSE)
+#  charge_exempt_label  :string(255)
+#  charge_exempt_reason :text
 #
 
