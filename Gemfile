@@ -118,11 +118,12 @@ ruby '1.9.3'
     gem 'rspec-rails'#                                                                      MIT - https://github.com/rspec/rspec-rails
     gem 'factory_girl_rails'#                                                               MIT - https://github.com/thoughtbot/factory_girl_rails
     gem 'debugger'
+    gem 'poltergeist'
+    gem 'launchy'
   end
 
 # Test Specific Gems
   group :test do
-    gem 'poltergeist'
     gem 'capybara', "=1.1.4"#                                                               MIT - https://github.com/jnicklas/capybara
     gem 'database_cleaner'#                                                                 MIT - https://github.com/bmabey/database_cleaner
     gem 'rb-fsevent'#                                                                       MIT - https://github.com/thibaudgg/rb-fsevent

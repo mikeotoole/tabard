@@ -17,6 +17,15 @@ require "cancan/matchers"
 require 'database_cleaner'
 
 require 'capybara/poltergeist'
+Capybara.run_server = true #Whether start server when testing
+def set_host (host)
+  host! host
+  Capybara.app_host = "http://" + host
+end
+Capybara.asset_root = "../../app/assets" # This is needed for save_and_open_page
+Capybara.server_port = 1337
+Capybara.default_wait_time = 5 #When we testing AJAX, we can set a default wait time
+Capybara.ignore_hidden_elements = true #Ignore hidden elements when testing, make helpful when you hide or show elements using javascript
 Capybara.javascript_driver = :poltergeist
 
 # Requires supporting ruby files with custom matchers and macros, etc,

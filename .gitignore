@@ -27,6 +27,9 @@ public/422.html
 public/500.html
 public/communities/
 
+screenshots/
+screenshots/*
+
 # Visual Paradigm
 *.vpp~*
 
