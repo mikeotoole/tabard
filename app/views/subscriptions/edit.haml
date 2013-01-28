@@ -63,6 +63,17 @@
           = sf.input :quantity, as: :radio_buttons, collection: collection, include_blank: false, label: false, wrapper_html: {class: 'select members_package', data: data}
           = sf.input :_destroy, as: :hidden, default: true, input_html: {data: data}
 
+    - if @community.is_charge_exempt
+      %blockquote
+        %h2 Discount
+        = @community.charge_exempt_label
+        %p
+          %strong Regular Price:
+          %strike= number_to_currency(@invoice.non_exempt_total_recurring_price_per_month_in_dollars(@community))
+          %br
+          %strong Discounted Price:
+          = number_to_currency(@invoice.total_recurring_price_per_month_in_dollars(@community))
+
     #cc_input.section{ class: card_is_present ? '' : 'show_fields' }
       %h1 Payment
 

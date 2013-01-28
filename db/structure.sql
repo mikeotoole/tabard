@@ -473,7 +473,12 @@ CREATE TABLE communities (
     pending_removal boolean DEFAULT false,
     action_items text,
     community_plan_id integer,
-    community_profiles_count integer DEFAULT 0
+    community_profiles_count integer DEFAULT 0,
+    is_charge_exempt boolean DEFAULT false,
+    charge_exempt_authorizer_id integer,
+    charge_exempt_start_time timestamp without time zone,
+    charge_exempt_label character varying(255),
+    charge_exempt_reason text
 );
 
 
@@ -4122,3 +4127,5 @@ INSERT INTO schema_migrations (version) VALUES ('20121113203319');
 INSERT INTO schema_migrations (version) VALUES ('20121113203332');
 
 INSERT INTO schema_migrations (version) VALUES ('20121206191144');
+
+INSERT INTO schema_migrations (version) VALUES ('20130115205343');
