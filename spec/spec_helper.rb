@@ -23,9 +23,9 @@ def set_host (host)
   Capybara.app_host = "http://" + host
 end
 Capybara.server_port = 1337
-Capybara.default_wait_time = 5 #When we testing AJAX, we can set a default wait time
+Capybara.default_wait_time = 10 #When we testing AJAX, we can set a default wait time
 Capybara.register_driver :poltergeist do |app|
-  Capybara::Poltergeist::Driver.new(app, {inspector: true})
+  Capybara::Poltergeist::Driver.new(app, {inspector: true, window_size: [1024,768]})
 end
 Capybara.javascript_driver = :poltergeist
 
