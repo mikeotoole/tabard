@@ -1,5 +1,7 @@
 require 'simplecov'
-
+namespace :database do
+  system ""
+end
 namespace :reports do
   desc "Run all of the reports"
   task all: [:docs, :notes, :best_practices, :tests, :brakeman_scan] do

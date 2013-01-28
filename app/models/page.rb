@@ -37,6 +37,7 @@ class Page < ActiveRecord::Base
 # Callbacks
 ###
   after_update :remove_action_item
+  before_destroy :home_page_can_not_be_deleted
 
 ###
 # Delegates
@@ -86,6 +87,13 @@ protected
     if self.community.home_page and self.community.home_page.id == self.id and self.community.action_items.any?
       self.community.action_items.delete(:update_home_page)
       self.community.save
+    end
+  end
+
+  def home_page_can_not_be_deleted
+    if self.community and self.community.home_page and self.community.home_page.id == self.id
+      self.errors.add(:base, "This is the current home page and can't be deleted.")
+      return false
     end
   end
 end

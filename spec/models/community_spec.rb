@@ -529,7 +529,7 @@ describe Community do
   end
 
   describe "home_page" do
-    it "should allow blank" do
+    it "should not allow blank" do
       community.home_page_id = ''
       community.should be_valid
     end
@@ -567,6 +567,10 @@ describe Community do
     community2 = create(:community)
     community2.admin_profile = admin_profile
     community2.save.should be_false
+  end
+  it "should not be allowed to be deleted" do
+    page = community.home_page
+    page.destroy.should be_false
   end
 end
 
