@@ -20,7 +20,7 @@ ActiveAdmin.register Character do
     column :name
     column :game, sortable: false
     column "User Profile" do |character|
-      link_to character.user_profile.gamer_tag, [:alexandria, character.user_profile]
+      link_to character.user_profile_gamer_tag, [:alexandria, character.user_profile]
     end
     column :created_at
     column "Destroy" do |character|

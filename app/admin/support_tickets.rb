@@ -39,10 +39,10 @@ ActiveAdmin.register SupportTicket do
       link_to support_ticket.body.truncate(50), alexandria_support_ticket_url(support_ticket)
     end
     column :user_profile do |support_ticket|
-      link_to support_ticket.user_profile.full_name, [:alexandria, support_ticket.user_profile]
+      link_to support_ticket.user_profile_full_name, [:alexandria, support_ticket.user_profile]
     end
     column :admin_user, sortable: :admin_user_id   do |support_ticket|
-      link_to support_ticket.admin_user.display_name, [:alexandria, support_ticket.admin_user] if support_ticket.admin_user
+      link_to support_ticket.admin_user_display_name, [:alexandria, support_ticket.admin_user] if support_ticket.admin_user
     end
     column "Status" do |support_ticket|
       "#{support_ticket.status}"

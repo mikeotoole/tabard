@@ -38,6 +38,8 @@ class Character < ActiveRecord::Base
   delegate :game_type, to: :played_game
   delegate :name, to: :game, prefix: true
   delegate :id, to: :game, prefix: true
+  delegate :gamer_tag, to: :user_profile, prefix: true
+  delegate :display_name, to: :user_profile, prefix: true
 
 ###
 # Validators

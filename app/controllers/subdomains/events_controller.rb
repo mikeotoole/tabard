@@ -176,7 +176,7 @@ protected
   # This adds a little flash notice to reminde the user to RSVP.
   def rsvp_check
     invite = current_user.invites.find_by_event_id(@event.id)
-    
+
     # If the user is the creator, and they haven't RSVP'd, auto-select RSVP status as 'Attending'
     if !!invite and current_user.user_profile_id == @event.creator_id
       invite.update_attributes({ status: 'Attending' })

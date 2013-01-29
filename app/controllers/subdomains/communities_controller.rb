@@ -82,9 +82,9 @@ class Subdomains::CommunitiesController < SubdomainsController
       } +
       @characters.map{|character|
         hash = {
-          label: "<a>#{view_context.image_tag(view_context.image_path(character.avatar_url(:icon)))} <strong>#{character.name}</strong> (#{character.user_profile.display_name})</a>",
+          label: "<a>#{view_context.image_tag(view_context.image_path(character.avatar_url(:icon)))} <strong>#{character.name}</strong> (#{character.user_profile_display_name})</a>",
           value: character.user_profile.id,
-          display_name: character.user_profile.display_name
+          display_name: character.user_profile_display_name
         }
         case view
           when 'event-invites' then hash[:html] = render_to_string partial: 'subdomains/events/invite_fields', locals: { _i: '_INDEX_', user_profile: character.user_profile, character: character }

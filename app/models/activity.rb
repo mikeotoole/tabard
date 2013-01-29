@@ -28,6 +28,7 @@ class Activity < ActiveRecord::Base
 # Delegates
 ###
   delegate :name, to: :community, prefix: true
+  delegate :created_at, to: :target, prefix: true
   delegate :subdomain, to: :community, prefix: true
   delegate :display_name, to: :user_profile, prefix: true
 
