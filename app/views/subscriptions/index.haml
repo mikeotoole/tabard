@@ -45,7 +45,7 @@
               - if recurring.persisted?
                 = link_to 'Edit', edit_subscription_path(community), class: 'edit', meta: 'Edit subscription'
               - else
-                = link_to 'Upgrade', edit_subscription_path(community, upgrade: true), class: 'upgrade', meta: 'Upgrade to pro'
+                = link_to 'Upgrade', edit_subscription_url(community, subdomain: 'secure', upgrade: true), class: 'upgrade', meta: 'Upgrade to pro'
     %tfoot
       %tr
         %td.r{ colspan: 2 }
