@@ -31,7 +31,8 @@
           %strong= current_community.name
           - if !!current_community.slogan
             %cite= shorten_words current_community.slogan
-        = link_to 'Upgrade to Pro', edit_subscription_url(current_community, subdomain: 'secure', upgrade: true), class: 'button pro' if can? :upgrade, current_community and not current_community.is_paid_community?
+        - if can? :upgrade, current_community and not current_community.is_paid_community?
+          = link_to 'Upgrade to Pro', edit_subscription_url(current_community, subdomain: 'secure', upgrade: true), class: 'button pro'
         = render 'layouts/action_items' if has_action_items?
         .menu
           %ul

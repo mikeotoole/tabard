@@ -5,9 +5,11 @@
     %li= link_to "Community Applications", community_applications_url
     %li
       %span= @community_application.user_profile_display_name
-- if can? :edit, current_community
+
+- if can? :edit, current_community and can? :upgrade, current_community
   #submenu
-    = link_to 'Upgrade Subscription', edit_subscription_url(current_community, subdomain: 'secure', upgrade: true), class: 'button' if can? :upgrade, current_community
+    = link_to 'Upgrade Subscription', edit_subscription_url(current_community, subdomain: 'secure', upgrade: true), class: 'button'
+
 %h1 Member Application
 = render 'communities/population', community: current_community
 - unless @community_application.is_pending? or @community_application.left?

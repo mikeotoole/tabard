@@ -6,7 +6,7 @@ card =
   setup: ->
     $('#form_with_subscription').submit ->
       return true unless $('#cc_fields:visible').length
-      
+
       # Encourage all fields being filled out
       errCount = 0
       for field in $(@).find('input[type=text]')
@@ -135,7 +135,7 @@ jQuery(document).ready ($) ->
     name = $this.val()
     subdomain = name.toLowerCase().replace(/[^a-z]/g, '')
     if subdomain
-      url = "http://<span class='subdomain'>#{subdomain}</span>.tabard.co"
+      url = "http://<span class='subdomain'>#{subdomain}</span>.tabard.com"
       if $li.find('mark.url').length is 0
         $('<mark class="url">').html(url).appendTo $li
       else

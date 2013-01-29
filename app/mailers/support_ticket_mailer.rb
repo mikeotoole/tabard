@@ -16,7 +16,7 @@ class SupportTicketMailer < ActionMailer::Base
     if !!@support_ticket
       @user_profile = UserProfile.find_by_id(@support_ticket.user_profile_id)
       @url = alexandria_support_ticket_url(@support_ticket)
-      mail(to: "support@tabard.co", subject: "Tabard: New Support Ticket") do |format|
+      mail(to: "support@tabard.com", subject: "Tabard: New Support Ticket") do |format|
          format.html { render "mailers/new_support_ticket" }
       end
     end

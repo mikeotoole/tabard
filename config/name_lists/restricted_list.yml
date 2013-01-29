@@ -1,4 +1,4 @@
---- 
+---
 - :domain: true
   :company: false
   :administration: false
@@ -42,19 +42,19 @@
 - :domain: true
   :company: false
   :administration: false
-  :word: login  
+  :word: login
 - :domain: true
   :company: false
   :administration: false
-  :word: logout  
+  :word: logout
 - :domain: true
   :company: false
   :administration: true
-  :word: admin  
+  :word: admin
 - :domain: true
   :company: false
   :administration: false
-  :word: manage  
+  :word: manage
 - :domain: true
   :company: false
   :administration: true
@@ -78,7 +78,7 @@
 - :domain: true
   :company: false
   :administration: false
-  :word: m    
+  :word: m
 - :domain: true
   :company: true
   :administration: true
@@ -97,13 +97,21 @@
   :word: tabard.co
 - :domain: true
   :company: true
+  :administration: true
+  :word: Tabard.com
+- :domain: true
+  :company: true
+  :administration: true
+  :word: tabard.com
+- :domain: true
+  :company: true
   :administration: false
   :word: digitalaugment
 - :domain: true
   :company: true
   :administration: false
-  :word: digitalaugmentinc  
+  :word: digitalaugmentinc
 - :domain: true
   :company: true
   :administration: false
-  :word: da 
+  :word: da

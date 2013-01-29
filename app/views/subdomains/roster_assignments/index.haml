@@ -2,9 +2,9 @@
 
 %h1 Membership Roster
 
-- if can? :edit, current_community
+- if can? :edit, current_community and can? :upgrade, current_community
   #submenu
-    = link_to 'Upgrade Subscription', edit_subscription_url(current_community, subdomain: 'secure', upgrade: true), class: 'button' if can? :upgrade, current_community
+    = link_to 'Upgrade Subscription', edit_subscription_url(current_community, subdomain: 'secure', upgrade: true), class: 'button'
 
 = render 'communities/population', community: current_community
 -#= render 'shared/searchbox', resource: @member_profiles, action: roster_assignments_url
