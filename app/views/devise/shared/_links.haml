@@ -1,5 +1,5 @@
 %ul.sidelinks
-  %li= link_to_unless controller_name == 'sessions', "Login", new_session_url(resource_name, subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"))
+  %li= link_to_unless controller_name == 'sessions', "Login", new_session_url(resource_name, subdomain: "secure")
   - if devise_mapping.registerable?
     %li= link_to_unless (controller_name == 'registrations' and action_name == 'new'), "Sign up", new_registration_url(resource_name, protocol: "http://", subdomain: "www")
   - if devise_mapping.recoverable?
