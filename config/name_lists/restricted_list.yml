@@ -115,3 +115,23 @@
   :company: true
   :administration: false
   :word: da
+- :domain: true
+  :company: false
+  :administration: true
+  :word: dev
+- :domain: true
+  :company: false
+  :administration: true
+  :word: developers
+- :domain: true
+  :company: false
+  :administration: true
+  :word: developer
+- :domain: true
+  :company: false
+  :administration: true
+  :word: api
+- :domain: true
+  :company: false
+  :administration: true
+  :word: security
