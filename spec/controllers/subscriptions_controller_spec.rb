@@ -23,7 +23,7 @@ describe SubscriptionsController do
 
     it "should redirected to new user session path when not authenticated as a user" do
       get :index
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
   end
 
@@ -54,7 +54,7 @@ describe SubscriptionsController do
 
     it "should redirected to new user session path when not authenticated as a user" do
       get 'edit', community_id: community
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
 
     it "should respond forbidden when authenticated as an unauthorized user" do
@@ -133,7 +133,7 @@ describe SubscriptionsController do
       end
 
       it "should redirect to new user session path" do
-        response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+        response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
       end
 
       it "should not change attributes" do

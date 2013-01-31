@@ -36,12 +36,12 @@ describe Subdomains::CommentsController do
       get :new, :comment => { :commentable_id => discussion.id, :commentable_type => discussion.class }
       assigns(:comment).should be_a_new(Comment)
     end
-
+    
     it "should redirect to new user session path when not authenticated as a user" do
       get :new, :comment => { :commentable_id => discussion.id, :commentable_type => discussion.class }
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-
+    
     it "should respond forbidden when not a member" do
       sign_in non_member
       get :new, :comment => { :commentable_id => discussion.id, :commentable_type => discussion.class }
@@ -55,12 +55,12 @@ describe Subdomains::CommentsController do
       get :edit, :id => comment.id.to_s
       assigns(:comment).should eq(comment)
     end
-
+    
     it "should redirect to new user session path when not authenticated as a user" do
       get :edit, :id => comment.id.to_s
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-
+    
     it "should respond forbidden when not a member" do
       sign_in non_member
       get :edit, :id => comment.id.to_s
@@ -72,7 +72,7 @@ describe Subdomains::CommentsController do
     before(:each) {
       sign_in user
     }
-
+  
     describe "with valid params" do
       it "creates a new Comment" do
         expect {
@@ -108,9 +108,9 @@ describe Subdomains::CommentsController do
   describe "POST create" do
     it "should redirected to new user session path when not authenticated as a user" do
       post :create, :comment => attributes_for(:comment)
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-
+    
     it "should respond forbidden when not a member" do
       sign_in non_member
       post :create, :comment => attributes_for(:comment)
@@ -122,7 +122,7 @@ describe Subdomains::CommentsController do
     before(:each) {
       sign_in user
     }
-
+  
     describe "with valid params" do
       it "updates the requested comment" do
         comment
@@ -157,13 +157,13 @@ describe Subdomains::CommentsController do
       end
     end
   end
-
+  
   describe "PUT update" do
     it "should redirect to new user session path when not authenticated as a user" do
       put :update, :id => comment.id, :comment => attributes_for(:comment)
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-
+    
     it "should respond forbidden when not a member" do
       sign_in non_member
       put :update, :id => comment.id, :comment => attributes_for(:comment)
@@ -180,7 +180,7 @@ describe Subdomains::CommentsController do
         delete :destroy, :id => comment.id.to_s
       }.to change(Comment, :count).by(0)
     end
-
+    
     it "does destroy the requested comment if it has no subcomments" do
       comment.comments.should be_empty
       sign_in user
@@ -196,14 +196,14 @@ describe Subdomains::CommentsController do
       delete :destroy, :id => comment.id.to_s
       response.should be_success
     end
-
+    
     it "redirects to the original comment item if comment has no subcomments" do
       comment.comments.should be_empty
       sign_in user
       delete :destroy, :id => comment.id.to_s
       response.should be_success
     end
-
+    
     it "sets comment is_removed to true if comment has subcomments" do
       comment.comments << create(:comment, :commentable_type => "Comment", :commentable_id => comment.id)
       comment.comments.should_not be_empty
@@ -211,7 +211,7 @@ describe Subdomains::CommentsController do
       delete :destroy, :id => comment.id.to_s
       Comment.find(comment).is_removed.should be_true
     end
-
+    
     it "should be forbidden if comment is locked" do
       comment.is_locked = true
       comment.save.should be_true
@@ -220,96 +220,96 @@ describe Subdomains::CommentsController do
       response.should be_forbidden
     end
   end
-
+  
   describe "DELETE destroy" do
     it "should redirect to new user session path when not authenticated as a user" do
       delete :destroy, :id => comment.id.to_s
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-
+    
     it "should respond forbidden when not a member" do
       sign_in non_member
       delete :destroy, :id => comment.id.to_s
       response.should be_forbidden
     end
   end
-
+  
   describe "POST lock" do
     before(:each) {
       request.env["HTTP_REFERER"] = "/"
     }
-
+  
     it "should lock the comment when authenticated as community admin" do
       sign_in admin
       post :lock, :id => comment.id.to_s
       Comment.find(comment).is_locked.should be_true
     end
-
+    
     it "should redirect back when authenticated as community admin" do
       sign_in admin
       post :lock, :id => comment.id.to_s
       response.should be_success
     end
-
+    
     it "should not lock the comment when authenticated as a user" do
       sign_in user
       post :lock, :id => comment.id.to_s
-      Comment.find(comment).is_locked.should be_false
+      Comment.find(comment).is_locked.should be_false    
     end
-
+    
     it "should not lock the comment when not authenticated as a user" do
       post :lock, :id => comment.id.to_s
-      Comment.find(comment).is_locked.should be_false
+      Comment.find(comment).is_locked.should be_false 
     end
-
+    
     it "should redirect to new user session path when not authenticated as a user" do
       post :lock, :id => comment.id.to_s
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://")) 
     end
-
+    
     it "should respond forbidden when not a member" do
       sign_in non_member
       post :lock, :id => comment.id.to_s
       response.should be_forbidden
     end
   end
-
+  
   describe "POST unlock" do
     before(:each) {
       request.env["HTTP_REFERER"] = "/"
       comment.is_locked = true
       comment.save!
     }
-
+  
     it "should unlock the comment when authenticated as community admin" do
       sign_in admin
       post :unlock, :id => comment.id.to_s
       Comment.find(comment).is_locked.should be_false
     end
-
+    
     it "should redirect back when authenticated as community admin" do
       sign_in admin
       post :unlock, :id => comment.id.to_s
       response.should be_success
     end
-
+    
     it "should not unlock the comment when authenticated as a user" do
       sign_in user
       Comment.find(comment).is_locked.should be_true
       post :unlock, :id => comment.id.to_s
       Comment.find(comment).is_locked.should be_true
     end
-
+    
     it "should not unlock the comment when not authenticated as a user" do
       post :unlock, :id => comment.id.to_s
-      Comment.find(comment).is_locked.should be_true
+      Comment.find(comment).is_locked.should be_true 
     end
-
+    
     it "should redirect to new user session path when not authenticated as a user" do
       post :unlock, :id => comment.id.to_s
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://")) 
     end
-
+    
     it "should respond forbidden when not a member" do
       sign_in non_member
       post :unlock, :id => comment.id.to_s

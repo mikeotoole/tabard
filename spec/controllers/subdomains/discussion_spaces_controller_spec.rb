@@ -37,12 +37,12 @@ describe Subdomains::DiscussionSpacesController do
       get :index
       assigns(:discussion_spaces).should have(community.discussion_spaces.count).things
     end
-
+    
     it "should redirect to new user session path when not authenticated as a user" do
       get :index
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-
+    
     it "should respond forbidden when not a member" do
       sign_in non_member
       get :index
@@ -56,17 +56,17 @@ describe Subdomains::DiscussionSpacesController do
       get :show, :id => space
       assigns(:discussion_space).should eq(space)
     end
-
+    
     it "should redirected to new user session path when not authenticated as a user" do
       get :show, :id => space
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-
+    
     it "should respond forbidden when not a member" do
       sign_in non_member
       get :show, :id => space
       response.should be_forbidden
-    end
+    end    
   end
 
   describe "GET new" do
@@ -75,18 +75,18 @@ describe Subdomains::DiscussionSpacesController do
       get :new
       assigns(:discussion_space).should be_a_new(DiscussionSpace)
     end
-
+    
     it "should redirect to new user session path when not authenticated as a user" do
       get :new
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
-    end
-
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
+    end 
+    
     it "should respond forbidden when not a member" do
       sign_in non_member
       get :new
       response.should be_forbidden
     end
-
+    
     it "should respond forbidden when a member without permissions" do
       sign_in user
       get :new
@@ -100,24 +100,24 @@ describe Subdomains::DiscussionSpacesController do
       get :edit, :id => space.id.to_s
       assigns(:discussion_space).should eq(space)
     end
-
+    
     it "should redirect to new user session path when not authenticated as a user" do
       get :edit, :id => space.id.to_s
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-
+    
     it "should respond forbidden when not a member" do
       sign_in non_member
       get :edit, :id => space.id.to_s
       response.should be_forbidden
-    end
+    end 
   end
 
   describe "POST create when authenticated as admin" do
     before(:each) {
       sign_in admin
     }
-
+  
     describe "with valid params" do
       it "creates a new DiscussionSpace" do
         expect {
@@ -135,12 +135,12 @@ describe Subdomains::DiscussionSpacesController do
         post :create, :discussion_space => attributes_for(:discussion_space)
         response.should redirect_to(DiscussionSpace.last)
       end
-
+      
       it "should create an activity" do
         expect {
           post :create, :discussion_space => attributes_for(:discussion_space)
         }.to change(Activity, :count).by(1)
-
+        
         activity = Activity.last
         activity.target_type.should eql "DiscussionSpace"
         activity.action.should eql 'created'
@@ -157,7 +157,7 @@ describe Subdomains::DiscussionSpacesController do
         post :create, :discussion_space => attributes_for(:discussion_space, :name => nil)
         response.should render_template("new")
       end
-
+      
       it "should not create an activity" do
         expect {
           post :create, :discussion_space => attributes_for(:discussion_space, :name => nil)
@@ -165,25 +165,25 @@ describe Subdomains::DiscussionSpacesController do
       end
     end
   end
-
+  
   describe "POST create" do
     it "should redirected to new user session path when not authenticated as a user" do
       post :create, :discussion_space => attributes_for(:discussion_space)
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-
+    
     it "should respond forbidden when not a member" do
       sign_in non_member
       post :create, :discussion_space => attributes_for(:discussion_space)
       response.should be_forbidden
-    end
+    end    
   end
 
   describe "PUT update when authenticated as owner" do
     before(:each) {
       sign_in admin
     }
-
+  
     describe "with valid params" do
       it "updates the requested discussion_space" do
         put :update, :id => space.id, :discussion_space => {:name => "New Name"}
@@ -199,15 +199,15 @@ describe Subdomains::DiscussionSpacesController do
         put :update, :id => space.id, :discussion_space => {:name => "New Name"}
         response.should redirect_to(space)
       end
-
+      
       it "should create an Activity when attributes change" do
         put :update, :id => space.id, :discussion_space => {:name => "New Name"}
         activity = Activity.last
         activity.target_type.should eql "DiscussionSpace"
         activity.action.should eql 'edited'
       end
-
-      it "should not create an Activity when attributes don't change" do
+      
+      it "should not create an Activity when attributes don't change" do        
         space
         expect {
           put :update, :id => space.id, :discussion_space => {:name => space.name}
@@ -231,14 +231,14 @@ describe Subdomains::DiscussionSpacesController do
   describe "PUT update" do
     it "should redirected to new user session path when not authenticated as a user" do
       put :update, :id => space.id, :discussion_space => {:name => "New Name"}
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-
+    
     it "should respond forbidden when not a member" do
       sign_in non_member
       put :update, :id => space.id, :discussion_space => {:name => "New Name"}
       response.should be_forbidden
-    end
+    end    
   end
 
   describe "DELETE destroy" do
@@ -255,12 +255,12 @@ describe Subdomains::DiscussionSpacesController do
       delete :destroy, :id => space.id.to_s
       response.should redirect_to(discussion_spaces_url)
     end
-
+    
     it "should redirected to new user session path when not authenticated as a user" do
       delete :destroy, :id => space.id.to_s
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
-
+    
     it "should respond forbidden when not a member" do
       sign_in non_member
       delete :destroy, :id => space.id.to_s

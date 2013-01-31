@@ -24,7 +24,7 @@ describe CharactersController do
 
     it "shouldn't be successful when not authenticated as a user" do
       get 'new', played_game_id: played_game
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
 
     it "should render characters/new template" do
@@ -50,7 +50,7 @@ describe CharactersController do
 
     it "should redirected to new user session path when not authenticated as a user" do
       get 'edit', :id => character
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
 
     it "should respond forbidden when authenticated as an unauthorized user" do
@@ -104,7 +104,7 @@ describe CharactersController do
     end
 
     it "should redirect to new user session path" do
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
   end
 
@@ -153,7 +153,7 @@ describe CharactersController do
     end
 
     it "should redirect to new user session path" do
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
 
     it "should not change attributes" do
@@ -170,7 +170,7 @@ describe CharactersController do
 
     it "should redirected to new user session path when not authenticated as a user" do
       delete 'destroy', :id => character
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
 
     it "should respond forbidden when authenticated as an unauthorized user" do

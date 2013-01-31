@@ -11,7 +11,7 @@ describe CardController do
     end
     it "should redirected to new user session path when not authenticated as a user" do
       get "edit"
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
   end
 
@@ -23,7 +23,7 @@ describe CardController do
     end
     it "should redirected to new user session path when not authenticated as a user" do
       put 'update'
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
   end
 

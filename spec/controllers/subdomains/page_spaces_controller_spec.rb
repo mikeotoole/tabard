@@ -45,7 +45,7 @@ describe Subdomains::PageSpacesController do
 
     it "should redirected to new user session path when not authenticated as a user" do
       get :index
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
 
     it "should respond forbidden when not a member" do
@@ -70,7 +70,7 @@ describe Subdomains::PageSpacesController do
 
     it "should redirect to new user session path when not authenticated as a user" do
       get :show, :id => space
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
 
     it "should respond forbidden when not a member" do
@@ -95,7 +95,7 @@ describe Subdomains::PageSpacesController do
 
     it "should redirect to new user session path when not authenticated as a user" do
       get :new
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
 
     it "should respond forbidden when not a member" do
@@ -120,7 +120,7 @@ describe Subdomains::PageSpacesController do
 
     it "should redirect to new user session path when not authenticated as a user" do
       get :edit, :id => space.id.to_s
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
 
     it "should respond forbidden when not a member" do
@@ -186,7 +186,7 @@ describe Subdomains::PageSpacesController do
   describe "POST create" do
     it "should redirected to new user session path when not authenticated as a user" do
       post :create, :page_space => attributes_for(:page_space)
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
 
     it "should respond forbidden when not a member" do
@@ -248,7 +248,7 @@ describe Subdomains::PageSpacesController do
   describe "PUT update" do
     it "should redirected to new user session path when not authenticated as a user" do
       put :update, :id => space.id, :page_space => {:name => "New Name"}
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
 
     it "should respond forbidden when not a member" do
@@ -275,7 +275,7 @@ describe Subdomains::PageSpacesController do
 
     it "should redirected to new user session path when not authenticated as a user" do
       delete :destroy, :id => space.id.to_s
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
 
     it "should respond forbidden when not a member" do

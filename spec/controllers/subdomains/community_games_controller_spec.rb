@@ -40,7 +40,7 @@ describe Subdomains::CommunityGamesController do
 
     it "should redirect to new user session path when not authenticated as a user" do
       get :index
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
 
     it "should respond forbidden when not a member" do
@@ -82,7 +82,7 @@ describe Subdomains::CommunityGamesController do
 
     it "should redirect to new user session path when not authenticated as a user" do
       get :new
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
 
     it "should respond forbidden when not a member" do
@@ -108,7 +108,7 @@ describe Subdomains::CommunityGamesController do
 
     it "should redirect to new user session path when not authenticated as a user" do
       get :edit, :id => community_game.id.to_s
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
 
     it "should respond forbidden when not a member" do
@@ -180,7 +180,7 @@ describe Subdomains::CommunityGamesController do
   describe "POST create" do
     it "should redirected to new user session path when not authenticated as a user" do
       post :create, :community_game => valid_attributes
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
 
     it "should respond forbidden when not a member" do
@@ -248,7 +248,7 @@ describe Subdomains::CommunityGamesController do
   describe "PUT update" do
     it "should redirected to new user session path when not authenticated as a user" do
       put :update, :id => community_game.id, :community_game => valid_attributes
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
 
     it "should respond forbidden when not a member" do
@@ -281,7 +281,7 @@ describe Subdomains::CommunityGamesController do
 
     it "should redirected to new user session path when not authenticated as a user" do
       delete :destroy, :id => community_game.id.to_s
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
 
     it "should respond forbidden when not a member" do

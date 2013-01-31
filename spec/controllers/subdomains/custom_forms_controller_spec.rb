@@ -19,10 +19,10 @@ describe Subdomains::CustomFormsController do
       get :index
       assigns(:custom_forms).should eq([community.community_application_form, custom_form])
     end
-
+    
     it "should redirected to new user session path when not authenticated as a user" do
       get :index
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
   end
 
@@ -55,10 +55,10 @@ describe Subdomains::CustomFormsController do
       get :new
       assigns(:custom_form).should be_a_new(CustomForm)
     end
-
+    
     it "should redirected to new user session path when not authenticated as a user" do
       get :new
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
   end
 
@@ -68,10 +68,10 @@ describe Subdomains::CustomFormsController do
       get :edit, :id => custom_form
       assigns(:custom_form).should eq(custom_form)
     end
-
+    
     it "should redirected to new user session path when not authenticated as a user" do
       get :edit, :id => custom_form.id.to_s
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
   end
 
@@ -96,10 +96,10 @@ describe Subdomains::CustomFormsController do
         post :create, :custom_form => attributes_for(:custom_form)
         response.should redirect_to(custom_forms_url)
       end
-
+      
       it "should redirected to new user session path when not authenticated as a user" do
         post :create, :custom_form => attributes_for(:custom_form)
-        response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+        response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
       end
     end
 
@@ -108,8 +108,8 @@ describe Subdomains::CustomFormsController do
         sign_in admin
         post :create, :custom_form => {}
       }
-
-      it "assigns a newly created but unsaved custom_form as @custom_form" do
+    
+      it "assigns a newly created but unsaved custom_form as @custom_form" do 
         assigns(:custom_form).should be_a_new(CustomForm)
       end
 
@@ -125,16 +125,16 @@ describe Subdomains::CustomFormsController do
       get :thankyou, :id => custom_form
       assigns(:custom_form).should eq(custom_form)
     end
-
+    
     it "renders the thankyou template when authenticated as a user" do
       sign_in admin
       get :thankyou, :id => custom_form
       response.should render_template('thankyou')
     end
-
+    
     it "should redirected to new user session path when not authenticated as a user" do
       get :thankyou, :id => custom_form.id.to_s
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
     end
   end
 
@@ -143,7 +143,7 @@ describe Subdomains::CustomFormsController do
       sign_in admin
       custom_form
     }
-    describe "with valid params" do
+    describe "with valid params" do    
       it "updates the requested custom_form" do
         put :update, :id => custom_form.id, :custom_form => {:name => "New Name"}
         CustomForm.find(custom_form).name.should eq( "New Name")
