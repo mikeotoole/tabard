@@ -46,19 +46,19 @@ module UrlHelper
     end
   end
 
-###
-# Protected Methods
-###
-protected
+  ###
+  # Protected Methods
+  ###
+  protected
 
-  ###
-  # This methods adds the subdomain to the domian url.
-  # [Args]
-  #   * +subdomain+ -> A string containing the subdomain to add.
-  ###
-  def with_subdomain(subdomain)
-    subdomain = (subdomain || "")
-    subdomain += "." unless subdomain.empty?
-    [subdomain, request.domain].join
-  end
+    ###
+    # This methods adds the subdomain to the domian url.
+    # [Args]
+    #   * +subdomain+ -> A string containing the subdomain to add.
+    ###
+    def with_subdomain(subdomain)
+      subdomain = (subdomain || "")
+      subdomain += "." unless subdomain.empty?
+      [subdomain, request.domain].join
+    end
 end
