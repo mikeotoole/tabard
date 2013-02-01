@@ -400,7 +400,7 @@ protected
     when :user, User
       root_url_hack_helper(user_profile_url(current_user.user_profile, protocol: "http://", subdomain: "www") + '#characters')
     when :admin_user, AdminUser
-      alexandria_dashboard_url(protocol: (Rails.env.development? ? "http://" : "https://"), subdomain: "secure")
+      alexandria_dashboard_url(subdomain: "secure")
     else
       user_root_url(current_user)
     end

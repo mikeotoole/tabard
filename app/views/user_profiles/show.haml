@@ -19,7 +19,7 @@
   .avatar= image_tag @user_profile.avatar_url :large
   .actions
     - if can? :update, @user_profile
-      = link_to "Settings", edit_user_registration_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), class: 'settings'
+      = link_to "Settings", edit_user_registration_url(subdomain: "secure"), class: 'settings'
       = link_to 'Edit Profile', edit_user_profile_url(@user_profile), class: 'edit'
     - elsif user_signed_in?
       - if current_user.address_book.include? @user_profile
@@ -41,7 +41,7 @@
         You do not have any memberships yet.
         = link_to 'Find a community ›', search_url
         %br
-        = link_to 'Create a community ›', new_community_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"))
+        = link_to 'Create a community ›', new_community_url(subdomain: "secure")
     - else
       %p
         This user is not a member of any communities.

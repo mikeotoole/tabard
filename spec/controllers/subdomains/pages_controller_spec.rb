@@ -20,7 +20,7 @@ require 'spec_helper'
 
 describe Subdomains::PagesController do
   let(:owner) { DefaultObjects.user }
-  let(:non_owner) { 
+  let(:non_owner) {
     profile = create(:user_profile)
     DefaultObjects.community.promote_user_profile_to_member(profile)
     profile.user
@@ -41,23 +41,23 @@ describe Subdomains::PagesController do
       get :show, :id => page
       assigns(:page).should eq(page)
     end
-    
+
     it "should render the 'show' template when authenticated as a member" do
       sign_in owner
       get :show, :id => page
       response.should render_template("show")
     end
-    
+
     it "should redirect to new user session path when not authenticated as a user" do
       get :show, :id => page
-      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
     end
-    
+
     it "should respond forbidden when not a member" do
       sign_in non_member
       get :show, :id => page
       response.should be_forbidden
-    end   
+    end
   end
 
   describe "GET new" do
@@ -66,16 +66,16 @@ describe Subdomains::PagesController do
       get :new, :page_space_id => space.id
       assigns(:page).should be_a_new(Page)
     end
-    
+
     it "should render the 'new' template when authenticated as a admin" do
       sign_in admin
       get :new, :page_space_id => space.id
       response.should render_template("new")
     end
-    
+
     it "should redirect to new user session path when not authenticated as a user" do
       get :new, :page_space_id => space.id
-      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
     end
 
     it "should respond forbidden when a member(owner)" do
@@ -83,7 +83,7 @@ describe Subdomains::PagesController do
       get :new, :page_space_id => space.id
       response.should be_forbidden
     end
-    
+
     it "should respond forbidden when not a member" do
       sign_in non_member
       get :new, :page_space_id => space.id
@@ -97,18 +97,18 @@ describe Subdomains::PagesController do
       get :edit, :id => page.id.to_s
       assigns(:page).should eq(page)
     end
-    
+
     it "should render the 'edit' template when authenticated as as admin" do
       sign_in admin
       get :edit, :id => page.id.to_s
       response.should render_template("edit")
     end
-    
+
     it "should redirect to new user session path when not authenticated as a user" do
       get :edit, :id => page.id.to_s
-      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
     end
-    
+
     it "should respond forbidden when an member(owner)" do
       sign_in owner
       get :edit, :id => page.id.to_s
@@ -120,7 +120,7 @@ describe Subdomains::PagesController do
       get :edit, :id => page.id.to_s
       response.should be_forbidden
     end
-    
+
     it "should respond forbidden when not owner" do
       sign_in non_owner
       get :edit, :id => page.id.to_s
@@ -132,7 +132,7 @@ describe Subdomains::PagesController do
     before(:each) {
       sign_in admin
     }
-  
+
     describe "with valid params" do
       it "creates a new Discussion" do
         space
@@ -151,12 +151,12 @@ describe Subdomains::PagesController do
         post :create, :page_space_id => space.id, :page => attributes_for(:page)
         response.should redirect_to(Page.last)
       end
-      
+
       it "should create an activity" do
         expect {
           post :create, :page_space_id => space.id, :page => attributes_for(:page)
         }.to change(Activity, :count).by(1)
-        
+
         activity = Activity.last
         activity.target_type.should eql "Page"
         activity.action.should eql 'created'
@@ -173,7 +173,7 @@ describe Subdomains::PagesController do
         post :create, :page_space_id => space.id, :page => attributes_for(:page, :name => nil)
         response.should render_template("new")
       end
-      
+
       it "should not create an activity" do
         expect {
           post :create, :page_space_id => space.id, :page => attributes_for(:page, :name => nil)
@@ -181,11 +181,11 @@ describe Subdomains::PagesController do
       end
     end
   end
-  
+
   describe "POST create" do
     it "should redirect to new user session path when not authenticated as a user" do
       post :create, :page_space_id => space.id, :page => attributes_for(:page)
-      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
     end
 
     it "should respond forbidden when a member(owner)" do
@@ -193,7 +193,7 @@ describe Subdomains::PagesController do
       post :create, :page_space_id => space.id, :page => attributes_for(:page)
       response.should be_forbidden
     end
-    
+
     it "should respond forbidden when not a member" do
       sign_in non_member
       post :create, :page_space_id => space.id, :page => attributes_for(:page)
@@ -205,7 +205,7 @@ describe Subdomains::PagesController do
     before(:each) {
       sign_in admin
     }
-  
+
     describe "with valid params" do
       it "updates the requested page" do
         put :update, :id => page.id, :page => {:name => "New name"}
@@ -221,15 +221,15 @@ describe Subdomains::PagesController do
         put :update, :id => page.id, :page => {:name => "New name"}
         response.should redirect_to(page)
       end
-      
+
       it "should create an Activity when attributes change" do
         put :update, :id => page.id, :page => {:name => "New name"}
         activity = Activity.last
         activity.target_type.should eql "Page"
         activity.action.should eql 'edited'
       end
-      
-      it "should not create an Activity when attributes don't change" do        
+
+      it "should not create an Activity when attributes don't change" do
         page
         expect {
           put :update, :id => page.id, :page => {:name => page.name}
@@ -253,7 +253,7 @@ describe Subdomains::PagesController do
   describe "PUT update" do
     it "should redirect to new user session path when not authenticated as a user" do
       put :update, :id => page.id, :page => {:name => "New name"}
-      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
     end
 
     it "should respond forbidden when a member(owner)" do
@@ -261,13 +261,13 @@ describe Subdomains::PagesController do
       put :update, :id => page.id, :page => {:name => "New name"}
       response.should be_forbidden
     end
-    
+
     it "should respond forbidden when not a member" do
       sign_in non_member
       put :update, :id => page.id, :page => {:name => "New name"}
       response.should be_forbidden
     end
-    
+
     it "should respond forbidden when a member but not owner" do
       sign_in non_owner
       put :update, :id => page.id, :page => {:name => "New name"}
@@ -289,23 +289,23 @@ describe Subdomains::PagesController do
       delete :destroy, :id => page.id.to_s
       response.should redirect_to(page.page_space)
     end
-    
+
     it "should redirect to new user session path when not authenticated as a user" do
       delete :destroy, :id => page.id.to_s
-      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
     end
-    
+
     it "should respond forbidden when not a member" do
       sign_in non_member
       delete :destroy, :id => page.id.to_s
       response.should be_forbidden
     end
-    
+
     it "should respond forbidden when a member but not owner" do
       sign_in non_owner
       delete :destroy, :id => page.id.to_s
       response.should be_forbidden
     end
   end
-  
+
 end

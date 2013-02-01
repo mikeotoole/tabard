@@ -51,7 +51,7 @@ class RegistrationsController < Devise::RegistrationsController
     @user = current_user
     if not @user
       set_flash_message :alert, :not_signed_id
-      redirect_to new_user_session_url(subdomain: 'secure', protocol: "https://")
+      redirect_to new_user_session_url(subdomain: 'secure')
     end
   end
 
@@ -143,6 +143,6 @@ class RegistrationsController < Devise::RegistrationsController
 
   # Where to redirect to after updating the account with devise
   def after_update_path_for(resource)
-    edit_user_registration_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"))
+    edit_user_registration_url(subdomain: "secure")
   end
 end
