@@ -13,7 +13,7 @@ describe InvoicesController do
     end
     it "should redirected to new user session path when not authenticated as a user" do
       get "index"
-      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
     end
   end
 
@@ -25,7 +25,7 @@ describe InvoicesController do
     end
     it "should redirected to new user session path when not authenticated as a user" do
       get 'show', id: invoice
-      response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "https://"))
+      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
     end
   end
 end
