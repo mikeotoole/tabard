@@ -15,7 +15,7 @@
 
     #bar
       = link_to 'Tabard™', root_url(subdomain: "www"), class: 'logo'
-      = link_to 'load', bar_url(protocol: request.protocol, subdomain: request.subdomain, format: :js), remote: true, class: 'dynload', data: { type: :text, target: '#bar' }
+      = render "layouts/bar_#{user_signed_in? ? 'in' : 'out'}"
 
     = render 'layouts/flash_messages' unless @page_caching
 
