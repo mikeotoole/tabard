@@ -3,7 +3,7 @@
 %ul.menu
   %li
     = link_to 'Search', search_url
-  - if current_user.communities.any?
+  - if !current_user.communities.any?
     %li
       %span My Communities
       %ul.communities
@@ -12,7 +12,9 @@
         - unless current_user.communities.any?
           = link_to 'Find a community', search_url(subdomain: "www")
         - if current_user.owned_communities.size < Community::MAX_OWNED_COMMUNITIES
-          %li.add= link_to 'Add a community', new_community_url(subdomain: "secure")
+          %li.add= link_to 'Create a community', new_community_url(subdomain: "secure")
+  - else
+    %li= link_to 'Create a community', new_community_url(subdomain: "secure")
 
 %ul.dashboard
   %li.notice
