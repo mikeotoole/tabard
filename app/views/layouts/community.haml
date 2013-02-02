@@ -82,7 +82,7 @@
                   - elsif current_user.application_pending? current_community
                     %a Application Pending
                 - else
-                  = link_to 'Apply Now', new_user_registration_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"), community_id: current_community.id)
+                  = link_to 'Apply Now', new_user_registration_url(subdomain: "secure", community_id: current_community.id)
       #body
         = yield
         = render 'layouts/footer', current_layout: 'community'

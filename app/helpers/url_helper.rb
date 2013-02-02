@@ -14,10 +14,15 @@ module UrlHelper
   def url_for(options = nil)
     if options.kind_of?(Hash)
       if options.has_key?(:subdomain)
+        if options[:subdomain] == 'secure'
+          options[:protocol] = (Rails.env.development? ? "http://" : "https://")
+        else
+          options[:protocol] ||= 'http://'
+        end
+
         options[:host] = with_subdomain(options.delete(:subdomain))
         options[:port] = request.port_string.gsub(':','') unless request.port_string.empty?
         options[:only_path] ||= false
-        options[:protocol] ||= 'http://'
       elsif defined?(current_community) and not current_community.blank? and current_community.respond_to?("subdomain")
         options[:host] = with_subdomain(current_community.subdomain)
         options[:port] = request.port_string.gsub(':','') unless request.port_string.empty?
@@ -41,19 +46,19 @@ module UrlHelper
     end
   end
 
-###
-# Protected Methods
-###
-protected
+  ###
+  # Protected Methods
+  ###
+  protected
 
-  ###
-  # This methods adds the subdomain to the domian url.
-  # [Args]
-  #   * +subdomain+ -> A string containing the subdomain to add.
-  ###
-  def with_subdomain(subdomain)
-    subdomain = (subdomain || "")
-    subdomain += "." unless subdomain.empty?
-    [subdomain, request.domain].join
-  end
+    ###
+    # This methods adds the subdomain to the domian url.
+    # [Args]
+    #   * +subdomain+ -> A string containing the subdomain to add.
+    ###
+    def with_subdomain(subdomain)
+      subdomain = (subdomain || "")
+      subdomain += "." unless subdomain.empty?
+      [subdomain, request.domain].join
+    end
 end

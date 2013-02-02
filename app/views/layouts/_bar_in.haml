@@ -3,7 +3,7 @@
 %ul.menu
   %li
     = link_to 'Search', search_url
-  - if current_user.communities.any?
+  - if !current_user.communities.any?
     %li
       %span My Communities
       %ul.communities
@@ -12,7 +12,9 @@
         - unless current_user.communities.any?
           = link_to 'Find a community', search_url(subdomain: "www")
         - if current_user.owned_communities.size < Community::MAX_OWNED_COMMUNITIES
-          %li.add= link_to 'Add a community', new_community_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"))
+          %li.add= link_to 'Create a community', new_community_url(subdomain: "secure")
+  - else
+    %li= link_to 'Create a community', new_community_url(subdomain: "secure")
 
 %ul.dashboard
   %li.notice
@@ -26,7 +28,7 @@
   = link_to image_tag(current_user.avatar_url :tiny), user_profile_url(current_user.user_profile, subdomain: "www", anchor: 'games')
   %ul
     %li.profile= link_to 'Edit My Profile', edit_user_profile_url(current_user.user_profile)
-    %li.settings= link_to 'Account Settings', account_settings_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"))
+    %li.settings= link_to 'Account Settings', account_settings_url(subdomain: "secure")
     - if ENV["ENABLE_PAYMENT"]
-      %li.subscriptions= link_to 'Subscriptions', subscriptions_url(subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"))
+      %li.subscriptions= link_to 'Subscriptions', subscriptions_url(subdomain: "secure")
     %li.logout= link_to 'Logout', destroy_user_session_url, method: :delete

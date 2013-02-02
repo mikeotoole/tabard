@@ -2,7 +2,7 @@
 
 %h1 Account Settings
 
-= simple_form_for(@user, url: registration_url(@user, subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), html: { method: :put, autocomplete: :off }) do |f|
+= simple_form_for(@user, url: registration_url(@user, subdomain: "secure"), html: { method: :put, autocomplete: :off }) do |f|
   %fieldset
     %ol
       -if @user.pending_reconfirmation?
