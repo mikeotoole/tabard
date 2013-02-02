@@ -10,7 +10,7 @@
       = f.input :full_name, input_html: { maxlength: UserProfile::MAX_FULL_NAME_LENGTH }
       = f.input :location, hint: "#{UserProfile::MAX_LOCATION_LENGTH} characters max. Optional.", input_html: { maxlength: UserProfile::MAX_LOCATION_LENGTH }
       = f.input :description, label: "About me", wrapper_tag: :p, hint: "#{UserProfile::MAX_DESCRIPTION_LENGTH} characters max. Optional.", input_html: { maxlength: UserProfile::MAX_DESCRIPTION_LENGTH }
-      %li.avatar{ class: f.object.errors.any? ? 'with-errors' : '' }
+      %li.avatar{ class: object_has_avatar_errors(f.object) ? 'with-errors' : '' }
         - if !user_profile.avatar_url.to_s or f.object.errors.any?
           = image_tag 'application/avatar@240.png', width: 240, height: 240
         - else

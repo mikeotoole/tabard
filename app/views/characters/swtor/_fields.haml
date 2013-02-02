@@ -5,7 +5,7 @@
 = f.input :level, as: :string, input_html: { maxlength: 2 }, wrapper_html: { class: 'short' }
 = f.input :gender, as: :radio_buttons, required: true, collection: SwtorCharacter::VALID_GENDERS
 -#= f.input :about, as: :text, label: 'Optional Description', input_html: { rows: 5 }
-%li.avatar{ class: f.object.errors.any? ? 'with-errors' : '' }
+%li.avatar{ class: object_has_avatar_errors(f.object) ? 'with-errors' : '' }
   - if !character.persisted? or !character.avatar_url.to_s or f.object.errors.any?
     = image_tag 'application/avatar@240.png', width: 240, height: 240
   - else

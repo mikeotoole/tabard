@@ -533,12 +533,15 @@ button,
     &.radio_buttons > mark.error,
     .check_boxes + ul + mark.error,
     >.radio_buttons + ul + mark.error
+      margin: 0
       padding-top: 5px
     .check_boxes + ul + dfn.hint + mark.error,
     >.radio_buttons + ul + dfn.hint + mark.error
       margin-bottom: 20px
       margin-top: -45px
       padding-top: 5px
+    &[affects] mark.error
+      display: none
     &.select,
     .select
       border-color: #A43D33
