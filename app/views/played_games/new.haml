@@ -14,4 +14,4 @@
   %h2 Popular Games
   %ul
     - @popular_games.each do |game|
-      %li= game.name
+      %li= link_to game.name, played_games_url('played_game[game_name]' => game.name), method: :post

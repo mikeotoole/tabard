@@ -3,7 +3,7 @@
 %ul.menu
   %li
     = link_to 'Search', search_url
-  - if !current_user.communities.any?
+  - if current_user.communities.any?
     %li
       %span My Communities
       %ul.communities
