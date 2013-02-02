@@ -47,8 +47,8 @@ class LeagueOfLegends < Game
   end
 
   def self.game_name
-    @wow_game_name ||= Wow.all.first.name
-    return @wow_game_name
+    @league_of_legends_game_name ||= LeagueOfLegends.all.first.name
+    return @league_of_legends_game_name
   end
 
 ###
