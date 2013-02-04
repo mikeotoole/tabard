@@ -52,10 +52,6 @@ class SentMessagesController < MailboxController
       redirect_to inbox_path
     else
       if @message.to.blank?
-        errors = Array.new
-        @message.errors.each{|attr,msg| errors << {attr: attr, msg: msg}}
-        @message = current_user.sent_messages.build(to: [-1], subject: @message.subject, body: @message.body)
-        errors.each{ |error| @message.errors.add(error[:attr],error[:msg]) }
         flash[:alert] = "You need at least one valid recipient"
       end
       render 'new'
