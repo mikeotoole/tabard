@@ -42,6 +42,7 @@ class AdminAbility
       can [:update, :destroy], DiscussionSpace
       can [:read, :destroy, :remove_comment], Discussion
       can [:read, :update], CommunityGame
+      can [:read], CommunityApplication
       can [:read], Character
       can [:read], Game
       can [:update_account, :edit_account], AdminUser do |admin_user|

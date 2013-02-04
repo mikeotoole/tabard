@@ -75,6 +75,9 @@ class CommunityApplication < ActiveRecord::Base
 ###
 # Public Methods
 ###
+  def body
+    "Community Application"
+  end
 
 ###
 # Instance Methods
