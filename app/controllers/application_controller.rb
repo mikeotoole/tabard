@@ -202,10 +202,13 @@ protected
   # Returns true if supported.
   ###
   def browser_supported?
-    return true if browser.safari? and browser.version.to_i >= 5
-    return true if browser.chrome? and browser.version.to_i >= 17
-    #return true if browser.ie? and browser.version.to_i >= 9
-    return true if browser.firefox? and browser.version.to_i >= 10
+    ua = AgentOrange::UserAgent.new(request.headers["HTTP_USER_AGENT"].downcase)
+    return true if ua.device.is_bot?
+    browser = ua.device.engine.browser
+    return true if browser.type == 'safari' and browser.version.to_i >= 5
+    return true if browser.type == 'chrome' and browser.version.to_i >= 17
+    #return true if browser.type == 'ie' and browser.version.to_i >= 9
+    return true if browser.type == 'firefox' and browser.version.to_i >= 10
     return false
   end
   helper_method :browser_supported?

@@ -40,7 +40,8 @@ ruby '1.9.3'
   gem 'country_select'#                                                                     MIT - https://github.com/stefanpenner/country_select
 
 # Browser Detection
-  gem 'browser'#                                                                            MIT - https://github.com/fnando/browser
+  #gem 'browser'#                                                                            MIT - https://github.com/fnando/browser
+  gem 'agent_orange'#                                                                    MIT - https://github.com/kevinelliott/agent_orange
 
 # Pagination
   gem 'kaminari'#                                                                           MIT - https://github.com/amatsuda/kaminari

@@ -45,6 +45,7 @@ GEM
       i18n (~> 0.6)
       multi_json (~> 1.0)
     addressable (2.3.2)
+    agent_orange (0.1.6)
     annotate (2.5.0)
       rake
     arbre (1.0.1)
@@ -70,7 +71,6 @@ GEM
       ruby_parser (= 2.3.1)
       sass (~> 3.0)
       terminal-table (~> 1.4)
-    browser (0.1.5)
     builder (3.0.4)
     bullet (4.2.0)
       uniform_notifier
@@ -377,10 +377,10 @@ PLATFORMS
 DEPENDENCIES
   activeadmin
   activerecord-postgres-hstore
+  agent_orange
   annotate
   asset_sync
   brakeman
-  browser
   bullet
   cancan
   capybara (= 1.1.4)
