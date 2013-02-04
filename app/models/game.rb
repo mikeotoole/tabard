@@ -9,7 +9,7 @@ class Game < ActiveRecord::Base
 ###
 # Constants
 ###
-  VALID_GAMES = [['World of Warcraft', 'Wow'], ['Star Wars: The Old Republic', 'Swtor'], ['Minecraft', 'Minecraft'], ['League Of Legends', 'LeagueOfLegends'], ['Custom Game', 'CustomGame']]
+  VALID_GAMES = [['World of Warcraft', 'Wow'], ['Star Wars: The Old Republic', 'Swtor'], ['Minecraft', 'Minecraft'], ['League of Legends', 'LeagueOfLegends'], ['Custom Game', 'CustomGame']]
 
 ###
 # Attribute accessible

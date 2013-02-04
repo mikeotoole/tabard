@@ -1,9 +1,9 @@
-= link_to 'Tabard™', user_profile_url(current_user.user_profile, subdomain: "www"), class: 'logo'
+= link_to 'Tabard', user_profile_url(current_user.user_profile, subdomain: "www"), class: 'logo'
 
 %ul.menu
   %li
     = link_to 'Search', search_url
-  - if !current_user.communities.any?
+  - if current_user.communities.any?
     %li
       %span My Communities
       %ul.communities

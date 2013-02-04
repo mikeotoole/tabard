@@ -3,7 +3,7 @@
 # Copyright:: Copyright (c) 2011 DigitalAugment Inc.
 # License::   Proprietary Closed Source
 #
-# This class represents a League Of Legends character.
+# This class represents a League of Legends character.
 ###
 class LeagueOfLegendsCharacter < Character
   #validates_lengths_from_database except: [:name, :avatar]

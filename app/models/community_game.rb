@@ -56,7 +56,7 @@ class CommunityGame < ActiveRecord::Base
   serialize :info, ActiveRecord::Coders::Hstore
 
   # Dynamicly add setter, getter, and scopes for keys (See lib/hstore_accessor.rb).
-  hstore_accessor :info, :faction, :server_name, :server_type, :server_ip
+  hstore_accessor :info, :faction, :server_name, :server_type, :server_ip, :region
 
 ###
 # Public Methods

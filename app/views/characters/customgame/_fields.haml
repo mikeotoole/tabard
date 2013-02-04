@@ -1,6 +1,6 @@
 = f.input :name
-= f.input :about
-%li.avatar{ class: f.object.errors.any? ? 'with-errors' : '' }
+-#= f.input :about
+%li.avatar{ class: object_has_avatar_errors(f.object) ? 'with-errors' : '' }
   - if !character.persisted? or !character.avatar_url.to_s or f.object.errors.any?
     = image_tag 'application/avatar@240.png'
   - else

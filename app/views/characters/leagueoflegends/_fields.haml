@@ -2,8 +2,8 @@
 = f.input :level
 = f.input :region, as: :radio_buttons, required: true, label: 'Region', collection: LeagueOfLegends.regions, wrapper_html: { class: 'select with-label'}
 = f.input :champions, as: :check_boxes, label: 'Prefered Champions (select 5)', collection: LeagueOfLegends.champion_names, wrapper_tag: 'li', wrapper_html: {class: 'col4'}
-= f.input :about
-%li.avatar{ class: f.object.errors.any? ? 'with-errors' : '' }
+-#= f.input :about
+%li.avatar{ class: object_has_avatar_errors(f.object) ? 'with-errors' : '' }
   - if !character.persisted? or !character.avatar_url.to_s or f.object.errors.any?
     = image_tag 'application/avatar@240.png'
   - else

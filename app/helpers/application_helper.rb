@@ -80,6 +80,14 @@ module ApplicationHelper
   end
 
   ###
+  # Checks the object, looking for errors on common avatar field names
+  # [Returns] true if any errors or found, otherwise false.
+  ###
+  def object_has_avatar_errors(obj)
+    obj.errors[:avatar].any? || obj.errors[:remote_avatar].any? || obj.errors[:remove_avatar_url].any?
+  end
+
+  ###
   # Shortens long words by placing a separator in the middle of them
   # [Returns] string of shortened words
   ###

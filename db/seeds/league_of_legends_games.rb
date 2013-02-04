@@ -107,5 +107,5 @@ VALID_CHAMPIONS =
   Zilean,
   Zyra"
 
-puts "Creating League Of Legends Game..."
-LeagueOfLegends.create!(name: "League Of Legends", champions: VALID_CHAMPIONS.gsub(/[\r\n]/,""), aliases: "LOL")
+puts "Creating League of Legends Game..."
+LeagueOfLegends.create!(name: "League of Legends", champions: VALID_CHAMPIONS.gsub(/[\r\n]/,""), aliases: "LOL")
