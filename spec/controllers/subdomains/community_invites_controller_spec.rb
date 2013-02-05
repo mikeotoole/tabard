@@ -56,7 +56,7 @@ describe Subdomains::CommunityInvitesController do
       it "should render blank for less than 2 letter terms" do
         sign_in admin
         admin.user_profile.update_column(:display_name, "THIS IS COOL")
-        get 'autocomplete', term: "THIS"
+        get 'autocomplete', term: "THIS IS COOL"
         @json = [{label: admin.display_name, value: admin.id, avatar: admin.avatar_url(:icon)}].to_json
         response.body.should == @json
       end

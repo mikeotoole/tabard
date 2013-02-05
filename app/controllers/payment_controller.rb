@@ -10,7 +10,7 @@ class PaymentController < ApplicationController
 
   def turn_off
     unless ENV["ENABLE_PAYMENT"]
-      raise ActionController::RoutingError
+      raise ActionController::RoutingError.new('Not Found')
     end
   end
 end
