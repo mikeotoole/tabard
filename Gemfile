@@ -112,6 +112,8 @@ ruby '1.9.3'
     gem 'haml-rails'#                                                                       MIT - https://github.com/indirect/haml-rails
     gem 'bullet'#                                                                           MIT - https://github.com/flyerhzm/bullet
     gem 'brakeman'#                                                                         MIT - https://github.com/presidentbeef/brakeman
+    gem 'better_errors'#                                                                     MIT - https://github.com/charliesome/better_errors
+    gem "binding_of_caller"#                                                                MIT - https://github.com/banister/binding_of_caller
   end
 
 # Development and Test Specific Gems
