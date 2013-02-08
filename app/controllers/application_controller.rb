@@ -215,10 +215,10 @@ protected
     ua = orange_user_agent
     return true if ua.device.is_bot?
     browser = ua.device.engine.browser
-    return true if browser.type == 'safari' and browser.version.to_i >= 5
-    return true if browser.type == 'chrome' and browser.version.to_i >= 17
-    #return true if browser.type == 'ie' and browser.version.to_i >= 9
-    return true if browser.type == 'firefox' and browser.version.to_i >= 10
+    return true if browser.type.to_s == 'safari' and browser.version.major.to_i >= 5
+    return true if browser.type.to_s == 'chrome' and browser.version.major.to_i >= 17
+    #return true if browser.type == 'ie' and browser.version.major.to_i >= 9
+    return true if browser.type.to_s == 'firefox' and browser.version.major.to_i >= 10
     return false
   end
   helper_method :browser_supported?
