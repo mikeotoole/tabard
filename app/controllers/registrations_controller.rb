@@ -134,7 +134,7 @@ class RegistrationsController < Devise::RegistrationsController
 ###
   # Where to redirect to after signing up with devise
   def after_sign_up_path_for(resource)
-    user_profile_url(resource.user_profile, subdomain: "www", anchor: "games")
+    user_profile_url(resource.user_profile, protocol: "http://", subdomain: "www", anchor: "games")
   end
 
   # Where to redirect to after signing up with devise, and the account is inactive.

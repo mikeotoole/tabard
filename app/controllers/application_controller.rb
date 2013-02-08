@@ -420,7 +420,7 @@ protected
   def after_sign_in_path_for(resource_or_scope)
     case resource_or_scope
     when :user, User
-      root_url_hack_helper(user_profile_url(current_user.user_profile, protocol: "http://", subdomain: "www") + '#characters')
+      root_url_hack_helper(user_profile_url(current_user.user_profile, protocol: "http://", subdomain: "www", anchor: "games"))
     when :admin_user, AdminUser
       alexandria_dashboard_url(subdomain: "secure")
     else
