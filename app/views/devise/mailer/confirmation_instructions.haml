@@ -11,8 +11,8 @@
     %font{ color: '#333' }= "Welcome to Tabard, #{@resource.is_a?(User) ? @resource.display_name : @resource.email}!"
   %p You can confirm your account through the link below:
   %p
-    %strong= link_to 'Confirm your account', confirmation_url(@resource, confirmation_token: @resource.confirmation_token), style: 'color: #BE4124'
-  %p= confirmation_url(@resource, confirmation_token: @resource.confirmation_token)
+    %strong= link_to 'Confirm your account', confirmation_url(@resource, confirmation_token: @resource.confirmation_token, subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), style: 'color: #BE4124'
+  %p= confirmation_url(@resource, confirmation_token: @resource.confirmation_token, subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"))
   %hr
   %h2
     %font{ color: '#333' } Getting started with Tabard
