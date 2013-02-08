@@ -7,6 +7,7 @@
 ###
 class ConfirmationsController < Devise::ConfirmationsController
   prepend_view_path "app/views/devise"
+  before_filter :sign_out_admin_user, only: :show
 
   protected
 

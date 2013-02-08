@@ -13,6 +13,7 @@ class RegistrationsController < Devise::RegistrationsController
   skip_before_filter :ensure_not_ssl_mode, only: [:create, :update, :new, :edit, :disable_confirmation, :destroy, :reinstate_account_edit, :reinstate_account]
   before_filter :ensure_secure_subdomain, only: [:create, :update, :new, :edit, :disable_confirmation, :destroy, :reinstate_account_edit, :reinstate_account]
   before_filter :block_unauthorized_user!, only: [:cancel_confirmation]
+  before_filter :sign_out_admin_user, only: :create
 
 ###
 # Sign Up
