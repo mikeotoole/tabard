@@ -64,8 +64,8 @@
           = sf.input :_destroy, as: :hidden, default: true, input_html: {data: data}
 
     - if @community.is_charge_exempt
-      %blockquote
-        %h2 Discount
+      %blockquote#charge_exempt
+        %h1 Discount
         = @community.charge_exempt_label
         %p
           %strong Regular Price:
@@ -74,19 +74,20 @@
           %strong Discounted Price:
           = number_to_currency(@invoice.total_recurring_price_per_month_in_dollars(@community))
 
-    #cc_input.section{ class: card_is_present ? '' : 'show_fields' }
-      %h1 Payment
-
-      - if card_is_present
-        = render 'card/current', stripe: @stripe if card_on_file
-        %menu
-          = link_to 'Change card', 'javascript:;', class: 'newcard'
-          = link_to 'Use card on file', 'javascript:;', class: 'onfile'
-
-      %fieldset{ id: 'cc_fields', class: card_is_present ? 'hide' : '' }
-        = render 'card/accepted'
-        %ol= render 'card/fields'
-        = render "subscriptions/notice"
+    - else
+      #cc_input.section{ class: card_is_present ? '' : 'show_fields' }
+        %h1 Payment
+  
+        - if card_is_present
+          = render 'card/current', stripe: @stripe if card_on_file
+          %menu
+            = link_to 'Change card', 'javascript:;', class: 'newcard'
+            = link_to 'Use card on file', 'javascript:;', class: 'onfile'
+  
+        %fieldset{ id: 'cc_fields', class: card_is_present ? 'hide' : '' }
+          = render 'card/accepted'
+          %ol= render 'card/fields'
+          = render "subscriptions/notice"
 
     %p.submit
       = f.button :submit, 'Update Subscription'

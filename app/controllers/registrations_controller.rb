@@ -13,6 +13,7 @@ class RegistrationsController < Devise::RegistrationsController
   skip_before_filter :ensure_not_ssl_mode, only: [:create, :update, :new, :edit, :disable_confirmation, :destroy, :reinstate_account_edit, :reinstate_account]
   before_filter :ensure_secure_subdomain, only: [:create, :update, :new, :edit, :disable_confirmation, :destroy, :reinstate_account_edit, :reinstate_account]
   before_filter :block_unauthorized_user!, only: [:cancel_confirmation]
+  before_filter :sign_out_admin_user, only: :create
 
 ###
 # Sign Up
@@ -133,12 +134,12 @@ class RegistrationsController < Devise::RegistrationsController
 ###
   # Where to redirect to after signing up with devise
   def after_sign_up_path_for(resource)
-    user_profile_url(resource.user_profile, subdomain: "www", anchor: "games")
+    after_sign_in_path_for(resource)
   end
 
   # Where to redirect to after signing up with devise, and the account is inactive.
   def after_inactive_sign_up_path_for(resource)
-    root_url_hack_helper(root_url(protocol: "http://", subdomain: "www"))
+    root_url(subdomain: "www")
   end
 
   # Where to redirect to after updating the account with devise
