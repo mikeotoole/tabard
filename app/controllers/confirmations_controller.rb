@@ -13,7 +13,7 @@ class ConfirmationsController < Devise::ConfirmationsController
 
   # The path used after confirmation.
   def after_confirmation_path_for(resource_name, resource)
-    user_profile_url(resource.user_profile, protocol: "http://", subdomain: "www", anchor: "games")
+    after_sign_in_path_for(resource)
   end
 
   # Override default path
