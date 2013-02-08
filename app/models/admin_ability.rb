@@ -63,6 +63,9 @@ class AdminAbility
       can [:read, :create], SupportComment
       can [:read], Invoice
       can [:read], InvoiceItem
+      can [:update], Page do |page|
+        page.is_home_page?
+      end
     end
 
     # Rules for superadmin user. (Inherits rules from admin).

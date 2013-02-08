@@ -64,7 +64,15 @@ class Subdomains::PagesController < SubdomainsController
 
   # DELETE /pages/:id(.:format)
   def destroy
-    flash[:notice] = 'Page was successfully removed.' if @page.destroy
+    if @page.destroy
+      flash[:notice] = 'Page was successfully removed.'
+    else
+      if @page.is_home_page?
+        flash[:notice] = 'The commmunity home page can not be removed.'
+      else
+        flash[:notice] = 'Page was unable to be removed.'
+      end
+    end
     respond_with(@page, location: page_space_url(@page.page_space))
   end
 
