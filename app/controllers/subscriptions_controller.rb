@@ -40,8 +40,15 @@ class SubscriptionsController < PaymentController
   def update
     @stripe_card_token = params[:stripe_card_token]
     begin
-      if @invoice.update_attributes_with_payment(params[:invoice], @stripe_card_token)
-        flash[:success] = "Your plan has been changed"
+      success_message = "Your plan has been changed"
+      if @community.is_charge_exempt
+        if @invoice.update_attributes(params[:invoice])
+          flash[:success] = success_message
+        else
+          flash[:error] = "We were unable to update your account at this time."
+        end
+      elsif @invoice.update_attributes_with_payment(params[:invoice], @stripe_card_token)
+        flash[:success] = success_message
       else
         @current_plan_invoice_item = @invoice.invoice_items.select{|ii| ii.has_community_plan?}.first
         @all_upgrades_invoice_items = @invoice.invoice_items.recurring.select{|ii| ii.has_community_upgrade?}
