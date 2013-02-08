@@ -70,6 +70,10 @@ class Page < ActiveRecord::Base
     Sanitize.clean(html, Sanitize::Config::CUSTOM).html_safe
   end
 
+  def is_home_page?
+    self.id == self.community.home_page_id
+  end
+
 ###
 # Protected Methods
 ###
