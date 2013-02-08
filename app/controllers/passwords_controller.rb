@@ -13,8 +13,8 @@ class PasswordsController < Devise::PasswordsController
   before_filter :ensure_secure_subdomain, only: [:edit, :update]
   before_filter :sign_out_admin_user, only: :update
 
-   # The path used after sending reset password instructions
-    def after_sending_reset_password_instructions_path_for(resource_name)
-      root_url(subdomain: "www")
-    end
+  # The path used after sending reset password instructions
+  def after_sending_reset_password_instructions_path_for(resource_name)
+    root_url(subdomain: "www")
+  end
 end

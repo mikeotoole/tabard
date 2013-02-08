@@ -13,9 +13,10 @@ class UnlocksController < Devise::UnlocksController
 
   # Override default path
   def after_sending_unlock_instructions_path_for(resource)
-    root_url
+    root_url(subdomain: "www")
   end
+
   def after_unlock_path_for(resource)
-      new_session_url(resource, subdomain: "secure")
-    end
+    new_session_url(resource, subdomain: "secure")
+  end
 end

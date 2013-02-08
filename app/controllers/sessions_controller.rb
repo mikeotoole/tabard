@@ -15,6 +15,7 @@ class SessionsController < Devise::SessionsController
   def new
     super
   end
+
   ###
   # The create is overrided to force the signing out of the admin user if needed.
   ###

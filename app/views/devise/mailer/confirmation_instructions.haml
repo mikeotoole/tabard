@@ -3,8 +3,8 @@
     %font{ color: '#333' }= "Hello #{@resource.is_a?(User) ? @resource.display_name : @resource.email}!"
   %p You can confirm your new email address through the link below:
   %p
-    %strong= link_to 'Confirm your account', confirmation_url(@resource, confirmation_token: @resource.confirmation_token), style: 'color: #BE4124'
-  %p= confirmation_url(@resource, confirmation_token: @resource.confirmation_token)
+    %strong= link_to 'Confirm your account', confirmation_url(@resource, confirmation_token: @resource.confirmation_token, subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), style: 'color: #BE4124'
+  %p= confirmation_url(@resource, confirmation_token: @resource.confirmation_token, subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://"))
 
 - else
   %h2
