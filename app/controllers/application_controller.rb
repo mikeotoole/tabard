@@ -198,11 +198,21 @@ protected
   helper_method :sort_direction
 
   ###
+  # This helper method gets the agent orange user agent.
+  # Returns true if supported.
+  ###
+  def orange_user_agent
+    @agent_orange_user_agent ||= AgentOrange::UserAgent.new(request.headers["HTTP_USER_AGENT"].downcase)
+    return @agent_orange_user_agent
+  end
+  helper_method :orange_user_agent
+
+  ###
   # This helper method that checks current browser is supported.
   # Returns true if supported.
   ###
   def browser_supported?
-    ua = AgentOrange::UserAgent.new(request.headers["HTTP_USER_AGENT"].downcase)
+    ua = orange_user_agent
     return true if ua.device.is_bot?
     browser = ua.device.engine.browser
     return true if browser.type == 'safari' and browser.version.to_i >= 5
