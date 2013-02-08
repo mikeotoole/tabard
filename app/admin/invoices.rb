@@ -22,14 +22,15 @@ ActiveAdmin.register Invoice do
       link_to "View", alexandria_invoice_path(invoice)
     end
     column :user, sortable: false
-    column :total_price_in_dollars
     column :period_start_date
     column :period_end_date
     column :paid_date
   end
 
   show do |invoice|
-    attributes_table *default_attribute_table_rows
+    rows = default_attribute_table_rows
+    rows.insert(2, :total_price_in_dollars)
+    attributes_table *rows
 
     div do
       panel("Invoice Items") do
