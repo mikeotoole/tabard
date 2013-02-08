@@ -4,9 +4,7 @@
   I have added the following comment for support ticket ##{@support_ticket.id}:
 %hr
 
-%font{ color: '#333' }
-  %p
-    #{@support_comment.body}
+%font{ color: '#333' }= simple_format @support_comment.body
 
 %hr
 %p Help this user out by clicking the link below:

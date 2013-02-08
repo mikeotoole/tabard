@@ -324,6 +324,7 @@ body.fixed-menu #header .menu
         visibility: hidden
   
   p
+    line-height: 1.3em
     padding: 10px 0
     word-wrap: break-word
   
@@ -1725,7 +1726,7 @@ body.fixed-menu #header .menu
     width: 878px
     + mark.error
       width: 880px
-  
+
   #event_body,
   #invite_comment_body
     height: 100px
@@ -1747,7 +1748,14 @@ body.fixed-menu #header .menu
       
   #breadcrumb + #submenu
     top: 61px
-  
+
+body.announcements #body article
+  border-bottom: 1px solid
+  padding: 15px 30px 30px
+
+body.discussions #body article .body
+  padding: 15px 30px 0
+
 body.events.index #submenu .list,
 body.events.month_index #submenu .month,
 body.events.week_index #submenu .week,

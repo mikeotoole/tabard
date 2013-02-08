@@ -4,9 +4,7 @@
   I am having the following support issue:
 %hr
 
-%font{ color: '#333' }
-  %p
-    #{@support_ticket.body}
+%font{ color: '#333' }= simple_format @support_ticket.body
 
 %hr
 %p Help this user out by clicking the link below:

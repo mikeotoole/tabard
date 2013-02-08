@@ -8,7 +8,8 @@
   %h2
     #{@acknowledgement.announcement_name}
 
-%hr
-%p Checkout the complete announcement here:
 %p
-  %strong= link_to 'View Announcement', @url, style: 'color: #BE4124'
+  %strong= link_to 'View Announcement on Tabard', @url, style: 'color: #BE4124'
+
+%hr
+= simple_format @acknowledgement.announcement_body

@@ -10,7 +10,8 @@
 %font{ color: '#333' }
   %h2 #{@message_association.subject}
 
-%hr
-%p You can view your message at the link below:
 %p
-  %strong= link_to 'View Message', mail_url(@message_association), style: 'color: #BE4124'
+  %strong= link_to 'View Message on Tabard', mail_url(@message_association), style: 'color: #BE4124'
+
+%hr
+= simple_format @message_association.body
