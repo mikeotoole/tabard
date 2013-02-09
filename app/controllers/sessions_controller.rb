@@ -10,6 +10,7 @@ class SessionsController < Devise::SessionsController
   skip_before_filter :ensure_not_ssl_mode
   before_filter :ensure_secure_subdomain, only: [:new, :create]
   before_filter :sign_out_admin_user, only: :create
+  after_filter :change_notices_to_successes, only: [:create]
 
   # Overriding new to hide announcements
   def new

@@ -8,6 +8,7 @@
 class ConfirmationsController < Devise::ConfirmationsController
   prepend_view_path "app/views/devise"
   before_filter :sign_out_admin_user, only: :show
+  after_filter :change_notices_to_successes, only: [:create]
 
   protected
 

@@ -14,6 +14,7 @@ class RegistrationsController < Devise::RegistrationsController
   before_filter :ensure_secure_subdomain, only: [:create, :update, :new, :edit, :disable_confirmation, :destroy, :reinstate_account_edit, :reinstate_account]
   before_filter :block_unauthorized_user!, only: [:cancel_confirmation]
   before_filter :sign_out_admin_user, only: :create
+  after_filter :change_notices_to_successes, only: [:create, :reinstate_account, :update]
 
 ###
 # Sign Up
@@ -22,7 +23,7 @@ class RegistrationsController < Devise::RegistrationsController
   def new
     community = Community.find_by_id(params[:community_id])
     flash[:notice] =  "Before you can apply to #{community.name} you need to create a Tabard&trade; account or login." if community
-    flash[:alert] = "This version of Tabard&trade; is a Beta Test. ALL DATA WILL BE REMOVED at the end of the test." if User::BETA_CODE_REQUIRED
+    flash[:alert] = "This version of Tabard is a Beta Test. ALL DATA WILL BE REMOVED at the end of the test." if User::BETA_CODE_REQUIRED
     super
   end
 
