@@ -1,7 +1,10 @@
-%meta{ content: 'chrome=1', http: {equiv: 'X-UA-Compatible'} }
+- use_chromeframe = (!params[:controller].match /top_level|search|registrations|sessions/i)
+- if use_chromeframe
+  %meta{ content: 'chrome=1', http: {equiv: 'X-UA-Compatible'} }
 /[if IE]
   = stylesheet_link_tag "application/ie"
-  = javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js'
-  %script{ type: 'text/javascript' }
-    :plain
-      window.attachEvent("onload", function(){ CFInstall.check({mode:'overlay'}); });
+  - if use_chromeframe
+    = javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js'
+    %script{ type: 'text/javascript' }
+      :plain
+        window.attachEvent("onload", function(){ CFInstall.check({mode:'overlay'}); });

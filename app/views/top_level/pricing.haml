@@ -3,7 +3,7 @@
 %h1 Community Pricing
 
 .col3
-  %article.basic
+  .col.basic
     %h2 Basic Communities
     .price
       %strong Free
@@ -15,7 +15,7 @@
         %strong
           Up to 20 members.
 
-  %article.pro
+  .col.pro
     %h2
       Pro Communities
       - unless !!ENV['ENABLE_PAYMENT']
@@ -33,7 +33,7 @@
           %br
           Custom member roles.
 
-  %article.upgrade
+  .col.upgrade
     %h2
       Pay as you Grow
       - unless !!ENV['ENABLE_PAYMENT']

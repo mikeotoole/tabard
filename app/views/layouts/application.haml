@@ -1,7 +1,7 @@
 !!!
 %html
   %head
-    %title= yield_for :title, "Tabard™"
+    %title= yield_for :title, "Tabard"
     %link{ href: "/stylesheets/fonts.css", media: "screen", rel: "stylesheet", type: "text/css" }
     = stylesheet_link_tag "top_level/top_level"
     = render 'layouts/set_timezone' unless !!cookies[:timezone]
@@ -14,7 +14,7 @@
   %body{ class: body_classes.join(' ') }
 
     #bar
-      = link_to 'Tabard™', root_url(subdomain: "www"), class: 'logo'
+      = link_to 'Tabard', root_url(subdomain: "www"), class: 'logo'
       = render "layouts/bar_#{user_signed_in? ? 'in' : 'out'}"
 
     = render 'layouts/flash_messages' unless @page_caching
