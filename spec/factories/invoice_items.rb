@@ -4,17 +4,39 @@ FactoryGirl.define do
   factory :invoice_item do
     quantity 1
     association :item, factory: :pro_community_plan
-    after(:build)  { |ii| set_invoice(ii) }
+    after(:build) { |ii| set_community(ii) }
+    after(:build) { |ii| set_invoice(ii) }
+  end
+
+  factory :upgrade_invoice_item, class: InvoiceItem do
+    quantity 1
+    association :item, factory: :twenty_user_pack_upgrade
+    after(:build) { |ii| set_community(ii) }
+    after(:build) { |ii| set_invoice(ii) }
+    after(:build) { |ii| add_pro_community_plan_ii(ii) }
+  end
+
+  factory :basic_invoice_item, class: InvoiceItem do
+    quantity 1
+    association :item, factory: :pro_community_plan
+    after(:build) { |ii| set_community(ii) }
+  end
+end
+
+def set_community(ii)
+  if ii.community.blank?
+    ii.community = DefaultObjects.community_admin_with_stripe_out_state.communities.first
   end
 end
 
 def set_invoice(ii)
-  if ii.community.blank?
-    ii.community = DefaultObjects.community_admin_with_stripe_out_state.communities.first
-  end
   if ii.invoice.blank? and ii.invoice_id.blank?
     ii.invoice = FactoryGirl.build(:invoice, user_id: DefaultObjects.community_admin_with_stripe_out_state.id)
   end
+end
+
+def add_pro_community_plan_ii(ii)
+  FactoryGirl.build(:invoice_item, invoice: ii.invoice)
 end
 
 # == Schema Information

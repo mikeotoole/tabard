@@ -178,7 +178,7 @@ protected
   # Validates that the community is owned by the invoice user.
   ###
   def community_is_owned_by_user
-    self.errors.add(:base, "Community is not owned by user") unless self.user.owns_community?(self.community)
+    self.errors.add(:base, "Community is not owned by user") if self.invoice.present? and not self.user.owns_community?(self.community)
   end
 
   ###
@@ -197,7 +197,7 @@ protected
   # When the invoice is closed its items can't be updated.
   ###
   def cant_be_edited_after_closed
-    if self.invoice.is_closed and self.invoice.is_closed_was
+    if self.invoice and self.invoice.is_closed and self.invoice.is_closed_was
       self.errors.add(:base, "can't be edited when invoice is closed")
     end
   end
