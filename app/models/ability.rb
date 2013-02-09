@@ -253,7 +253,7 @@ class Ability
       event.is_public
     end
     can [:read], Event do |event|
-      event.creator_id = user.user_profile_id
+      event.creator_id == user.user_profile_id
     end
   end
 

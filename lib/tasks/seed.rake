@@ -57,10 +57,11 @@ namespace :seed do
 
     for i in 0..50
       Timecop.freeze(rand(20).days.ago)
-      discussion = create_discussion('Just Another Headshot', 'Community', "#{adj} Herp Derp #{i}", "#{adj} Herp Derp #{i}", 'Billy')
+      com = Community.find_by_name("Just Another Headshot")
+      discussion = create_discussion(com.name, 'Community', "#{adj} Herp Derp #{i}", "#{adj} Herp Derp #{i}", com.admin_profile.full_name)
       puts "With 100 Comments"
       for j in 0..100
-        create_comment(discussion, "#{adj} Herp Derp #{i}-#{j}", 'Billy')
+        create_comment(discussion, "#{adj} Herp Derp #{i}-#{j}", com.admin_profile.full_name)
       end
     end
   end
@@ -73,70 +74,68 @@ namespace :seed do
     end
 
     puts "Creating user maxlength@digitalaugment.com"
-    max = create_user("Max", "Length", create_w_string(UserProfile::MAX_NAME_LENGTH))
+    max = create_user(create_w_string(UserProfile::MAX_NAME_LENGTH), "Max")
     user_profile = max.user_profile
     user_profile.location = create_w_string(UserProfile::MAX_LOCATION_LENGTH)
     user_profile.description = create_w_string(UserProfile::MAX_DESCRIPTION_LENGTH)
     user_profile.title = create_w_string(UserProfile::MAX_TITLE_LENGTH)
     user_profile.save!
-    max2 = create_user("Max2", "Length2", create_w_string(UserProfile::MAX_NAME_LENGTH))
-    max3 = create_user("Max3", "Length3", create_w_string(UserProfile::MAX_NAME_LENGTH))
+    max2 = create_user(create_w_string(UserProfile::MAX_NAME_LENGTH), "Max2")
 
     puts "Creating characters with max length attributes"
-    create_empire_character("Length", create_w_string(SwtorCharacter::MAX_NAME_LENGTH), "Sith Warrior", "Juggernaut", "Sith Pureblood", 99, "Female", "The Bastion")
-    create_empire_character("Length", create_w_string(SwtorCharacter::MAX_NAME_LENGTH), "Sith Warrior", "Juggernaut", "Sith Pureblood", 99, "Female", "The Bastion")
-    create_alliance_character("Length", create_w_string(WowCharacter::MAX_NAME_LENGTH), "Death Night", "Pandaren", 99, "Female", "Steamwheedle Cartel")
-    create_alliance_character("Length", create_w_string(WowCharacter::MAX_NAME_LENGTH), "Death Night", "Pandaren", 99, "Female", "Steamwheedle Cartel")
+    create_swtor_character(max.full_name, create_w_string(SwtorCharacter::MAX_NAME_LENGTH), "Sith Warrior", "Juggernaut", "Sith Pureblood", "Empire", 50, "Female", "The Bastion")
+    create_swtor_character(max.full_name, create_w_string(SwtorCharacter::MAX_NAME_LENGTH), "Sith Warrior", "Juggernaut", "Sith Pureblood", "Empire", 50, "Female", "The Bastion")
+    create_wow_character(max.full_name, create_w_string(WowCharacter::MAX_NAME_LENGTH), "Death Knight", "Worgen", "Alliance", 90, "Female", "Steamwheedle Cartel")
+    create_wow_character(max.full_name, create_w_string(WowCharacter::MAX_NAME_LENGTH), "Death Knight", "Worgen", "Alliance", 90, "Female", "Steamwheedle Cartel")
 
-    create_empire_character("Length2", create_w_string(SwtorCharacter::MAX_NAME_LENGTH), "Sith Warrior", "Juggernaut", "Sith Pureblood", 99, "Female", "The Bastion")
-    create_empire_character("Length2", create_w_string(SwtorCharacter::MAX_NAME_LENGTH), "Sith Warrior", "Juggernaut", "Sith Pureblood", 99, "Female", "The Bastion")
-    create_alliance_character("Length2", create_w_string(WowCharacter::MAX_NAME_LENGTH), "Death Night", "Pandaren", 99, "Female", "Steamwheedle Cartel")
-    create_alliance_character("Length2", create_w_string(WowCharacter::MAX_NAME_LENGTH), "Death Night", "Pandaren", 99, "Female", "Steamwheedle Cartel")
+    create_swtor_character(max.full_name, create_w_string(SwtorCharacter::MAX_NAME_LENGTH), "Sith Warrior", "Juggernaut", "Sith Pureblood", "Empire", 50, "Female", "The Bastion")
+    create_swtor_character(max.full_name, create_w_string(SwtorCharacter::MAX_NAME_LENGTH), "Sith Warrior", "Juggernaut", "Sith Pureblood", "Empire", 50, "Female", "The Bastion")
+    create_wow_character(max.full_name, create_w_string(WowCharacter::MAX_NAME_LENGTH), "Death Knight", "Worgen", "Alliance", 90, "Female", "Steamwheedle Cartel")
+    create_wow_character(max.full_name, create_w_string(WowCharacter::MAX_NAME_LENGTH), "Death Knight", "Worgen", "Alliance", 90, "Female", "Steamwheedle Cartel")
 
-    create_empire_character("Length3", create_w_string(SwtorCharacter::MAX_NAME_LENGTH), "Sith Warrior", "Juggernaut", "Sith Pureblood", 99, "Female", "The Bastion")
-    create_empire_character("Length3", create_w_string(SwtorCharacter::MAX_NAME_LENGTH), "Sith Warrior", "Juggernaut", "Sith Pureblood", 99, "Female", "The Bastion")
-    create_alliance_character("Length3", create_w_string(WowCharacter::MAX_NAME_LENGTH), "Death Night", "Pandaren", 99, "Female", "Steamwheedle Cartel")
-    create_alliance_character("Length3", create_w_string(WowCharacter::MAX_NAME_LENGTH), "Death Night", "Pandaren", 99, "Female", "Steamwheedle Cartel")
+    create_swtor_character(max.full_name, create_w_string(SwtorCharacter::MAX_NAME_LENGTH), "Sith Warrior", "Juggernaut", "Sith Pureblood", "Empire", 50, "Female", "The Bastion")
+    create_swtor_character(max.full_name, create_w_string(SwtorCharacter::MAX_NAME_LENGTH), "Sith Warrior", "Juggernaut", "Sith Pureblood", "Empire", 50, "Female", "The Bastion")
+    create_wow_character(max.full_name, create_w_string(WowCharacter::MAX_NAME_LENGTH), "Death Knight", "Worgen", "Alliance", 90, "Female", "Steamwheedle Cartel")
+    create_wow_character(max.full_name, create_w_string(WowCharacter::MAX_NAME_LENGTH), "Death Knight", "Worgen", "Alliance", 90, "Female", "Steamwheedle Cartel")
 
     puts "Creating community with max length attributes"
-    max_community = create_community("Length", create_w_string(Community::MAX_NAME_LENGTH), create_w_string(Community::MAX_SLOGAN_LENGTH), %w(Alliance Republic))
+    max_community = create_community(max.full_name, create_w_string(Community::MAX_NAME_LENGTH), create_w_string(Community::MAX_SLOGAN_LENGTH), %w(Alliance Republic))
     max_community.save!
     max_community.update_column(:is_public_roster, false)
 
-    application = generate_application(max_community, "Length2")
-    character_hash_map = find_character_mapping(max_community, application)
-    application.accept_application(user_profile, character_hash_map)
-    application = generate_application(max_community, "Length3")
-    character_hash_map = find_character_mapping(max_community, application)
 
-    discussion_space = create_discussion_space("Length", max_community.name, create_w_string(DiscussionSpace::MAX_NAME_LENGTH), "Republic")
-    discussion = create_discussion(max_community.name, discussion_space.name, create_w_string(Discussion::MAX_NAME_LENGTH), create_w_string(Discussion::MAX_BODY_LENGTH), "Length")
+    #application = generate_application(max_community, max2.full_name)
+    #character_hash_map = find_character_mapping(max_community, application)
+    #application.accept_application(user_profile, character_hash_map)
 
-    comment1 = create_comment(discussion, create_w_string(Comment::MAX_BODY_LENGTH), 'Length')
-    comment1a = create_comment(comment1, create_w_string(Comment::MAX_BODY_LENGTH), 'Length')
-    comment1b = create_comment(comment1, create_w_string(Comment::MAX_BODY_LENGTH), 'Length')
-    comment1b2 = create_comment(comment1b, create_w_string(Comment::MAX_BODY_LENGTH), 'Length')
+    discussion_space = create_discussion_space(max.full_name, max_community.name, create_w_string(DiscussionSpace::MAX_NAME_LENGTH), "Republic")
+    discussion = create_discussion(max_community.name, discussion_space.name, create_w_string(Discussion::MAX_NAME_LENGTH), create_w_string(Discussion::MAX_BODY_LENGTH), max.full_name)
+
+    comment1 = create_comment(discussion, create_w_string(Comment::MAX_BODY_LENGTH), max.full_name)
+    comment1a = create_comment(comment1, create_w_string(Comment::MAX_BODY_LENGTH), max.full_name)
+    comment1b = create_comment(comment1, create_w_string(Comment::MAX_BODY_LENGTH), max.full_name)
+    comment1b2 = create_comment(comment1b, create_w_string(Comment::MAX_BODY_LENGTH), max.full_name)
 
     create_announcement(max_community.name,
                     create_w_string(Announcement::MAX_NAME_LENGTH),
                     create_w_string(Announcement::MAX_BODY_LENGTH),
-                    'Length',
-                    max_community.community_games.find_by_game_type("Swtor"))
+                    max.full_name,
+                    max_community.community_games.find_by_game_id(Game.find_by_type("Swtor")))
     create_announcement(max_community.name,
                     create_w_string(Announcement::MAX_NAME_LENGTH),
                     create_w_string(Announcement::MAX_BODY_LENGTH),
-                    'Length',
-                    max_community.community_games.find_by_game_type("Swtor"))
+                    max.full_name,
+                    max_community.community_games.find_by_game_id(Game.find_by_type("Swtor")))
 
-    page_space = create_page_space('Length', max_community.name, create_w_string(PageSpace::MAX_NAME_LENGTH), "Republic")
-    create_page('Length', max_community.name, page_space.name, create_w_string(Page::MAX_NAME_LENGTH), create_w_string(300))
+    page_space = create_page_space(max.full_name, max_community.name, create_w_string(PageSpace::MAX_NAME_LENGTH), "Republic")
+    create_page(max.full_name, max_community.name, page_space.name, create_w_string(Page::MAX_NAME_LENGTH), create_w_string(300))
 
     create_max_custom_form(max_community.name, true)
 
-    create_role(max_community.name, create_w_string(Role::MAX_NAME_LENGTH), %w(PageSpace), %w(Create), %w(Length2))
+    create_role(max_community.name, create_w_string(Role::MAX_NAME_LENGTH), %w(PageSpace), %w(Create), [max2.full_name])
 
-    create_message('Length', create_w_string(Message::MAX_SUBJECT_LENGTH), %w(Length2), create_w_string(Message::MAX_BODY_LENGTH))
-    create_message('Length2', create_w_string(Message::MAX_SUBJECT_LENGTH), %w(Length), create_w_string(Message::MAX_BODY_LENGTH))
+    create_message(max.full_name, create_w_string(Message::MAX_SUBJECT_LENGTH), [max2.full_name], create_w_string(Message::MAX_BODY_LENGTH))
+    create_message(max2.full_name, create_w_string(Message::MAX_SUBJECT_LENGTH), [max.full_name], create_w_string(Message::MAX_BODY_LENGTH))
   end
 
   desc "Seeds content with max length values"
