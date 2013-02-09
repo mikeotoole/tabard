@@ -4,10 +4,10 @@
 
 # Create user
 def create_user(full_name, gamer_tag=nil)
-  puts "Creating User #{full_name}"
   gamer_tag ||= "#{full_name}"
   gamer_tag = gamer_tag[0..(UserProfile::MAX_GAMER_TAG_LENGTH-1)] if gamer_tag.length > UserProfile::MAX_GAMER_TAG_LENGTH
   email = "#{gamer_tag}@digitalaugment.com"
+  puts "Creating User #{full_name} | #{gamer_tag} | #{email}"
   user = User.new(accepted_current_terms_of_service: true, accepted_current_privacy_policy: true,
       email: email,
       email_confirmation: email,
