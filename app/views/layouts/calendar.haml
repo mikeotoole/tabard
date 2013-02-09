@@ -8,7 +8,6 @@
     = render 'layouts/set_timezone' unless !!cookies[:timezone]
     = csrf_meta_tags
     = favicon_link_tag asset_path 'favicon.png'
-    = javascript_include_tag "application"
     = yield :header
     = render 'layouts/ie'
 
@@ -31,6 +30,7 @@
 
     = yield
 
+    = javascript_include_tag "application"
     /= javascript_include_tag "moment.min"
     = javascript_include_tag "calendar"
     = yield :footer
