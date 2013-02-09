@@ -31,8 +31,8 @@
       = link_to shorten_words(@discussion.user_profile_name), @discussion.user_profile
       = "as #{@discussion.poster_name}" unless @discussion.poster == @discussion.user_profile
     %time= time_ago_in_words(@discussion.has_been_edited ? @discussion.updated_at : @discussion.created_at) + ' ago'
-  %p
-    = @discussion.body
+  
+  .body= simple_format @discussion.body
 
 - if @comments.any? or can? :comment, @discussion
   %aside.comments

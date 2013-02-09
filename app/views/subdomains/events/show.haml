@@ -21,8 +21,7 @@
 %article.event
   %h1= shorten_words @event.name, 21
   = render 'meta', event: @event
-  - if @event.body
-    %p= @event.body
+  = simple_format @event.body if @event.body
 
 - if @event.community_game
   %p
