@@ -1,7 +1,7 @@
 %h2
   %font{ color: '#333' }= "Hello #{@resource.is_a?(User) ? @resource.display_name : @resource.email}!"
 %p
-  Your new Tabard&trade; Admin account has been created.
+  Your new Tabard Admin account has been created.
 %p
   Before you start,
   %strong= (link_to 'set your password here', edit_password_url(@resource, reset_password_token: @resource.reset_password_token, subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), style: 'color: #BE4124') + '.'

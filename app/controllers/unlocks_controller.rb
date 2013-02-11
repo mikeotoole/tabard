@@ -8,6 +8,7 @@
 class UnlocksController < Devise::UnlocksController
   prepend_view_path "app/views/devise"
   skip_before_filter :block_unauthorized_user!
+  after_filter :change_notices_to_successes, only: [:create]
 
   protected
 

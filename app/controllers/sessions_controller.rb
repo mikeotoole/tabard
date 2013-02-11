@@ -10,6 +10,7 @@ class SessionsController < Devise::SessionsController
   skip_before_filter :ensure_not_ssl_mode
   before_filter :ensure_secure_subdomain, only: [:new, :create]
   before_filter :sign_out_admin_user, only: :create
+  after_filter :change_notices_to_successes, only: [:create]
 
   # Overriding new to hide announcements
   def new
@@ -23,7 +24,7 @@ class SessionsController < Devise::SessionsController
     current_user.update_column(:force_logout, false) if current_user and current_user.force_logout
     resource = warden.authenticate!(scope: resource_name, recall: "#{controller_path}#new")
     after_sign_in_path = after_sign_in_path_for(resource)
-    flash[:notice] = "This version of Tabard&trade; is a Beta Test. ALL DATA WILL BE REMOVED at the end of the test." if User::BETA_CODE_REQUIRED
+    flash[:notice] = "This version of Tabard is a Beta Test. ALL DATA WILL BE REMOVED at the end of the test." if User::BETA_CODE_REQUIRED
     respond_with resource, location: after_sign_in_path.match(/\.js$/) ? root_url : after_sign_in_path
   end
 end

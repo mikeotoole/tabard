@@ -24,9 +24,9 @@ en:
       admin_disabled: 'Your account has been deactivated by Tabard.'
       user_disabled: 'Your account has been deactivated. Please reactivate your account first.'
     sessions:
-      signed_in: 'Welcome. You are now signed in.'
-      user_signed_in: 'Welcome %{display_name}. You are now signed in.'
-      signed_out: 'You have been signed out. See you around soon.'
+      signed_in: '' # Left blank intensionally -DW
+      user_signed_in: '' # Left blank intensionally -DW
+      signed_out: '' # Left blank intensionally -DW
     passwords:
       send_instructions: 'You will receive an email with instructions about how to reset your password within a few minutes.'
       updated: 'Your password was changed successfully. You are now signed in.'

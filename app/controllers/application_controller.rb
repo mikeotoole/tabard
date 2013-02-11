@@ -434,6 +434,12 @@ protected
     return root_url
   end
 
+  # This after_filter will change the default Devise messages that would be notices into success messages instead
+  def change_notices_to_successes
+    flash[:success] = flash[:notice]
+    flash.delete :notice
+  end
+
 ###
 # System Hacks
 ###

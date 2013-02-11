@@ -24,6 +24,9 @@ require 'spec_helper'
 
 describe InvoiceItem do
   let(:invoice_item) { create(:invoice_item) }
+  let(:invoice) { invoice_item.invoice }
+  let(:basic_invoice_item) { build(:basic_invoice_item)}
+  let(:upgrade_invoice_item) { create(:upgrade_invoice_item) }
 
   it "should create a new instance given valid attributes" do
     invoice_item.should be_valid
@@ -34,7 +37,11 @@ describe InvoiceItem do
   end
 
   it "should not be able to be edited after it is closed" do
-    pending
+    invoice.mark_paid_and_close
+    invoice_item.is_recurring.should be_true
+    invoice_item.is_recurring = false
+    invoice_item.save.should be_false
+    invoice_item.is_recurring.should be_true
   end
 
   it "should not be able to be edited when it is prorated" do
@@ -46,53 +53,61 @@ describe InvoiceItem do
 ###
   describe "invoice" do
     it "should be required" do
-      pending
+      basic_invoice_item.save.should be_false
+      basic_invoice_item.invoice = FactoryGirl.build(:invoice, user_id: DefaultObjects.community_admin_with_stripe_out_state.id)
+      basic_invoice_item.save.should be_true
     end
   end
 
   describe "community" do
     it "should be required" do
-      pending
+      invoice_item.community = nil
+      invoice_item.save.should be_false
     end
 
     it "should be owned by the user" do
-      pending
+      invoice_item.community = create(:community)
+      invoice_item.save.should be_false
     end
   end
 
   describe "is_prorated" do
     it "should not be true if is recurring" do
-      pending
-    end
-  end
-
-  describe "is_recurring" do
-    it "should not be true if is recurring" do
-      pending
+      invoice_item.is_recurring.should be_true
+      invoice_item.is_prorated = true
+      invoice_item.save.should be_false
     end
   end
 
   describe "item" do
     it "should be required" do
-      pending
-    end
-    it "should be avaliable if it is a community plan" do
-      pending
+      invoice_item.item = nil
+      invoice_item.save.should be_false
     end
   end
 
   describe "quantity" do
     it "should be required" do
-      pending
+      invoice_item.quantity = nil
+      invoice_item.save.should be_false
     end
-    it "should be greater than or equal to 1" do
-      pending
+    it "should be editable for upgrades" do
+      upgrade_invoice_item.quantity = 2
+      upgrade_invoice_item.save.should be_true
+      upgrade_invoice_item.quantity.should eq 2
+    end
+    it "should be greater than or equal to 0" do
+      upgrade_invoice_item.quantity = -1
+      upgrade_invoice_item.save.should be_false
     end
     it "should be only integer" do
-      pending
+      upgrade_invoice_item.quantity = "fuck"
+      upgrade_invoice_item.save.should be_true
+      upgrade_invoice_item.quantity.should eq 1
     end
     it "should only be 1 if the item is a community plan" do
-      pending
+      invoice_item.quantity = 2
+      invoice_item.save.should be_false
     end
   end
 
