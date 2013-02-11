@@ -341,7 +341,7 @@ class Ability
     end
 
     # Cannot Overrides
-    cannot [:show], CommunityApplication do |community_application|
+    cannot [:comment], CommunityApplication do |community_application|
       community_application.user_profile_id == user.user_profile_id
     end
 
