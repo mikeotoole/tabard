@@ -29,6 +29,7 @@
 #  is_email_on_announcement          :boolean          default(TRUE)
 #  stripe_customer_token             :string(255)
 #  is_in_good_account_standing       :boolean          default(TRUE)
+#  is_email_on_invite                :boolean          default(TRUE)
 #
 
 require 'spec_helper'

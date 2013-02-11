@@ -194,7 +194,7 @@ end
 #  creator_id        :integer
 #  supported_game_id :integer
 #  community_id      :integer
-#  is_public         :boolean          default(FALSE)
+#  is_public         :boolean          default(TRUE)
 #  location          :string(255)
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130211223038) do
+ActiveRecord::Schema.define(:version => 20130211233442) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
@@ -427,10 +427,10 @@ ActiveRecord::Schema.define(:version => 20130211223038) do
     t.integer  "creator_id"
     t.integer  "supported_game_id"
     t.integer  "community_id"
-    t.boolean  "is_public",         :default => false
+    t.boolean  "is_public",         :default => true
     t.string   "location"
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
     t.integer  "community_game_id"
   end
 
