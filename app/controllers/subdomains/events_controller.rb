@@ -16,7 +16,7 @@ class Subdomains::EventsController < SubdomainsController
   before_filter :load_event, except: [:new, :create, :index]
   before_filter :create_event, only: [:new, :create]
   before_filter :rsvp_check, only: [:show, :invites]
-  authorize_resource except: [:index, :invites]
+  authorize_resource except: [:index, :month_index, :week_index, :invites]
   skip_before_filter :limit_subdomain_access
 
 ###
