@@ -31,7 +31,7 @@ module DaBvRails
     config.active_record.observers =  :admin_user_observer, :character_observer, :community_observer,
                                       :community_application_observer, :roster_assignment_observer, :user_profile_observer, :discussion_observer,
                                       :message_association_observer, :acknowledgement_observer, :comment_observer,
-                                      :support_ticket_observer, :support_comment_observer, :community_invite_observer
+                                      :invite_observer, :support_ticket_observer, :support_comment_observer, :community_invite_observer
 
     # This protects attributes automatically
     config.active_record.whitelist_attributes = true

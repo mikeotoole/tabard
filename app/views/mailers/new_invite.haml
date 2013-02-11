@@ -1,0 +1,13 @@
+%h2
+  %font{ color: '#333' } Hello #{@user_profile.display_name},
+%p You have a new event invite on Tabard!
+%hr
+
+%font{ color: '#333' }
+  %h2 #{@invite.event_name}
+
+%p
+  %strong= link_to 'View Invite on Tabard', invite_url(@invite, subdomain: @invite.community_subdomain), style: 'color: #BE4124'
+
+%hr
+= simple_format @invite.event_body

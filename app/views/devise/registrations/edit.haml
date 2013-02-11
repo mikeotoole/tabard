@@ -12,6 +12,7 @@
       %li
         = f.input :is_email_on_message, label: "Send me an email when I receive a message", wrapper_tag: :div
         = f.input :is_email_on_announcement, label: "Send me an email when I receive an announcement", wrapper_tag: :div
+        = f.input :is_email_on_invite, label: "Send me an email when I receive an invite to an event", wrapper_tag: :div
       = f.input :time_zone, collection: timezone_collection_hash, as: :radio_buttons, wrapper_html: { class: 'select with-label' }
       = f.input :password, label: 'New password'
       = f.input :password_confirmation, label: 'New password confirmation'

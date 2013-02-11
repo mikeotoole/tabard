@@ -37,7 +37,7 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :email_confirmation, :password, :remember_me, :user_profile_attributes, :is_partial_request, :remember_password,
     :accepted_current_terms_of_service, :accepted_current_privacy_policy, :user_disabled_at, :date_of_birth, :birth_day, :birth_month, :birth_year,
-    :time_zone, :beta_code, :is_email_on_message, :is_email_on_announcement, :terms
+    :time_zone, :beta_code, :is_email_on_message, :is_email_on_announcement,  :is_email_on_invite, :terms
 
 ###
 # Associations
