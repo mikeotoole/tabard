@@ -14,4 +14,8 @@
   %strong= link_to 'View Message on Tabard', mail_url(@message_association), style: 'color: #BE4124'
 
 %hr
-= simple_format @message_association.body
+- if @message_association.is_system_sent
+  :markdown
+    #{@message_association.body}
+- else
+  = simple_format @message_association.body
