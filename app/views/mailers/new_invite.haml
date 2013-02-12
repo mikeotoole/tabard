@@ -1,13 +1,23 @@
 %h2
   %font{ color: '#333' } Hello #{@user_profile.display_name},
-%p You have a new event invite on Tabard!
+%p You have a new event invitation on Tabard!
 %hr
 
 %font{ color: '#333' }
-  %h2 #{@invite.event_name}
+  %h2 #{@event.name}
+
+%p
+  %strong.day= l @event.start_time, format: :date_short
+  from
+  %strong.time= l @event.start_time, format: :time_12
+  until
+  - unless @event.start_time.day == @event.end_time.day
+    %strong.day= l @event.end_time, format: :date_short
+    at
+  %strong.time= l @event.end_time, format: :time_12
 
 %p
   %strong= link_to 'RSVP on Tabard', edit_invite_url(@invite, subdomain: @invite.community_subdomain), style: 'color: #BE4124'
 
 %hr
-= simple_format @invite.event_body
+= simple_format @event.body

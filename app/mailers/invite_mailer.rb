@@ -13,6 +13,7 @@ class InviteMailer < ActionMailer::Base
   # Tell user they have a new message
   def new_invite(invite_id)
     @invite = Invite.find_by_id(invite_id)
+    @event = @invite.event
     if !!@invite
       @subject = "Tabard: New Event Invite For #{@invite.community_name}"
       @user_profile = @invite.user_profile
