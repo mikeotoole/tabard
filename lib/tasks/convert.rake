@@ -315,6 +315,7 @@ task :convert => :environment do
   puts "! #{CharacterProxy.all.count} Characters to convert..."
   Character.observers.disable :all do
       CharacterProxy.all.each do |proxy| # Readd model
+        next if proxy.is_removed
         puts "@ converting #{proxy.to_yaml}..."
         game = Game.new
         old_character = Hash.new
