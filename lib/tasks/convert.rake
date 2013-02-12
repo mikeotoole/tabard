@@ -348,7 +348,7 @@ task :convert => :environment do
           new_character = played_game.new_character(old_character.slice("name","char_class","race","level","about","gender"))
           new_character.faction = old_game["faction"]
           new_character.server_name = old_game["server_name"]
-          unless avatar.blank?
+          if avatar.present? and not proxy.is_removed
             begin
               new_character.remote_avatar_url = "https://tabard.s3.amazonaws.com/uploads/wow_character/avatar/#{old_character_id}/#{avatar}"
             rescue
@@ -359,7 +359,7 @@ task :convert => :environment do
           new_character = played_game.new_character(old_character.slice("name","char_class","advanced_class","species","level","about","gender"))
           #new_character.faction = old_game["faction"]
           new_character.server_name = old_game["server_name"]
-          unless avatar.blank?
+          if avatar.present? and not proxy.is_removed
             begin
               new_character.remote_avatar_url = "https://tabard.s3.amazonaws.com/uploads/swtor_character/avatar/#{old_character_id}/#{avatar}"
             rescue
@@ -368,7 +368,7 @@ task :convert => :environment do
           end
         when "Minecraft"
           new_character = played_game.new_character(old_character.slice("name","about"))
-          unless avatar.blank?
+          if avatar.present? and not proxy.is_removed
             begin
               new_character.remote_avatar_url = "https://tabard.s3.amazonaws.com/uploads/minecraft_character/avatar/#{old_character_id}/#{avatar}"
             rescue
