@@ -342,6 +342,7 @@ task :convert => :environment do
         avatar = old_character["avatar"]
         old_character_id = old_character["id"]
         puts "######### Set avatar (#{avatar}) and id (#{old_character_id})"
+        puts "######### #{old_character.to_yaml}"
         case game.class.to_s
         when "Wow"
           new_character = played_game.new_character(old_character.slice(:name,:char_class,:race,:level,:about,:gender))
