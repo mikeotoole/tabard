@@ -389,4 +389,7 @@ task :convert => :environment do
         end
       end
   end
+
+  puts "Destroying all Activities with CharacterProxy targets."
+  Activity.destroy_all(:target_type => "CharacterProxy")
 end
