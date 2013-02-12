@@ -356,7 +356,7 @@ task :convert => :environment do
           end
         when "Swtor"
           new_character = played_game.new_character(old_character.slice!(:name,:char_class,:advanced_class,:species,:level,:about,:gender))
-          new_character.faction = old_game["faction"]
+          #new_character.faction = old_game["faction"]
           new_character.server_name = old_game["server_name"]
           unless avatar.blank?
             begin
