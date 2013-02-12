@@ -344,7 +344,7 @@ task :convert => :environment do
         puts "######### Set avatar (#{avatar}) and id (#{old_character_id})"
         case game.class.to_s
         when "Wow"
-          new_character = played_game.new_character(old_character.slice!(:name,:char_class,:race,:level,:about,:gender))
+          new_character = played_game.new_character(old_character.slice(:name,:char_class,:race,:level,:about,:gender))
           new_character.faction = old_game["faction"]
           new_character.server_name = old_game["server_name"]
           unless avatar.blank?
@@ -355,7 +355,7 @@ task :convert => :environment do
             end
           end
         when "Swtor"
-          new_character = played_game.new_character(old_character.slice!(:name,:char_class,:advanced_class,:species,:level,:about,:gender))
+          new_character = played_game.new_character(old_character.slice(:name,:char_class,:advanced_class,:species,:level,:about,:gender))
           #new_character.faction = old_game["faction"]
           new_character.server_name = old_game["server_name"]
           unless avatar.blank?
@@ -366,7 +366,7 @@ task :convert => :environment do
             end
           end
         when "Minecraft"
-          new_character = played_game.new_character(old_character.slice!(:name,:about))
+          new_character = played_game.new_character(old_character.slice(:name,:about))
           unless avatar.blank?
             begin
               new_character.remote_avatar_url = "https://tabard.s3.amazonaws.com/uploads/minecraft_character/avatar/#{old_character_id}/#{avatar}"
