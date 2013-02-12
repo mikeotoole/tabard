@@ -65,7 +65,7 @@ class CommunitiesController < ApplicationController
     end
 
     flash[:success] = "Your community has been created." if success
-    respond_with(@community, location: edit_community_settings_url(subdomain: @community.subdomain))
+    respond_with(@community, location: edit_community_settings_url(subdomain: @community.subdomain, protocol: "http://"))
   end
 
   # DELETE /communities/:id(.:format)
@@ -77,7 +77,7 @@ class CommunitiesController < ApplicationController
       redirect_to user_profile_url(current_user.user_profile, subdomain: "www", protocol: "http://")
     else
       flash[:alert] = 'Password was not valid.'
-      redirect_to community_remove_confirmation_community_url(@community, subdomain: "secure")
+      redirect_to community_remove_confirmation_community_url(@community, subdomain: "secure", protocol: "https://")
     end
   end
 

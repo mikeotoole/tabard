@@ -7,7 +7,7 @@
   %h2 #{@invite.event_name}
 
 %p
-  %strong= link_to 'View Invite on Tabard', invite_url(@invite, subdomain: @invite.community_subdomain), style: 'color: #BE4124'
+  %strong= link_to 'RSVP on Tabard', edit_invite_url(@invite, subdomain: @invite.community_subdomain), style: 'color: #BE4124'
 
 %hr
 = simple_format @invite.event_body
