@@ -17,7 +17,7 @@ module UrlHelper
         if options[:subdomain] == 'secure'
           options[:protocol] = (Rails.env.development? ? "http://" : "https://")
         else
-          options[:protocol] ||= 'http://'
+          options[:protocol] = 'http://'
         end
 
         options[:host] = with_subdomain(options.delete(:subdomain))
