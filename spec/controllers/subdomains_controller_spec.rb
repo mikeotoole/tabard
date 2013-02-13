@@ -28,7 +28,7 @@ describe SubdomainsController do
     end
 
     it "should redirect to root if not exist" do
-      @request.host = "DOESNOTEXIST.example.com"
+      @request.host = "DOESNOTEXIST.lvh.me"
       sign_in community.admin_profile.user
       get 'index'
       response.should redirect_to(root_url(subdomain: false))

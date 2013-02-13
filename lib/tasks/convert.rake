@@ -315,6 +315,7 @@ task :convert => :environment do
   puts "! #{CharacterProxy.all.count} Characters to convert..."
   Character.observers.disable :all do
       CharacterProxy.all.each do |proxy| # Readd model
+        next if proxy.is_removed
         puts "@ converting #{proxy.to_yaml}..."
         game = Game.new
         old_character = Hash.new
@@ -342,12 +343,13 @@ task :convert => :environment do
         avatar = old_character["avatar"]
         old_character_id = old_character["id"]
         puts "######### Set avatar (#{avatar}) and id (#{old_character_id})"
+        puts "######### #{old_character.to_yaml}"
         case game.class.to_s
         when "Wow"
-          new_character = played_game.new_character(old_character.slice!(:name,:char_class,:race,:level,:about,:gender))
+          new_character = played_game.new_character(old_character.slice("name","char_class","race","level","about","gender"))
           new_character.faction = old_game["faction"]
           new_character.server_name = old_game["server_name"]
-          unless avatar.blank?
+          if avatar.present? and not proxy.is_removed
             begin
               new_character.remote_avatar_url = "https://tabard.s3.amazonaws.com/uploads/wow_character/avatar/#{old_character_id}/#{avatar}"
             rescue
@@ -355,10 +357,10 @@ task :convert => :environment do
             end
           end
         when "Swtor"
-          new_character = played_game.new_character(old_character.slice!(:name,:char_class,:advanced_class,:species,:level,:about,:gender))
+          new_character = played_game.new_character(old_character.slice("name","char_class","advanced_class","species","level","about","gender"))
           #new_character.faction = old_game["faction"]
           new_character.server_name = old_game["server_name"]
-          unless avatar.blank?
+          if avatar.present? and not proxy.is_removed
             begin
               new_character.remote_avatar_url = "https://tabard.s3.amazonaws.com/uploads/swtor_character/avatar/#{old_character_id}/#{avatar}"
             rescue
@@ -366,8 +368,8 @@ task :convert => :environment do
             end
           end
         when "Minecraft"
-          new_character = played_game.new_character(old_character.slice!(:name,:about))
-          unless avatar.blank?
+          new_character = played_game.new_character(old_character.slice("name","about"))
+          if avatar.present? and not proxy.is_removed
             begin
               new_character.remote_avatar_url = "https://tabard.s3.amazonaws.com/uploads/minecraft_character/avatar/#{old_character_id}/#{avatar}"
             rescue
@@ -387,4 +389,7 @@ task :convert => :environment do
         end
       end
   end
+
+  puts "Destroying all Activities with CharacterProxy targets."
+  Activity.destroy_all(:target_type => "CharacterProxy")
 end

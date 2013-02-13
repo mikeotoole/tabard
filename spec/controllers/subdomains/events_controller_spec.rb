@@ -56,6 +56,68 @@ describe Subdomains::EventsController do
     end
   end
 
+  describe "GET past" do
+    it "assigns all events as @events when authenticated as a member" do
+      event
+      sign_in member
+      get :past
+      assigns(:events).should eq([])
+    end
+
+    it "should redirect to new user session path when not authenticated as a user" do
+      get :past
+      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+    end
+
+    it "should respond forbidden when not a member" do
+      sign_in non_member
+      get :past
+      response.should be_forbidden
+    end
+
+    it "renders the 'index' template when authenticated as a member" do
+      sign_in member
+      get :past
+      response.should render_template("past")
+    end
+  end
+
+  describe "GET month_index" do
+    describe "with valid date" do
+      it "assigns all events as @events when authenticated as a member" do
+        event
+        sign_in member
+        get :month_index, year: Time.now.year, month: Time.now.month
+        assigns(:events).should eq([event])
+      end
+
+      it "should redirect to new user session path when not authenticated as a user" do
+        get :month_index, year: Time.now.year, month: Time.now.month
+        response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      end
+
+      it "should respond forbidden when not a member" do
+        sign_in non_member
+        get :month_index, year: Time.now.year, month: Time.now.month
+        response.should be_forbidden
+      end
+
+      it "renders the 'index' template when authenticated as a member" do
+        sign_in member
+        get :month_index, year: Time.now.year, month: Time.now.month
+        response.should render_template("month_index")
+      end
+    end
+    describe "with invalid date" do
+      it "assigns no events as @events when authenticated as a member" do
+        event
+        sign_in member
+        get :month_index, year: 1990, month: 13
+        response.should redirect_to(month_events_url(year: Date.today.year, month: Date.today.month))
+      end
+    end
+  end
+
   describe "GET show" do
     it "assigns the requested event as @event when authenticated as a member" do
       sign_in member
@@ -78,6 +140,31 @@ describe Subdomains::EventsController do
       sign_in member
       get :show, :id => event
       response.should render_template("show")
+    end
+  end
+
+  describe "GET invites" do
+    it "assigns the requested event as @event when authenticated as a member" do
+      sign_in member
+      get :invites, :id => event
+      assigns(:event).should eq(event)
+    end
+
+    it "should redirected to new user session path when not authenticated as a user" do
+      get :invites, :id => event
+      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+    end
+
+    it "should respond forbidden when not a member" do
+      sign_in non_member
+      get :invites, :id => event
+      response.should be_forbidden
+    end
+
+    it "renders the 'show' template when authenticated as a member" do
+      sign_in member
+      get :invites, :id => event
+      response.should render_template("invites")
     end
   end
 
@@ -274,85 +361,4 @@ describe Subdomains::EventsController do
       response.should be_forbidden
     end
   end
-
-#   describe "POST attend" do
-#     it "should mark user as attending when authenticated as community member" do
-#       sign_in member
-#       member.user_profile.attending_events.should be_empty
-#       post :attend, :id => event.id.to_s
-#       User.find(member).user_profile.attending_events.should eq([event])
-#     end
-#
-#     it "should redirect to event when authenticated as community member" do
-#       sign_in member
-#       post :attend, :id => event.id.to_s
-#       response.should redirect_to(event)
-#     end
-#
-#     it "should redirect to new user session path when not authenticated as a user" do
-#       post :attend, :id => event.id.to_s
-#       response.should redirect_to(new_user_session_path)
-#     end
-#
-#     it "should respond forbidden when not a member" do
-#       sign_in non_member
-#       post :attend, :id => event.id.to_s
-#       response.should be_forbidden
-#     end
-#
-#     it "should respond forbidden when invite only and member does not have invite" do
-#       sign_in member
-#       post :attend, :id => invite_only.id.to_s
-#       response.should be_forbidden
-#     end
-#
-#     it "should mark user as attending when invite only and member does have invite" do
-#       sign_in member
-#       member.user_profile.attending_events.should be_empty
-#       invite_only.invites.create(:user_profile => member)
-#       post :attend, :id => invite_only.id.to_s
-#       User.find(member).user_profile.attending_events.should eq([invite_only])
-#     end
-#
-#     it "should respond forbidden when event is in the past" do
-#       sign_in member
-#       past_event = create(:event, :start_time => Time.now - (120 * 60), :end_time => Time.now - (60 * 60))
-#       past_event.should be_valid
-#       post :attend, :id => past_event.id.to_s
-#       response.should be_forbidden
-#     end
-#   end
-#
-#   describe "POST invite" do
-#     it "should create invite when authenticated as community admin" do
-#       sign_in admin
-#       member.user_profile.invited_events.should be_empty
-#       post :invite, :id => event.id.to_s, :invite => {:user_profile_id => member.id}
-#       User.find(member).user_profile.invited_events.should eq([event])
-#     end
-#
-#     it "should redirect to event when authenticated as community admin" do
-#       sign_in admin
-#       post :invite, :id => event.id.to_s, :invite => {:user_profile_id => member.id}
-#       response.should redirect_to(event)
-#     end
-#
-#     it "should redirect to new user session path when not authenticated as a user" do
-#       post :invite, :id => event.id.to_s, :invite => {:user_profile_id => member.id}
-#       response.should redirect_to(new_user_session_path)
-#     end
-#
-#     it "should respond forbidden when not a member" do
-#       sign_in non_member
-#       post :invite, :id => event.id.to_s, :invite => {:user_profile_id => member.id}
-#       response.should be_forbidden
-#     end
-#
-#     it "should respond forbidden when not admin" do
-#       sign_in member
-#       post :invite, :id => event.id.to_s, :invite => {:user_profile_id => member.id}
-#       response.should be_forbidden
-#     end
-#   end
-
 end

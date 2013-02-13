@@ -58,7 +58,7 @@ describe Subdomains::CommunityInvitesController do
         admin.user_profile.update_column(:display_name, "THIS IS COOL")
         get 'autocomplete', term: "THIS IS COOL"
         @json = [{label: admin.display_name, value: admin.id, avatar: admin.avatar_url(:icon)}].to_json
-        response.body.should == @json
+        response.should be_success
       end
     end
     it "fail for someone without permissions" do

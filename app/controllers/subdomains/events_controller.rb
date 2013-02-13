@@ -124,22 +124,6 @@ class Subdomains::EventsController < SubdomainsController
     respond_with(@event)
   end
 
-  # POST /events/:id/attend(.:format)
-  def attend
-    participant = @event.participants.new()
-    participant.user_profile = current_user.user_profile
-    participant.character = (character_active? ? current_character : nil) #TODO WAT?
-    if participant.save
-      flash[:success] = 'Successfully responded as attending.'
-      redirect_to url_for(@event), action: :show
-      return
-    else
-      flash[:alert] = 'Unable to respond to event.'
-      redirect_to url_for(@event), action: :show
-      return
-    end
-  end
-
   # GET /events/:id/invites(.:format)
   def invites
     authorize! :show, @event

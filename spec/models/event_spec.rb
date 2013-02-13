@@ -58,9 +58,9 @@ describe Event do
     event.save.should be_false
   end
 
-  it "should set is_public to false by default" do
+  it "should set is_public to true by default" do
     event.should be_valid
-    event.is_public.should be_false
+    event.is_public.should be_true
   end
 
   it "should not allow access to creator_id" do
