@@ -22,7 +22,7 @@
             - else
               = image_tag ra.character_avatar_url(:icon), class: 'avatar icon'
               = ra.character_name
-    - elsif member_profile == current_user.user_profile
+    - elsif user_signed_in? and member_profile == current_user.user_profile
       = link_to 'Add Characters', my_roster_assignments_url
     - else
       &mdash;
