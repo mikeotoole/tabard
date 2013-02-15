@@ -54,7 +54,7 @@ class Ability
     # Game Rules
     can :read, Game
     # UserProfile Rules
-    can :read, UserProfile, publicly_viewable: true
+    can :read, UserProfile
     can :read, PlayedGame, user_profile: { publicly_viewable: true }
     can :read, Character, played_game: { user_profile: { publicly_viewable: true }}
     # User Rules
