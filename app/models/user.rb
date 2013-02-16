@@ -54,6 +54,7 @@ class User < ActiveRecord::Base
   after_save :update_document_acceptance
   before_validation :combine_birthday
   before_create :accept_current_documents
+  after_create :check_for_gravatar
 
 ###
 # Delegates
@@ -421,6 +422,26 @@ protected
     if self.terms
       self.accepted_current_terms_of_service = true
       self.accepted_current_privacy_policy = true
+    end
+  end
+
+  ###
+  # _after_create_
+  #
+  # This method looks for CommunityInvites for this user and sends them a system message.
+  ###
+  def check_for_gravatar
+    if self.user_profile.avatar.blank? and not self.user_profile.email.blank?
+      begin
+        gravatar_url = "http://www.gravatar.com/avatar/#{Digest::MD5.new.update(self.email)}.png?s=420&d=404"
+        self.user_profile.remote_avatar_url = gravatar_url
+        self.save!
+      rescue
+      ensure
+        return true
+      end
+    else
+      return true
     end
   end
 
