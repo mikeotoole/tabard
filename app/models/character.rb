@@ -12,6 +12,7 @@ class Character < ActiveRecord::Base
   #VALID_CHARACTERS = [['World of Warcraft', 'Wow'], ['Star Wars: The Old Republic', 'Swtor'], ['Minecraft', 'Minecraft'], ['Custom Game', 'CustomGame']]
   # Used by validator to limit the length of name.
   MAX_NAME_LENGTH = 50
+  DEFAULT_AVATAR_CLASSES = %w( MinecraftCharacter )
 
 ###
 # Attribute accessible

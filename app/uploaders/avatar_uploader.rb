@@ -28,24 +28,23 @@ class AvatarUploader < CarrierWave::Uploader::Base
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
   def default_url
-    #"/images/fallback/" + [version_name, "default.png"].compact.join('_')
+    if Character::DEFAULT_AVATAR_CLASSES.include? model.class.to_s
+      suffix = model.class.to_s.downcase.underscore
+    else
+      suffix = ''
+    end
     case version_name
     # TODO: Make sure that addding "/assets/" to the default PNGs below doesn't break production
     when :large
-      # "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png?size=240x240"
-      '/assets/application/avatar@240.png'
+      "/assets/avatars/avatar#{suffix}@240.png"
     when :small
-      # "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png?size=60x60"
-      '/assets/application/avatar@60.png'
+      "/assets/avatars/avatar#{suffix}@60.png"
     when :tiny
-      # "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png?size=40x40"
-      '/assets/application/avatar@40.png'
+      "/assets/avatars/avatar#{suffix}@40.png"
     when :icon
-      # "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png?size=20x20"
-      '/assets/application/avatar@20.png'
+      "/assets/avatars/avatar#{suffix}@20.png"
     else
-      # "http://robohash.org/#{model.class.to_s.underscore}/#{model.id}.png"
-      '/assets/application/blank.png'
+      "/assets/avatars/blank.png"
     end
   end
 
