@@ -111,6 +111,9 @@ class Character < ActiveRecord::Base
     return community.community_games.exists?(game_id: self.game.id) if community
   end
 
+  def find_and_upload_avatar_from_game
+  end
+
   def is_disabled?
     self.is_removed or self.user_profile.is_disabled?
   end
