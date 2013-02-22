@@ -29,7 +29,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
   # Provide a default URL as a default if there hasn't been a file uploaded:
   def default_url
     if Character::DEFAULT_AVATAR_CLASSES.include? model.class.to_s
-      suffix = model.class.to_s.downcase.underscore
+      suffix = model.class.to_s
     else
       suffix = ''
     end
