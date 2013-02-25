@@ -26,6 +26,7 @@ class PageSpace < ActiveRecord::Base
   belongs_to :community_game
   belongs_to :community
   has_many :pages, dependent: :destroy, order: 'LOWER(name)'
+  has_many :activities, as: :target, dependent: :destroy
 
 ###
 # Validators

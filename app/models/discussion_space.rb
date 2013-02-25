@@ -27,6 +27,7 @@ class DiscussionSpace < ActiveRecord::Base
   belongs_to :community_game
   belongs_to :community
   has_many :discussions, dependent: :destroy
+  has_many :activities, as: :target, dependent: :destroy
 
 ###
 # Validators
