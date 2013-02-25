@@ -25,6 +25,7 @@ class CommunityGame < ActiveRecord::Base
   has_many :discussion_spaces, dependent: :destroy
   has_many :page_spaces, dependent: :destroy
   has_many :events, dependent: :destroy
+  has_many :activities, as: :target, dependent: :destroy
 
 ###
 # Callbacks

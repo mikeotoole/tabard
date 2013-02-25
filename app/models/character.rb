@@ -30,6 +30,7 @@ class Character < ActiveRecord::Base
   has_many :invites, dependent: :nullify
   has_many :roster_assignments, dependent: :destroy
   has_and_belongs_to_many :community_applications
+  has_many :activities, as: :target, dependent: :destroy
 
 
 ###
