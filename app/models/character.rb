@@ -12,6 +12,7 @@ class Character < ActiveRecord::Base
   #VALID_CHARACTERS = [['World of Warcraft', 'Wow'], ['Star Wars: The Old Republic', 'Swtor'], ['Minecraft', 'Minecraft'], ['Custom Game', 'CustomGame']]
   # Used by validator to limit the length of name.
   MAX_NAME_LENGTH = 50
+  DEFAULT_AVATAR_CLASSES = %w( MinecraftCharacter )
 
 ###
 # Attribute accessible
@@ -110,6 +111,9 @@ class Character < ActiveRecord::Base
   # This method determines if this character proxy is compatable with the provided community.
   def compatable_with_community?(community)
     return community.community_games.exists?(game_id: self.game.id) if community
+  end
+
+  def find_and_upload_avatar_from_game
   end
 
   def is_disabled?

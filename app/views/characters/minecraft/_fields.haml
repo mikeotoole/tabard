@@ -1,11 +1,5 @@
-= f.input :name, input_html: { maxlength: MinecraftCharacter::MAX_NAME_LENGTH }
+= f.input :name, hint: 'Case sensitive', input_html: { maxlength: MinecraftCharacter::MAX_NAME_LENGTH }
 -#= f.input :about, as: :text, label: 'Optional Description', input_html: { rows: 5 }
-%li.avatar{ class: object_has_avatar_errors(f.object) ? 'with-errors' : '' }
-  - if !character.persisted? or !character.avatar_url.to_s or f.object.errors.any?
-    = image_tag 'application/avatar@240.png'
-  - else
+- if character.persisted? and character.avatar_url.to_s and !f.object.errors.any?
+  %li.avatar{ class: object_has_avatar_errors(f.object) ? 'with-errors' : '' }
     = image_tag(character.avatar_url :large)
-  %br
-  = f.input :remove_avatar, as: :boolean, label: "Remove avatar", wrapper: false unless character[:avatar].blank?
-  = f.input :avatar, wrapper: false, hint: 'Maxium file size of 2mb. GIF, JPG, PNG.'
-  = f.input :remote_avatar_url, label: "or image URL", wrapper: false
