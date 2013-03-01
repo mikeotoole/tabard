@@ -2,7 +2,7 @@ Stripe.api_key = ENV['STRIPE_PRIVATE_KEY']
 STRIPE_PUBLIC_KEY = ENV['STRIPE_PUBLIC_KEY']
 
 StripeEvent.setup do
-  subscribe 'charge.failed', 'charge.refunded', 'charge.disputed' do |event|
+  subscribe 'charge.failed', 'charge.refunded', 'charge.dispute.created', 'charge.dispute.updated', 'charge.dispute.closed' do |event|
     puts "ALERT_ERROR STRIPE_EVENT:CHARGE: #{event.to_yaml}"
   end
 
