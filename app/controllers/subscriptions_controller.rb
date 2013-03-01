@@ -27,8 +27,12 @@ class SubscriptionsController < PaymentController
     # Get invoice item for current plan.
     @current_plan_invoice_item = @invoice.plan_invoice_item_for_community(@community)
 
+    # Get all upgrades for the current community.
     @all_upgrades_invoice_items = @invoice.recurring_upgrade_invoice_items_for_community(@community)
+
+    # TODO This should check that there exists a upgrade for all available upgrades for the current plan.
     if @all_upgrades_invoice_items.blank?
+      # TODO For each missing upgrade add a zero quantity one (so the user can add upgrades).
       @all_upgrades_invoice_items = @invoice.invoice_items.new({item: CommunityUpgrade.first, quantity: 0, community_id: @community.id}, without_protection: true)
     end
 
@@ -41,21 +45,27 @@ class SubscriptionsController < PaymentController
     @stripe_card_token = params[:stripe_card_token]
     begin
       success_message = "Your plan has been changed"
+      # Check to see if the community is charge exempt..
       if @community.is_charge_exempt
+        #.. If it is just update it.
         if @invoice.update_attributes(params[:invoice])
           flash[:success] = success_message
         else
           flash[:error] = "We were unable to update your account at this time."
         end
+      #.. If it is not exempt, try to update it with payment..
       elsif @invoice.update_attributes_with_payment(params[:invoice], @stripe_card_token)
         flash[:success] = success_message
+      #.. If it can't be updated with payment, then set the view variables from the current invoice.
       else
         @current_plan_invoice_item = @invoice.invoice_items.select{|ii| ii.has_community_plan?}.first
         @all_upgrades_invoice_items = @invoice.invoice_items.recurring.select{|ii| ii.has_community_upgrade?}
       end
+    # Rescue from Stripe errors and let the user know what is happening.
     rescue Stripe::StripeError => e
       @invoice.errors.add :base, "There was a problem with your credit card"
       @stripe_card_token = nil
+    # Rescue from stale objects (Locked) and let the user know what is happening.
     rescue ActiveRecord::StaleObjectError => e
       # ERROR invoice is currently being charged.
       flash[:alert] = "Your invoice is currently being charged."

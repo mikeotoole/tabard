@@ -24,6 +24,7 @@ class CardController < PaymentController
       @stripe ||= nil
     end
     @invoice = current_user.current_invoice
+    # Set invoice to nil if the invoice is not delinquent.
     @invoice = nil unless @invoice.persisted? and (@invoice.period_end_date < Time.now and @invoice.total_price_in_cents > 0)
   end
 
@@ -43,11 +44,11 @@ class CardController < PaymentController
         self.errors.add :base, "There was a problem with your credit card. Insure your full billing address is provided."
       end
     rescue Stripe::StripeError => e
-      logger.error "StripeError: #{e.message}"
       flash[:error] = "There was a problem with your credit card"
       @stripe_card_token = nil
     rescue ActiveRecord::StaleObjectError => e
       # ERROR invoice is currently being charged.
+      flash[:alert] = "Your invoice is currently being charged."
     end
     begin
       @stripe = Stripe::Customer.retrieve(current_user.stripe_customer_token) unless current_user.stripe_customer_token.blank?

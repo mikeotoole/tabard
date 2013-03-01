@@ -34,6 +34,14 @@ describe SubscriptionsController do
       response.should be_success
     end
 
+    it "should not allow a community the user does not own" do
+      pending
+    end
+
+    it "should redirect to subscritpions index if current invoice is processing_payment" do
+      pending
+    end
+
     it "should render subscriptions/edit template when authenticated as an authorized user" do
       sign_in admin
       get 'edit', community_id: community
@@ -83,6 +91,14 @@ describe SubscriptionsController do
       it "should redirect back to subscription edit page" do
         response.should redirect_to(edit_subscription_url(community))
       end
+    end
+
+    it "should not allow a community the user does not own" do
+      pending
+    end
+
+    it "should redirect to subscritpions index if current invoice is processing_payment" do
+      pending
     end
 
     it "should assign only available plans to @available_plans" do
