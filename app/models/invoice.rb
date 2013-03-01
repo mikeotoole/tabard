@@ -198,16 +198,16 @@ class Invoice < ActiveRecord::Base
               # The address, ZIP+4, and ZIP could not be  found.
               success = false
             else
-              logger.error "ALERT_ERROR WITH WA #{response.to_yaml}"
+              logger.error "ALERT_ERROR WITH WA: #{response.inspect}"
               self.update_column(:tax_error_occurred, true) if self.persisted?
             end
           rescue => e
-            logger.error "ALERT_ERROR WITH WA REQUEST #{e.to_yaml}"
+            logger.error "ALERT_ERROR WITH WA REQUEST: #{e.inspect}"
             self.update_column(:tax_error_occurred, true) if self.persisted?
           end
         end
       rescue => e
-        logger.error "ALERT_ERROR tax_rate error with Stripe #{e.to_yaml}"
+        logger.error "ALERT_ERROR tax_rate error with Stripe: #{e.inspect}"
         self.update_column(:tax_error_occurred, true) if self.persisted?
       end
       if success
