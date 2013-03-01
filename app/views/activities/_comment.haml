@@ -30,5 +30,4 @@
             = link_to_if (user_signed_in? and current_user.in_community(comment.community).can? :show, community_application), 'Community Application', community_application_url(community_application, subdomain: comment.community_subdomain), meta: community_application.user_profile_display_name
       %p
         - unless comment.is_removed
-          %span.body
-            = truncate shorten_words(comment.body), length: 150, omission: '…'
+          %span.body= truncate format_comment(comment.body), length: 150, omission: '…'

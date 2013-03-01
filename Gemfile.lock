@@ -288,6 +288,7 @@ GEM
       railties (~> 3.1)
     rest-client (1.6.7)
       mime-types (>= 1.16)
+    rinku (1.7.2)
     rotp (1.4.1)
     rspec (2.12.0)
       rspec-core (~> 2.12.0)
@@ -427,6 +428,7 @@ DEPENDENCIES
   rb-fsevent
   rdiscount
   rest-client
+  rinku
   rotp
   rspec-rails
   sanitize
