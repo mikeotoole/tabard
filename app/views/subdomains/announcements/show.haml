@@ -25,7 +25,7 @@
 
 %article
   %h1= shorten_words @announcement.name, 21
-  = simple_format @announcement.body
+  = format_content @announcement.body
 
 - if can? :create, Announcement and (@user_profiles_have_seen.any? or @user_profiles_have_not_seen.any?)
   %table
