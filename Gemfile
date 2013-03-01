@@ -61,6 +61,7 @@ ruby '1.9.3'
 
 # Filtering
   gem 'profanalyzer'#                                                                       MIT - http://profanalyzer.rubyforge.org
+  gem 'rinku'#                                                                              MIT - https://github.com/vmg/rinku
 
 # Background jobs
   gem 'delayed_job_active_record'#                                                          MIT - https://github.com/collectiveidea/delayed_job_active_record
