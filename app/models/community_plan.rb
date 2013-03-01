@@ -43,8 +43,8 @@ class CommunityPlan < ActiveRecord::Base
   # Returns the current default Free plan for communities.
   def self.default_plan
     plan = CommunityPlan.find_by_title(FREE_PLAN_TITLE)
-    if plan == nil
-      plan = CommunityPlan.create({
+    if plan.blank?
+      plan = CommunityPlan.create!({
         title: FREE_PLAN_TITLE,
         description: "This is the default free plan.",
         price_per_month_in_cents: 0,

@@ -26,12 +26,7 @@ class PlayedGamesController < ApplicationController
   end
 
   def create
-    if @played_game.save
-      flash[:success] = "The game has been added to your list."
-    # else
-    #  flash[:notice] = "That game is already on your list."
-    end
-    logger.debug @played_game.to_yaml
+    flash[:success] = "The game has been added to your list." if @played_game.save
     redirect_to user_profile_url(@user_profile, anchor: "games", subdomain: "www")
   end
 

@@ -110,7 +110,7 @@ class CommunityApplication < ActiveRecord::Base
           begin
             community_profile.roster_assignments.create!({community_game_id: character_map[character.id.to_s], character: character}, without_protection: true).approve(false)
           rescue ActiveRecord::RecordInvalid => invalid
-            logger.error invalid.record.errors
+            logger.error "ALERT_ERROR accept_application. Could not create roster_assignment: #{invalid.record.errors}"
           end
         end
       end

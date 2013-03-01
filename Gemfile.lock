@@ -288,6 +288,7 @@ GEM
       railties (~> 3.1)
     rest-client (1.6.7)
       mime-types (>= 1.16)
+    rinku (1.7.2)
     rotp (1.4.1)
     rspec (2.12.0)
       rspec-core (~> 2.12.0)
@@ -341,10 +342,10 @@ GEM
       activerecord (~> 3.0)
       activesupport (~> 3.0)
       polyamorous (~> 0.5.0)
-    stripe (1.7.8)
+    stripe (1.7.11)
       multi_json (>= 1.0.4, < 2)
       rest-client (~> 1.4)
-    stripe_event (0.4.0)
+    stripe_event (0.5.0)
       rails (~> 3.1)
       stripe (~> 1.6)
     subexec (0.2.2)
@@ -427,6 +428,7 @@ DEPENDENCIES
   rb-fsevent
   rdiscount
   rest-client
+  rinku
   rotp
   rspec-rails
   sanitize
@@ -434,8 +436,8 @@ DEPENDENCIES
   simple_form
   simplecov
   squeel
-  stripe
-  stripe_event
+  stripe (~> 1.7.11)
+  stripe_event (~> 0.5.0)
   thin
   timecop
   uglifier
