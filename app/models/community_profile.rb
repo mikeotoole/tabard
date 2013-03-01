@@ -20,7 +20,6 @@ class CommunityProfile < ActiveRecord::Base
 ###
 # Associations
 ###
-  # TODO Joe/Bryan We need to evaluate the eager loading of associations and inverse_of to optimize our memory footprints and speed. -JW
   belongs_to :community, inverse_of: :community_profiles, touch: true, counter_cache: true
   belongs_to :user_profile, touch: true
   belongs_to :community_application

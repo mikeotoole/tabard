@@ -22,7 +22,6 @@ class StatusCodeController < ApplicationController
 
   # This method gets the Unsupported Browser page.
   def unsupported_browser
-    # TODO - remove this after the beta test
     flash.now[:notice] = "We recommend using Chrome for the best Tabard experience."
   end
 
