@@ -270,6 +270,8 @@ DaBvRails::Application.routes.draw do
 
   get '/mu-2656c9d8-02082dc2-3904fc4c-9012184b' => "status_code#blitz"
 
+  get '/loaderio-5990c4bd3e6704d1a506c842975428c3' => "status_code#loaderio"
+
   get "/unsupported_browser" => "status_code#unsupported_browser", as: 'unsupported_browser'
   match '/not_found' => 'status_code#not_found', as: 'not_found'
   match '/forbidden' => 'status_code#forbidden', as: 'forbidden'

@@ -36,4 +36,9 @@ class StatusCodeController < ApplicationController
   def blitz
     render text: "42"
   end
+
+  # Used for loaderio API
+  def loaderio
+    render text: "loaderio-5990c4bd3e6704d1a506c842975428c3"
+  end
 end
