@@ -3,7 +3,7 @@ STRIPE_PUBLIC_KEY = ENV['STRIPE_PUBLIC_KEY']
 
 StripeEvent.setup do
   subscribe 'charge.failed', 'charge.refunded', 'charge.dispute.created', 'charge.dispute.updated', 'charge.dispute.closed' do |event|
-    puts "ALERT_ERROR STRIPE_EVENT:CHARGE: #{event.type}:#{event.id}"
+    puts "ALERT_ERROR STRIPE_EVENT:CHARGE: #{event.type}:#{event.id} ChargeID:#{event.data.object.id}"
   end
 
   subscribe 'charge.succeeded' do |event|
