@@ -15,8 +15,8 @@ class DocumentAcceptanceController < ApplicationController
     if current_user.has_accepted_the_document(@document)
       redirect_to user_profile_url(current_user.user_profile), notice: "You have already accepted the document"
     end
-    flash.now[:alert] = "You must accept the updated \"Terms of Service\" to continue to use Tabard&trade;." unless current_user.accepted_current_terms_of_service and @document.class == TermsOfService
-    flash.now[:alert] = "You must accept the updated \"Privacy Policy\" to continue to use Tabard&trade;." unless current_user.accepted_current_privacy_policy and @document.class == PrivacyPolicy
+    flash.now[:alert] = "You must accept the updated \"Terms of Service\" to continue to use Tabard&trade;." if not current_user.accepted_current_terms_of_service and @document.class == TermsOfService
+    flash.now[:alert] = "You must accept the updated \"Privacy Policy\" to continue to use Tabard&trade;." if not current_user.accepted_current_privacy_policy and @document.class == PrivacyPolicy
   end
 
   # POST /accept_document/:id(.:format)
