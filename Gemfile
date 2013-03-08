@@ -50,8 +50,8 @@ ruby '1.9.3'
   gem 'friendly_id'#                                                                        MIT - https://github.com/norman/friendly_id
 
 # Stripe
-  gem 'stripe'
-  gem 'stripe_event'
+  gem "stripe", "~> 1.7.11"
+  gem "stripe_event", "~> 0.5.0"
 
 # RestClient
   gem 'rest-client'#                                                                        MIT - https://github.com/archiloque/rest-client

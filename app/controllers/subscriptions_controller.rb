@@ -49,15 +49,16 @@ class SubscriptionsController < PaymentController
       if @community.is_charge_exempt
         #.. If it is just update it.
         if @invoice.update_attributes(params[:invoice])
-          flash[:success] = success_message
+          flash.now[:success] = success_message
         else
-          flash[:error] = "We were unable to update your account at this time."
+          flash.now[:error] = "We were unable to update your account at this time."
         end
       #.. If it is not exempt, try to update it with payment..
       elsif @invoice.update_attributes_with_payment(params[:invoice], @stripe_card_token)
-        flash[:success] = success_message
+        flash.now[:success] = success_message
       #.. If it can't be updated with payment, then set the view variables from the current invoice.
       else
+
         @current_plan_invoice_item = @invoice.invoice_items.select{|ii| ii.has_community_plan?}.first
         @all_upgrades_invoice_items = @invoice.invoice_items.recurring.select{|ii| ii.has_community_upgrade?}
       end
@@ -68,7 +69,7 @@ class SubscriptionsController < PaymentController
     # Rescue from stale objects (Locked) and let the user know what is happening.
     rescue ActiveRecord::StaleObjectError => e
       # ERROR invoice is currently being charged.
-      flash[:alert] = "Your invoice is currently being charged."
+      flash.now[:alert] = "Your invoice is currently being charged."
       redirect_to subscriptions_path
       return true
     end

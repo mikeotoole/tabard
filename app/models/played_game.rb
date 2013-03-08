@@ -16,7 +16,7 @@ class PlayedGame < ActiveRecord::Base
 ###
   belongs_to :game
   belongs_to :user_profile
-  has_many :characters, dependent: :destroy, order: 'LOWER(name)', conditions: {is_removed: nil} #TODO: Is this condition needed??
+  has_many :characters, dependent: :destroy, order: 'LOWER(name)', conditions: {is_removed: nil}
 
 ###
 # Delegates

@@ -1,17 +1,24 @@
 Stripe.api_key = ENV['STRIPE_PRIVATE_KEY']
 STRIPE_PUBLIC_KEY = ENV['STRIPE_PUBLIC_KEY']
+
 StripeEvent.setup do
-  subscribe 'charge.failed', 'charge.succeeded', 'charge.refunded', 'charge.disputed' do |event|
-    puts "STRIPE_EVENT:CHARGE: #{event.to_yaml}"
-    # Charge events
+  subscribe 'charge.failed', 'charge.refunded', 'charge.dispute.created', 'charge.dispute.updated', 'charge.dispute.closed' do |event|
+    puts "ALERT_ERROR STRIPE_EVENT:CHARGE: #{event.type}:#{event.id} ChargeID:#{event.data.object.id}"
+  end
+
+  subscribe 'charge.succeeded' do |event|
+    #puts "STRIPE_EVENT:CHARGE: #{event.type}:#{event.id}"
+  end
+
+  subscribe 'customer.deleted' do |event|
+    puts "ALERT_ERROR STRIPE_EVENT:CUSTOMER:DELETED: #{event.type}:#{event.id}"
   end
 
   subscribe 'transfer.created', 'transfer.updated', 'transfer.failed'do |event|
-    puts "STRIPE_EVENT:TRANSFER: #{event.to_yaml}"
-    # Transfer events
+    puts "ALERT_ERROR STRIPE_EVENT:TRANSFER: #{event.type}:#{event.id}"
   end
 
   subscribe do |event|
-    puts "STRIPE_EVENT: #{event.to_yaml}"
+    #puts "STRIPE_EVENT: #{event.type}:#{event.id}"
   end
 end

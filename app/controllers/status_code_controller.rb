@@ -22,7 +22,6 @@ class StatusCodeController < ApplicationController
 
   # This method gets the Unsupported Browser page.
   def unsupported_browser
-    # TODO - remove this after the beta test
     flash.now[:notice] = "We recommend using Chrome for the best Tabard experience."
   end
 
@@ -36,5 +35,10 @@ class StatusCodeController < ApplicationController
   # Used for blitz API
   def blitz
     render text: "42"
+  end
+
+  # Used for loaderio API
+  def loaderio
+    render text: "loaderio-5990c4bd3e6704d1a506c842975428c3"
   end
 end

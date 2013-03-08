@@ -198,16 +198,16 @@ class Invoice < ActiveRecord::Base
               # The address, ZIP+4, and ZIP could not be  found.
               success = false
             else
-              logger.error  "ERROR WITH WA #{response.to_yaml}"
+              logger.error "ALERT_ERROR WITH WA: #{response.inspect}"
               self.update_column(:tax_error_occurred, true) if self.persisted?
             end
           rescue => e
-            logger.error "ERROR WITH WA REQUEST #{e.to_yaml}"
+            logger.error "ALERT_ERROR WITH WA REQUEST: #{e.inspect}"
             self.update_column(:tax_error_occurred, true) if self.persisted?
           end
         end
       rescue => e
-        logger.error "ERROR WITH Stripe #{e.to_yaml}"
+        logger.error "ALERT_ERROR tax_rate error with Stripe: #{e.inspect}"
         self.update_column(:tax_error_occurred, true) if self.persisted?
       end
       if success
@@ -328,7 +328,7 @@ class Invoice < ActiveRecord::Base
               )
               # Log big charge
               if self.total_price_in_cents > NOTIFY_CHARGE_AMOUNT
-                logger.error "ERROR charge_customer: Invoice(#{self.id}) amount(#{self.total_price_in_cents}) was greater then #{NOTIFY_CHARGE_AMOUNT} cents."
+                logger.error "ALERT_ERROR charge_customer: Invoice(#{self.id}) amount(#{self.total_price_in_cents}) was greater then #{NOTIFY_CHARGE_AMOUNT} cents."
               end
               success = self.mark_paid_and_close(charge.id)
             rescue ActiveRecord::StaleObjectError
@@ -364,35 +364,36 @@ class Invoice < ActiveRecord::Base
                 case e.code
                   when "incorrect_number", "invalid_number", "invalid_expiry_month", "invalid_expiry_year", "invalid_cvc"
                     InvoiceMailer.delay.payment_failed(self.id, I18n.t('card.errors.invalid.short'), I18n.t('card.errors.invalid.full')) if send_email
-                    self.errors[:base] = [I18n.t('card.errors.invalid.full')]
+                    self.errors.add :base, I18n.t('card.errors.invalid.full')
 
                   when "expired_card"
                     InvoiceMailer.delay.payment_failed(self.id, I18n.t('card.errors.expired.short'), I18n.t('card.errors.expired.full')) if send_email
-                    self.errors[:base] = [I18n.t('card.errors.expired.full')]
+                    self.errors.add :base, I18n.t('card.errors.expired.full')
 
                   when "incorrect_cvc"
                     InvoiceMailer.delay.payment_failed(self.id, I18n.t('card.errors.cvc.short'), I18n.t('card.errors.cvc.full')) if send_email
-                    self.errors[:base] = [I18n.t('card.errors.cvc.full')]
+                    self.errors.add :base, I18n.t('card.errors.cvc.full')
 
                   when "card_declined"
                     InvoiceMailer.delay.payment_failed(self.id, I18n.t('card.errors.declined.short'), I18n.t('card.errors.declined.full')) if send_email
-                    self.errors[:base] = [I18n.t('card.errors.declined.full')]
+                    logger.debug "ASLKDHALKSJDLASJDLKASDKLJASDLJALKDJAKSDJKALJDKLAJSKLDJASKDS"
+                    self.errors.add :base, I18n.t('card.errors.declined.full')
 
                   when "missing"
                     InvoiceMailer.delay.payment_failed(self.id, I18n.t('card.errors.missing.short'), I18n.t('card.errors.missing.full')) if send_email
-                    self.errors[:base] = [I18n.t('card.errors.missing.full')]
-                    logger.error "CardError charge_customer: #{e.message}"
+                    self.errors.add :base, I18n.t('card.errors.missing.full')
+                    logger.error "ALERT_ERROR CardError charge_customer: #{e.message}"
 
                   when "processing_error"
                     # ERROR: Log error and retry tomorrow.
                     # Add error to invoice.
-                    self.errors[:base] = ["There was an error processing your payment."]
-                    logger.error "CardError charge_customer: #{e.message}"
+                    self.errors.add :base, "There was an error processing your payment."
+                    logger.error "ALERT_ERROR CardError charge_customer: #{e.message}"
 
                   else
                     # ERROR: This should not happen! Log error.
                     # Add error to invoice.
-                    self.errors[:base] = ["There was an error processing your payment."]
+                    self.errors.add :base, "There was an error processing your payment."
                     logger.error "ALERT_ERROR CardError charge_customer: #{e.message}"
                 end
               end
@@ -400,29 +401,29 @@ class Invoice < ActiveRecord::Base
             rescue Stripe::StripeError => e
               logger.error "ALERT_ERROR StripeError charge_customer: #{e.message}"
               # Add error to invoice.
-              self.errors[:base] = ["There was an error processing your payment."]
+              self.errors.add :base, "There was an error processing your payment."
               success = false
             end
           end
         else
           # Invice cost is less then MINIMUM_CHARGE_AMOUNT. Just mark as paid. Log that this happend for later review.
-          logger.error "ERROR charge_customer: Invoice(#{self.id}) was less then #{MINIMUM_CHARGE_AMOUNT} cents."
+          logger.error "ALERT_ERROR charge_customer: Invoice(#{self.id}) was less then #{MINIMUM_CHARGE_AMOUNT} cents."
           success = self.mark_paid_and_close
         end
       else
         # ERROR Invoice owner has no payment information.
-        logger.error "ERROR charge_customer: Invoice owner (#{self.user_id}) had no payment info"
+        logger.error "ALERT_ERROR charge_customer: Invoice owner (#{self.user_id}) had no payment info"
         InvoiceMailer.delay.payment_failed(self.id, I18n.t('card.errors.missing.short'), I18n.t('card.errors.missing.full')) if send_fail_email
-        self.errors[:base] = [I18n.t('card.errors.missing.full')]
+        self.errors.add :base, I18n.t('card.errors.missing.full')
         success = false
       end
     rescue Exception => e
       if e.class == ActiveRecord::StaleObjectError
         throw e
       else
-        logger.error "ERROR charge_customer: #{e.message}"
+        logger.error "ALERT_ERROR charge_customer: #{e.message}"
         # Add error to invoice.
-        self.errors[:base] = ["There was an error processing your payment."]
+        self.errors.add :base, "There was an error processing your payment."
         success = false
       end
     ensure
@@ -438,8 +439,8 @@ class Invoice < ActiveRecord::Base
   ###
   def mark_paid_and_close(charge_id=nil)
     success = self.update_attributes({is_closed: true, paid_date: Time.now, stripe_charge_id: charge_id}, without_protection: true)
-    logger.error "ERROR BAD Could not set paid invoice(#{self.id}) as paid. Time:#{Time.now} ChargeID:#{charge_id}" unless success
-    logger.error "ERROR Tax was overridden INVOICE: #{self.id}" if self.tax_error_occurred
+    logger.error "ALERT_ERROR BAD Could not set paid invoice(#{self.id}) as paid. Time:#{Time.now} ChargeID:#{charge_id}" unless success
+    logger.error "ALERT_ERROR Tax was overridden INVOICE: #{self.id}" if self.tax_error_occurred
     self.invoice_items.each do |item|
       item.set_charge_exempt_info
     end

@@ -152,7 +152,6 @@ class Community < ActiveRecord::Base
 
   # Returns all games that this community supports
   def games
-    # TODO: Can this be changed to a has_may through now? -MO
     self.community_games.collect{|sg| sg.game}.uniq{|g| g.name}
   end
 
@@ -233,7 +232,7 @@ class Community < ActiveRecord::Base
         if success and not plan.is_free_plan?
           invoice.invoice_items.new({community: self, item: plan, quantity: 1}, without_protection: true)
           unless invoice.update_attributes_with_payment(nil, stripe_card_token)
-            self.errors[:base] = invoice.errors[:base]
+            self.errors[:base] = invoice.errors[:base].first
             success = false
           end
         end

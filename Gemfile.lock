@@ -342,10 +342,10 @@ GEM
       activerecord (~> 3.0)
       activesupport (~> 3.0)
       polyamorous (~> 0.5.0)
-    stripe (1.7.8)
+    stripe (1.7.11)
       multi_json (>= 1.0.4, < 2)
       rest-client (~> 1.4)
-    stripe_event (0.4.0)
+    stripe_event (0.5.0)
       rails (~> 3.1)
       stripe (~> 1.6)
     subexec (0.2.2)
@@ -436,8 +436,8 @@ DEPENDENCIES
   simple_form
   simplecov
   squeel
-  stripe
-  stripe_event
+  stripe (~> 1.7.11)
+  stripe_event (~> 0.5.0)
   thin
   timecop
   uglifier
