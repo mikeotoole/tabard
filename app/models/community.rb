@@ -232,7 +232,7 @@ class Community < ActiveRecord::Base
         if success and not plan.is_free_plan?
           invoice.invoice_items.new({community: self, item: plan, quantity: 1}, without_protection: true)
           unless invoice.update_attributes_with_payment(nil, stripe_card_token)
-            self.errors[:base] = invoice.errors[:base]
+            self.errors[:base] = invoice.errors[:base].first
             success = false
           end
         end

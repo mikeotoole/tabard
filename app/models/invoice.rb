@@ -364,35 +364,36 @@ class Invoice < ActiveRecord::Base
                 case e.code
                   when "incorrect_number", "invalid_number", "invalid_expiry_month", "invalid_expiry_year", "invalid_cvc"
                     InvoiceMailer.delay.payment_failed(self.id, I18n.t('card.errors.invalid.short'), I18n.t('card.errors.invalid.full')) if send_email
-                    self.errors[:base] = [I18n.t('card.errors.invalid.full')]
+                    self.errors.add :base, I18n.t('card.errors.invalid.full')
 
                   when "expired_card"
                     InvoiceMailer.delay.payment_failed(self.id, I18n.t('card.errors.expired.short'), I18n.t('card.errors.expired.full')) if send_email
-                    self.errors[:base] = [I18n.t('card.errors.expired.full')]
+                    self.errors.add :base, I18n.t('card.errors.expired.full')
 
                   when "incorrect_cvc"
                     InvoiceMailer.delay.payment_failed(self.id, I18n.t('card.errors.cvc.short'), I18n.t('card.errors.cvc.full')) if send_email
-                    self.errors[:base] = [I18n.t('card.errors.cvc.full')]
+                    self.errors.add :base, I18n.t('card.errors.cvc.full')
 
                   when "card_declined"
                     InvoiceMailer.delay.payment_failed(self.id, I18n.t('card.errors.declined.short'), I18n.t('card.errors.declined.full')) if send_email
-                    self.errors[:base] = [I18n.t('card.errors.declined.full')]
+                    logger.debug "ASLKDHALKSJDLASJDLKASDKLJASDLJALKDJAKSDJKALJDKLAJSKLDJASKDS"
+                    self.errors.add :base, I18n.t('card.errors.declined.full')
 
                   when "missing"
                     InvoiceMailer.delay.payment_failed(self.id, I18n.t('card.errors.missing.short'), I18n.t('card.errors.missing.full')) if send_email
-                    self.errors[:base] = [I18n.t('card.errors.missing.full')]
+                    self.errors.add :base, I18n.t('card.errors.missing.full')
                     logger.error "ALERT_ERROR CardError charge_customer: #{e.message}"
 
                   when "processing_error"
                     # ERROR: Log error and retry tomorrow.
                     # Add error to invoice.
-                    self.errors[:base] = ["There was an error processing your payment."]
+                    self.errors.add :base, "There was an error processing your payment."
                     logger.error "ALERT_ERROR CardError charge_customer: #{e.message}"
 
                   else
                     # ERROR: This should not happen! Log error.
                     # Add error to invoice.
-                    self.errors[:base] = ["There was an error processing your payment."]
+                    self.errors.add :base, "There was an error processing your payment."
                     logger.error "ALERT_ERROR CardError charge_customer: #{e.message}"
                 end
               end
@@ -400,7 +401,7 @@ class Invoice < ActiveRecord::Base
             rescue Stripe::StripeError => e
               logger.error "ALERT_ERROR StripeError charge_customer: #{e.message}"
               # Add error to invoice.
-              self.errors[:base] = ["There was an error processing your payment."]
+              self.errors.add :base, "There was an error processing your payment."
               success = false
             end
           end
@@ -413,7 +414,7 @@ class Invoice < ActiveRecord::Base
         # ERROR Invoice owner has no payment information.
         logger.error "ALERT_ERROR charge_customer: Invoice owner (#{self.user_id}) had no payment info"
         InvoiceMailer.delay.payment_failed(self.id, I18n.t('card.errors.missing.short'), I18n.t('card.errors.missing.full')) if send_fail_email
-        self.errors[:base] = [I18n.t('card.errors.missing.full')]
+        self.errors.add :base, I18n.t('card.errors.missing.full')
         success = false
       end
     rescue Exception => e
@@ -422,7 +423,7 @@ class Invoice < ActiveRecord::Base
       else
         logger.error "ALERT_ERROR charge_customer: #{e.message}"
         # Add error to invoice.
-        self.errors[:base] = ["There was an error processing your payment."]
+        self.errors.add :base, "There was an error processing your payment."
         success = false
       end
     ensure

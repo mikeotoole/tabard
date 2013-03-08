@@ -57,11 +57,15 @@ class CommunitiesController < ApplicationController
         invoice = current_user.current_invoice
         success = @community.save_with_plan(params[:plan_id], @stripe_card_token, invoice)
       rescue Stripe::StripeError => e
-        @community.errors.add :base, "There was a problem with your credit card"
+        @community.errors.add :base, e.message
         @stripe_card_token = nil
         raise ActiveRecord::Rollback
+      ensure
+        unless success
+          @stripe_card_token = nil
+          raise ActiveRecord::Rollback
+        end
       end
-      raise ActiveRecord::Rollback unless success
     end
 
     flash[:success] = "Your community has been created." if success
