@@ -436,12 +436,13 @@ protected
   ###
   # _after_create_
   #
-  # This method looks for CommunityInvites for this user and sends them a system message.
+  # Checks if the user's emails has a gravatar and sets the user's profile avatar if so.
   ###
   def check_for_gravatar
     if self.user_profile.avatar.blank? and not self.user_profile.email.blank?
       begin
         gravatar_url = "http://www.gravatar.com/avatar/#{Digest::MD5.new.update(self.email)}.png?s=420&d=404"
+        RestClient.get gravatar_url
         self.user_profile.remote_avatar_url = gravatar_url
         self.save!
       rescue
