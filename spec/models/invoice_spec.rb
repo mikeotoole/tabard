@@ -31,6 +31,7 @@ require 'spec_helper'
 
 describe Invoice do
   let(:invoice) { DefaultObjects.invoice }
+  let(:invoice_with_tax) { DefaultObjects.invoice_with_tax }
   let(:community) { DefaultObjects.community_admin_with_stripe_out_state.communities.first }
   let(:pro_plan) { community.current_community_plan }
   let(:user_pack) { pro_plan.community_upgrades.first }
@@ -38,6 +39,14 @@ describe Invoice do
                                                                              "item_type"=>"#{user_pack.class}",
                                                                              "quantity"=>"1",
                                                                              "item_id"=>"#{user_pack.id}" }}}}
+
+  # New user
+  let(:new_admin) { DefaultObjects.community_admin }
+  let(:new_invoice) {DefaultObjects.community_admin.current_invoice }
+  let(:invoice_item_attributes_new_plan) { { "invoice_items_attributes" => { "0" => { "community_id"=>"#{DefaultObjects.community.id}",
+                                                                                      "item_type"=>"#{pro_plan.class}",
+                                                                                      "quantity"=>"1",
+                                                                                      "item_id"=>"#{pro_plan.id}" }}}}
 
   it "should create a new instance given valid attributes" do
     invoice.should be_valid
@@ -212,11 +221,14 @@ describe Invoice do
     end
 
     it "should include tax and untaxed total when tax is present" do
-      pending
+      invoice_with_tax.total_tax_in_cents.should_not eq 0
+      total = invoice_with_tax.total_tax_in_cents + invoice_with_tax.total_price_in_cents_without_tax
+      total.should eq invoice_with_tax.total_price_in_cents
     end
 
-    it "should include no tax and only untaxed total when tax is not present" do
-      pending
+    it "should include equal untaxed total when tax is not present" do
+      invoice.total_tax_in_cents.should eq 0
+      invoice.total_price_in_cents.should eq invoice.total_price_in_cents_without_tax
     end
 
     it "should return zero when no invoice items are present" do
@@ -237,27 +249,74 @@ describe Invoice do
   end
 
   describe "total_price_in_cents_without_tax" do
-    pending
+    describe "when tax is present" do
+      it "should equal the cost of all invoice items" do
+        invoice_with_tax.invoice_items.count.should_not eq 0
+        price = 0.0
+        invoice_with_tax.invoice_items.each do |ii|
+          price = price + ii.total_price_in_cents
+        end
+        invoice_with_tax.total_price_in_cents_without_tax.should eq price
+      end
+    end
+    describe "when tax is not present" do
+      it "should equal the cost of all invoice items" do
+        invoice.invoice_items.count.should_not eq 0
+        price = 0.0
+        invoice.invoice_items.each do |ii|
+          price = price + ii.total_price_in_cents
+        end
+        invoice.total_price_in_cents_without_tax.should eq price
+      end
+    end
   end
 
   describe "total_price_in_dollars_without_tax" do
-    pending
+    it "should eq total_price_in_cents_without_tax converted to dollars" do
+      invoice_with_tax.total_price_in_dollars_without_tax.should eq (invoice_with_tax.total_price_in_cents_without_tax / 100.0)
+    end
   end
 
   describe "total_tax_in_cents" do
-    pending
+    describe "when tax is present" do
+      it "should eq tax rate times total_price_in_cents_without_tax" do
+        invoice_with_tax.tax_rate.should_not eq 0.0
+        invoice_with_tax.total_tax_in_cents.should eq (invoice_with_tax.tax_rate * invoice_with_tax.total_price_in_cents_without_tax)
+      end
+    end
+    describe "when tax is not present" do
+      it "should be zero" do
+        invoice.tax_rate.should eq 0.0
+        invoice.total_tax_in_cents.should eq 0
+      end
+    end
   end
 
   describe "total_tax_in_dollars" do
-    pending
+    it "should eq total_tax_in_cents converted to dollars" do
+      invoice_with_tax.total_tax_in_dollars.should eq (invoice_with_tax.total_tax_in_cents / 100.0)
+    end
   end
 
   describe "should_be_taxed?" do
-    pending
+    it "should return false when tax is zero" do
+      invoice.total_tax_in_cents.should eq 0
+      invoice.should_be_taxed?.should be_false
+    end
+
+    it "should return true when tax is not zero" do
+      invoice_with_tax.total_tax_in_cents.should_not eq 0
+      invoice_with_tax.should_be_taxed?.should be_true
+    end
   end
 
   describe "tax_rate" do
-    pending
+    it "should return zero when user is not in WA" do
+      invoice.tax_rate.should eq 0
+    end
+    it "should not return zero when user is in WA" do
+      invoice_with_tax.tax_rate.should_not eq 0
+    end
   end
 
   describe "total_recurring_price_per_month_in_cents" do
@@ -382,48 +441,79 @@ describe Invoice do
   describe "update_attributes_with_payment" do
     describe "when stripe_card_token is nil" do
       it "should return false and add error when admin has no stripe customer id" do
-        pending
+        invoice.user.update_column(:stripe_customer_token, nil)
+        invoice.user_stripe_customer_token.should be_nil
+        ret = invoice.update_attributes_with_payment(invoice_item_attributes)
+        ret.should be_false
+        invoice.errors.empty?.should be_false
       end
 
       it "should save the invoice and invoice items" do
-        pending
+        invoice
+        lambda {
+          ret = invoice.update_attributes_with_payment(invoice_item_attributes)
+          ret.should be_true
+        }.should change(InvoiceItem, :count).by(2) # Creates new prorated item and recurring item.
       end
     end
 
     describe "when stripe_card_token is given" do
       it "should update or create Stripe customer" do
-        pending
+        new_admin.stripe_customer_token.should be_nil
+        new_invoice.update_attributes_with_payment(invoice_item_attributes_new_plan, DefaultObjects.stripe_card_token_out_state)
+        new_admin.reload
+        new_admin.stripe_customer_token.should_not be_nil
       end
 
       it "should save the invoice and invoice items" do
-        pending
+        lambda {
+          ret = new_invoice.update_attributes_with_payment(invoice_item_attributes_new_plan, DefaultObjects.stripe_card_token_out_state)
+          ret.should be_true
+        }.should change(InvoiceItem, :count).by(1)
       end
     end
 
     describe "when invoice is not valid" do
       it "should return false" do
-        pending
+        ret = invoice.update_attributes_with_payment(invoice_item_attributes_new_plan)
+        ret.should be_false
       end
 
       it "should not save invoice" do
-        pending
+        invoice
+        lambda {
+          ret = invoice.update_attributes_with_payment(invoice_item_attributes_new_plan)
+          ret.should be_false
+        }.should change(InvoiceItem, :count).by(0)
       end
 
       it "should not charge customer" do
-        pending
+        ret = invoice.update_attributes_with_payment(invoice_item_attributes_new_plan)
+        ret.should be_false
+        invoice.charged_total_price_in_cents.should be_nil
       end
 
       it "should not update or create Stripe customer" do
-        pending
+        invoice
+        new_admin.stripe_customer_token.should be_nil
+        new_invoice.update_attributes_with_payment(invoice_item_attributes, DefaultObjects.stripe_card_token_out_state)
+        new_admin.reload
+        new_admin.stripe_customer_token.should be_nil
       end
     end
 
     it "should charge customer when invoice is past due" do
-      pending
+      invoice
+      Timecop.travel 31.days
+      ret = invoice.update_attributes_with_payment(invoice_item_attributes)
+      ret.should be_true
+      invoice.charged_total_price_in_cents.should eq invoice.total_price_in_cents
     end
 
     it "should not charge customer when invoice is not past due" do
-      pending
+      ret = invoice.update_attributes_with_payment(invoice_item_attributes)
+      ret.should be_true
+      invoice.charged_total_price_in_cents.should be_nil
     end
   end
 
