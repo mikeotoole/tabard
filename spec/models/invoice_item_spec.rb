@@ -96,14 +96,10 @@ describe InvoiceItem do
       upgrade_invoice_item.save.should be_true
       upgrade_invoice_item.quantity.should eq 2
     end
-    it "should be greater than or equal to 0" do
-      upgrade_invoice_item.quantity = -1
-      upgrade_invoice_item.save.should be_false
-    end
     it "should be only integer" do
       upgrade_invoice_item.quantity = "fuck"
       upgrade_invoice_item.save.should be_true
-      upgrade_invoice_item.quantity.should eq 1
+      upgrade_invoice_item.quantity.should_not  eq "fuck"
     end
     it "should only be 1 if the item is a community plan" do
       invoice_item.quantity = 2
