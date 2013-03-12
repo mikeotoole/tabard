@@ -121,12 +121,12 @@ class DefaultObjects
     if @community_admin_with_stripe_in_state
       @community_admin_with_stripe_in_state
     else
-      community = FactoryGirl.create(:community, :name => "Admin with Stripe Comm")
+      community = FactoryGirl.create(:community, :name => "Stripe Comm with Tax")
       @community_admin_with_stripe_in_state = community.admin_profile.user
 
       stripe_customer = Stripe::Customer.create(
         :description => "Customer for test@example.com",
-        :card => DefaultObjects.stripe_card_token_in_state.id
+        :card => DefaultObjects.stripe_card_token_in_state
       )
       @community_admin_with_stripe_in_state.stripe_customer_token = stripe_customer.id
       @community_admin_with_stripe_in_state.owned_communities << community
@@ -139,12 +139,12 @@ class DefaultObjects
     if @community_admin_with_stripe_out_state
       @community_admin_with_stripe_out_state
     else
-      community = FactoryGirl.create(:community, :name => "Admin with Stripe Comm")
+      community = FactoryGirl.create(:community, :name => "Stripe Comm with NO Tax")
       @community_admin_with_stripe_out_state = community.admin_profile.user
 
       stripe_customer = Stripe::Customer.create(
         :description => "Customer for test@example.com",
-        :card => DefaultObjects.stripe_card_token_out_state.id
+        :card => DefaultObjects.stripe_card_token_out_state
       )
       @community_admin_with_stripe_out_state.stripe_customer_token = stripe_customer.id
       @community_admin_with_stripe_out_state.owned_communities << community
@@ -165,6 +165,21 @@ class DefaultObjects
       @invoice.invoice_items.new({community: invoice_item.community, item: user_pack, quantity: 1}, without_protection: true)
       @invoice.save!
       @invoice
+    end
+  end
+
+  def self.invoice_with_tax
+    if @invoice_with_tax
+      @invoice_with_tax
+    else
+      invoice_item = FactoryGirl.create(:invoice_item_with_tax)
+      old_invoice = invoice_item.invoice.reload
+      old_invoice.mark_paid_and_close
+      @invoice_with_tax = old_invoice.user.current_invoice
+      user_pack = invoice_item.community.current_community_plan.community_upgrades.first
+      @invoice_with_tax.invoice_items.new({community: invoice_item.community, item: user_pack, quantity: 1}, without_protection: true)
+      @invoice_with_tax.save!
+      @invoice_with_tax
     end
   end
 
@@ -218,7 +233,7 @@ class DefaultObjects
         :address_state => 'NM',
         :address_zip => '87124'
       },
-    )
+    ).id
   end
 
   def self.stripe_card_token_in_state
@@ -233,7 +248,7 @@ class DefaultObjects
         :address_state => 'WA',
         :address_zip => '99352'
       },
-    )
+    ).id
   end
 
   def self.clean
@@ -259,5 +274,6 @@ class DefaultObjects
     @page_space = nil
     @general_page_space = nil
     @invoice = nil
+    @invoice_with_tax = nil
   end
 end

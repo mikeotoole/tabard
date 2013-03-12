@@ -8,6 +8,13 @@ FactoryGirl.define do
     after(:build) { |ii| set_invoice(ii) }
   end
 
+  factory :invoice_item_with_tax, class: InvoiceItem do
+    quantity 1
+    association :item, factory: :pro_community_plan
+    after(:build) { |ii| set_community_with_tax(ii) }
+    after(:build) { |ii| set_invoice_with_tax(ii) }
+  end
+
   factory :upgrade_invoice_item, class: InvoiceItem do
     quantity 1
     association :item, factory: :twenty_user_pack_upgrade
@@ -32,6 +39,18 @@ end
 def set_invoice(ii)
   if ii.invoice.blank? and ii.invoice_id.blank?
     ii.invoice = FactoryGirl.build(:invoice, user_id: DefaultObjects.community_admin_with_stripe_out_state.id)
+  end
+end
+
+def set_community_with_tax(ii)
+  if ii.community.blank?
+    ii.community = DefaultObjects.community_admin_with_stripe_in_state.communities.first
+  end
+end
+
+def set_invoice_with_tax(ii)
+  if ii.invoice.blank? and ii.invoice_id.blank?
+    ii.invoice = FactoryGirl.build(:invoice, user_id: DefaultObjects.community_admin_with_stripe_in_state.id)
   end
 end
 
