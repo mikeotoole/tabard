@@ -35,7 +35,9 @@ describe SubscriptionsController do
     end
 
     it "should not allow a community the user does not own" do
-      pending
+      sign_in admin
+      get 'edit', community_id: create(:community)
+      response.should be_success
     end
 
     it "should redirect to subscritpions index if current invoice is processing_payment" do
