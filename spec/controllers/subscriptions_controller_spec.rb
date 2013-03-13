@@ -77,7 +77,7 @@ describe SubscriptionsController do
     describe "when authenticated as a user with valid attributes and stripe token" do
       before(:each) do
         sign_in admin
-        put 'update', community_id: community, stripe_card_token: card_token.id, invoice: {"invoice_items_attributes"=>
+        put 'update', community_id: community, stripe_card_token: card_token, invoice: {"invoice_items_attributes"=>
                                                                                                  {"0"=>{"community_id"=>"#{community.id}",
                                                                                                         "item_type"=>"CommunityPlan",
                                                                                                         "quantity"=>"1",
