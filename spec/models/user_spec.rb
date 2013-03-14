@@ -158,7 +158,22 @@ describe User do
   end
 
   describe "update_stripe" do
-    pending
+    it "should work with in state card" do
+      @user = create(:user)
+      @user.update_stripe(DefaultObjects.stripe_card_token_in_state).should be_true
+    end
+    it "should work with out of state card" do
+      @user = create(:user)
+      @user.update_stripe(DefaultObjects.stripe_card_token_out_state).should be_true
+    end
+    it "should not work with nil" do
+      @user = create(:user)
+      @user.update_stripe("").should be_false
+    end
+    it "should not work with blank" do
+      @user = create(:user)
+      @user.update_stripe(nil).should be_false
+    end
   end
 
   describe "has_accepted_current_privacy_policy?" do
