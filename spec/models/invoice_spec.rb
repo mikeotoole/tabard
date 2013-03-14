@@ -281,7 +281,7 @@ describe Invoice do
     describe "when tax is present" do
       it "should eq tax rate times total_price_in_cents_without_tax" do
         invoice_with_tax.tax_rate.should_not eq 0.0
-        invoice_with_tax.total_tax_in_cents.should eq (invoice_with_tax.tax_rate * invoice_with_tax.total_price_in_cents_without_tax)
+        invoice_with_tax.total_tax_in_cents.should eq (invoice_with_tax.tax_rate * invoice_with_tax.total_price_in_cents_without_tax).round(0)
       end
     end
     describe "when tax is not present" do
@@ -518,111 +518,161 @@ describe Invoice do
   end
 
   describe "charge_customer" do
-    describe "when customer has not payment info" do
+    describe "when customer has no payment info" do
+      before(:each) { invoice.user.update_column(:stripe_customer_token, nil) }
+
       it "should not close invoice" do
-        pending
+        invoice.charge_customer
+        invoice.is_closed.should be_false
       end
 
       it "should return false and set error" do
-        pending
-      end
-
-      it "should send email when send_fail_email is true" do
-        pending
+        ret = invoice.charge_customer
+        ret.should be_false
+        invoice.errors.empty?.should be_false
       end
     end
 
     describe "when total_price_in_cents is less then MINIMUM_CHARGE_AMOUNT" do
       it "should close invoice" do
-        pending
-      end
-
-      it "should never email customer" do
-        pending
+        invoice.stub(:total_price_in_cents) { 20 }
+        invoice.charge_customer
+        invoice.is_closed.should be_true
+        invoice.charged_total_price_in_cents.should eq 20
+        invoice.stripe_charge_id.should be_nil
       end
     end
 
     describe "when processing_payment is true" do
+      before(:each) { invoice.stub(:processing_payment) { true } }
+
       it "should raise ActiveRecord::StaleObjectError" do
-        pending
+        expect { invoice.charge_customer }.to raise_error(ActiveRecord::StaleObjectError)
       end
 
       it "should not close invoice" do
-        pending
+        invoice.charge_customer
+        invoice.is_closed.should be_false
       end
     end
 
     describe "when lock_version changes" do
+      before(:each) { invoice.stub(:lock_version) { 2000 } }
+
       it "should raise ActiveRecord::StaleObjectError" do
-        pending
+        expect { invoice.charge_customer }.to raise_error(ActiveRecord::StaleObjectError)
       end
 
       it "should not close invoice" do
-        pending
+        invoice.charge_customer
+        invoice.is_closed.should be_false
       end
     end
 
     describe "when charge customer is successful" do
       it "should close invoice" do
-        pending
+        invoice.charge_customer
+        invoice.is_closed.should be_true
       end
 
       it "should mark paid date" do
-        pending
-      end
-
-      it "should mark paid date" do
-        pending
+        Timecop.freeze
+        invoice.charge_customer
+        invoice.paid_date.should eq Time.now
       end
 
       it "should set stripe_charge_id" do
-        pending
+        invoice.charge_customer
+        invoice.stripe_charge_id.should_not be_nil
       end
 
       it "should mark user as_good_standing_account" do
-        pending
+        invoice.user.update_column(:is_in_good_account_standing, false)
+        invoice.charge_customer
+        invoice.user.is_in_good_account_standing.should be_true
       end
     end
 
     describe "when Stripe::CardError is raised" do
+      before(:each) { Stripe::Charge.stub(:create).and_raise(Stripe::CardError.new("Test", nil, "card_declined")) }
+
       it "should make first_failed_attempt_date when nil" do
-        pending
+        Timecop.freeze
+        invoice.first_failed_attempt_date.should be_nil
+        invoice.charge_customer
+        invoice.first_failed_attempt_date.should eq Time.now
       end
 
       it "should mark user as_delinquent_account" do
-        pending
+        invoice.charge_customer
+        invoice.reload
+        invoice.user.is_in_good_account_standing.should be_false
+      end
+
+      it "should not close invoice" do
+        invoice.charge_customer
+        invoice.is_closed.should be_false
+      end
+
+      it "should return false and set error" do
+        ret = invoice.charge_customer
+        ret.should be_false
+        invoice.errors.empty?.should be_false
       end
 
       describe "when send_fail_email is true and (Time.now - self.first_failed_attempt_date) > SECONDS_OF_FAILED_ATTEMPTS" do
+        before(:each) {
+          invoice.update_column(:first_failed_attempt_date, Time.now)
+          Timecop.travel 10.days
+        }
+
         describe "and no prorated invoice items are present" do
-          it "should set all plans to the default plan" do
-            pending
+          before(:each) {
+            invoice.invoice_items.each do |ii|
+              ii.is_prorated.should be_false
+            end
+          }
+
+          it "should set all plans to the default plan and remove all upgrades" do
+            count = invoice.invoice_items.all.count
+            count.should_not eq 0
+            invoice.charge_customer(true)
+            invoice.invoice_items.each do |ii|
+              ii.item.should eq CommunityPlan.default_plan
+            end
+            invoice.invoice_items.all.count.should eq count
           end
 
           it "should close invoice" do
-            pending
+            invoice.charge_customer(true)
+            invoice.is_closed.should be_true
           end
         end
 
         describe "and prorated invoice items are present" do
           it "should remove all recurring invoice items" do
-            pending
+            community2 = create(:community, admin_profile_id: invoice.user.user_profile.id)
+            Timecop.travel Time.now + 15.days
+            ii = invoice.invoice_items.new({community: community2, item: pro_plan, quantity: 1}, without_protection: true)
+            invoice.save.should be_true
+            invoice.reload
+
+            invoice.invoice_items.select{|ii| ii.is_recurring == true}.count.should_not eq 0
+            invoice.invoice_items.select{|ii| ii.is_prorated == true}.count.should_not eq 0
+
+            invoice.charge_customer(true)
+
+            invoice.invoice_items.each do |ii|
+              ii.is_prorated.should be_true
+              ii.is_recurring.should be_false
+            end
           end
 
           it "should not close invoice" do
-            pending
+            invoice.charge_customer(true)
+            invoice.is_closed.should be_false
           end
         end
-      end
-    end
-
-    describe "when Stripe::StripeError is raised" do
-      it "should not close invoice" do
-        pending
-      end
-
-      it "should return false and set error" do
-        pending
       end
     end
   end
@@ -659,7 +709,6 @@ describe Invoice do
 
   describe "uniqued_invoice_items" do
     it "should return invoice items with the same start date, end date, community, is_prorated and is_recurring as new unsaved invoice items" do
-      pending
       invoice.invoice_items.count.should eq 1
       invoice.invoice_items.new({community: community, item: user_pack, quantity: 1}, without_protection: true)
       invoice.invoice_items.new({community: community, item: user_pack, quantity: 1}, without_protection: true)

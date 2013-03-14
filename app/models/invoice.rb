@@ -336,7 +336,7 @@ class Invoice < ActiveRecord::Base
               success = false
             rescue Stripe::CardError => e
               # Mark first failed attempt date.
-              self.first_failed_attempt_date = Time.now if self.first_failed_attempt_date.blank?
+              self.update_column(:first_failed_attempt_date, Time.now) if self.first_failed_attempt_date.blank?
               # Set boolean on user that payment failed (triggering a flash message for them).
               self.user.mark_as_delinquent_account
               # If over seven days since first failed attempt cancel users subscription.
@@ -419,7 +419,7 @@ class Invoice < ActiveRecord::Base
       end
     rescue Exception => e
       if e.class == ActiveRecord::StaleObjectError
-        throw e
+        raise e
       else
         logger.error "ALERT_ERROR charge_customer: #{e.message}"
         # Add error to invoice.
