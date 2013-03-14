@@ -158,7 +158,7 @@ describe User do
   end
 
   describe "update_stripe" do
-    pending
+    pending "Is this needed?"
   end
 
   describe "has_accepted_current_privacy_policy?" do
