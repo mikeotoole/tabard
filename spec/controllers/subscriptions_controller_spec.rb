@@ -37,10 +37,14 @@ describe SubscriptionsController do
     it "should not allow a community the user does not own" do
       sign_in admin
       get 'edit', community_id: create(:community)
-      response.should be_success
+      response.should be_not_found
     end
 
     it "should redirect to subscritpions index if current invoice is processing_payment" do
+      #sign_in admin
+      #admin.current_invoice.processing_payment = true
+      #get 'edit', community_id: community
+      #response.should redirect_to(subscriptions_url(subdomain: 'secure'))
       pending
     end
 
@@ -96,10 +100,24 @@ describe SubscriptionsController do
     end
 
     it "should not allow a community the user does not own" do
-      pending
+      sign_in admin
+      put 'update', community_id: create(:community), stripe_card_token: card_token, invoice: {"invoice_items_attributes"=>
+                                                                                                 {"0"=>{"community_id"=>"#{community.id}",
+                                                                                                        "item_type"=>"CommunityPlan",
+                                                                                                        "quantity"=>"1",
+                                                                                                        "item_id"=>"#{plan.id}"} } }
+      response.should be_not_found
     end
 
     it "should redirect to subscritpions index if current invoice is processing_payment" do
+      #sign_in admin
+      #admin.current_invoice.processing_payment = true
+      #put 'update', community_id: community, stripe_card_token: card_token, invoice: {"invoice_items_attributes"=>
+      #                                                                                           {"0"=>{"community_id"=>"#{community.id}",
+      #                                                                                                  "item_type"=>"CommunityPlan",
+      #                                                                                                  "quantity"=>"1",
+      #                                                                                                  "item_id"=>"#{plan.id}"} } }
+      #response.should redirect_to(subscriptions_url(subdomain: 'secure'))
       pending
     end
 
