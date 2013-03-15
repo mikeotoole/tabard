@@ -211,6 +211,9 @@ DaBvRails::Application.routes.draw do
         end
       end
 
+      # Minecraft
+      get 'minecraft/whitelist' => 'minecraft#whitelist', as: 'minecraft_whitelist'
+
       # Events
       resources :events do
         member do
