@@ -48,6 +48,7 @@ describe Invoice do
                                                                                       "quantity"=>"1",
                                                                                       "item_id"=>"#{pro_plan.id}" }}}}
 
+
   it "should create a new instance given valid attributes" do
     invoice.should be_valid
   end
@@ -518,6 +519,7 @@ describe Invoice do
   end
 
   describe "charge_customer" do
+
     describe "when customer has no payment info" do
       before(:each) { invoice.user.update_column(:stripe_customer_token, nil) }
 
@@ -628,8 +630,8 @@ describe Invoice do
 
         describe "and no prorated invoice items are present" do
           before(:each) {
-            invoice.invoice_items.each do |ii|
-              ii.is_prorated.should be_false
+            invoice.invoice_items.select(&:is_prorated).each do |ii|
+              ii.destroy
             end
           }
 
@@ -651,12 +653,6 @@ describe Invoice do
 
         describe "and prorated invoice items are present" do
           it "should remove all recurring invoice items" do
-            community2 = create(:community, admin_profile_id: invoice.user.user_profile.id)
-            Timecop.travel Time.now + 15.days
-            ii = invoice.invoice_items.new({community: community2, item: pro_plan, quantity: 1}, without_protection: true)
-            invoice.save.should be_true
-            invoice.reload
-
             invoice.invoice_items.select{|ii| ii.is_recurring == true}.count.should_not eq 0
             invoice.invoice_items.select{|ii| ii.is_prorated == true}.count.should_not eq 0
 
@@ -675,6 +671,10 @@ describe Invoice do
         end
       end
     end
+  end
+
+  describe "cancel_subscription" do
+    pending
   end
 
   describe "mark_paid_and_close" do
