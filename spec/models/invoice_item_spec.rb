@@ -140,6 +140,10 @@ describe InvoiceItem do
     pending
   end
 
+  it "should remove incompatable items" do
+    pending
+  end
+
   it "should make free non recurring" do
     pending
   end

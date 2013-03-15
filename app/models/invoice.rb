@@ -341,22 +341,7 @@ class Invoice < ActiveRecord::Base
               self.user.mark_as_delinquent_account
               # If over seven days since first failed attempt cancel users subscription.
               if send_fail_email and (Time.now - self.first_failed_attempt_date) > SECONDS_OF_FAILED_ATTEMPTS
-                if self.invoice_items.prorated.empty?
-                  # An invoice with no prorated items will have the plans turned to free and the invoice closed.
-                  self.invoice_items.select(&:has_community_plan?).each do |ii|
-                    ii.item = CommunityPlan.default_plan
-                  end
-                  self.save!
-                  self.mark_paid_and_close
-                  InvoiceMailer.delay.subscription_canceled(self.id, false)
-                # An invoice with prorated items will have the recurring items removed and will stay.
-                else
-                  self.invoice_items.recurring.each do |ii|
-                    ii.mark_for_destruction
-                  end
-                  self.save!
-                  InvoiceMailer.delay.subscription_canceled(self.id, true)
-                end
+                self.cancel_subscription
               else
                 # If send_fail_email is true and first_failed_attempt_date is today then send email.
                 # This is to make sure the user only gets one email about the error.
@@ -418,17 +403,35 @@ class Invoice < ActiveRecord::Base
         success = false
       end
     rescue Exception => e
-      if e.class == ActiveRecord::StaleObjectError
-        raise e
-      else
-        logger.error "ALERT_ERROR charge_customer: #{e.message}"
-        # Add error to invoice.
-        self.errors.add :base, "There was an error processing your payment."
-        success = false
-      end
+      logger.error "ALERT_ERROR charge_customer: #{e.message}"
+      # Add error to invoice.
+      self.errors.add :base, "There was an error processing your payment."
+      success = false
     ensure
       self.update_column(:processing_payment, false)
       return success
+    end
+  end
+
+  def cancel_subscription(send_email=true)
+    if self.invoice_items.prorated.empty?
+      #TODO: Make this into a cancel subscription method.
+
+      # An invoice with no prorated items will have the plans turned to free and the invoice closed.
+      self.invoice_items.select(&:has_community_plan?).each do |ii|
+        ii.item = CommunityPlan.default_plan
+      end
+      self.save!
+      # TODO: Invoice should have price of zero now.
+      self.mark_paid_and_close
+      InvoiceMailer.delay.subscription_canceled(self.id, false) if send_email
+    # An invoice with prorated items will have the recurring items removed and will stay.
+    else
+      self.invoice_items.recurring.each do |ii|
+        ii.mark_for_destruction
+      end
+      self.save!
+      InvoiceMailer.delay.subscription_canceled(self.id, true) if send_email
     end
   end
 

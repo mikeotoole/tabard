@@ -134,4 +134,6 @@ ruby '1.9.3'
     gem 'guard-rspec'#                                                                      MIT - https://github.com/guard/guard-rspec
     gem 'guard-livereload'#                                                                 MIT - https://github.com/guard/guard-livereload
     #gem 'growl_notify'#                                                                    MIT - https://github.com/scottdavis/growl_notify
+    #gem 'vcr'#                                                                              MIT - https://github.com/vcr/vcr
+    #gem 'webmock'
   end
