@@ -415,14 +415,14 @@ class Invoice < ActiveRecord::Base
 
   def cancel_subscription(send_email=true)
     if self.invoice_items.prorated.empty?
-      #TODO: Make this into a cancel subscription method.
-
       # An invoice with no prorated items will have the plans turned to free and the invoice closed.
       self.invoice_items.select(&:has_community_plan?).each do |ii|
         ii.item = CommunityPlan.default_plan
       end
       self.save!
-      # TODO: Invoice should have price of zero now.
+      if self.total_price_in_cents > 0
+        logger.error "ALERT_ERROR cancel_subscription: Invoice(#{self.id}) was canceled with a balance(#{self.total_price_in_cents})."
+      end
       self.mark_paid_and_close
       InvoiceMailer.delay.subscription_canceled(self.id, false) if send_email
     # An invoice with prorated items will have the recurring items removed and will stay.

@@ -69,6 +69,7 @@ RSpec.configure do |config|
   config.after(:each) do
     DatabaseCleaner.clean
     DefaultObjects.clean
+    Timecop.return
   end
 
   config.include(MailerMacros)
