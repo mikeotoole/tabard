@@ -61,7 +61,7 @@ class SubdomainsController < ApplicationController
     #application
     management_items << {link: edit_community_settings_url, title: "Community Settings", class: 'settings'} if can_manage? current_community
     management_items << {link: community_games_url, title: "Community Games", class: 'games'} if can_manage? current_community.community_games.new
-    management_items << {link: roles_url, title: "Permissions", class: 'roles'} if can_manage? current_community.roles.new
+    management_items << {link: roles_url, title: "Permissions", class: 'roles'} if can? :manage, Role
     management_items << {link: community_invites_url, title: "Recruit Members", class: 'recruit'} if can? :create, CommunityInvite
     management_items << {link: community_applications_url, title: 'Applications', class: 'applications', meta: current_community.pending_applications.size} if can_manage?(current_community.community_applications.new()) or can? :index, CommunityApplication
     management_items << {link: pending_roster_assignments_url, title: "Roster Requests", class: 'roster', meta: current_community.pending_roster_assignments.size} if can? :pending, RosterAssignment
