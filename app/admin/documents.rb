@@ -18,11 +18,11 @@ ActiveAdmin.register Document do
     @document = Document.find(params[:id])
     case @document.type
       when "PrivacyPolicy"
-        render 'app/views/top_level/privacy_policy.haml', layout: 'application'
+        render 'app/views/top_level/privacy_policy', layout: 'application'
       when "TermsOfService"
-        render 'app/views/top_level/terms_of_service.haml', layout: 'application'
+        render 'app/views/top_level/terms_of_service', layout: 'application'
       when "ArtworkAgreement"
-        render 'app/views/top_level/artwork_agreement.haml', layout: 'application'
+        render 'app/views/top_level/artwork_agreement', layout: 'application'
     end
   end
 
