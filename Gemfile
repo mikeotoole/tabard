@@ -1,5 +1,5 @@
 source 'http://rubygems.org'#                                                               LICENSE - URL
-ruby '1.9.3'
+ruby '2.0.0'
 
 # Rails Gem
   gem 'rails' #                                                                             MIT - https://github.com/rails/rails
