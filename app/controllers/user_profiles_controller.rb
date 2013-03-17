@@ -24,7 +24,7 @@ class UserProfilesController < ApplicationController
       format.html {
         if @user_profile.is_disabled?
           flash[:alert] = 'The profile you requested is no longer active.'
-          render 'inactive_show.haml'
+          render 'inactive_show'
         else
           @communities_to_invite_to = Array.new
           @communities_with_roles_to_assign = Array.new
