@@ -1,5 +1,5 @@
 source 'http://rubygems.org'#                                                               LICENSE - URL
-ruby '1.9.3'
+ruby '2.0.0'
 
 # Rails Gem
   gem 'rails' #                                                                             MIT - https://github.com/rails/rails
@@ -40,7 +40,6 @@ ruby '1.9.3'
   gem 'country_select'#                                                                     MIT - https://github.com/stefanpenner/country_select
 
 # Browser Detection
-  #gem 'browser'#                                                                            MIT - https://github.com/fnando/browser
   gem 'agent_orange'#                                                                    MIT - https://github.com/kevinelliott/agent_orange
 
 # Pagination
