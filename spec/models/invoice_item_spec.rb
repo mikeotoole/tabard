@@ -227,13 +227,13 @@ describe InvoiceItem do
 
   describe "number of day" do
     it "should return the elapsed time" do
-      pending
+      invoice_item.number_of_days.should eq 30
     end
   end
 
   describe "number  of users each" do
     it "should return the number of users that the item gives" do
-      pending
+      invoice_item.number_of_users_each.should eq 100
     end
   end
 end
