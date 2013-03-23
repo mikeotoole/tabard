@@ -40,6 +40,8 @@ DaBvRails::Application.configure do
   # config.logger = SyslogLogger.new
   config.logger = Logger.new(STDOUT)
 
+  config.log_tags = [:uuid, :remote_ip]
+
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store
   config.cache_store = :dalli_store

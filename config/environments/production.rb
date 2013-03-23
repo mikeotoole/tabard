@@ -34,12 +34,14 @@ DaBvRails::Application.configure do
   # config.force_ssl = true
 
   # See everything in the log (default is :info)
-  # config.log_level = :debug
+  # The levels available on the logger are (in ascending order): debug, info, warn, error, and fatal.
+  config.log_level = :warn
 
   # Use a different logger for distributed setups
   # config.logger = SyslogLogger.new
   config.logger = Logger.new(STDOUT)
-  config.log_level = :warn
+
+  config.log_tags = [:uuid, :remote_ip]
 
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store
