@@ -55,7 +55,6 @@ class TopLevelController < ApplicationController
   # GET /
   ###
   def index
-    raise "herp"
     redirect_to user_profile_url(current_user.user_profile, subdomain: "www") + '#characters' if user_signed_in?
   end
 
