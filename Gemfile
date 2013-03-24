@@ -86,6 +86,7 @@ ruby '2.0.0'
 
 # Logging
   gem 'quiet_assets'#                                                                       MIT - https://github.com/evrone/quiet_assets
+  gem 'lograge'#                                                                            MIT - https://github.com/roidrage/lograge
 
   group :assets do
 
@@ -95,7 +96,7 @@ ruby '2.0.0'
   gem 'timecop'#                                                                            MIT - https://github.com/jtrupiano/timecop
 
 
-  gem 'simplecov'#                                                                        MIT - https://github.com/colszowka/simplecov
+  gem 'simplecov'#                                                                          MIT - https://github.com/colszowka/simplecov
 
 # Production Specific Gems
   group :production do
@@ -112,7 +113,7 @@ ruby '2.0.0'
     gem 'haml-rails'#                                                                       MIT - https://github.com/indirect/haml-rails
     gem 'bullet'#                                                                           MIT - https://github.com/flyerhzm/bullet
     gem 'brakeman'#                                                                         MIT - https://github.com/presidentbeef/brakeman
-    gem 'better_errors'#                                                                     MIT - https://github.com/charliesome/better_errors
+    gem 'better_errors'#                                                                    MIT - https://github.com/charliesome/better_errors
     gem "binding_of_caller"#                                                                MIT - https://github.com/banister/binding_of_caller
   end
 
@@ -133,6 +134,6 @@ ruby '2.0.0'
     gem 'guard-rspec'#                                                                      MIT - https://github.com/guard/guard-rspec
     gem 'guard-livereload'#                                                                 MIT - https://github.com/guard/guard-livereload
     #gem 'growl_notify'#                                                                    MIT - https://github.com/scottdavis/growl_notify
-    #gem 'vcr'#                                                                              MIT - https://github.com/vcr/vcr
+    #gem 'vcr'#                                                                             MIT - https://github.com/vcr/vcr
     #gem 'webmock'
   end

@@ -44,6 +44,9 @@ DaBvRails::Application.configure do
   # Add info to the logs for tracking requests.
   config.log_tags = [ lambda {|req| "request_id=#{req.headers["HTTP_HEROKU_REQUEST_ID"]}" }, :remote_ip ]
 
+  # Turn on lograge. See https://github.com/roidrage/lograge
+  config.lograge.enabled = true
+
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store
   config.cache_store = :dalli_store
