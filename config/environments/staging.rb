@@ -40,6 +40,7 @@ DaBvRails::Application.configure do
   # config.logger = SyslogLogger.new
   config.logger = Logger.new(STDOUT)
 
+  # Add info to the logs for tracking requests.
   config.log_tags = [:remote_ip]
   config.log_tags += [
     proc do |req|

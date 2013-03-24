@@ -326,6 +326,7 @@ describe Invoice do
         community2 = create(:community, admin_profile_id: invoice.user.user_profile.id)
         invoice.invoice_items.create({community: community2, item: pro_plan, quantity: 1}).should be_true
 
+        debugger
         invoice.invoice_items.select{|ii| ii.community_id == community2.id and ii.is_recurring == true}.count.should eq 1
         invoice.total_recurring_price_per_month_in_cents(community2).should eq pro_plan.price_per_month_in_cents
       end
