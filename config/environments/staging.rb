@@ -35,7 +35,7 @@ DaBvRails::Application.configure do
 
   # See everything in the log (default is :info)
   # The levels available on the logger are (in ascending order): debug, info, warn, error, and fatal.
-  config.log_level = :warn
+  config.log_level = :debug
 
   # Use a different logger for distributed setups
   # config.logger = SyslogLogger.new
