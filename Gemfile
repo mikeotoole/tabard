@@ -59,7 +59,7 @@ ruby '2.0.0'
   gem 'oink'#                                                                               MIT - https://github.com/noahd1/oink
 
 # Filtering
-  gem 'profanalyzer'#                                                                       MIT - http://profanalyzer.rubyforge.org
+  gem 'profanalyzer', github: "digitalaugment/profanalyzer" #                               MIT - https://github.com/michaeledgar/profanalyzer
   gem 'rinku'#                                                                              MIT - https://github.com/vmg/rinku
 
 # Background jobs
