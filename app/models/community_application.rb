@@ -109,8 +109,8 @@ class CommunityApplication < ActiveRecord::Base
           next unless character_map[character.id.to_s]
           begin
             community_profile.roster_assignments.create!({community_game_id: character_map[character.id.to_s], character: character}, without_protection: true).approve(false)
-          rescue ActiveRecord::RecordInvalid => invalid
-            logger.error "ALERT_ERROR accept_application. Could not create roster_assignment: #{invalid.record.errors}"
+          rescue ActiveRecord::RecordInvalid => e
+            logger.error "ALERT_ERROR error=roster_assignment_create_failed model=community_application method=accept_application record_errors=#{e.record.errors}"
           end
         end
       end

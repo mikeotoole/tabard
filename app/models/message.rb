@@ -61,7 +61,7 @@ class Message < ActiveRecord::Base
       message.is_system_sent = true
       message.save!
     rescue
-      logger.error "ALERT_ERROR Could not send system message #{self.message}. #{message.errors}"
+      logger.error "ALERT_ERROR error=system_message_fail message=#{message} message_errors=#{message.errors}"
     end
   end
 

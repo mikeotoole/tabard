@@ -63,10 +63,10 @@ class UserProfilesController < ApplicationController
     begin
       @user_profile.update_attributes(params[:user_profile])
     rescue Excon::Errors::HTTPStatusError, Excon::Errors::SocketError, Excon::Errors::ProxyParseError, Excon::Errors::StubNotFound
-      logger.error "ERROR Excon user_profile update: #{$!}"
+      logger.error "ERROR controller=user_profiles action=update error=#{e.class} message=#{e.message}"
       @user_profile.errors.add :base, "An error has occurred while processing the image."
     rescue CarrierWave::UploadError, CarrierWave::DownloadError, CarrierWave::FormNotMultipart, CarrierWave::IntegrityError, CarrierWave::InvalidParameter, CarrierWave::ProcessingError
-      logger.error "ERROR CarrierWave user_profile update: #{$!}"
+      logger.error "ERROR controller=user_profiles action=update error=#{e.class} message=#{e.message}"
       @user_profile.errors.add :base, "Unable to upload your artwork due to an image uploading error."
     end
     respond_with(@user_profile)

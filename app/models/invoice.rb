@@ -198,16 +198,16 @@ class Invoice < ActiveRecord::Base
               # The address, ZIP+4, and ZIP could not be  found.
               success = false
             else
-              logger.error "ALERT_ERROR WITH WA: #{response.inspect}"
+              logger.error "ALERT_ERROR model=invoice method=tax_rate wa_error=unexpected_code response_code=#{kickback_hash['response']['code']}"
               self.update_column(:tax_error_occurred, true) if self.persisted?
             end
           rescue => e
-            logger.error "ALERT_ERROR WITH WA REQUEST: #{e.inspect}"
+            logger.error "ALERT_ERROR model=invoice method=tax_rate request_error=#{e.class} message=#{e.message}"
             self.update_column(:tax_error_occurred, true) if self.persisted?
           end
         end
       rescue => e
-        logger.error "ALERT_ERROR tax_rate error with Stripe: #{e.inspect}"
+        logger.error "ALERT_ERROR model=invoice method=tax_rate stripe_error=#{e.class} message=#{e.message}"
         self.update_column(:tax_error_occurred, true) if self.persisted?
       end
       if success
@@ -325,18 +325,18 @@ class Invoice < ActiveRecord::Base
                                             description: "Charge for invoice id:#{self.id}" )
             # Log big charge
             if self.total_price_in_cents > NOTIFY_CHARGE_AMOUNT
-              logger.error "ALERT_ERROR method=charge_customer error=large_charge invoice_id=#{self.id} price=#{self.total_price_in_cents}"
+              logger.error "ALERT_ERROR model=invoice method=charge_customer error=large_charge invoice_id=#{self.id} price=#{self.total_price_in_cents}"
             end
             success = self.mark_paid_and_close(charge.id)
           end
         else
           # Invice cost is less then MINIMUM_CHARGE_AMOUNT. Just mark as paid. Log that this happend for later review.
-          logger.error "ALERT_ERROR method=charge_customer error=small_invoice_total invoice_id=#{self.id} price=#{self.total_price_in_cents}"
+          logger.error "ALERT_ERROR model=invoice method=charge_customer error=small_invoice_total invoice_id=#{self.id} price=#{self.total_price_in_cents}"
           success = self.mark_paid_and_close
         end
       else
         # ERROR Invoice owner has no payment information.
-        logger.error "ALERT_ERROR charge_customer: Invoice owner (#{self.user_id}) had no payment info"
+        logger.error "ALERT_ERROR model=invoice method=charge_customer error=no_payment_info invoice_id=#{self.id} user_id=#{self.user_id}"
         InvoiceMailer.delay.payment_failed(self.id, I18n.t('card.errors.missing.short'), I18n.t('card.errors.missing.full')) if send_fail_email
         self.errors.add :base, I18n.t('card.errors.missing.full')
         success = false
@@ -368,30 +368,27 @@ class Invoice < ActiveRecord::Base
 
           when "card_declined"
             InvoiceMailer.delay.payment_failed(self.id, I18n.t('card.errors.declined.short'), I18n.t('card.errors.declined.full')) if send_email
-            logger.debug "ASLKDHALKSJDLASJDLKASDKLJASDLJALKDJAKSDJKALJDKLAJSKLDJASKDS"
             self.errors.add :base, I18n.t('card.errors.declined.full')
 
           when "missing"
             InvoiceMailer.delay.payment_failed(self.id, I18n.t('card.errors.missing.short'), I18n.t('card.errors.missing.full')) if send_email
             self.errors.add :base, I18n.t('card.errors.missing.full')
-            logger.error "ALERT_ERROR CardError charge_customer: #{e.message}"
-
+            logger.error "ALERT_ERROR model=invoice method=charge_customer invoice_id=#{self.id} exception=CardError message=#{e.message} code=#{e.code}"
           when "processing_error"
             # ERROR: Log error and retry tomorrow.
             # Add error to invoice.
             self.errors.add :base, "There was an error processing your payment."
-            logger.error "ALERT_ERROR CardError charge_customer: #{e.message}"
-
+            logger.error "ALERT_ERROR model=invoice method=charge_customer invoice_id=#{self.id} exception=CardError message=#{e.message} code=#{e.code}"
           else
             # ERROR: This should not happen! Log error.
             # Add error to invoice.
             self.errors.add :base, "There was an error processing your payment."
-            logger.error "ALERT_ERROR CardError charge_customer: #{e.message}"
+            logger.error "ALERT_ERROR model=invoice method=charge_customer invoice_id=#{self.id} exception=CardError message=#{e.message} code=#{e.code}"
         end
       end
       success = false
     rescue Stripe::StripeError => e
-      logger.error "ALERT_ERROR StripeError charge_customer: #{e.message}"
+      logger.error "ALERT_ERROR model=invoice method=charge_customer invoice_id=#{self.id} exception=StripeError message=#{e.message}"
       # Add error to invoice.
       self.errors.add :base, "There was an error processing your payment."
       success = false
@@ -400,7 +397,7 @@ class Invoice < ActiveRecord::Base
       success = false
       raise e # TODO: rescue in cron. -MO
     rescue Exception => e
-      logger.error "ALERT_ERROR charge_customer: #{e.message}"
+      logger.error "ALERT_ERROR model=invoice method=charge_customer error=unexpected_exception invoice_id=#{self.id} exception=#{e.class} message=#{e.message}"
       # Add error to invoice.
       self.errors.add :base, "There was an error processing your payment."
       success = false
@@ -425,7 +422,7 @@ class Invoice < ActiveRecord::Base
       end
       self.save!
       if self.total_price_in_cents > 0
-        logger.error "ALERT_ERROR cancel_subscription: Invoice(#{self.id}) was canceled with a balance(#{self.total_price_in_cents})."
+        logger.error "ALERT_ERROR model=invoice method=cancel_subscription error=canceled_with_balance invoice_id=#{self.id} balance=#{self.total_price_in_cents}"
       end
       self.mark_paid_and_close
       InvoiceMailer.delay.subscription_canceled(self.id, false) if send_email
@@ -447,8 +444,12 @@ class Invoice < ActiveRecord::Base
   ###
   def mark_paid_and_close(charge_id=nil)
     success = self.update_attributes({is_closed: true, paid_date: Time.now, stripe_charge_id: charge_id}, without_protection: true)
-    logger.error "ALERT_ERROR BAD Could not set paid invoice(#{self.id}) as paid. Time:#{Time.now} ChargeID:#{charge_id}" unless success
-    logger.error "ALERT_ERROR Tax was overridden INVOICE: #{self.id}" if self.tax_error_occurred
+    unless success
+      logger.error "ALERT_ERROR BAD model=invoice method=mark_paid_and_close error=mark_closed_failed invoice_id=#{self.id} time=#{Time.now} charge_id=#{charge_id}"
+    end
+    if self.tax_error_occurred
+      logger.error "ALERT_ERROR model=invoice method=mark_paid_and_close error=tax_error_occurred invoice_id=#{self.id}"
+    end
     self.invoice_items.each do |item|
       item.set_charge_exempt_info
     end

@@ -26,11 +26,11 @@ class ArtworkUploadsController < InheritedResources::Base
     begin
       flash[:success] = "Your artwork has been uploaded. Thank You!" if @artwork_upload.save
       respond_with(@artwork_upload, location: root_url)
-    rescue Excon::Errors::HTTPStatusError, Excon::Errors::SocketError, Excon::Errors::ProxyParseError, Excon::Errors::StubNotFound
-      logger.error "ERROR Excon artwork_uploads update: #{$!}"
+    rescue Excon::Errors::HTTPStatusError, Excon::Errors::SocketError, Excon::Errors::ProxyParseError, Excon::Errors::StubNotFound => e
+      logger.error "ERROR controller=artwork_uploads action=update error=#{e.class} message=#{e.message}"
       @artwork_upload.errors.add :base, "An error has occurred while processing the image."
     rescue CarrierWave::UploadError, CarrierWave::DownloadError, CarrierWave::FormNotMultipart, CarrierWave::IntegrityError, CarrierWave::InvalidParameter, CarrierWave::ProcessingError
-      logger.error "ERROR CarrierWave artwork_uploads update: #{$!}"
+      logger.error "ERROR controller=artwork_uploads action=update error=#{e.class} message=#{e.message}"
       params[:artwork_upload][:remote_artwork_image_url] = ""
       @artwork_upload = ArtworkUpload.new(params[:artwork_upload])
       flash[:alert] = "Unable to upload your artwork due to an image uploading error."

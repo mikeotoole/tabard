@@ -21,9 +21,8 @@ DaBvRails::Application.configure do
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 
-  # TODO: remove this -MO
-  config.lograge.enabled = true
-  config.log_tags = [ lambda {|req| "request_id=#{req.headers["HTTP_HEROKU_REQUEST_ID"]}" }, :remote_ip ]
+  #config.lograge.enabled = true
+  #config.log_tags = [ lambda {|req| "request_id=#{req.headers["HTTP_HEROKU_REQUEST_ID"]}" }, :remote_ip ]
 
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin

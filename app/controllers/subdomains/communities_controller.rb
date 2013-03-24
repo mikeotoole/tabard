@@ -43,10 +43,10 @@ class Subdomains::CommunitiesController < SubdomainsController
         flash[:alert] = 'Error. Unable to save changes.'
       end
     rescue Excon::Errors::HTTPStatusError, Excon::Errors::SocketError, Excon::Errors::Timeout, Excon::Errors::ProxyParseError, Excon::Errors::StubNotFound
-      logger.error "ERROR Excon community_settings update: #{$!}"
+      logger.error "ERROR controller=communities action=update error=#{e.class} message=#{e.message}"
       @community.errors.add :base, "An error has occurred while processing the image."
     rescue CarrierWave::UploadError, CarrierWave::DownloadError, CarrierWave::FormNotMultipart, CarrierWave::IntegrityError, CarrierWave::InvalidParameter, CarrierWave::ProcessingError
-      logger.error "ERROR CarrierWave community_settings update: #{$!}"
+      logger.error "ERROR controller=communities action=update error=#{e.class} message=#{e.message}"
       @community.errors.add :base, "Unable to upload your artwork due to an image uploading error."
     end
     respond_with @community, location: edit_community_settings_url
