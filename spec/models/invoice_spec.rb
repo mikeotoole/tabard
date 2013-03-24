@@ -639,6 +639,7 @@ describe Invoice do
         invoice.invoice_items.select(&:is_prorated).each do |ii|
           ii.delete
         end
+        invoice.reload
       }
 
       it "should set all plans to the default plan and remove all upgrades" do
