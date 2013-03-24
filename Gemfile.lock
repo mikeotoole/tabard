@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/digitalaugment/profanalyzer.git
-  revision: 50caa58c147c8b5f0d201eaceebd757e4d5fdc50
+  revision: 0b0c282fa49caafb0d2a5c599bcd0fc38baa52b3
   specs:
     profanalyzer (1.2.0)
 
