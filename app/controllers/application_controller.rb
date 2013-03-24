@@ -58,7 +58,7 @@ class ApplicationController < ActionController::Base
   rescue_from Exception do |exception|
     unless Rails.env.development?
       @request_id = !!request ? request.headers["HTTP_HEROKU_REQUEST_ID"] : nil
-      @message = "I had a 500 error." + (@request_id ? "On the request with id {@request_id}." : "")
+      @message = "I had a 500 error." + (@request_id ? " On the request with id #{@request_id}." : "")
       http_status_code(:internal_server_error, exception)
     else
       raise exception
