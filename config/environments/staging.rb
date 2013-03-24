@@ -45,6 +45,10 @@ DaBvRails::Application.configure do
 
   # Turn on lograge. See https://github.com/roidrage/lograge
   config.lograge.enabled = true
+  config.lograge.custom_options = lambda do |event|
+    # Print out request params
+    {:params => event.payload[:params].with_indifferent_access.except(:action, :controller)}
+  end
 
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store

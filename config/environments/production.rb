@@ -35,7 +35,7 @@ DaBvRails::Application.configure do
 
   # See everything in the log (default is :info)
   # The levels available on the logger are (in ascending order): debug, info, warn, error, and fatal.
-  config.log_level = :warn
+  config.log_level = :info
 
   # Use a different logger for distributed setups
   # config.logger = SyslogLogger.new
@@ -46,6 +46,10 @@ DaBvRails::Application.configure do
 
   # Turn on lograge. See https://github.com/roidrage/lograge
   config.lograge.enabled = true
+  config.lograge.custom_options = lambda do |event|
+    # Print out request params
+    {:params => event.payload[:params].with_indifferent_access.except(:action, :controller)}
+  end
 
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store
