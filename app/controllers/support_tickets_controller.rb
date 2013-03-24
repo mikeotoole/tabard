@@ -15,7 +15,7 @@ class SupportTicketsController < ApplicationController
 ###
   # Index
   def index
-    @support_ticket = SupportTicket.new()
+    @support_ticket = SupportTicket.new(body: params[:auto_body])
     @support_tickets = current_user.support_tickets.order('status DESC').order('updated_at DESC').includes(support_comments: [:admin_user, :user_profile]).page(params[:page]).per(10) if user_signed_in?
   end
 

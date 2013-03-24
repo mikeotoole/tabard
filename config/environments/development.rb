@@ -21,7 +21,7 @@ DaBvRails::Application.configure do
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 
-  config.log_tags = [ lambda {|req| "request_id=#{req.headers["HTTP_HEROKU_REQUEST_ID"]}" }, :remote_ip ]
+#   config.log_tags = [ lambda {|req| "request_id=#{req.headers["HTTP_HEROKU_REQUEST_ID"]}" }, :remote_ip ]
 
   # lograge setup. See https://github.com/roidrage/lograge
 #   config.lograge.enabled = true
