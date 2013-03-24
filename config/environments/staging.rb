@@ -43,8 +43,8 @@ DaBvRails::Application.configure do
   config.log_tags = [:remote_ip]
   config.log_tags += [
     proc do |req|
-      if env['HTTP_HEROKU_REQUEST_ID'].present?
-        "request_id=#{env['HTTP_HEROKU_REQUEST_ID']}"
+      if ENV['HTTP_HEROKU_REQUEST_ID'].present?
+        "request_id=#{ENV['HTTP_HEROKU_REQUEST_ID']}"
       end
     end
   ]
