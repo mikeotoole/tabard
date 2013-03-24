@@ -41,4 +41,8 @@ class StatusCodeController < ApplicationController
   def loaderio
     render text: "loaderio-5990c4bd3e6704d1a506c842975428c3"
   end
+
+  def bang
+    raise "Error Test"
+  end
 end

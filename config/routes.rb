@@ -275,9 +275,11 @@ DaBvRails::Application.routes.draw do
 
   get '/loaderio-5990c4bd3e6704d1a506c842975428c3' => "status_code#loaderio"
 
+
   get "/unsupported_browser" => "status_code#unsupported_browser", as: 'unsupported_browser'
   match '/not_found' => 'status_code#not_found', as: 'not_found'
   match '/forbidden' => 'status_code#forbidden', as: 'forbidden'
+  get 'bang' => 'status_code#bang'
   match '*route', to: 'status_code#not_found', as: 'status_code_not_found'
 
   # The priority is based upon order of creation:
