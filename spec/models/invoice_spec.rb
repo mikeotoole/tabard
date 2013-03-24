@@ -59,7 +59,7 @@ describe Invoice do
 
 #   it "should be editable when not closed" do
 #     invoice.is_closed.should be_false
-#     invoice.invoice_items.new({community: community, item: user_pack, quantity: 1}, without_protection: true)
+#     invoice.invoice_items.new({community: community, item: user_pack, quantity: 1})
 #     expect {
 #       invoice.save.should be_true
 #     }.to change(InvoiceItem, :count).by(1)
@@ -69,7 +69,7 @@ describe Invoice do
 #   it "should not be editable after closed" do
 #     invoice.mark_paid_and_close.should be_true
 #     invoice.is_closed.should be_true
-#     invoice.invoice_items.new({community: community, item: user_pack, quantity: 1}, without_protection: true)
+#     invoice.invoice_items.new({community: community, item: user_pack, quantity: 1})
 #     expect {
 #       invoice.save.should be_false
 #     }.to change(InvoiceItem, :count).by(0)
@@ -117,7 +117,7 @@ describe Invoice do
 #
 #   describe "invoice_items" do
 #     it "should be valid" do
-#       ii = invoice.invoice_items.new({community: community, quantity: 1}, without_protection: true)
+#       ii = invoice.invoice_items.new({community: community, quantity: 1})
 #       ii.should_not be_valid
 #       invoice.should_not be_valid
 #     end
@@ -324,19 +324,18 @@ describe Invoice do
     describe "when community is given" do
       it "should return the cost for communities invoice items" do
         community2 = create(:community, admin_profile_id: invoice.user.user_profile.id)
-        invoice.invoice_items.new({community: community2, item: pro_plan, quantity: 1}, without_protection: true)
-        invoice.save.should be_true
-        invoice.reload
+        invoice.invoice_items.create({community: community2, item: pro_plan, quantity: 1}).should be_true
+
         invoice.invoice_items.select{|ii| ii.community_id == community2.id and ii.is_recurring == true}.count.should eq 1
         invoice.total_recurring_price_per_month_in_cents(community2).should eq pro_plan.price_per_month_in_cents
       end
 
       it "should only return the cost of recurring items" do
         community2 = create(:community, admin_profile_id: invoice.user.user_profile.id)
-        invoice.invoice_items.new({community: community2, item: pro_plan, quantity: 1}, without_protection: true)
+        invoice.invoice_items.new({community: community2, item: pro_plan, quantity: 1})
         invoice.save.should be_true
         Timecop.travel Time.now + 15.days
-        invoice.invoice_items.new({community: community2, item: user_pack, quantity: 1}, without_protection: true)
+        invoice.invoice_items.new({community: community2, item: user_pack, quantity: 1})
         invoice.save.should be_true
         invoice.reload
         invoice.invoice_items.select{|ii| ii.community_id == community2.id and ii.is_recurring == true}.count.should eq 2
@@ -377,7 +376,7 @@ describe Invoice do
     it "should ignore any prorated community plan invoice items present" do
       community2 = create(:community, admin_profile_id: invoice.user.user_profile.id)
       Timecop.travel Time.now + 15.days
-      ii = invoice.invoice_items.new({community: community2, item: pro_plan, quantity: 1}, without_protection: true)
+      ii = invoice.invoice_items.new({community: community2, item: pro_plan, quantity: 1})
       invoice.save.should be_true
       invoice.reload
       prorated_plan = invoice.invoice_items.select{|ii| ii.community_id == community2.id and ii.item == pro_plan and ii.is_prorated == true}
@@ -421,8 +420,8 @@ describe Invoice do
 
     it "should only return community upgrade invoice items scoped to community" do
       community2 = create(:community, admin_profile_id: invoice.user.user_profile.id)
-      invoice.invoice_items.new({community: community2, item: pro_plan, quantity: 1}, without_protection: true)
-      invoice.invoice_items.new({community: community2, item: user_pack, quantity: 1}, without_protection: true)
+      invoice.invoice_items.new({community: community2, item: pro_plan, quantity: 1})
+      invoice.invoice_items.new({community: community2, item: user_pack, quantity: 1})
       invoice.save.should be_true
       invoice.reload
       ii = invoice.invoice_items.select{|ii| ii.community_id == community.id and ii.item == user_pack and ii.is_recurring == true}
@@ -431,7 +430,7 @@ describe Invoice do
 
 #     it "should return an empty array when no recurring community upgrade invoice items are present" do
 #       community2 = create(:community, admin_profile_id: invoice.user.user_profile.id)
-#       invoice.invoice_items.new({community: community2, item: pro_plan, quantity: 1}, without_protection: true)
+#       invoice.invoice_items.new({community: community2, item: pro_plan, quantity: 1})
 #       invoice.save.should be_true
 #       invoice.reload
 #       invoice.invoice_items.select{|ii| ii.community_id == community2.id and ii.item == user_pack and ii.is_recurring == true}.any?.should eq false
@@ -717,8 +716,8 @@ describe Invoice do
   describe "uniqued_invoice_items" do
     it "should return invoice items with the same start date, end date, community, is_prorated and is_recurring as new unsaved invoice items" do
       invoice.invoice_items.count.should eq 1
-      invoice.invoice_items.new({community: community, item: user_pack, quantity: 1}, without_protection: true)
-      invoice.invoice_items.new({community: community, item: user_pack, quantity: 1}, without_protection: true)
+      invoice.invoice_items.new({community: community, item: user_pack, quantity: 1})
+      invoice.invoice_items.new({community: community, item: user_pack, quantity: 1})
       invoice.save.should be_true
       invoice.invoice_items.count.should eq 3
 

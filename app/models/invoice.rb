@@ -252,7 +252,7 @@ class Invoice < ActiveRecord::Base
     com_id = community.id
     invoice_item = self.invoice_items.not_prorated.where{(item_type == "CommunityPlan") & (community_id == com_id)}.limit(1).first
     if invoice_item.blank?
-      invoice_item = self.invoice_items.new({community: community, item: CommunityPlan.default_plan, quantity: 1}, without_protection: true)
+      invoice_item = self.invoice_items.new({community: community, item: CommunityPlan.default_plan, quantity: 1})
     end
     return invoice_item
   end
@@ -467,6 +467,7 @@ class Invoice < ActiveRecord::Base
         end
       end
       if match
+        # FIXME: I don't like this phantom invoice item. What if the invoice item gets saved? -MO
         uniqued_ii.push InvoiceItem.new({invoice: collision_item.invoice, community: collision_item.community, item: collision_item.item, start_date: collision_item.start_date, end_date: collision_item.end_date, quantity: collision_item.quantity + invoice_item.quantity, is_prorated: collision_item.is_prorated, is_recurring: collision_item.is_recurring}, without_protection: true)
         uniqued_ii.delete collision_item
       else
@@ -548,7 +549,7 @@ protected
         invoice.period_start_date = self.period_end_date
         invoice.period_end_date = self.period_end_date + 30.days
         self.invoice_items.recurring.each do |ii|
-          invoice.invoice_items.new({community: ii.community, item: ii.item, quantity: ii.quantity}, without_protection: true)
+          invoice.invoice_items.new({community: ii.community, item: ii.item, quantity: ii.quantity})
         end
         invoice.save!
       end

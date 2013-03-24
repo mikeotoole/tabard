@@ -56,7 +56,7 @@ ruby '2.0.0'
   gem 'rest-client'#                                                                        MIT - https://github.com/archiloque/rest-client
 
 # Memory Usage
-  gem 'oink'#                                                                               MIT - https://github.com/noahd1/oink
+  #gem 'oink'#                                                                               MIT - https://github.com/noahd1/oink
 
 # Filtering
   gem 'profanalyzer', github: "digitalaugment/profanalyzer" #                               MIT - https://github.com/michaeledgar/profanalyzer

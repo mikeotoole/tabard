@@ -40,7 +40,14 @@ DaBvRails::Application.configure do
   # config.logger = SyslogLogger.new
   config.logger = Logger.new(STDOUT)
 
-  config.log_tags = [:uuid, :remote_ip]
+  config.log_tags = [:remote_ip]
+  config.log_tags += [
+    proc do |req|
+      if env['HTTP_HEROKU_REQUEST_ID'].present?
+        "request_id=#{env['HTTP_HEROKU_REQUEST_ID']}"
+      end
+    end
+  ]
 
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store
