@@ -677,6 +677,10 @@ describe Invoice do
         invoice.cancel_subscription
         invoice.is_closed.should be_false
       end
+
+      it "should make invoice return DefaultPlan for user's community" do
+        pending
+      end
     end
   end
 #
