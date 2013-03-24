@@ -83,7 +83,6 @@ class Wow < Game
   end
 
   def new_character(params)
-    puts "NEW CHARACTER #{params}"
     WowCharacter.new(params)
   end
 
