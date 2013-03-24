@@ -41,14 +41,7 @@ DaBvRails::Application.configure do
   config.logger = Logger.new(STDOUT)
 
   # Add info to the logs for tracking requests.
-  config.log_tags = [:remote_ip]
-  config.log_tags += [
-    proc do |req|
-      if req.headers["HTTP_HEROKU_REQUEST_ID"].present?
-        "request_id=#{req.headers["HTTP_HEROKU_REQUEST_ID"]}"
-      end
-    end
-  ]
+  config.log_tags = [ lambda {|req| "request_id=#{req.headers["HTTP_HEROKU_REQUEST_ID"]}" }, :remote_ip ]
 
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store

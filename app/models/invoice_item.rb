@@ -252,6 +252,7 @@ protected
   ###
   def set_as_recurring
     self.is_recurring = true unless self.is_prorated
+    return true
   end
 
   ###
