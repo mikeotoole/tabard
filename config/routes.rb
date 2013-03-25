@@ -276,11 +276,16 @@ DaBvRails::Application.routes.draw do
   get '/loaderio-5990c4bd3e6704d1a506c842975428c3' => "status_code#loaderio"
 
 
+  # Error Handling and Testing
+  get 'bang' => 'status_code#bang' # Test errors
+
   get "/unsupported_browser" => "status_code#unsupported_browser", as: 'unsupported_browser'
   match '/not_found' => 'status_code#not_found', as: 'not_found'
   match '/forbidden' => 'status_code#forbidden', as: 'forbidden'
-  get 'bang' => 'status_code#bang'
-  match '*route', to: 'status_code#not_found', as: 'status_code_not_found'
+  match '/internal_server_error' => 'status_code#internal_server_error', as: 'internal_server_error'
+
+  match "/404", to: "status_code#not_found"
+  match "/500", to: "status_code#internal_server_error"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

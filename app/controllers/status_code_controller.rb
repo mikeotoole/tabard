@@ -4,6 +4,8 @@
 # License::   Proprietary Closed Source
 #
 # This controller is for creating the active profile.
+#
+# Symbol meanings: http://www.codyfauser.com/2008/7/4/rails-http-status-code-to-symbol-mapping
 ###
 class StatusCodeController < ApplicationController
   skip_before_filter :block_unauthorized_user!
@@ -18,6 +20,12 @@ class StatusCodeController < ApplicationController
   # This is the 404 method
   def not_found
     render :not_found, status: :not_found
+  end
+
+  def internal_server_error
+    @request_id = !!request ? request.headers["HTTP_HEROKU_REQUEST_ID"] : nil
+    @message = "I had a 500 error." + (@request_id ? " On the request with id #{@request_id}." : "")
+    render :internal_server_error, status: :internal_server_error
   end
 
   # This method gets the Unsupported Browser page.

@@ -58,12 +58,13 @@ module DaBvRails
     # Filter Stripe Webhook Params
     config.filter_parameters += [:active_card]
 
-
     # Enable the asset pipeline
     config.assets.enabled = true
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    config.exceptions_app = self.routes
 
     # Configure what files get generated with rails generate command.
     config.generators do |g|

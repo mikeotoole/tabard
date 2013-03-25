@@ -55,16 +55,6 @@ class ApplicationController < ActionController::Base
     http_status_code(:not_found, exception)
   end
 
-  rescue_from Exception do |exception|
-    unless Rails.env.development?
-      @request_id = !!request ? request.headers["HTTP_HEROKU_REQUEST_ID"] : nil
-      @message = "I had a 500 error." + (@request_id ? " On the request with id #{@request_id}." : "")
-      http_status_code(:internal_server_error, exception)
-    else
-      raise exception
-    end
-  end
-
   ###
   # This method will attempt to render a status code according to the arguments that are passed to it.
   # [Args]
@@ -84,10 +74,6 @@ class ApplicationController < ActionController::Base
         format.html { render "status_code/forbidden", status: status, layout: 'application' }
       when :not_found
         format.html { render "status_code/not_found", status: status, layout: 'application' }
-      when :service_unavailable
-        format.html { render "status_code/service_unavailable", status: status, layout: 'application' }
-      when :internal_server_error
-        format.html { render "status_code/internal_server_error", status: status, layout: 'application' }
       else
         format.html { render "status_code/index", status: status, layout: 'application' }
       end
