@@ -59,7 +59,7 @@
         %dl
           - @community_application.submission.answers.each do |answer|
             %dt= answer.question_body
-            %dd= answer.body
+            %dd= format_content answer.body
 
     - unless @community_application.accepted? or @community_application.applicant_is_a_member? or @community_application.no_longer_a_member?
       %p.submit
