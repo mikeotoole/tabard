@@ -7,6 +7,8 @@ describe SubscriptionsController do
   let(:card_token) { DefaultObjects.stripe_card_token_out_state }
   let(:admin_with_stripe) { DefaultObjects.community_admin_with_stripe_out_state }
   let(:community_with_stripe) { admin_with_stripe.owned_communities.first }
+  let(:pro_community) { create(:pro_community) }
+  let(:pro_admin) { pro_community.admin_profile.user }
 
   describe "GET index" do
     it "assigns all users owned_communities as @owned_communities when authenticated as a user" do
@@ -32,6 +34,20 @@ describe SubscriptionsController do
       sign_in admin
       get 'edit', community_id: community
       response.should be_success
+    end
+
+    it "should not allow a community the user does not own" do
+      sign_in admin
+      get 'edit', community_id: create(:community)
+      response.should be_not_found
+    end
+
+    it "should redirect to subscritpions index if current invoice is processing_payment" do
+      sign_in pro_admin
+      pro_community.is_paid_community?.should be_true
+      pro_admin.current_invoice.update_column(:processing_payment, true)
+      get 'edit', community_id: pro_community
+      response.should redirect_to(subscriptions_url)
     end
 
     it "should render subscriptions/edit template when authenticated as an authorized user" do
@@ -69,7 +85,7 @@ describe SubscriptionsController do
     describe "when authenticated as a user with valid attributes and stripe token" do
       before(:each) do
         sign_in admin
-        put 'update', community_id: community, stripe_card_token: card_token.id, invoice: {"invoice_items_attributes"=>
+        put 'update', community_id: community, stripe_card_token: card_token, invoice: {"invoice_items_attributes"=>
                                                                                                  {"0"=>{"community_id"=>"#{community.id}",
                                                                                                         "item_type"=>"CommunityPlan",
                                                                                                         "quantity"=>"1",
@@ -83,6 +99,28 @@ describe SubscriptionsController do
       it "should redirect back to subscription edit page" do
         response.should redirect_to(edit_subscription_url(community))
       end
+    end
+
+    it "should not allow a community the user does not own" do
+      sign_in admin
+      put 'update', community_id: create(:community), stripe_card_token: card_token, invoice: {"invoice_items_attributes"=>
+                                                                                                 {"0"=>{"community_id"=>"#{community.id}",
+                                                                                                        "item_type"=>"CommunityPlan",
+                                                                                                        "quantity"=>"1",
+                                                                                                        "item_id"=>"#{plan.id}"} } }
+      response.should be_not_found
+    end
+
+    it "should redirect to subscritpions index if current invoice is processing_payment" do
+      sign_in pro_admin
+      pro_community.is_paid_community?.should be_true
+      pro_admin.current_invoice.update_column(:processing_payment, true)
+      put 'update', community_id: pro_community, stripe_card_token: card_token, invoice: {"invoice_items_attributes"=>
+                                                                                                 {"0"=>{"community_id"=>"#{pro_community.id}",
+                                                                                                        "item_type"=>"CommunityPlan",
+                                                                                                        "quantity"=>"1",
+                                                                                                        "item_id"=>"#{plan.id}"} } }
+      response.should redirect_to(subscriptions_url)
     end
 
     it "should assign only available plans to @available_plans" do

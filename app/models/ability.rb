@@ -392,8 +392,7 @@ class Ability
             when "View"
               action.concat([:read])
             else
-              logger.error "Invalid permission attempting to be decoded."
-              logger.error permisson.to_yaml
+              logger.error "ALERT_ERROR error=invalid_permission_level permisson_id=#{permisson.id} permission_level=#{permission.permission_level}"
           end
         end
         if permission.can_lock

@@ -129,7 +129,7 @@ class InvoiceItem < ActiveRecord::Base
 
   # Determines if this invoice item is compatable with the plan.
   def is_compatable_with_plan?
-    return true unless self.item_type != "CommunityPlan"
+    return true if self.item_type == "CommunityPlan"
     plan_invoice_item = self.invoice.invoice_items.select{|ii| ii.has_community_plan? and ii.community == self.community}.first
     if plan_invoice_item.present?
       plan = plan_invoice_item.item
@@ -137,7 +137,6 @@ class InvoiceItem < ActiveRecord::Base
       return false
     end
     return plan.is_compatable_with_upgrade? self.item
-    return true
   end
 
   # The number of days this invoice item is in effect for.
@@ -158,9 +157,10 @@ class InvoiceItem < ActiveRecord::Base
     end
   end
 
-  def mark_paid_and_close
+  # Called when an invoice is closed to save all charge exempt info.
+  def set_charge_exempt_info
     if self.community.is_charge_exempt
-      update_attributes({was_charge_exempt: true, charge_exempt_label: self.community.charge_exempt_label, charge_exempt_reason: self.community.charge_exempt_reason})
+      update_attributes({was_charge_exempt: true, charge_exempt_label: self.community.charge_exempt_label, charge_exempt_reason: self.community.charge_exempt_reason}, without_protection: true)
     end
   end
 
@@ -252,6 +252,7 @@ protected
   ###
   def set_as_recurring
     self.is_recurring = true unless self.is_prorated
+    return true
   end
 
   ###

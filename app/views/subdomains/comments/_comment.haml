@@ -13,8 +13,7 @@
         %time= "#{time_ago_in_words(comment.updated_at)} ago"
       %p
         - unless comment.is_removed
-          %span.body
-            = shorten_words(comment.body)
+          %span.body= format_comment comment.body
           = link_to 'Reply to this', new_comment_path(commentable_id: comment.id, commentable_type: comment.class), remote: true, data: { type: :text }, class: 'reply'
         - if comment.is_removed
           %em Comment was removed

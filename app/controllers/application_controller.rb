@@ -65,7 +65,7 @@ class ApplicationController < ActionController::Base
     if exception
       # store the exception so its message can be used in the view
       @exception = exception
-      flash[:alert] = @exception.message unless @exception.message.blank?
+      flash.now[:alert] = @exception.message unless @exception.message.blank?
     end
     # Only add the error page to the status code if the reuqest-format was HTML
     respond_to do |format|
@@ -74,8 +74,6 @@ class ApplicationController < ActionController::Base
         format.html { render "status_code/forbidden", status: status, layout: 'application' }
       when :not_found
         format.html { render "status_code/not_found", status: status, layout: 'application' }
-      when :service_unavailable
-        format.html { render "status_code/service_unavailable", status: status, layout: 'application' }
       else
         format.html { render "status_code/index", status: status, layout: 'application' }
       end

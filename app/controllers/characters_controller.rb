@@ -12,6 +12,7 @@ class CharactersController < ApplicationController
   # POST /played_games/:played_game_id/characters
   def create
     flash[:success] = "Your character has been created." if @character.save
+    @character.find_and_upload_avatar_from_game
     respond_with(@character, location: user_profile_url(current_user.user_profile, anchor: "games", subdomain: "www"))
   end
 
@@ -22,6 +23,7 @@ class CharactersController < ApplicationController
   # PUT /characters/:id
   def update
     flash[:success] = "Your character has been updated." if @character.update_attributes(params[:character])
+    @character.find_and_upload_avatar_from_game
     respond_with(@character, location: user_profile_url(current_user.user_profile, anchor: "games", subdomain: "www"))
   end
 

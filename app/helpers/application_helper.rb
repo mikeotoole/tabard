@@ -48,6 +48,24 @@ module ApplicationHelper
   end
 
   ###
+  # Formats text for body (page, discussion, etc.)
+  ###
+  def format_content(content)
+    content = Nokogiri::HTML::DocumentFragment.parse(content)
+    content = Rinku.auto_link content.to_s, :urls, 'target="blank" rel="nofollow"'
+    raw content
+  end
+
+  ###
+  # Formats text for comments
+  ###
+  def format_comment(content)
+    content = strip_tags content
+    content = Rinku.auto_link content, :urls, 'target="_blank" rel="nofollow"'
+    raw content
+  end
+
+  ###
   # Checks to see if the page is going to render action items for the community
   # [Returns] True or False
   ###

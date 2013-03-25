@@ -10,7 +10,7 @@ DaBvRails::Application.configure do
   config.whiny_nils = true
 
   # Show full error reports and disable caching
-  config.consider_all_requests_local       = true
+  config.consider_all_requests_local       = true # Turn this false to see error pages.
   config.action_controller.perform_caching = false
 
   # Don't care if the mailer can't send
@@ -20,6 +20,18 @@ DaBvRails::Application.configure do
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
+
+#   config.log_tags = [ lambda {|req| "request_id=#{req.headers["HTTP_HEROKU_REQUEST_ID"]}" }, :remote_ip ]
+
+  # lograge setup. See https://github.com/roidrage/lograge
+#   config.lograge.enabled = true
+  # custom_options can be a lambda or hash
+  # if it's a lambda then it must return a hash
+#   config.lograge.custom_options = lambda do |event|
+#     # Print out request params
+#     {:params => event.payload[:params].with_indifferent_access.except(:action, :controller)}
+#   end
+
 
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin

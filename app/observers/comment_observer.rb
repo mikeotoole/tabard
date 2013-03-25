@@ -18,12 +18,13 @@ class CommentObserver < ActiveRecord::Observer
 
   # Creates an activity when a comment is updated.
   def after_update(comment)
-    if comment.changed?
-      Activity.create!( {user_profile: comment.user_profile,
-                        community: comment.community,
-                        target: comment,
-                        action: "edited"}, without_protection: true)
-    end
+    # Removed Per BVR-969
+    #if comment.changed?
+    #  Activity.create!( {user_profile: comment.user_profile,
+    #                    community: comment.community,
+    #                    target: comment,
+    #                    action: "edited"}, without_protection: true)
+    #end
   end
 
   # removes activity with comment

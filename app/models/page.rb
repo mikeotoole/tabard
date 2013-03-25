@@ -29,6 +29,7 @@ class Page < ActiveRecord::Base
 ###
   belongs_to :page_space
   has_one :community, through: :page_space
+  has_many :activities, as: :target, dependent: :destroy
 
   scope :navigation_pages, conditions: {show_in_navigation: true}
   scope :alphabetical, order("name ASC")

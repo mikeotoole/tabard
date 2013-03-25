@@ -2,7 +2,7 @@
 -#= f.input :about
 %li.avatar{ class: object_has_avatar_errors(f.object) ? 'with-errors' : '' }
   - if !character.persisted? or !character.avatar_url.to_s or f.object.errors.any?
-    = image_tag 'application/avatar@240.png'
+    = image_tag 'avatars/avatar@240.png'
   - else
     = image_tag(character.avatar_url :large)
   %br

@@ -24,7 +24,7 @@ class UserProfilesController < ApplicationController
       format.html {
         if @user_profile.is_disabled?
           flash[:alert] = 'The profile you requested is no longer active.'
-          render 'inactive_show.haml'
+          render 'inactive_show'
         else
           @communities_to_invite_to = Array.new
           @communities_with_roles_to_assign = Array.new
@@ -63,10 +63,10 @@ class UserProfilesController < ApplicationController
     begin
       @user_profile.update_attributes(params[:user_profile])
     rescue Excon::Errors::HTTPStatusError, Excon::Errors::SocketError, Excon::Errors::ProxyParseError, Excon::Errors::StubNotFound
-      logger.error "#{$!}"
+      logger.error "ERROR controller=user_profiles action=update error=#{e.class} message=#{e.message}"
       @user_profile.errors.add :base, "An error has occurred while processing the image."
     rescue CarrierWave::UploadError, CarrierWave::DownloadError, CarrierWave::FormNotMultipart, CarrierWave::IntegrityError, CarrierWave::InvalidParameter, CarrierWave::ProcessingError
-      logger.error "#{$!}"
+      logger.error "ERROR controller=user_profiles action=update error=#{e.class} message=#{e.message}"
       @user_profile.errors.add :base, "Unable to upload your artwork due to an image uploading error."
     end
     respond_with(@user_profile)

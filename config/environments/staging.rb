@@ -34,11 +34,22 @@ DaBvRails::Application.configure do
   # config.force_ssl = true
 
   # See everything in the log (default is :info)
-  # config.log_level = :debug
+  # The levels available on the logger are (in ascending order): debug, info, warn, error, and fatal.
+  config.log_level = :debug
 
   # Use a different logger for distributed setups
   # config.logger = SyslogLogger.new
   config.logger = Logger.new(STDOUT)
+
+  # Add info to the logs for tracking requests.
+  config.log_tags = [ lambda {|req| "request_id=#{req.headers["HTTP_HEROKU_REQUEST_ID"]}" }, :remote_ip ]
+
+  # Turn on lograge. See https://github.com/roidrage/lograge
+  config.lograge.enabled = true
+  config.lograge.custom_options = lambda do |event|
+    # Print out request params
+    {:params => event.payload[:params].with_indifferent_access.except(:action, :controller)}
+  end
 
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store

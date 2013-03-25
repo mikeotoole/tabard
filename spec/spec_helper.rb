@@ -33,6 +33,11 @@ Capybara.javascript_driver = :poltergeist
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
+# VCR.configure do |c|
+#   c.cassette_library_dir = 'spec/vcr'
+#   c.hook_into :webmock #or :webmock or :fakeweb (must add them to Gemfile)
+# end
+
 RSpec.configure do |config|
   # == Mock Framework
   #
@@ -64,6 +69,7 @@ RSpec.configure do |config|
   config.after(:each) do
     DatabaseCleaner.clean
     DefaultObjects.clean
+    Timecop.return
   end
 
   config.include(MailerMacros)

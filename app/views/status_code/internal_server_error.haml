@@ -1,0 +1,12 @@
+- title "We're sorry, but something went wrong (500)"
+
+%h1 We're sorry, but something went wrong.
+
+%p
+  %strong Congratulations on breaking the system.
+  If you continue to experience issues, please
+  - if user_signed_in?
+    = link_to "open a support ticket", support_index_url(auto_body: @message)
+  - else
+    %a{:href => "mailto: support@tabard.com?subject=#{@message}"} email support@tabard.com
+  for assistance. We'll get to the bottom of this.

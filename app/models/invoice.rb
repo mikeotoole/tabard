@@ -16,6 +16,8 @@ class Invoice < ActiveRecord::Base
 ###
   # This is the minimal charge amount
   MINIMUM_CHARGE_AMOUNT=100
+  # If the charged amount is larger then this it is logged (will trigger alert email).
+  NOTIFY_CHARGE_AMOUNT=2000
   # How long till we cancel a users subscription for failure to pay.
   SECONDS_OF_FAILED_ATTEMPTS=604800 # Seconds in 7 days.
 
@@ -56,6 +58,8 @@ class Invoice < ActiveRecord::Base
   validates_date :period_end_date, on_or_after: :period_start_date, on_or_after_message: 'must be on or after start date'
   validate :no_reopening_closed_invoice
   validate :cant_be_edited_after_closed
+  validates :charged_state_tax_rate, numericality: { greater_than_or_equal_to: 0, only_integer: false}
+  validates :charged_local_tax_rate, numericality: { greater_than_or_equal_to: 0, only_integer: false}
 
 ###
 # Callbacks
@@ -70,12 +74,12 @@ class Invoice < ActiveRecord::Base
   # This will call charge_customer on all invoices that have an end_date before today.
   def self.bill_customers
     today = Time.zone.now.end_of_day
-    seven_days_ago = today - 7.days
+    seven_days_ago = today - SECONDS_OF_FAILED_ATTEMPTS.seconds
     invoices_to_bill = Invoice.where{(period_end_date <= today) &
-                                     (paid_date == nil) &
+                                     (paid_date == nil) & # TODO: Why can't this just look for invoices not closed?
                                      ((first_failed_attempt_date == nil) | (first_failed_attempt_date > seven_days_ago))}
     invoices_to_bill.each do |invoice|
-      Invoice.delay.charge(invoice)
+      Invoice.delay.charge(invoice.id)
     end
   end
 
@@ -137,7 +141,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def total_price_in_cents_without_tax
-      invoice_items.empty? ? 0 : invoice_items.map{|ii| ii.total_price_in_cents}.inject(0,:+)
+    invoice_items.empty? ? 0 : invoice_items.map{|ii| ii.total_price_in_cents}.inject(0,:+)
   end
 
   def total_price_in_dollars_without_tax
@@ -145,7 +149,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def total_tax_in_cents
-      tax = (self.total_price_in_cents_without_tax * self.tax_rate).round(0)
+    tax = (self.total_price_in_cents_without_tax * self.tax_rate).round(0)
   end
 
   def total_tax_in_dollars
@@ -158,14 +162,11 @@ class Invoice < ActiveRecord::Base
   end
 
   def tax_rate
-    if self.paid_date
-      if self.charged_state_tax_rate > 0 or self.charged_local_tax_rate > 0
-        return self.charged_state_tax_rate + self.charged_local_tax_rate
-      else
-        return 0
-      end
-    end
+    # If invoice was paid return saved values.
+    return self.charged_state_tax_rate + self.charged_local_tax_rate if self.paid_date
+    # If tax rate is cached return cached value.
     return @tax_rate if @tax_rate
+    # If user has no stripe token then we can't look up tax info. Just return zero.
     if self.user_stripe_customer_token.blank?
       @tax_rate ||= 0.0
     else
@@ -193,17 +194,20 @@ class Invoice < ActiveRecord::Base
                 self.update_column(:local_tax_code, rate_info["code"]) if self.persisted?
                 success = true
               end
+            when "3"
+              # The address, ZIP+4, and ZIP could not be  found.
+              success = false
             else
-              logger.error  "ERROR WITH WA #{response.to_yaml}"
+              logger.error "ALERT_ERROR model=invoice method=tax_rate wa_error=unexpected_code response_code=#{kickback_hash['response']['code']}"
               self.update_column(:tax_error_occurred, true) if self.persisted?
             end
           rescue => e
-            logger.error "ERROR WITH WA REQUEST #{e.to_yaml}"
+            logger.error "ALERT_ERROR model=invoice method=tax_rate request_error=#{e.class} message=#{e.message}"
             self.update_column(:tax_error_occurred, true) if self.persisted?
           end
         end
       rescue => e
-        logger.error "ERROR WITH Stripe #{e.to_yaml}"
+        logger.error "ALERT_ERROR model=invoice method=tax_rate stripe_error=#{e.class} message=#{e.message}"
         self.update_column(:tax_error_occurred, true) if self.persisted?
       end
       if success
@@ -248,7 +252,7 @@ class Invoice < ActiveRecord::Base
     com_id = community.id
     invoice_item = self.invoice_items.not_prorated.where{(item_type == "CommunityPlan") & (community_id == com_id)}.limit(1).first
     if invoice_item.blank?
-      invoice_item = self.invoice_items.new({community: community, item: CommunityPlan.default_plan, quantity: 1}, without_protection: true)
+      invoice_item = self.invoice_items.new({community: community, item: CommunityPlan.default_plan, quantity: 1})
     end
     return invoice_item
   end
@@ -276,6 +280,7 @@ class Invoice < ActiveRecord::Base
   def update_attributes_with_payment(invoice_attributes, stripe_card_token=nil)
     success = false
     self.attributes = invoice_attributes unless invoice_attributes.blank?
+    # If no stripe info error
     if self.user_stripe_customer_token.blank? and stripe_card_token.blank?
       #ERROR: Need payment info.
       self.errors.add :base, "Payment information is required"
@@ -288,7 +293,7 @@ class Invoice < ActiveRecord::Base
           self.errors.add :base, "There was a problem with your credit card. Insure your full billing address is provided."
         end
         if success and self.period_end_date < Time.now
-          # charge customer now.
+          # Charge customer now not sending email and override tax (eat tax if we can't findout tax info).
           success = self.charge_customer(false, true)
         end
       end
@@ -299,134 +304,159 @@ class Invoice < ActiveRecord::Base
   ###
   # Used to submit a charge to Stripe with this invoice cost.
   # If the invoice is still open it will first be closed.
-  #
+  #   * +send_fail_email+ If it should send payment failed email. This is false when a user directly causing charge_customer to be called and will be notified now.
+  #   * +override_tax+ If it should ignore tax and flag invoice if we can't find out tax info.
   # [Returns] True if the charge was submitted to Stripe, false otherwise
   ###
   def charge_customer(send_fail_email=true, override_tax=false)
     success = false
+    # TODO: look at charge exempt status and how it works with this. -MO
     begin
       if self.user_stripe_customer_token.present?
         if self.total_price_in_cents > MINIMUM_CHARGE_AMOUNT
           if self.tax_error_occurred and not override_tax
             success = false
           else
-            begin
-              raise ActiveRecord::StaleObjectError if self.processing_payment
-              self.update_attributes({processing_payment: true, lock_version: self.lock_version}, without_protection: true)
-              charge = Stripe::Charge.create(
-                amount: self.total_price_in_cents,
-                currency: "usd",
-                customer: self.user_stripe_customer_token,
-                description: "Charge for invoice id:#{self.id}"
-              )
-              success = self.mark_paid_and_close(charge.id)
-            rescue ActiveRecord::StaleObjectError
-              errors.add :base, "Payment is already being processed."
-              success = false
-            rescue Stripe::CardError => e
-              # Mark first failed attempt date.
-              self.first_failed_attempt_date = Time.now if self.first_failed_attempt_date.blank?
-              # Set boolean on user that payment failed (triggering a flash message for them).
-              self.user.mark_as_delinquent_account
-              if send_fail_email and (Time.now - self.first_failed_attempt_date) > SECONDS_OF_FAILED_ATTEMPTS
-                # If over seven days since first failed attempt cancel users subscription.
-                if self.invoice_items.prorated.empty?
-                  # An invoice with no prorated items will have the plans turned to free and the invoice closed.
-                  self.invoice_items.select(&:has_community_plan?).each do |ii|
-                    ii.item = CommunityPlan.default_plan
-                  end
-                  self.save!
-                  self.mark_paid_and_close
-                  InvoiceMailer.delay.subscription_canceled(self.id, false)
-                else
-                  # An invoice with prorated items will have the recurring items removed and will stay.
-                  self.invoice_items.recurring.each do |ii|
-                    ii.mark_for_destruction
-                  end
-                  self.save!
-                  InvoiceMailer.delay.subscription_canceled(self.id, true)
-                end
-              else
-                case e.code
-                  when "incorrect_number", "invalid_number", "invalid_expiry_month", "invalid_expiry_year", "invalid_cvc"
-                    InvoiceMailer.delay.payment_failed(self.id, I18n.t('card.errors.invalid.short'), I18n.t('card.errors.invalid.full')) if send_fail_email
-                    self.errors[:base] = [I18n.t('card.errors.invalid.full')]
-
-                  when "expired_card"
-                    InvoiceMailer.delay.payment_failed(self.id, I18n.t('card.errors.expired.short'), I18n.t('card.errors.expired.full')) if send_fail_email
-                    self.errors[:base] = [I18n.t('card.errors.expired.full')]
-
-                  when "incorrect_cvc"
-                    InvoiceMailer.delay.payment_failed(self.id, I18n.t('card.errors.cvc.short'), I18n.t('card.errors.cvc.full')) if send_fail_email
-                    self.errors[:base] = [I18n.t('card.errors.cvc.full')]
-
-                  when "card_declined"
-                    InvoiceMailer.delay.payment_failed(self.id, I18n.t('card.errors.declined.short'), I18n.t('card.errors.declined.full')) if send_fail_email
-                    self.errors[:base] = [I18n.t('card.errors.declined.full')]
-
-                  when "missing"
-                    InvoiceMailer.delay.payment_failed(self.id, I18n.t('card.errors.missing.short'), I18n.t('card.errors.missing.full')) if send_fail_email
-                    self.errors[:base] = [I18n.t('card.errors.missing.full')]
-                    logger.error "CardError charge_customer: #{e.message}"
-
-                  when "processing_error"
-                    # ERROR: Log error and retry tomorrow.
-                    # Add error to invoice.
-                    self.errors[:base] = ["There was an error processing your payment."]
-                    logger.error "CardError charge_customer: #{e.message}"
-
-                  else
-                    # ERROR: This should not happen! Log error.
-                    # Add error to invoice.
-                    self.errors[:base] = ["There was an error processing your payment."]
-                    logger.error "CardError charge_customer: #{e.message}"
-                end
-              end
-              success = false
-            rescue Stripe::StripeError => e
-              logger.error "StripeError charge_customer: #{e.message}"
-              # Add error to invoice.
-              self.errors[:base] = ["There was an error processing your payment."]
-              success = false
+            raise ActiveRecord::StaleObjectError.new(self, :charge_customer) if self.processing_payment
+            self.update_attributes({processing_payment: true, lock_version: self.lock_version}, without_protection: true)
+            charge = Stripe::Charge.create( amount: self.total_price_in_cents,
+                                            currency: "usd",
+                                            customer: self.user_stripe_customer_token,
+                                            description: "Charge for invoice id:#{self.id}" )
+            # Log big charge
+            if self.total_price_in_cents > NOTIFY_CHARGE_AMOUNT
+              logger.error "ALERT_ERROR model=invoice method=charge_customer error=large_charge invoice_id=#{self.id} price=#{self.total_price_in_cents}"
             end
+            success = self.mark_paid_and_close(charge.id)
           end
         else
-          # Invice cost is less then $1.00. Just mark as paid. Log that this happend for later review.
-          logger.error "ERROR charge_customer: Invoice was less then $1: #{self.to_yaml}"
+          # Invice cost is less then MINIMUM_CHARGE_AMOUNT. Just mark as paid. Log that this happend for later review.
+          logger.error "ALERT_ERROR model=invoice method=charge_customer error=small_invoice_total invoice_id=#{self.id} price=#{self.total_price_in_cents}"
           success = self.mark_paid_and_close
         end
       else
         # ERROR Invoice owner has no payment information.
-        logger.error "ERROR charge_customer: Invoice owner had no payment info: #{self.to_yaml}"
+        logger.error "ALERT_ERROR model=invoice method=charge_customer error=no_payment_info invoice_id=#{self.id} user_id=#{self.user_id}"
         InvoiceMailer.delay.payment_failed(self.id, I18n.t('card.errors.missing.short'), I18n.t('card.errors.missing.full')) if send_fail_email
-        self.errors[:base] = [I18n.t('card.errors.missing.full')]
+        self.errors.add :base, I18n.t('card.errors.missing.full')
         success = false
       end
-    rescue Exception => e
-      if e.class == ActiveRecord::StaleObjectError
-        throw e
+    rescue Stripe::CardError => e
+      # Mark first failed attempt date.
+      self.update_column(:first_failed_attempt_date, Time.now) if self.first_failed_attempt_date.blank?
+      # Set boolean on user that payment failed (triggering a flash message for them).
+      self.user.mark_as_delinquent_account
+      # If over seven days since first failed attempt cancel users subscription.
+      if send_fail_email and (Time.now - self.first_failed_attempt_date) > SECONDS_OF_FAILED_ATTEMPTS
+        self.cancel_subscription
       else
-        logger.error "ERROR charge_customer: #{e.message}"
-        # Add error to invoice.
-        self.errors[:base] = ["There was an error processing your payment."]
-        success = false
+        # If send_fail_email is true and first_failed_attempt_date is today then send email.
+        # This is to make sure the user only gets one email about the error.
+        send_email = send_fail_email and (self.first_failed_attempt_date < Time.now + 20.hours)
+        case e.code
+          when "incorrect_number", "invalid_number", "invalid_expiry_month", "invalid_expiry_year", "invalid_cvc"
+            InvoiceMailer.delay.payment_failed(self.id, I18n.t('card.errors.invalid.short'), I18n.t('card.errors.invalid.full')) if send_email
+            self.errors.add :base, I18n.t('card.errors.invalid.full')
+
+          when "expired_card"
+            InvoiceMailer.delay.payment_failed(self.id, I18n.t('card.errors.expired.short'), I18n.t('card.errors.expired.full')) if send_email
+            self.errors.add :base, I18n.t('card.errors.expired.full')
+
+          when "incorrect_cvc"
+            InvoiceMailer.delay.payment_failed(self.id, I18n.t('card.errors.cvc.short'), I18n.t('card.errors.cvc.full')) if send_email
+            self.errors.add :base, I18n.t('card.errors.cvc.full')
+
+          when "card_declined"
+            InvoiceMailer.delay.payment_failed(self.id, I18n.t('card.errors.declined.short'), I18n.t('card.errors.declined.full')) if send_email
+            self.errors.add :base, I18n.t('card.errors.declined.full')
+
+          when "missing"
+            InvoiceMailer.delay.payment_failed(self.id, I18n.t('card.errors.missing.short'), I18n.t('card.errors.missing.full')) if send_email
+            self.errors.add :base, I18n.t('card.errors.missing.full')
+            logger.error "ALERT_ERROR model=invoice method=charge_customer invoice_id=#{self.id} exception=CardError message=#{e.message} code=#{e.code}"
+          when "processing_error"
+            # ERROR: Log error and retry tomorrow.
+            # Add error to invoice.
+            self.errors.add :base, "There was an error processing your payment."
+            logger.error "ALERT_ERROR model=invoice method=charge_customer invoice_id=#{self.id} exception=CardError message=#{e.message} code=#{e.code}"
+          else
+            # ERROR: This should not happen! Log error.
+            # Add error to invoice.
+            self.errors.add :base, "There was an error processing your payment."
+            logger.error "ALERT_ERROR model=invoice method=charge_customer invoice_id=#{self.id} exception=CardError message=#{e.message} code=#{e.code}"
+        end
       end
+      success = false
+    rescue Stripe::StripeError => e
+      logger.error "ALERT_ERROR model=invoice method=charge_customer invoice_id=#{self.id} exception=StripeError message=#{e.message}"
+      # Add error to invoice.
+      self.errors.add :base, "There was an error processing your payment."
+      success = false
+    rescue ActiveRecord::StaleObjectError => e
+      self.errors.add :base, "Payment is already being processed."
+      success = false
+      raise e # TODO: rescue in cron. -MO
+    rescue Exception => e
+      logger.error "ALERT_ERROR model=invoice method=charge_customer error=unexpected_exception invoice_id=#{self.id} exception=#{e.class} message=#{e.message}"
+      # Add error to invoice.
+      self.errors.add :base, "There was an error processing your payment."
+      success = false
     end
     self.update_column(:processing_payment, false)
     return success
   end
 
+  ###
+  # This will cancel a subscription. If the user has no prorated invoice items all plan invoice items will be turned into free plans.
+  # If the user has prorated items all recurring items will be removed.
+  # In both cases the user will be notiffide that their subscription was canceled if send_email is true.
+  # [Args]
+  #   * +send_fail_email+ If it should send payment failed email. This is false when a user directly causing charge_customer to be called and will be notified now.
+  # [Returns] True
+  ###
+  def cancel_subscription(send_email=true)
+    if self.invoice_items.prorated.empty?
+      # An invoice with no prorated items will have the plans turned to free and the invoice closed.
+      self.invoice_items.select(&:has_community_plan?).each do |ii|
+        ii.item = CommunityPlan.default_plan
+      end
+      self.save!
+      if self.total_price_in_cents > 0
+        logger.error "ALERT_ERROR model=invoice method=cancel_subscription error=canceled_with_balance invoice_id=#{self.id} balance=#{self.total_price_in_cents}"
+      end
+      self.mark_paid_and_close
+      InvoiceMailer.delay.subscription_canceled(self.id, false) if send_email
+    # An invoice with prorated items will have the recurring items removed and will stay.
+    else
+      self.invoice_items.recurring.each do |ii|
+        ii.mark_for_destruction
+      end
+      self.save!
+      InvoiceMailer.delay.subscription_canceled(self.id, true) if send_email
+    end
+    return true
+  end
+
+  ###
   # This marks the invoice as paid and close.
+  #   * +charge_id+ The Stripe Charge ID. Defaults to nil.
+  # [Returns] True if success otherwise returns false.
+  ###
   def mark_paid_and_close(charge_id=nil)
     success = self.update_attributes({is_closed: true, paid_date: Time.now, stripe_charge_id: charge_id}, without_protection: true)
-    logger.error "ERROR Tax was overridden INVOICE: #{self.id}" if self.tax_error_occurred
+    unless success
+      logger.error "ALERT_ERROR BAD model=invoice method=mark_paid_and_close error=mark_closed_failed invoice_id=#{self.id} time=#{Time.now} charge_id=#{charge_id}"
+    end
+    if self.tax_error_occurred
+      logger.error "ALERT_ERROR model=invoice method=mark_paid_and_close error=tax_error_occurred invoice_id=#{self.id}"
+    end
     self.invoice_items.each do |item|
-      item.mark_paid_and_close
+      item.set_charge_exempt_info
     end
     # Set boolean on user that payment failed to false.
-    self.user.mark_as_good_standing_account if success
+    self.user.mark_as_good_standing_account
     InvoiceMailer.delay.payment_successful(self.id) if charge_id.present?
-    return success
+    return true
   end
 
   # Custom helper for views to help users read invoice items that look similar.
@@ -443,6 +473,7 @@ class Invoice < ActiveRecord::Base
         end
       end
       if match
+        # FIXME: I don't like this phantom invoice item. What if the invoice item gets saved? -MO
         uniqued_ii.push InvoiceItem.new({invoice: collision_item.invoice, community: collision_item.community, item: collision_item.item, start_date: collision_item.start_date, end_date: collision_item.end_date, quantity: collision_item.quantity + invoice_item.quantity, is_prorated: collision_item.is_prorated, is_recurring: collision_item.is_recurring}, without_protection: true)
         uniqued_ii.delete collision_item
       else
@@ -524,7 +555,7 @@ protected
         invoice.period_start_date = self.period_end_date
         invoice.period_end_date = self.period_end_date + 30.days
         self.invoice_items.recurring.each do |ii|
-          invoice.invoice_items.new({community: ii.community, item: ii.item, quantity: ii.quantity}, without_protection: true)
+          invoice.invoice_items.new({community: ii.community, item: ii.item, quantity: ii.quantity})
         end
         invoice.save!
       end

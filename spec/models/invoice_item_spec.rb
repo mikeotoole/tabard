@@ -33,7 +33,10 @@ describe InvoiceItem do
   end
 
   it "should only have one plan per period" do
-    pending
+    invoice.invoice_items.where{item_type.eq "CommunityPlan"}.count.should eq 1
+    bad_item = build(:invoice_item)
+    invoice.invoice_items << bad_item
+    invoice.should_not be_valid
   end
 
   it "should not be able to be edited after it is closed" do
@@ -45,7 +48,8 @@ describe InvoiceItem do
   end
 
   it "should not be able to be edited when it is prorated" do
-    pending
+    invoice_item.update_column(:is_prorated, true)
+    invoice_item.update_attributes({quantity: 1}).should be_false
   end
 
 ###
@@ -96,14 +100,10 @@ describe InvoiceItem do
       upgrade_invoice_item.save.should be_true
       upgrade_invoice_item.quantity.should eq 2
     end
-    it "should be greater than or equal to 0" do
-      upgrade_invoice_item.quantity = -1
-      upgrade_invoice_item.save.should be_false
-    end
     it "should be only integer" do
       upgrade_invoice_item.quantity = "fuck"
       upgrade_invoice_item.save.should be_true
-      upgrade_invoice_item.quantity.should eq 1
+      upgrade_invoice_item.quantity.should_not  eq "fuck"
     end
     it "should only be 1 if the item is a community plan" do
       invoice_item.quantity = 2
@@ -113,13 +113,13 @@ describe InvoiceItem do
 
   describe "start_date" do
     it "should be required" do
-      pending
+      build(:invoice_item, start_date: nil).should_not be_valid
     end
   end
 
   describe "end_date" do
     it "should be required" do
-      pending
+      build(:invoice_item, end_date: nil).should_not be_valid
     end
     it "should be at the end date if it is prorated" do
       pending
@@ -133,14 +133,24 @@ describe InvoiceItem do
 # Callbacks
 ###
   it "should be set as recurring" do
-    pending
+    invoice_item.is_prorated.should be_false
+    invoice_item.is_recurring.should be_true
   end
 
   it "should set dates" do
-    pending
+    Timecop.freeze
+    some_invoice_item = create(:invoice_item)
+    some_invoice_item.start_date.should eq some_invoice_item.period_end_date
+    some_invoice_item.end_date.should eq some_invoice_item.period_end_date + 30.days
+    Timecop.return
   end
 
   it "should set destruction when quantity is zero or incompatable" do
+    some_invoice_item = create(:invoice_item, quantity: 0)
+    some_invoice_item.marked_for_destruction?.should be_true
+  end
+
+  it "should remove incompatable items" do
     pending
   end
 
@@ -153,25 +163,29 @@ describe InvoiceItem do
 ###
   describe "total price in cents" do
     it "should return price multiplied by quantity when not prorated" do
-      pending
+      invoice_item.is_prorated.should be_false
+      invoice_item.total_price_in_cents.should eq (invoice_item.price_per_month_in_cents * invoice_item.quantity).round(0)
     end
     it "should return price multiplied by quantity divided by the fraction of the 30 days when prorated" do
-      pending
+      invoice_item.update_column(:is_prorated, true)
+      invoice_item.total_price_in_cents.should eq (((invoice_item.price_per_month_in_cents / 30.0) * invoice_item.number_of_days * invoice_item.quantity)).round(0)
     end
   end
 
   describe "total price in dollars" do
     it "it should be the correct converion from price in cents" do
-      pending
+      invoice_item.total_price_in_dollars.should eq (invoice_item.total_price_in_cents/100)
     end
   end
 
   describe "title" do
     it "should return the title from the item when not prorated" do
-      pending
+      invoice_item.is_prorated.should be_false
+      invoice_item.title.should eq invoice_item.item_title
     end
     it "should prepend Prorated if prorated" do
-      pending
+      invoice_item.update_column(:is_prorated, true)
+      invoice_item.title.should eq "Prorated - #{invoice_item.item_title}"
     end
   end
 
@@ -213,13 +227,13 @@ describe InvoiceItem do
 
   describe "number of day" do
     it "should return the elapsed time" do
-      pending
+      invoice_item.number_of_days.should eq 30
     end
   end
 
   describe "number  of users each" do
     it "should return the number of users that the item gives" do
-      pending
+      invoice_item.number_of_users_each.should eq 100
     end
   end
 end

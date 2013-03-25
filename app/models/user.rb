@@ -54,6 +54,7 @@ class User < ActiveRecord::Base
   after_save :update_document_acceptance
   before_validation :combine_birthday
   before_create :accept_current_documents
+  after_create :check_for_gravatar
 
 ###
 # Delegates
@@ -171,6 +172,9 @@ class User < ActiveRecord::Base
   # [Args]
   #   * +stripe_card_token+ A Stripe card token.
   # [Returns] True if the Stripe customer was updated or created, false otherwise
+  # [Raises]
+  #   * +Stripe::StripeError+ If updating card info or creating customer fails.
+  #   * +ActiveRecord::RecordNotSaved+ If stripe_customer_token can't be set on user.
   ###
   def update_stripe(stripe_card_token)
     return false if stripe_card_token.blank?
@@ -198,6 +202,7 @@ class User < ActiveRecord::Base
   ###
   def current_invoice
     today = Time.now
+    # Get the first invoice ordered newest to oldest that has a start date before today and that is not closed.
     invoice = self.invoices.historical.where{(period_start_date <= today) & (is_closed == false)}.limit(1).first
 
     # A user with an invoice more then 7 days past due has end date set to today. This invoice should only have old prorated items on it.
@@ -205,7 +210,11 @@ class User < ActiveRecord::Base
       invoice.period_end_date = Time.zone.now.beginning_of_day if  (Time.now - invoice.first_failed_attempt_date) > Invoice::SECONDS_OF_FAILED_ATTEMPTS
     end
 
-    invoice = self.invoices.new({period_start_date: Time.zone.now.beginning_of_day, period_end_date: Time.zone.now.beginning_of_day}, without_protection: true) if invoice.blank?
+    # If the invoice is blank create a new invoice with a start and end date of today.
+    # This invoice will be closed after the user signs up for a new subscription.
+    if invoice.blank?
+      invoice = self.invoices.new({period_start_date: Time.zone.now.beginning_of_day, period_end_date: Time.zone.now.beginning_of_day}, without_protection: true)
+    end
     return invoice
   end
 
@@ -421,6 +430,27 @@ protected
     if self.terms
       self.accepted_current_terms_of_service = true
       self.accepted_current_privacy_policy = true
+    end
+  end
+
+  ###
+  # _after_create_
+  #
+  # Checks if the user's emails has a gravatar and sets the user's profile avatar if so.
+  ###
+  def check_for_gravatar
+    if self.user_profile.avatar.blank? and not self.user_profile.email.blank?
+      begin
+        gravatar_url = "http://www.gravatar.com/avatar/#{Digest::MD5.new.update(self.email)}.png?s=420&d=404"
+        RestClient.get gravatar_url
+        self.user_profile.remote_avatar_url = gravatar_url
+        self.save!
+      rescue
+      ensure
+        return true
+      end
+    else
+      return true
     end
   end
 

@@ -7,7 +7,7 @@ describe PlayedGamesController do
   describe "GET 'index'" do
     it "should show the index" do
       sign_in user
-      get 'index', user_profile_id: user_profile.id
+      xhr :get, 'index', user_profile_id: user_profile.id
       response.should be_success
     end
   end
