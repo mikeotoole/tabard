@@ -3,29 +3,35 @@
 FactoryGirl.define do
   factory :invoice_item do
     quantity 1
-    association :item, factory: :pro_community_plan
+    item { FactoryGirl.create(:pro_community_plan) }
     after(:build) { |ii| set_community(ii) }
     after(:build) { |ii| set_invoice(ii) }
   end
 
   factory :invoice_item_with_tax, class: InvoiceItem do
     quantity 1
-    association :item, factory: :pro_community_plan
+    item { FactoryGirl.create(:pro_community_plan) }
     after(:build) { |ii| set_community_with_tax(ii) }
     after(:build) { |ii| set_invoice_with_tax(ii) }
   end
 
   factory :upgrade_invoice_item, class: InvoiceItem do
     quantity 1
-    association :item, factory: :twenty_user_pack_upgrade
+    item { FactoryGirl.create(:pro_community_plan).community_upgrades.first }
     after(:build) { |ii| set_community(ii) }
     after(:build) { |ii| set_invoice(ii) }
     after(:build) { |ii| add_pro_community_plan_ii(ii) }
   end
 
-  factory :basic_invoice_item, class: InvoiceItem do
+  factory :basic_plan_invoice_item, class: InvoiceItem do
     quantity 1
-    association :item, factory: :pro_community_plan
+    item { FactoryGirl.create(:pro_community_plan) }
+    after(:build) { |ii| set_community(ii) }
+  end
+
+  factory :basic_upgrade_invoice_item, class: InvoiceItem do
+    quantity 1
+    item { FactoryGirl.create(:pro_community_plan).community_upgrades.first }
     after(:build) { |ii| set_community(ii) }
   end
 end

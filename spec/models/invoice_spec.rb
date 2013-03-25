@@ -691,7 +691,19 @@ describe Invoice do
       end
 
       it "should make invoice return DefaultPlan for user's community" do
-        pending
+        user = invoice.user
+        user.communities.count.should eq 1
+        community = user.communities.first
+
+        plan_ii = invoice.plan_invoice_item_for_community(community)
+
+        Timecop.travel(plan_ii.start_date + 1.day)
+
+        community.current_community_plan.is_free_plan?.should be_false
+
+        invoice.cancel_subscription
+
+        community.current_community_plan.is_free_plan?.should be_true
       end
     end
   end

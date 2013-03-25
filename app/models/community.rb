@@ -66,7 +66,7 @@ class Community < ActiveRecord::Base
   belongs_to :home_page, class_name: "Page"
 
   # Plans and upgrades
-  has_many :invoice_items
+  has_many :invoice_items, inverse_of: :community
 
   accepts_nested_attributes_for :theme
 

@@ -563,16 +563,6 @@ describe Community do
     build(:community, :admin_profile => admin_profile).should_not be_valid
   end
 
-  it "should limit the number of communities a user can own during change of community admin" do
-    pending "Waiting on the admin change feature."
-    community2 = create(:community)
-    admin_profile = community.admin_profile
-    create_list(:community, 19, :admin_profile => admin_profile)
-    admin_profile.reload.owned_communities.size.should eq 20
-    community2 = create(:community)
-    community2.admin_profile = admin_profile
-    community2.save.should be_false
-  end
   it "should not be allowed to be deleted" do
     page = community.home_page
     page.destroy.should be_false

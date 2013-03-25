@@ -18,7 +18,7 @@ class InvoiceItem < ActiveRecord::Base
 # Associations
 ###
   belongs_to :invoice, inverse_of: :invoice_items
-  belongs_to :community
+  belongs_to :community, inverse_of: :invoice_items
   belongs_to :item, polymorphic: true
   belongs_to :community_user_pack_items, foreign_key: :item_id, class_name: "CommunityUserPackUpgrade"
 
@@ -27,7 +27,8 @@ class InvoiceItem < ActiveRecord::Base
 ###
   before_validation :set_as_recurring
   before_validation :set_dates, on: :create
-  before_validation :set_destruction_when_quantity_is_zero_or_incompatable
+  before_validation :mark_for_destruction_when_incompatable_with_plan
+  before_validation :mark_for_destruction_when_quantity_is_zero
   before_save :make_free_non_recurring
 
 ###
@@ -129,7 +130,7 @@ class InvoiceItem < ActiveRecord::Base
 
   # Determines if this invoice item is compatable with the plan.
   def is_compatable_with_plan?
-    return true if self.item_type == "CommunityPlan"
+    return true if self.has_community_plan?
     plan_invoice_item = self.invoice.invoice_items.select{|ii| ii.has_community_plan? and ii.community == self.community}.first
     if plan_invoice_item.present?
       plan = plan_invoice_item.item
@@ -278,8 +279,20 @@ protected
   #
   # This will set the model for destruction if the quantity is 0.
   ###
-  def set_destruction_when_quantity_is_zero_or_incompatable
-    if not self.is_prorated and (self.quantity.blank? or self.quantity == 0 or not self.is_compatable_with_plan?)
+  def mark_for_destruction_when_incompatable_with_plan
+    if not self.is_prorated and not self.is_compatable_with_plan?
+      self.mark_for_destruction
+    end
+    return true
+  end
+
+  ###
+  # _before_validation_
+  #
+  # This will set the model for destruction if the quantity is 0.
+  ###
+  def mark_for_destruction_when_quantity_is_zero
+    if self.quantity.blank? or self.quantity == 0
       self.mark_for_destruction
     end
     return true

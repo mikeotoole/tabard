@@ -24,8 +24,8 @@ require 'spec_helper'
 
 describe InvoiceItem do
   let(:invoice_item) { create(:invoice_item) }
-  let(:invoice) { invoice_item.invoice }
-  let(:basic_invoice_item) { build(:basic_invoice_item)}
+  let(:invoice) { invoice_item.invoice.reload }
+  let(:basic_invoice_item) { build(:basic_plan_invoice_item)}
   let(:upgrade_invoice_item) { create(:upgrade_invoice_item) }
 
   it "should create a new instance given valid attributes" do
@@ -113,19 +113,32 @@ describe InvoiceItem do
 
   describe "start_date" do
     it "should be required" do
-      build(:invoice_item, start_date: nil).should_not be_valid
+      invoice_item.stub(:start_date) { nil }
+
+      invoice_item.should_not be_valid
     end
   end
 
   describe "end_date" do
     it "should be required" do
-      build(:invoice_item, end_date: nil).should_not be_valid
+      invoice_item.stub(:end_date) { nil }
+
+      invoice_item.should_not be_valid
     end
-    it "should be at the end date if it is prorated" do
-      pending
+    it "should be at the start date if it is prorated" do
+      invoice_item.stub(:end_date) { 30.days.from_now }
+      invoice_item.stub(:is_prorated) { true }
+      invoice_item.stub(:is_recurring) { false }
+
+      invoice_item.should_not be_valid
+      invoice_item.errors.full_messages.first.should include("End date must be at")
     end
     it "shoud be after start date" do
-      pending
+      invoice_item.stub(:end_date) { 10.days.ago }
+      invoice_item.stub(:start_date) { Time.now }
+
+      invoice_item.should_not be_valid
+      invoice_item.errors.full_messages.should eq ["End date must be after start date"]
     end
   end
 
@@ -151,11 +164,21 @@ describe InvoiceItem do
   end
 
   it "should remove incompatable items" do
-    pending
+    invoice = DefaultObjects.invoice
+    ii = invoice.invoice_items.first
+    ii.item_type.should eq "CommunityPlan"
+    ii.item = CommunityPlan.default_plan
+    invoice.save.should be_true
+    invoice.invoice_items.select(&:is_recurring).each do |ii|
+      ii.item_type.should eq "CommunityPlan"
+    end
   end
 
   it "should make free non recurring" do
-    pending
+    invoice_item.is_recurring.should be_true
+    invoice_item.item = CommunityPlan.default_plan
+    invoice_item.save.should be_true
+    invoice_item.is_recurring.should be_false
   end
 
 ###
@@ -191,37 +214,47 @@ describe InvoiceItem do
 
   describe "has default plan" do
     it "should return true if the item is the default plan" do
-      pending
+      invoice_item.item = CommunityPlan.default_plan
+      invoice_item.has_default_plan?.should be_true
     end
     it "should return false if the item is not the default plan" do
-      pending
+      invoice_item.item.title.should_not eq CommunityPlan::FREE_PLAN_TITLE
+      invoice_item.has_default_plan?.should be_false
     end
   end
 
   describe "has community plan" do
     it "should return true if the item is a community plan" do
-      pending
+      basic_invoice_item.has_community_plan?.should be_true
     end
     it "should return false if the item is not a community plan" do
-      pending
+      upgrade_invoice_item.has_community_plan?.should be_false
     end
   end
 
   describe "has community upgrade" do
     it "should return true if the item is a community upgrade" do
-      pending
+      upgrade_invoice_item.has_community_upgrade?.should be_true
     end
     it "should return false if the item is not a community upgrade" do
-      pending
+      basic_invoice_item.has_community_upgrade?.should be_false
     end
   end
 
   describe "is compatable with plan" do
     it "should return true if the item is compatable with the community plan" do
-      pending
+      invoice = DefaultObjects.invoice
+      ii = invoice.invoice_items.select(&:has_community_upgrade?).first
+      ii.is_compatable_with_plan?.should be_true
     end
     it "should return false if the item is not compatable with the community plan" do
-      pending
+      invoice = DefaultObjects.invoice
+      ii = invoice.invoice_items.first
+      ii.item_type.should eq "CommunityPlan"
+      ii.item = CommunityPlan.default_plan
+      invoice.save.should be_true
+      upgrade_invoice_item.invoice = invoice
+      upgrade_invoice_item.is_compatable_with_plan?.should be_false
     end
   end
 
