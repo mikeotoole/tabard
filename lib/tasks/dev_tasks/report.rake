@@ -4,9 +4,15 @@ namespace :database do
 end
 namespace :reports do
   desc "Run all of the reports"
-  task all: [:docs, :notes, :best_practices, :tests, :brakeman_scan] do
+  task all: [:docs, :notes, :best_practices, :tests, :brakeman_scan, :open] do
     puts "\nReports generated and output to doc/reports!"
     system "echo \"All reports generated at #{Time.now.to_s}\" | tee doc/reports/all_reports.log"
+  end
+
+  desc "Open html file linking to all reports"
+  task :open do
+    file_to_open = "doc/all_reports.html"
+    system %{open "#{file_to_open}"}
   end
 
   desc "Create a coverage report for documentation"

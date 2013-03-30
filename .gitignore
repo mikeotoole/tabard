@@ -35,3 +35,8 @@ screenshots/*
 
 # Metrics
 .metrics
+
+
+vendor/bundle
+vender/
+vendor

@@ -115,6 +115,7 @@ ruby '2.0.0'
     gem 'brakeman'#                                                                         MIT - https://github.com/presidentbeef/brakeman
     gem 'better_errors'#                                                                    MIT - https://github.com/charliesome/better_errors
     gem "binding_of_caller"#                                                                MIT - https://github.com/banister/binding_of_caller
+    gem 'rubygems-bundler'
   end
 
 # Development and Test Specific Gems

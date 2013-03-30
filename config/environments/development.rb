@@ -61,6 +61,7 @@ DaBvRails::Application.configure do
     :authentication       => 'plain',
     enable_starttls_auto: true
   }
+
   config.after_initialize do
     Bullet.enable = true
     Bullet.alert = false
@@ -69,6 +70,5 @@ DaBvRails::Application.configure do
     Bullet.growl = false
     Bullet.xmpp = false
     Bullet.rails_logger = true
-    Bullet.disable_browser_cache = true
   end
 end
