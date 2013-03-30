@@ -21,7 +21,7 @@
       %dl
         - @submission.answers.each do |answer|
           %dt= answer.question_body
-          %dd= answer.body
+          %dd= format_content answer.body
 
   - if can? :destroy, @submission
     %p.submit
