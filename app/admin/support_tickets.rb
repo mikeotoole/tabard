@@ -1,5 +1,5 @@
 ActiveAdmin.register SupportTicket do
-  menu parent: "Tabard"
+  menu parent: "Tabard", priority: 1, if: proc{ can?(:read, SupportTicket) }
   controller.authorize_resource except: :take
 
   actions :index, :show, :edit, :update

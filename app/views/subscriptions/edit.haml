@@ -32,17 +32,17 @@
           - is_current = ((params[:upgrade] == 'true' and !plan.is_free_plan?) or (params[:upgrade] != 'true' and plan.id == @current_plan_invoice_item.item_id))
           %input{ id: "community_plan_#{plan.id}", type: 'radio', name: 'invoice[invoice_items_attributes][0][item_id]', data: {price: plan.price_per_month_in_cents, members: plan.max_number_of_users}, value: plan.id, checked: is_current ? 'checked' : nil }
           %label{ for: "community_plan_#{plan.id}", title: plan.description }
-            %span.title= plan.title.gsub(/\s*community\s*/i, '')
+            %span.title= plan.title
             %span.price
               - if plan.price_per_month_in_cents > 0
-                = "$#{plan.price_per_month_in_dollars}/month"
+                = "#{number_to_currency(plan.price_per_month_in_dollars)}/month"
               - else
                 This one is on us
             %span.meta
               - if plan.price_per_month_in_cents > 0
-                100 members + custom roles
+                = "#{plan.max_number_of_users} members + custom roles"
               - else
-                Up to 20 members
+                = "Up to #{plan.max_number_of_users} members"
 
     = render "communities/population", community: @community
 
@@ -77,13 +77,13 @@
     - else
       #cc_input.section{ class: card_is_present ? '' : 'show_fields' }
         %h1 Payment
-  
+
         - if card_is_present
           = render 'card/current', stripe: @stripe if card_on_file
           %menu
             = link_to 'Change card', 'javascript:;', class: 'newcard'
             = link_to 'Use card on file', 'javascript:;', class: 'onfile'
-  
+
         %fieldset{ id: 'cc_fields', class: card_is_present ? 'hide' : '' }
           = render 'card/accepted'
           %ol= render 'card/fields'

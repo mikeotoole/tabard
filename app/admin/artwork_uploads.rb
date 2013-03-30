@@ -6,7 +6,7 @@
 # This is an ActiveAdmin resource definition for managing Artwork Uploads.
 ###
 ActiveAdmin.register ArtworkUpload do
-  menu parent: "Tabard", if: proc{ can?(:read, ArtworkUpload) }
+  menu parent: "Tabard", priority: 3, if: proc{ can?(:read, ArtworkUpload) }
   controller.authorize_resource
 
   actions :index, :show, :destroy

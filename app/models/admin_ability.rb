@@ -77,6 +77,8 @@ class AdminAbility
       end
       can :create, [AdminUser, 'AdminUser'] # Quoted needed for displaying button in panel.
       can :manage, AdminUser
+      can :manage, CommunityPlan
+      can :manage, CommunityUpgrade
       cannot [:update_account, :edit_account], AdminUser do |admin_user|
         admin_user != user
       end

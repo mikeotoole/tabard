@@ -7,7 +7,12 @@
 ###
 class CommunityPlan < ActiveRecord::Base
   # What the free plan is called.
-  FREE_PLAN_TITLE = "Free Community"
+  FREE_PLAN_TITLE = "Free"
+
+###
+# Attribute accessible
+###
+  attr_accessible :title, :description, :is_available, :max_number_of_users, :price_per_month_in_cents
 
 ###
 # Associations
@@ -25,13 +30,12 @@ class CommunityPlan < ActiveRecord::Base
   validates :price_per_month_in_cents, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0}
   validates :max_number_of_users, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0}
   validate :no_changing_price, on: :update
+  validate :no_changing_free_plan_title, on: :update
 
 ###
 # Scopes
 ###
-  scope :available, lambda {
-    where{(is_available == true)}.order :price_per_month_in_cents
-  }
+  scope :available, lambda { where{(is_available == true)}.order :price_per_month_in_cents }
 
 ###
 # Public Methods
@@ -88,7 +92,23 @@ protected
   ###
   def no_changing_price
     if self.price_per_month_in_cents_changed?
-      self.errors.add(:base, "price can not be changed")
+      self.errors.add(:price_per_month_in_cents, "can not be changed")
+    end
+  end
+
+  ###
+  # _Validator_
+  #
+  # Validates the free plan can't have it's title changed.
+  # This should only be changed using the constant FREE_PLAN_TITLE.
+  # To change title:
+  #  1. Put site in maintenance mode
+  #  2. Push new code with constant "FREE_PLAN_TITLE" changed
+  #  3. Change title in console.
+  ###
+  def no_changing_free_plan_title
+    if self.title_changed? and self.title_was == FREE_PLAN_TITLE
+      self.errors.add(:title, "can not be changed on free plan. Please change in model using constant and then in db using console.")
     end
   end
 end

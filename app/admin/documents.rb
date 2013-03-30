@@ -1,5 +1,5 @@
 ActiveAdmin.register Document do
-  menu parent: "Tabard", if: proc{ can?(:read, Document) }
+  menu parent: "Tabard", priority: 2, if: proc{ can?(:read, Document) }
   controller.load_resource only: [:edit, :update]
   controller.authorize_resource
   controller.cache_sweeper :document_sweeper
