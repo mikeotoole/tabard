@@ -64,6 +64,7 @@ module DaBvRails
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
+    # This will make our app handle exceptions. So in the routes we can route exceptions to controllers to handle.
     config.exceptions_app = self.routes
 
     # Configure what files get generated with rails generate command.

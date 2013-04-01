@@ -43,6 +43,10 @@ class ApplicationController < ActionController::Base
   # Allow subdomains to punch through to www
   after_filter :set_access_control_headers
 
+  # Log the current users id for tracking used in debugging and support.
+  after_filter :log_user_id
+
+
 ###
 # Status Code Rescues
 ###
@@ -409,6 +413,16 @@ protected
       rescue
       end
     end
+  end
+
+  ###
+  # _after_filter_
+  #
+  # Print to the logs if there is a current user their id.
+  ###
+  def log_user_id
+    logger.error "current_user_id=#{current_user.id}" if current_user.present?
+    logger.error "current_admin_user_id=#{current_admin_user.id}" if current_admin_user.present?
   end
 
 ###
