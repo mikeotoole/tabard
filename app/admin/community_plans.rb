@@ -44,6 +44,6 @@ ActiveAdmin.register CommunityPlan do
     f.inputs "Danger Zone" do
       f.input :is_available
     end
-    f.buttons
+    f.actions
   end
 end

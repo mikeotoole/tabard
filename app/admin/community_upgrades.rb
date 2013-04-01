@@ -32,7 +32,7 @@ ActiveAdmin.register CommunityUpgrade do
   end
 
   form do |f|
-    f.inputs "Details (Note: this will NOT change values listed on Pricing page.)" do
+    f.inputs "Details (Note: this will NOT change values listed on Pricing page)" do
       f.input :title, hint: "Used on invoice"
       f.input :description, hint: "Used on invoice"
       f.input :max_number_of_upgrades
@@ -40,6 +40,6 @@ ActiveAdmin.register CommunityUpgrade do
     f.inputs "Price (Can only be changed on new plans)" do
       f.input :price_per_month_in_cents if f.object.new_record?
     end
-    f.buttons
+    f.actions
   end
 end
