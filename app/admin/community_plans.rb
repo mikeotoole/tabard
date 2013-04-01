@@ -33,9 +33,9 @@ ActiveAdmin.register CommunityPlan do
   end
 
   form do |f|
-    f.inputs "Details (Note: this will NOT change values listed on Pricing page, however, it will for the subscriptions edit page.)" do
+    f.inputs "Details (Note: this will NOT change values listed on Pricing page.)" do
       f.input :title
-      f.input :description, hint: "Currently not used anywhere."
+      f.input :description, hint: "Used on invoice"
       f.input :max_number_of_users
     end
     f.inputs "Price (Can only be changed on new plans)" do

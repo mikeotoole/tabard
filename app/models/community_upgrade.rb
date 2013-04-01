@@ -15,6 +15,11 @@ class CommunityUpgrade < ActiveRecord::Base
 ###
 # Attribute accessible
 ###
+  attr_accessible :title, :description, :max_number_of_upgrades, :price_per_month_in_cents
+
+###
+# store
+###
   store :upgrade_options, accessors: [:number_of_users]
 
 ###

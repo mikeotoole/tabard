@@ -18,6 +18,6 @@ unless @dont_run
       type: "CommunityUserPackUpgrade",
       price_per_month_in_cents: 200,
       upgrade_options: {number_of_users: 20},
-      max_number_of_upgrades: 100
+      max_number_of_upgrades: 45
     }, without_protection: true)
 end

@@ -32,7 +32,7 @@
           - is_current = ((params[:upgrade] == 'true' and !plan.is_free_plan?) or (params[:upgrade] != 'true' and plan.id == @current_plan_invoice_item.item_id))
           %input{ id: "community_plan_#{plan.id}", type: 'radio', name: 'invoice[invoice_items_attributes][0][item_id]', data: {price: plan.price_per_month_in_cents, members: plan.max_number_of_users}, value: plan.id, checked: is_current ? 'checked' : nil }
           %label{ for: "community_plan_#{plan.id}", title: plan.description }
-            %span.title= plan.title
+            %span.title= plan.title.gsub(/\s*community\s*/i, '')
             %span.price
               - if plan.price_per_month_in_cents > 0
                 = "#{number_to_currency(plan.price_per_month_in_dollars)}/month"
@@ -57,7 +57,7 @@
           = sf.input :community_id, as: :hidden
           = sf.input :item_type, as: :hidden
           = sf.input :item_id, as: :hidden
-          - collection = (1..CommunityUserPackUpgrade::MAX_PER_COMMUNITY).collect {|u| ["+#{number_with_delimiter(u * sf.object.item.number_of_bonus_users)} members — #{number_to_currency(u * sf.object.price_per_month_in_dollars, precision: 0)}/mo", u]}
+          - collection = (1..sf.object.item.max_number_of_upgrades).collect {|u| ["+#{number_with_delimiter(u * sf.object.item.number_of_bonus_users)} members — #{number_to_currency(u * sf.object.price_per_month_in_dollars, precision: 0)}/mo", u]}
           - collection.unshift(['None',0])
           - data = sf.object.persisted? ? {destroy: 'upgrade_pack'} : {}
           = sf.input :quantity, as: :radio_buttons, collection: collection, include_blank: false, label: false, wrapper_html: {class: 'select members_package', data: data}
