@@ -8,14 +8,9 @@ require 'carrierwave/processing/mini_magick'
 # This uploader is for handling the uploading of avatar using carrier wave.
 ###
 class AvatarUploader < CarrierWave::Uploader::Base
-
-  # Include RMagick or ImageScience support:
-  # include CarrierWave::RMagick
   include CarrierWave::MiniMagick
-  # include CarrierWave::ImageScience
 
   # Choose what kind of storage to use for this uploader:
-  #storage :file
   storage :fog
 
   process convert: 'png'
@@ -34,7 +29,6 @@ class AvatarUploader < CarrierWave::Uploader::Base
       suffix = ''
     end
     case version_name
-    # TODO: Make sure that addding "/assets/" to the default PNGs below doesn't break production
     when :large
       "/assets/avatars/avatar#{suffix}@240.png"
     when :small
@@ -48,17 +42,6 @@ class AvatarUploader < CarrierWave::Uploader::Base
     end
   end
 
-  # Process files as they are uploaded:
-  # process scale: [200, 300]
-  #
-  # def scale(width, height)
-  #   # do something
-  # end
-
-  # Create different versions of your uploaded files:
-  # version :thumb do
-  #   process scale: [50, 50]
-  # end
   version :large do
     process resize_to_fill: [240,240]
   end
@@ -90,5 +73,4 @@ protected
     var = :"@#{mounted_as}_secure_token"
     model.instance_variable_get(var) or model.instance_variable_set(var, SecureRandom.uuid)
   end
-
 end

@@ -395,7 +395,7 @@ class Invoice < ActiveRecord::Base
     rescue ActiveRecord::StaleObjectError => e
       self.errors.add :base, "Payment is already being processed."
       success = false
-      raise e # TODO: rescue in cron. -MO
+      raise e
     rescue Exception => e
       logger.error "ALERT_ERROR model=invoice method=charge_customer error=unexpected_exception invoice_id=#{self.id} exception=#{e.class} message=#{e.message}"
       # Add error to invoice.
