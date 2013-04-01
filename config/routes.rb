@@ -47,7 +47,7 @@ DaBvRails::Application.routes.draw do
     put 'users/reinstate' => 'registrations#send_reinstate', as: :send_reinstate
     get 'users/reinstate_account' => 'registrations#reinstate_account_edit', as: :reinstate_account
     put 'users/reinstate_account' => 'registrations#reinstate_account', as: :reinstate_account
-    match 'account-settings' => 'registrations#edit', as: :account_settings
+    get 'account-settings' => 'registrations#edit', as: :account_settings
   end
 
   # Documents
@@ -67,7 +67,7 @@ DaBvRails::Application.routes.draw do
     resources :played_games, only: [:index, :show]
   end
   get "/account" => "user_profiles#account", as: "account"
-  match "/account/update" => "user_profiles#update", as: "update_account", via: :put
+  put "/account/update" => "user_profiles#update", as: "update_account"
 
   # Characer and PlayedGames
   resources :played_games, only: [:new, :create, :update, :destroy] do
@@ -124,8 +124,8 @@ DaBvRails::Application.routes.draw do
       # Community
       get "/disabled" => "communities#disabled", as: "community_disabled"
       get "/community_settings" => "communities#edit", as: "edit_community_settings"
-      match "/community_settings" => "communities#update", as: "update_community_settings", via: :put
-      match "/clear_action_items" => "communities#clear_action_items", as: "clear_action_items"
+      put "/community_settings" => "communities#update", as: "update_community_settings"
+      get "/clear_action_items" => "communities#clear_action_items", as: "clear_action_items"
       get "/activities" => "communities#activities", as: "community_activities"
       get "/autocomplete-members" => "communities#autocomplete_members", as: "autocomplete_members"
 
@@ -144,7 +144,7 @@ DaBvRails::Application.routes.draw do
           put :reject
         end
         collection do
-          match 'game/:id' => 'roster_assignments#game', as: :game
+          get 'game/:id' => 'roster_assignments#game', as: :game
         end
       end
 
@@ -194,7 +194,7 @@ DaBvRails::Application.routes.draw do
         end
         collection do
           get :community
-          match 'game/:id' => 'announcements#game', as: :game
+          get 'game/:id' => 'announcements#game', as: :game
           match 'batch_destroy' => "announcements#batch_destroy", as: "batch_destroy"
         end
       end
