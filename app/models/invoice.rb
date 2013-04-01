@@ -325,13 +325,13 @@ class Invoice < ActiveRecord::Base
                                             description: "Charge for invoice id:#{self.id}" )
             # Log big charge
             if self.total_price_in_cents > NOTIFY_CHARGE_AMOUNT
-              logger.error "ALERT_ERROR model=invoice method=charge_customer error=large_charge invoice_id=#{self.id} price=#{self.total_price_in_cents}"
+              logger.warn "ALERT_ERROR model=invoice method=charge_customer error=large_charge invoice_id=#{self.id} price=#{self.total_price_in_cents}"
             end
             success = self.mark_paid_and_close(charge.id)
           end
         else
           # Invice cost is less then MINIMUM_CHARGE_AMOUNT. Just mark as paid. Log that this happend for later review.
-          logger.error "ALERT_ERROR model=invoice method=charge_customer error=small_invoice_total invoice_id=#{self.id} price=#{self.total_price_in_cents}"
+          logger.warn "ALERT_ERROR model=invoice method=charge_customer error=small_invoice_total invoice_id=#{self.id} price=#{self.total_price_in_cents}"
           success = self.mark_paid_and_close
         end
       else
@@ -448,7 +448,7 @@ class Invoice < ActiveRecord::Base
       logger.error "ALERT_ERROR BAD model=invoice method=mark_paid_and_close error=mark_closed_failed invoice_id=#{self.id} time=#{Time.now} charge_id=#{charge_id}"
     end
     if self.tax_error_occurred
-      logger.error "ALERT_ERROR model=invoice method=mark_paid_and_close error=tax_error_occurred invoice_id=#{self.id}"
+      logger.warn "ALERT_ERROR model=invoice method=mark_paid_and_close error=tax_error_occurred invoice_id=#{self.id}"
     end
     self.invoice_items.each do |item|
       item.set_charge_exempt_info
