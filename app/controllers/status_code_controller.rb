@@ -8,6 +8,7 @@
 # Symbol meanings: http://www.codyfauser.com/2008/7/4/rails-http-status-code-to-symbol-mapping
 ###
 class StatusCodeController < ApplicationController
+  layout 'error'
   skip_before_filter :block_unauthorized_user!
   skip_before_filter :limit_subdomain_access
   skip_before_filter :check_supported_browser

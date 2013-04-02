@@ -1,0 +1,113 @@
+@import mixins
+@import application/reset
+@import application/core
+
+body
+    background: #eee
+    color: #777
+
+    em
+        font-style: italic
+    
+    strong
+        color: #000
+        
+    strong.omg
+        color: #A33C33
+        text-transform: uppercase
+    
+    .alignleft
+        clear: left
+        float: left
+        margin: 0 10px 10px 0
+    
+    .alignright
+        clear: right
+        float: right
+        margin: 0 0 10px 10px
+    
+    img.alignleft,
+    img.alignright
+        +border_radius(3)
+    
+    hr
+        border-top: 1px solid #ccc
+        margin: 15px 0
+        visibility: visible
+    
+button,
+.button,
+#body button,
+#body .button
+    background: #A23826
+    +bg_gradient(#d24723,#792b28)
+    color: #f8d5bb
+    &.read span:before
+        content: '\F107'
+    &:focus,
+    &:hover
+        background: #BE4931
+        +bg_gradient(#e05c2e,#9e3834)
+        +box_shadow(0 0 10px rgba(#000,.2))
+        color: #fff
+
+#body
+    background: #fff
+    +border_radius(5)
+    +box_shadow(0 1px 5px rgba(#000,.1))
+    left: 50%
+    margin: 100px 0 0 -300px
+    padding: 50px
+    position: absolute
+    text-align: left
+    width: 500px
+    
+    a:not(.button)
+        +border_radius(2)
+        color: #3E7797
+        text-decoration: underline
+        &:hover
+            color: #AA391F
+    
+    h1
+        color: #5a3971
+        font-size: 36px
+        letter-spacing: -1px
+        line-height: 1em
+        padding: 0 0 .5em
+        text-shadow: 0 1px 1px #fff
+    
+    h2
+        color: #3E7797
+        font-size: 24px
+        line-height: 1em
+        padding: .5em 0
+        text-shadow: 0 1px 1px #fff
+        span
+            display: block
+            font-size: .8em
+
+    p
+        line-height: 1.5em
+        padding: 10px 0
+
+    .col3a, .col3b, .col3c
+        float: left
+        margin: 20px 0
+        text-align: center
+        width: 140px
+        a
+            display: block
+            img
+                display: block
+                margin: 10px auto 0
+            &:hover
+                background: #eee
+    .col3b
+        margin: 20px 40px
+
+@import application/footer
+
+#footer
+    bottom: auto
+    top: 100%
