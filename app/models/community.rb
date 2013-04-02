@@ -102,9 +102,9 @@ class Community < ActiveRecord::Base
   validates :name, not_restricted_name: {all: true}
   validates :slogan, length: { maximum: MAX_SLOGAN_LENGTH }
   validates :admin_profile, presence: true
-  validates :background_color, format: { with: /^[0-9a-fA-F]{6}$/, message: "Only valid HEX colors are allowed." },
+  validates :background_color, format: { with: /\A[0-9a-fA-F]{6}\Z/, message: "Only valid HEX colors are allowed." },
             unless: Proc.new{|community| community.background_color.blank? }
-  validates :title_color, format: { with: /^[0-9a-fA-F]{6}$/, message: "Only valid HEX colors are allowed." },
+  validates :title_color, format: { with: /\A[0-9a-fA-F]{6}\Z/, message: "Only valid HEX colors are allowed." },
             unless: Proc.new{|community| community.title_color.blank? }
   validate :can_not_change_name, on: :update
   validate :within_owned_communities_limit, on: :create

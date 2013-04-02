@@ -105,13 +105,13 @@ class User < ActiveRecord::Base
       confirmation: true,
       uniqueness: true,
       length: { within: 5..128 },
-      format: { with: %r{^(?:[_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-zA-Z0-9\-\.]+)*(\.[a-z]{2,4})$}i }
+      format: { with: %r{\A(?:[_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-zA-Z0-9\-\.]+)*(\.[a-z]{2,4})\Z}i }
 
   validates :password,
       length: { within: 8..30 },
       presence: true,
       format: {
-        with: %r{^(.*)([a-z][A-Z]|[a-z][\d]|[a-z][\W]|[A-Z][a-z]|[A-Z][\d]|[A-Z][\W]|[\d][a-z]|[\d][A-Z]|[\d][\W]|[\W][a-z]|[\W][A-Z]|[\W][\d])(.*)$},
+        with: %r{\A(.*)([a-z][A-Z]|[a-z][\d]|[a-z][\W]|[A-Z][a-z]|[A-Z][\d]|[A-Z][\W]|[\d][a-z]|[\d][A-Z]|[\d][\W]|[\W][a-z]|[\W][A-Z]|[\W][\d])(.*)\Z},
         message: "Must contain at least 2 of the following: lowercase letter, uppercase letter, number and punctuation symbols."
       },
       if: :password_required?

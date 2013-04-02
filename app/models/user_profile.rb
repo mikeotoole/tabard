@@ -119,7 +119,7 @@ class UserProfile < ActiveRecord::Base
       presence: true,
       uniqueness: { case_sensitive: false },
       length: { maximum: MAX_GAMER_TAG_LENGTH },
-      format: { with: %r{^[a-z0-9]+$}i }
+      format: { with: %r{\A[a-z0-9]+\Z}i }
   validates :display_name, presence: true, length: { maximum: MAX_NAME_LENGTH }
   validates :full_name, presence: true, length: { maximum: MAX_FULL_NAME_LENGTH }
   validates :title, length: { maximum: MAX_TITLE_LENGTH }

@@ -41,7 +41,7 @@ class ArtworkUpload < ActiveRecord::Base
   validates :email,
       presence: true,
       length: { within: 5..128 },
-      format: { with: %r{^(?:[_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-zA-Z0-9\-\.]+)*(\.[a-z]{2,4})$}i }
+      format: { with: %r{\A(?:[_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-zA-Z0-9\-\.]+)*(\.[a-z]{2,4})\Z}i }
   validates :document, presence: true
   validates :accepted_current_artwork_agreement, acceptance: true
   validates :certify_owner_of_artwork, acceptance: {accept: true}
