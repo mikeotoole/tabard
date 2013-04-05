@@ -64,7 +64,7 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   # POST /community_applications.json
   def create
     if @community_application.save
-      flash[:success].now = @community_application.custom_form_thankyou
+      flash.now[:success] = @community_application.custom_form_thankyou
     end
     respond_with @community_application, location: custom_form_thankyou_url(@community_application.custom_form), error_behavior: :list
   end
@@ -73,7 +73,7 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   # DELETE /community_applications/1.json
   def destroy
     if @community_application.withdraw
-      flash[:notice].now = 'Your application has been withdrawn.'
+      flash.now[:notice] = 'Your application has been withdrawn.'
     end
     respond_with @community_application
   end

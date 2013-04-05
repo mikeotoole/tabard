@@ -30,7 +30,7 @@ ActiveAdmin.register AdminUser do
     params[:admin_user].delete(:role)
     if current_admin_user.update_with_password(params[:admin_user])
       sign_in(current_admin_user, bypass: true)
-      flash[:notice] = 'Account updated.'
+      flash.now[:notice] = 'Account updated.'
       redirect_to alexandria_dashboard_url
     else
       @admin_user = current_admin_user
@@ -40,7 +40,7 @@ ActiveAdmin.register AdminUser do
 
   collection_action :reset_all_passwords, method: :post do
     AdminUser.delay.reset_all_passwords
-    flash[:message] = "Password resets in progress."
+    flash.now[:message] = "Password resets in progress."
     redirect_to action: :index
   end
 
