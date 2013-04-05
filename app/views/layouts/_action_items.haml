@@ -1,22 +1,24 @@
+- content_for :footer do
+  %script{ type: 'text/javascript' }
+    :plain
+      jQuery(document).ready(function($){
+        $('.action_items').on('ajax:success', function(event, data, status, xhr){
+          response = $.parseJSON(xhr.responseText);
+          if(response.success){
+            $('.action_items').fadeOut(300, function(){
+              $('body').removeClass('with_action_items');
+              $(this).remove();
+            });
+          } else {
+            $.flash('alert', response.message);
+          }
+        });
+      });
+
 .action_items
   %p
     Now that you're community has been created, let's get everything setup:
     = link_to '✕', clear_action_items_url(format: :js), class: 'clear', meta: "I know what I'm doing. Remove this box.", remote: true, data: { type: :text }
-    %script{ type: 'text/javascript' }
-      :plain
-        jQuery(document).ready(function($){
-          $('.action_items').on('ajax:success', function(event, data, status, xhr){
-            response = $.parseJSON(xhr.responseText);
-            if(response.success){
-              $('.action_items').fadeOut(300, function(){
-                $('body').removeClass('with_action_items');
-                $(this).remove();
-              });
-            } else {
-              $.flash('alert', response.message);
-            }
-          });
-        });
   %ol
     %li{ class: "#{request.fullpath == edit_community_settings_path ? 'current' : ''} #{!!current_community.action_items[:update_settings] ? '' : 'done'}" }
       = link_to_unless_current 'Settings', edit_community_settings_url
