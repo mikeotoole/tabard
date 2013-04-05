@@ -30,9 +30,9 @@ class SubscriptionsController < PaymentController
     # Get all upgrades for the current community.
     @all_upgrades_invoice_items = @invoice.recurring_upgrade_invoice_items_for_community(@community)
 
-    # TODO This should check that there exists a upgrade for all available upgrades for the current plan.
+    # TODO: After Adding more CommunityUpgrades - This should check that there exists a upgrade for all available upgrades for the current plan.
     if @all_upgrades_invoice_items.blank?
-      # TODO For each missing upgrade add a zero quantity one (so the user can add upgrades).
+      # TODO: After Adding more CommunityUpgrades - For each missing upgrade add a zero quantity one (so the user can add upgrades).
       @all_upgrades_invoice_items = @invoice.invoice_items.new({item: CommunityUpgrade.first, quantity: 0, community_id: @community.id}, without_protection: true)
     end
 
