@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130215184154) do
+ActiveRecord::Schema.define(:version => 20130211233442) do
 
   create_table "acknowledgements", :force => true do |t|
     t.integer  "community_profile_id"
