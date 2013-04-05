@@ -418,8 +418,8 @@ protected
       begin
         origin_uri = URI.parse(request.env['HTTP_ORIGIN'])
         some_subdomain = origin_uri.hostname.split('.').first
-        # TODO add check to make sure this is ours....
-        if not origin.blank? and not some_subdomain.blank? and Community.where{subdomain == some_subdomain}.exists?
+        is_our_domain = origin_uri.hostname.split('.').last(2).join('.') == ENV['BV_HOST_DOMAIN']
+        if is_our_domain and not origin.blank? and not some_subdomain.blank? and Community.where{subdomain == some_subdomain}.exists?
           headers['Access-Control-Allow-Origin'] = request.env['HTTP_ORIGIN']
           headers['Access-Control-Request-Method'] = '*'
         end
