@@ -8,7 +8,7 @@ ActiveAdmin.register DiscussionSpace do
     space = DiscussionSpace.find(params[:id])
     authorize!(:destroy, space)
     space.delay_destory
-    flash[:message] = 'Discussion Space is being removed.'
+    flash.now[:message] = 'Discussion Space is being removed.'
     redirect_to action: :index
   end
 

@@ -8,3 +8,14 @@ require 'bundler/setup' if File.exists?(ENV['BUNDLE_GEMFILE'])
 # I think we added this to give us the use of 'y' in the console to yaml dump an object. That is now supported. -MO
 # require 'yaml'
 # YAML::ENGINE.yamler = 'syck'
+
+require 'rails/commands/server'
+
+module Rails
+  class Server
+    alias :default_options_alias :default_options
+    def default_options
+      default_options_alias.merge!(:Host => "127.0.0.1")
+    end
+  end
+end

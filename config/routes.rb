@@ -23,7 +23,7 @@ DaBvRails::Application.routes.draw do
   devise_scope :admin_user do
     get "/alexandria/login" => "alexandria/devise/sessions#new"
     post "/alexandria/login" => "alexandria/devise/sessions#create"
-    match "/alexandria/logout" => "alexandria/devise/sessions#destroy"
+    delete "/alexandria/logout" => "alexandria/devise/sessions#destroy"
     get "/admin_users/sign_in" => "alexandria/devise/sessions#new"
     post "/admin_users/sign_in" => "alexandria/devise/sessions#create"
     get "/admin_users/password/edit" => "alexandria/devise/passwords#edit"
@@ -195,7 +195,7 @@ DaBvRails::Application.routes.draw do
         collection do
           get :community
           get 'game/:id' => 'announcements#game', as: :game
-          match 'batch_destroy' => "announcements#batch_destroy", as: "batch_destroy"
+          delete 'batch_destroy' => "announcements#batch_destroy", as: "batch_destroy"
         end
       end
 

@@ -312,7 +312,7 @@ protected
   ###
   def check_force_logout
     if current_user and current_user.force_logout
-      flash[:notice] = 'You have been logged out for system maintenance'
+      flash.now[:notice] = 'You have been logged out for system maintenance'
       redirect_to destroy_user_session_path
     end
   end
@@ -353,7 +353,7 @@ protected
   def ensure_user_is_in_good_payment_standing
     if user_signed_in? and not current_user.is_in_good_account_standing
       # card_url
-      flash[:notice] = "Uh oh. Your subscription is overdue. Please #{view_context.link_to('update your card', card_url)} to keep your service active."
+      flash.now[:notice] = "Uh oh. Your subscription is overdue. Please #{view_context.link_to('update your card', card_url)} to keep your service active."
     end
   end
 
@@ -451,7 +451,7 @@ protected
 
   # This after_filter will change the default Devise messages that would be notices into success messages instead
   def change_notices_to_successes
-    flash[:success] = flash[:notice]
+    flash.now[:success] = flash[:notice]
     flash.delete :notice
   end
 

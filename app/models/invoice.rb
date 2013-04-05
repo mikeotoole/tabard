@@ -38,6 +38,7 @@ class Invoice < ActiveRecord::Base
 ###
   delegate :id, to: :user, prefix: true
   delegate :user_profile, to: :user
+  delegate :gamer_tag, to: :user_profile, prefix: true
   delegate :stripe_customer_token, to: :user, prefix: true
 
 ###
@@ -76,7 +77,7 @@ class Invoice < ActiveRecord::Base
     today = Time.zone.now.end_of_day
     seven_days_ago = today - SECONDS_OF_FAILED_ATTEMPTS.seconds
     invoices_to_bill = Invoice.where{(period_end_date <= today) &
-                                     (paid_date == nil) & # TODO: Why can't this just look for invoices not closed?
+                                     (is_closed == false) &
                                      ((first_failed_attempt_date == nil) | (first_failed_attempt_date > seven_days_ago))}
     invoices_to_bill.each do |invoice|
       Invoice.delay.charge(invoice.id)
@@ -124,7 +125,6 @@ class Invoice < ActiveRecord::Base
   def non_exempt_total_recurring_price_per_month_in_dollars(community=nil)
     self.non_exempt_total_recurring_price_per_month_in_cents(community)/100.0
   end
-
 
   # [Returns] the total cost of all invoice items in cents.
   def total_price_in_cents
@@ -311,10 +311,9 @@ class Invoice < ActiveRecord::Base
   ###
   def charge_customer(send_fail_email=true, override_tax=false)
     success = false
-    # TODO: look at charge exempt status and how it works with this. -MO
     begin
-      if self.user_stripe_customer_token.present?
-        if self.total_price_in_cents > MINIMUM_CHARGE_AMOUNT
+      if self.total_price_in_cents > MINIMUM_CHARGE_AMOUNT
+        if self.user_stripe_customer_token.present?
           if self.tax_error_occurred and not override_tax
             success = false
           else
@@ -331,16 +330,16 @@ class Invoice < ActiveRecord::Base
             success = self.mark_paid_and_close(charge.id)
           end
         else
-          # Invice cost is less then MINIMUM_CHARGE_AMOUNT. Just mark as paid. Log that this happend for later review.
-          logger.warn "ALERT_ERROR model=invoice method=charge_customer error=small_invoice_total invoice_id=#{self.id} price=#{self.total_price_in_cents}"
-          success = self.mark_paid_and_close
+          # ERROR Invoice owner has no payment information.
+          logger.error "ALERT_ERROR model=invoice method=charge_customer error=no_payment_info invoice_id=#{self.id} user_id=#{self.user_id}"
+          InvoiceMailer.delay.payment_failed(self.id, I18n.t('card.errors.missing.short'), I18n.t('card.errors.missing.full')) if send_fail_email
+          self.errors.add :base, I18n.t('card.errors.missing.full')
+          success = false
         end
       else
-        # ERROR Invoice owner has no payment information.
-        logger.error "ALERT_ERROR model=invoice method=charge_customer error=no_payment_info invoice_id=#{self.id} user_id=#{self.user_id}"
-        InvoiceMailer.delay.payment_failed(self.id, I18n.t('card.errors.missing.short'), I18n.t('card.errors.missing.full')) if send_fail_email
-        self.errors.add :base, I18n.t('card.errors.missing.full')
-        success = false
+        # Invice cost is less then MINIMUM_CHARGE_AMOUNT. Just mark as paid. Log that this happend for later review.
+        logger.warn "ALERT_ERROR model=invoice method=charge_customer error=small_invoice_total gamer_tag=#{self.user_profile_gamer_tag} invoice_id=#{self.id} price=#{self.total_price_in_cents}"
+        success = self.mark_paid_and_close
       end
     rescue Stripe::CardError => e
       # Mark first failed attempt date.
@@ -474,8 +473,14 @@ class Invoice < ActiveRecord::Base
         end
       end
       if match
-        # FIXME: I don't like this phantom invoice item. What if the invoice item gets saved? -MO
-        uniqued_ii.push InvoiceItem.new({invoice: collision_item.invoice, community: collision_item.community, item: collision_item.item, start_date: collision_item.start_date, end_date: collision_item.end_date, quantity: collision_item.quantity + invoice_item.quantity, is_prorated: collision_item.is_prorated, is_recurring: collision_item.is_recurring}, without_protection: true)
+        uniqued_ii.push InvoiceItem.new({ community: collision_item.community,
+                                               item: collision_item.item,
+                                         start_date: collision_item.start_date,
+                                           end_date: collision_item.end_date,
+                                           quantity: collision_item.quantity + invoice_item.quantity,
+                                        is_prorated: collision_item.is_prorated,
+                                       is_recurring: collision_item.is_recurring
+                                        }, without_protection: true)
         uniqued_ii.delete collision_item
       else
         uniqued_ii.push invoice_item
