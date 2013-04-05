@@ -21,16 +21,21 @@ DaBvRails::Application.configure do
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 
-#   config.log_tags = [:uuid, :remote_ip]
+  # config.log_tags = [:uuid, :remote_ip]
 
   # lograge setup. See https://github.com/roidrage/lograge
-#   config.lograge.enabled = true
+  # config.lograge.enabled = true
   # custom_options can be a lambda or hash
-  # if it's a lambda then it must return a hash
-#   config.lograge.custom_options = lambda do |event|
-#     # Print out request params
-#     {:params => event.payload[:params].with_indifferent_access.except(:action, :controller)}
-#   end
+  config.lograge.custom_options = lambda do |event|
+    # Add values to log output. See ApplicationController append_info_to_payload method.
+    {
+      remote_ip: event.payload[:remote_ip],
+      request_id: event.payload[:request_id],
+      current_user_id: event.payload[:current_user_id],
+      current_admin_user_id: event.payload[:current_admin_user_id],
+      params: event.payload[:params].with_indifferent_access.except(:action, :controller)
+    }
+  end
 
 
   # Only use best-standards-support built into browsers

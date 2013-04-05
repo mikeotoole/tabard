@@ -43,9 +43,6 @@ class ApplicationController < ActionController::Base
   # Allow subdomains to punch through to www
   after_filter :set_access_control_headers
 
-  # Log the current users id for tracking used in debugging and support.
-  after_filter :log_user_id
-
 
 ###
 # Status Code Rescues
@@ -250,6 +247,20 @@ protected
   ###
   # _before_filter_
   #
+  # This is used by the gem lograge to add data to the logs.
+  # See https://github.com/roidrage/lograge for more info.
+  ###
+  def append_info_to_payload(payload)
+    super
+    payload[:current_user_id] = current_user.present? ? current_user.id : "none"
+    payload[:current_admin_user_id] = current_admin_user.present? ? current_admin_user.id : "none"
+    payload[:request_id] = request.headers["HTTP_HEROKU_REQUEST_ID"].present? ? request.headers["HTTP_HEROKU_REQUEST_ID"] : request.uuid
+    payload[:remote_ip] = request.remote_ip
+  end
+
+  ###
+  # _before_filter_
+  #
   # This method limits a controller to prevent subdomain access, redirecting to root if the subdomain is present.
   # The allows us to white list controller that inherit from application controller.
   ###
@@ -413,16 +424,6 @@ protected
       rescue
       end
     end
-  end
-
-  ###
-  # _after_filter_
-  #
-  # Print to the logs if there is a current user their id.
-  ###
-  def log_user_id
-    logger.error "current_user_id=#{current_user.id}" if current_user.present?
-    logger.error "current_admin_user_id=#{current_admin_user.id}" if current_admin_user.present?
   end
 
 ###

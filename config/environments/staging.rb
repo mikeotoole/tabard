@@ -42,13 +42,19 @@ DaBvRails::Application.configure do
   config.logger = Logger.new(STDOUT)
 
   # Add info to the logs for tracking requests.
-  config.log_tags = [ lambda {|req| "request_id=#{req.headers["HTTP_HEROKU_REQUEST_ID"]}" }, :remote_ip ]
+  # config.log_tags = [ :remote_ip ]
 
   # Turn on lograge. See https://github.com/roidrage/lograge
   config.lograge.enabled = true
   config.lograge.custom_options = lambda do |event|
-    # Print out request params
-    {:params => event.payload[:params].with_indifferent_access.except(:action, :controller)}
+    # Add values to log output. See ApplicationController append_info_to_payload method.
+    {
+      remote_ip: event.payload[:remote_ip],
+      request_id: event.payload[:request_id],
+      current_user_id: event.payload[:current_user_id],
+      current_admin_user_id: event.payload[:current_admin_user_id],
+      params: event.payload[:params].with_indifferent_access.except(:action, :controller)
+    }
   end
 
   # Use a different cache store in production
