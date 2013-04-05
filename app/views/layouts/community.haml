@@ -61,7 +61,7 @@
               - if current_user.is_member? current_community
                 %li
                   = link_to 'Announcements', announcements_url
-              - if current_user.is_member? current_community and form_items.any?
+              - if (current_user.is_member? current_community and form_items.any?) or can? :create, CustomForm
                 %li
                   = link_to 'Forms', custom_forms_url
             - if user_signed_in? and current_user.communities.include?(current_community)

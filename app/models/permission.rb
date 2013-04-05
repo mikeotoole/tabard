@@ -37,7 +37,8 @@ class Permission < ActiveRecord::Base
   validates :role, presence: true
 
   validates :subject_class, presence: true,
-      inclusion: { in: VALID_SUBJECT_CLASSES, message: "%{value} is not currently a supported permissionable" }
+      inclusion: { in: VALID_SUBJECT_CLASSES, message: "%{value} is not currently a supported permissionable" },
+      uniqueness: {scope: [:role_id, :id_of_subject, :id_of_parent]}
 
   validates :permission_level,
       inclusion: { in: VALID_PERMISSION_LEVELS, message: "%{value} is not a valid permission level" },
