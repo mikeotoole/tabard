@@ -58,8 +58,6 @@ card =
         Stripe.createToken data, @handleStripeResponse
 
     handleStripeResponse: (status, response) ->
-        $('body').removeClass 'busy'
-
         # Remove old error messages
         $('#flash li').each -> $(@).find('.dismiss').trigger 'click'
         $('#form_with_subscription li').removeClass('with-errors').find('mark.error').remove()
@@ -73,6 +71,8 @@ card =
             ccFields.removeAttr 'disabled'
 
         else
+            $('body').removeClass 'busy'
+
             # Show message in DOM
             if response.error.param.match /exp_year|exp_month/
                 errorMsg = 'Invalid expiration date.'
