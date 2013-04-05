@@ -39,7 +39,7 @@ class Game < ActiveRecord::Base
 # Class Methods
 ###
   def self.popular
-    PlayedGame.order(:game_id).group_by(&:game_id).map{|id, pgs| pgs.first.game} #TODO fix this
+    PlayedGame.order(:game_id).group_by(&:game_id).map{|id, pgs| pgs.first.game}
   end
   # Search game name and aliases for given term.
   def self.search(search)
