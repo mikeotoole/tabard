@@ -11,6 +11,7 @@ require 'bundler/setup' if File.exists?(ENV['BUNDLE_GEMFILE'])
 
 require 'rails/commands/server'
 
+# Have the server run on 127.0.0.1 instead of 0.0.0.0
 module Rails
   class Server
     alias :default_options_alias :default_options
