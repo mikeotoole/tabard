@@ -256,7 +256,7 @@ protected
     if self.community.email_notice_on_application
       Rails.application.routes.default_url_options[:host] = "#{community.subdomain}.#{ENV['BV_HOST_URL']}"
       message = Message.create_system(subject: "Application Submitted to #{self.community.name}",
-                            body: "[#{self.user_profile.name}](#{url_helpers.user_profile_url(self.user_profile)}) has submitted [their application](#{helpers.community_application_url(self)}) to #{self.community.name}.",
+                            body: "[#{self.user_profile.name}](#{url_helpers.user_profile_url(self.user_profile)}) has submitted [their application](#{url_helpers.community_application_url(self)}) to #{self.community.name}.",
                             to: [self.community.admin_profile_id])
     end
   end
