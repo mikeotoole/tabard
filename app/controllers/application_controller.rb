@@ -126,10 +126,12 @@ protected
 ###
   # This method sets the last poster.
   def set_last_posted_as(profile)
-    # TODO harden this
-    session[:poster_type] = profile.class.to_s
-    session[:poster_id] = profile.id.to_s
+    if Character::VALID_CHARACTER_CLASSES.include?(profile.class.to_s) or profile.class == UserProfile
+      session[:poster_type] = profile.class.to_s
+      session[:poster_id] = profile.id.to_s
+    end
   end
+
   # This method gets the character id of the last posted character
   def last_posted_as_character_id
     return nil if session[:poster_type].blank? or session[:poster_id].blank? or !!(session[:poster_type] =~ /UserProfile/)

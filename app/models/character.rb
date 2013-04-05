@@ -13,6 +13,7 @@ class Character < ActiveRecord::Base
   # Used by validator to limit the length of name.
   MAX_NAME_LENGTH = 50
   DEFAULT_AVATAR_CLASSES = %w( MinecraftCharacter )
+  VALID_CHARACTER_CLASSES = %w(MinecraftCharacter SwtorCharacter LeagueOfLegendsCharacter WowCharacter)
 
 ###
 # Attribute accessible
