@@ -45,29 +45,20 @@ class SubscriptionsController < PaymentController
     @stripe_card_token = params[:stripe_card_token]
     begin
       success_message = "Your plan has been changed"
+      success = false
       # Check to see if the community is charge exempt..
       if @community.is_charge_exempt
         #.. If it is just update it.
-        if @invoice.update_attributes(params[:invoice])
-          flash.now[:success] = success_message
-        else
-          flash.now[:error] = "We were unable to update your account at this time."
-        end
-      #.. If it is not exempt, try to update it with payment..
-      elsif @invoice.update_attributes_with_payment(params[:invoice], @stripe_card_token)
-        flash.now[:success] = success_message
-      #.. If it can't be updated with payment, then set the view variables from the current invoice.
+        success = @invoice.update_attributes(params[:invoice])
+        flash.now[:error] = "We were unable to update your account at this time." unless success
       else
-
-        @current_plan_invoice_item = @invoice.invoice_items.select{|ii| ii.has_community_plan?}.first
-        @all_upgrades_invoice_items = @invoice.invoice_items.recurring.select{|ii| ii.has_community_upgrade?}
+        #.. If it is not exempt, try to update it with payment..
+        success = @invoice.update_attributes_with_payment(params[:invoice], @stripe_card_token)
       end
     # Rescue from Stripe errors and let the user know what is happening.
     rescue Stripe::StripeError => e
       @invoice.errors.add :base, "There was a problem with your credit card"
       @stripe_card_token = nil
-      @current_plan_invoice_item = @invoice.invoice_items.select{|ii| ii.has_community_plan?}.first
-      @all_upgrades_invoice_items = @invoice.invoice_items.recurring.select{|ii| ii.has_community_upgrade?}
     # Rescue from stale objects (Locked) and let the user know what is happening.
     rescue ActiveRecord::StaleObjectError => e
       # ERROR invoice is currently being charged.
@@ -75,6 +66,15 @@ class SubscriptionsController < PaymentController
       redirect_to subscriptions_path
       return true
     end
+
+    if success
+      flash.now[:success] = success_message
+    else
+      #.. If it can't be updated with payment, then set the view variables from the current invoice.
+      @current_plan_invoice_item = @invoice.invoice_items.select{|ii| ii.has_community_plan?}.first
+      @all_upgrades_invoice_items = @invoice.invoice_items.recurring.select{|ii| ii.has_community_upgrade?}
+    end
+
     respond_with(@invoice, location: edit_subscription_url(@community))
   end
 
