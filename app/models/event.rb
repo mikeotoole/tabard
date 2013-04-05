@@ -6,8 +6,6 @@
 # This class represents an event.
 ###
 class Event < ActiveRecord::Base
-  include Rails.application.routes.url_helpers # FIXME wrap this in a method to get at helpers. See: http://railscasts.com/episodes/132-helpers-outside-views
-
   validates_lengths_from_database except: [:name, :body]
 ###
 # Constants
@@ -85,6 +83,11 @@ class Event < ActiveRecord::Base
 ###
 # Public Methods
 ###
+
+  def helpers
+    Rails.application.routes.url_helpers # FIXME wrap this in a method to get at helpers. See: http://railscasts.com/episodes/132-helpers-outside-views
+  end
+
   # The number of minutes the event lasts for
   def duration_minutes
     (end_time.to_time - start_time.to_time) / 60
@@ -145,9 +148,9 @@ end
 
 # This messages the invited person
 def message_the_invites(text='')
-  default_url_options[:host] = "#{community.subdomain}.#{ENV['BV_HOST_URL']}"
+  Rails.application.routes.default_url_options[:host] = "#{community.subdomain}.#{ENV['BV_HOST_URL']}"
   Message.create_system(subject: "Event Changed",
-      body: "The event, [#{name}](#{event_url(self)}), has changed. #{text}\n\t\n> **Start:** #{start_time.strftime('%b %e, %y @ %l:%M %p')}  \n**End:** #{end_time.strftime('%b %e, %y @ %l:%M %p')}\n\t\n> #{body}",
+      body: "The event, [#{name}](#{helpers.event_url(self)}), has changed. #{text}\n\t\n> **Start:** #{start_time.strftime('%b %e, %y @ %l:%M %p')}  \n**End:** #{end_time.strftime('%b %e, %y @ %l:%M %p')}\n\t\n> #{body}",
       to: self.user_profiles.map{|profile| profile.id}) unless self.user_profiles.blank?
 end
 

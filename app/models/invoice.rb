@@ -304,6 +304,7 @@ class Invoice < ActiveRecord::Base
   ###
   # Used to submit a charge to Stripe with this invoice cost.
   # If the invoice is still open it will first be closed.
+  # [Args]
   #   * +send_fail_email+ If it should send payment failed email. This is false when a user directly causing charge_customer to be called and will be notified now.
   #   * +override_tax+ If it should ignore tax and flag invoice if we can't find out tax info.
   # [Returns] True if the charge was submitted to Stripe, false otherwise

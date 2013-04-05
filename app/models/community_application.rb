@@ -7,8 +7,6 @@
 ###
 class CommunityApplication < ActiveRecord::Base
   validates_lengths_from_database
-  # Used by mailer to add links to application.
-  include Rails.application.routes.url_helpers # FIXME wrap this in a method to get at helpers. See: http://railscasts.com/episodes/132-helpers-outside-views
 
   # Resource will be marked as deleted with the deleted_at column set to the time of deletion.
   acts_as_paranoid
@@ -82,11 +80,15 @@ class CommunityApplication < ActiveRecord::Base
 ###
 # Instance Methods
 ###
+  def helpers
+    Rails.application.routes.url_helpers
+  end
+
   ###
   # This method accepts this application and does all of the magic to make the applicant a member.
   # [Returns] True if this action was successful, otherwise false.
   ###
-  def accept_application(accepted_by_user_profile, character_map=Hash.new) # TODO Make this better!
+  def accept_application(accepted_by_user_profile, character_map=Hash.new)
     return false if self.accepted? or self.applicant_is_a_member?
     error_count = 0
     self.characters.each do |charatcer|
@@ -99,9 +101,9 @@ class CommunityApplication < ActiveRecord::Base
     if self.update_attributes({status: "Accepted", status_changer: accepted_by_user_profile}, without_protection: true)
       community_profile = self.community.promote_user_profile_to_member(self.user_profile)
       community_profile.update_attributes({community_application_id: self.id},without_protection: true)
-      default_url_options[:host] = "#{community.subdomain}.#{ENV['BV_HOST_URL']}"
+      Rails.application.routes.default_url_options[:host] = "#{community.subdomain}.#{ENV['BV_HOST_URL']}"
       message = Message.create_system(subject: "Application Accepted to #{self.community.name}",
-                  body: "Your application to [#{self.community.name}](#{root_url(subdomain: self.community_subdomain)}) has been accepted.",
+                  body: "Your application to [#{self.community.name}](#{helpers.root_url(subdomain: self.community_subdomain)}) has been accepted.",
                   to: [self.user_profile_id])
 
       unless community_profile.nil?
@@ -125,9 +127,9 @@ class CommunityApplication < ActiveRecord::Base
   def reject_application(rejected_by_user_profile)
     return false unless self.is_pending? or self.applicant_is_a_member?
     if self.update_attributes({status: "Rejected", status_changer: rejected_by_user_profile}, without_protection: true)
-      default_url_options[:host] = "#{community.subdomain}.#{ENV['BV_HOST_URL']}"
+      Rails.application.routes.default_url_options[:host] = "#{community.subdomain}.#{ENV['BV_HOST_URL']}"
       message = Message.create_system(subject: "Application Rejected",
-                            body: "Your application to [#{self.community.name}](#{root_url(subdomain: self.community_subdomain)}) has been rejected.",
+                            body: "Your application to [#{self.community.name}](#{helpers.root_url(subdomain: self.community_subdomain)}) has been rejected.",
                             to: [self.user_profile_id])
     end
   end
@@ -251,9 +253,9 @@ protected
   ###
   def message_community_admin
     if self.community.email_notice_on_application
-      default_url_options[:host] = "#{community.subdomain}.#{ENV['BV_HOST_URL']}"
+      Rails.application.routes.default_url_options[:host] = "#{community.subdomain}.#{ENV['BV_HOST_URL']}"
       message = Message.create_system(subject: "Application Submitted to #{self.community.name}",
-                            body: "[#{self.user_profile.name}](#{user_profile_url(self.user_profile)}) has submitted [their application](#{community_application_url(self)}) to #{self.community.name}.",
+                            body: "[#{self.user_profile.name}](#{helpers.user_profile_url(self.user_profile)}) has submitted [their application](#{helpers.community_application_url(self)}) to #{self.community.name}.",
                             to: [self.community.admin_profile_id])
     end
   end

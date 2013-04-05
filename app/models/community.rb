@@ -190,9 +190,12 @@ class Community < ActiveRecord::Base
   # OPTIMIZE: We may want to cache the current plan.
   ###
   def current_community_plan
-    today = Time.now
-    invoiceitem = self.invoice_items.where{(item_type == "CommunityPlan") & (start_date <= today) & (end_date >= today)}.limit(1).first
-    invoiceitem.present? ? invoiceitem.item : CommunityPlan.default_plan
+    if @plan.blank?
+      today = Time.now
+      invoiceitem = self.invoice_items.where{(item_type == "CommunityPlan") & (start_date <= today) & (end_date >= today)}.limit(1).first
+      @plan = invoiceitem.present? ? invoiceitem.item : CommunityPlan.default_plan
+    end
+    return @plan
   end
 
   # This will return the community plan set to be recurring.
@@ -219,8 +222,13 @@ class Community < ActiveRecord::Base
   end
 
   ###
-  #
-  # This should be wrapped in a Community.transaction do block
+  # This will save a community and adding the plan a user picks.
+  # This is used when creating a new community.
+  # # [Args]
+  #   * +plan_id+ The plan id for the plan a user picks.
+  #   * +stripe_card_token+ The token from stripe for their card.
+  #   * +invoice+ The community owners invoice.
+  # [Returns] True if community was created. Otherwise false is retuned and errors added to the communinty.
   ###
   def save_with_plan(plan_id, stripe_card_token, invoice)
     success = false
@@ -228,12 +236,15 @@ class Community < ActiveRecord::Base
     plan = CommunityPlan.default_plan unless ENV["ENABLE_PAYMENT"]
     if plan.present?
       if invoice.present?
-        success = self.save
-        if success and not plan.is_free_plan?
-          invoice.invoice_items.new({community: self, item: plan, quantity: 1}, without_protection: true)
-          unless invoice.update_attributes_with_payment(nil, stripe_card_token)
-            self.errors[:base] = invoice.errors[:base].first
-            success = false
+        Community.transaction do
+          success = self.save
+          if success and not plan.is_free_plan?
+            invoice.invoice_items.new({community: self, item: plan, quantity: 1}, without_protection: true)
+            unless invoice.update_attributes_with_payment(nil, stripe_card_token)
+              self.errors[:base] = invoice.errors[:base].first
+              success = false
+              raise ActiveRecord::Rollback
+            end
           end
         end
       else
@@ -266,11 +277,13 @@ class Community < ActiveRecord::Base
   # OPTIMIZE: We may want to cache max_number_of_users.
   ###
   def max_number_of_users
-    plan_users_total = self.current_community_plan.max_number_of_users
-    user_pack_upgrades_ii = current_upgrades.joins{community_user_pack_items}
-    upgrade_users_total = user_pack_upgrades_ii.map{|u| u.item.number_of_bonus_users * u.quantity}.inject(0,:+)
-
-    return plan_users_total + upgrade_users_total
+    if @total_max_user.blank?
+      plan_users_total = self.current_community_plan.max_number_of_users
+      user_pack_upgrades_ii = current_upgrades.joins{community_user_pack_items}
+      upgrade_users_total = user_pack_upgrades_ii.map{|u| u.item.number_of_bonus_users * u.quantity}.inject(0,:+)
+      @total_max_user = plan_users_total + upgrade_users_total
+    end
+    return @total_max_user
   end
 
   ###
