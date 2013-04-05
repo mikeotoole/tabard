@@ -80,10 +80,6 @@ class CommunityApplication < ActiveRecord::Base
 ###
 # Instance Methods
 ###
-  def helpers
-    Rails.application.routes.url_helpers
-  end
-
   ###
   # This method accepts this application and does all of the magic to make the applicant a member.
   # [Returns] True if this action was successful, otherwise false.
@@ -103,7 +99,7 @@ class CommunityApplication < ActiveRecord::Base
       community_profile.update_attributes({community_application_id: self.id},without_protection: true)
       Rails.application.routes.default_url_options[:host] = "#{community.subdomain}.#{ENV['BV_HOST_URL']}"
       message = Message.create_system(subject: "Application Accepted to #{self.community.name}",
-                  body: "Your application to [#{self.community.name}](#{helpers.root_url(subdomain: self.community_subdomain)}) has been accepted.",
+                  body: "Your application to [#{self.community.name}](#{url_helpers.root_url(subdomain: self.community_subdomain)}) has been accepted.",
                   to: [self.user_profile_id])
 
       unless community_profile.nil?
@@ -129,7 +125,7 @@ class CommunityApplication < ActiveRecord::Base
     if self.update_attributes({status: "Rejected", status_changer: rejected_by_user_profile}, without_protection: true)
       Rails.application.routes.default_url_options[:host] = "#{community.subdomain}.#{ENV['BV_HOST_URL']}"
       message = Message.create_system(subject: "Application Rejected",
-                            body: "Your application to [#{self.community.name}](#{helpers.root_url(subdomain: self.community_subdomain)}) has been rejected.",
+                            body: "Your application to [#{self.community.name}](#{url_helpers.root_url(subdomain: self.community_subdomain)}) has been rejected.",
                             to: [self.user_profile_id])
     end
   end
@@ -206,6 +202,11 @@ class CommunityApplication < ActiveRecord::Base
 ###
 protected
 
+  # Allows us to use url helpers in model without messing up the namespace.
+  def url_helpers
+    Rails.application.routes.url_helpers
+  end
+
 ###
 # Validator Methods
 ###
@@ -255,7 +256,7 @@ protected
     if self.community.email_notice_on_application
       Rails.application.routes.default_url_options[:host] = "#{community.subdomain}.#{ENV['BV_HOST_URL']}"
       message = Message.create_system(subject: "Application Submitted to #{self.community.name}",
-                            body: "[#{self.user_profile.name}](#{helpers.user_profile_url(self.user_profile)}) has submitted [their application](#{helpers.community_application_url(self)}) to #{self.community.name}.",
+                            body: "[#{self.user_profile.name}](#{url_helpers.user_profile_url(self.user_profile)}) has submitted [their application](#{helpers.community_application_url(self)}) to #{self.community.name}.",
                             to: [self.community.admin_profile_id])
     end
   end

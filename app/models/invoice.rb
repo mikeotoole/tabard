@@ -76,7 +76,7 @@ class Invoice < ActiveRecord::Base
     today = Time.zone.now.end_of_day
     seven_days_ago = today - SECONDS_OF_FAILED_ATTEMPTS.seconds
     invoices_to_bill = Invoice.where{(period_end_date <= today) &
-                                     (paid_date == nil) & # TODO: Why can't this just look for invoices not closed?
+                                     (is_closed == false) &
                                      ((first_failed_attempt_date == nil) | (first_failed_attempt_date > seven_days_ago))}
     invoices_to_bill.each do |invoice|
       Invoice.delay.charge(invoice.id)

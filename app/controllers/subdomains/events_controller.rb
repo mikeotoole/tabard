@@ -6,8 +6,8 @@
 # This controller is handling events within the scope of subdomains (communities).
 ###
 class Subdomains::EventsController < SubdomainsController
-  include Rails.application.routes.url_helpers
   respond_to :html, :js
+
 ###
 # Before Filters
 ###

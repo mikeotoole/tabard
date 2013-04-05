@@ -83,11 +83,6 @@ class Event < ActiveRecord::Base
 ###
 # Public Methods
 ###
-
-  def helpers
-    Rails.application.routes.url_helpers # FIXME wrap this in a method to get at helpers. See: http://railscasts.com/episodes/132-helpers-outside-views
-  end
-
   # The number of minutes the event lasts for
   def duration_minutes
     (end_time.to_time - start_time.to_time) / 60
@@ -133,26 +128,31 @@ class Event < ActiveRecord::Base
 ###
 protected
 
-def notify_users
-  return true unless self.persisted?
-  return true if self.invites.blank?
-  if name_changed? or body_changed?
-    self.invites.unscoped.update_all({is_viewed: false})
-    message_the_invites
-  elsif start_time_changed? or end_time_changed?
-    self.invites.unscoped.update_all({status: nil, expiration: self.end_time, is_viewed: false})
-    message_the_invites('Please update your RSVP status.')
+  def notify_users
+    return true unless self.persisted?
+    return true if self.invites.blank?
+    if name_changed? or body_changed?
+      self.invites.unscoped.update_all({is_viewed: false})
+      message_the_invites
+    elsif start_time_changed? or end_time_changed?
+      self.invites.unscoped.update_all({status: nil, expiration: self.end_time, is_viewed: false})
+      message_the_invites('Please update your RSVP status.')
+    end
+    return true
   end
-  return true
-end
 
-# This messages the invited person
-def message_the_invites(text='')
-  Rails.application.routes.default_url_options[:host] = "#{community.subdomain}.#{ENV['BV_HOST_URL']}"
-  Message.create_system(subject: "Event Changed",
-      body: "The event, [#{name}](#{helpers.event_url(self)}), has changed. #{text}\n\t\n> **Start:** #{start_time.strftime('%b %e, %y @ %l:%M %p')}  \n**End:** #{end_time.strftime('%b %e, %y @ %l:%M %p')}\n\t\n> #{body}",
-      to: self.user_profiles.map{|profile| profile.id}) unless self.user_profiles.blank?
-end
+  # This messages the invited person
+  def message_the_invites(text='')
+    Rails.application.routes.default_url_options[:host] = "#{community.subdomain}.#{ENV['BV_HOST_URL']}"
+    Message.create_system(subject: "Event Changed",
+        body: "The event, [#{name}](#{url_helpers.event_url(self)}), has changed. #{text}\n\t\n> **Start:** #{start_time.strftime('%b %e, %y @ %l:%M %p')}  \n**End:** #{end_time.strftime('%b %e, %y @ %l:%M %p')}\n\t\n> #{body}",
+        to: self.user_profiles.map{|profile| profile.id}) unless self.user_profiles.blank?
+  end
+
+  # Allows us to use url helpers in model without messing up the namespace.
+  def url_helpers
+    Rails.application.routes.url_helpers
+  end
 
 ###
 # _before_validation_
