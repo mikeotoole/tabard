@@ -77,6 +77,16 @@ class CommunityPlan < ActiveRecord::Base
     self.price_per_month_in_cents/100.0
   end
 
+  # Don't allow anyone to destroy a CommunityPlan that has InvoiceItems
+  def destroy
+    if self.invoice_items.any?
+      self.errors.add(:base, "Cannot destroy CommunityPlans that are attached to InvoiceItems")
+      return false
+    else
+      super
+    end
+  end
+
 ###
 # Protected Methods
 ###

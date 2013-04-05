@@ -31,6 +31,20 @@ describe CommunityPlan do
     pro_community_plan.max_number_of_users.should be > 20
   end
 
+  it "can't be destroyed if it has invoice items" do
+    community_plan = create(:invoice_item).item
+    community_plan.class.should eq CommunityPlan
+    community_plan.invoice_items.any?.should be_true
+    community_plan.destroy.should be_false
+    CommunityPlan.exists?(community_plan).should be_true
+  end
+
+  it "can be destoryed if it does not have invoice items" do
+    community_plan.invoice_items.any?.should be_false
+    community_plan.destroy.should be_true
+    CommunityPlan.exists?(community_plan).should be_false
+  end
+
   describe "title" do
     it "should not be blank" do
       build(:community_plan, title: "").should_not be_valid

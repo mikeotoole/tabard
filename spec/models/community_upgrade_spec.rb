@@ -20,12 +20,28 @@ describe CommunityUpgrade do
   it "should create a new instance given valid attributes" do
     community_upgrade.should be_valid
   end
+
+  it "can't be destroyed if it has invoice items" do
+    community_upgrade = create(:upgrade_invoice_item).item
+    community_upgrade.class.should eq CommunityUserPackUpgrade
+    community_upgrade.invoice_items.any?.should be_true
+    community_upgrade.destroy.should be_false
+    CommunityUpgrade.exists?(community_upgrade).should be_true
+  end
+
+  it "can be destoryed if it does not have invoice items" do
+    community_upgrade.invoice_items.any?.should be_false
+    community_upgrade.destroy.should be_true
+    CommunityUpgrade.exists?(community_upgrade).should be_false
+  end
+
   describe "title" do
     it "should not be blank" do
       build(:community_upgrade, title: "").should_not be_valid
       build(:community_upgrade, title: nil).should_not be_valid
     end
   end
+
   describe "description" do
     it "should not be blank" do
       build(:community_upgrade, description: "").should_not be_valid
@@ -61,6 +77,7 @@ describe CommunityUpgrade do
       build(:community_upgrade, price_per_month_in_cents: 1.11).should_not be_valid
     end
   end
+
   describe "max_number_of_upgrades" do
     it "should not be blank" do
       build(:community_upgrade, max_number_of_upgrades: nil).should_not be_valid
