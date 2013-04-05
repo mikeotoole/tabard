@@ -31,8 +31,8 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   # GET /community_applications/1
   # GET /community_applications/1.json
   def show
-    flash[:alert].now = "Your community is full and you will not be able to accept any more members." if current_community.is_at_max_capacity? and can? :edit, current_community
-    flash[:notice].now = "Your community is almost full. You will not be able to accept any more members if you are full." if current_community.is_at_almost_max_capacity? and can? :edit, current_community
+    flash.now[:alert] = "Your community is full and you will not be able to accept any more members." if current_community.is_at_max_capacity? and can? :edit, current_community
+    flash.now[:notice] = "Your community is almost full. You will not be able to accept any more members if you are full." if current_community.is_at_almost_max_capacity? and can? :edit, current_community
     @community_games = current_community.community_games
     @comments = @community_application.comments.page params[:page]
     params[:character_hash] ||= Hash.new
@@ -48,10 +48,10 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   # GET /community_applications/new.json
   def new
     if current_user.is_member? current_community
-      flash[:notice].now = "You are already a member of this community."
+      flash.now[:notice] = "You are already a member of this community."
       redirect_to my_roster_assignments_path
     elsif current_user.application_pending? current_community
-      flash[:notice].now = "You have already applied to this community. Your application is pending review."
+      flash.now[:notice] = "You have already applied to this community. Your application is pending review."
       redirect_to root_url(subdomain: current_community.subdomain)
     else
       @community_application.submission.custom_form.questions.each do |question|
@@ -82,16 +82,16 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   def accept
     params[:character_hash] ||= Hash.new
     if @community_application.user_profile.is_disabled?
-      flash[:alert].now = "The application was unable to be accepted because the user has disabled their account."
+      flash.now[:alert] = "The application was unable to be accepted because the user has disabled their account."
       @community_games = current_community.community_games
       @comments = @community_application.comments.page params[:page]
       render :show
     else
       if @community_application.accept_application(current_user.user_profile, params[:character_hash])
-        flash[:success].now = "The application to \"#{@community_application.community_name}\" has been accepted."
+        flash.now[:success] = "The application to \"#{@community_application.community_name}\" has been accepted."
         redirect_to community_applications_url
       else
-        flash[:alert].now = "The application was unable to be accepted because your community is full." if current_community.is_at_max_capacity?
+        flash.now[:alert] = "The application was unable to be accepted because your community is full." if current_community.is_at_max_capacity?
         @community_games = current_community.community_games
         @comments = @community_application.comments.page params[:page]
         render :show
@@ -101,7 +101,7 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
 
   # This rejects the specified application.
   def reject
-    flash[:notice].now = 'The application has been rejected.' if @community_application.reject_application(current_user.user_profile)
+    flash.now[:notice] = 'The application has been rejected.' if @community_application.reject_application(current_user.user_profile)
     redirect_to community_applications_url
   end
 ###
