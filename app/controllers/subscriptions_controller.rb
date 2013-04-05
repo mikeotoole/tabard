@@ -66,6 +66,8 @@ class SubscriptionsController < PaymentController
     rescue Stripe::StripeError => e
       @invoice.errors.add :base, "There was a problem with your credit card"
       @stripe_card_token = nil
+      @current_plan_invoice_item = @invoice.invoice_items.select{|ii| ii.has_community_plan?}.first
+      @all_upgrades_invoice_items = @invoice.invoice_items.recurring.select{|ii| ii.has_community_upgrade?}
     # Rescue from stale objects (Locked) and let the user know what is happening.
     rescue ActiveRecord::StaleObjectError => e
       # ERROR invoice is currently being charged.
