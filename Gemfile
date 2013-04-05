@@ -9,9 +9,6 @@ ruby '2.0.0'
   gem 'nilify_blanks'#                                                                      MIT - https://github.com/rubiety/nilify_blanks
   gem 'activerecord-postgres-hstore'#                                                             https://github.com/softa/activerecord-postgres-hstore
 
-# Javascript Library
-  gem 'jquery-rails'#                                                                       MIT - https://github.com/rails/jquery-rails
-
 # Meta Languages
   gem 'haml'#                                                                               MIT - https://github.com/haml/haml
   gem 'squeel'#                                                                             MIT - https://github.com/ernie/squeel
@@ -40,7 +37,7 @@ ruby '2.0.0'
   gem 'country_select'#                                                                     MIT - https://github.com/stefanpenner/country_select
 
 # Browser Detection
-  gem 'agent_orange'#                                                                    MIT - https://github.com/kevinelliott/agent_orange
+  gem 'agent_orange'#                                                                       MIT - https://github.com/kevinelliott/agent_orange
 
 # Pagination
   gem 'kaminari'#                                                                           MIT - https://github.com/amatsuda/kaminari
@@ -73,24 +70,23 @@ ruby '2.0.0'
   gem 'fog'#                                                                                MIT - https://github.com/fog/fog
   gem 'mini_magick'#                                                                        MIT - https://github.com/probablycorey/mini_magick
   gem 'carrierwave'#                                                                        MIT - https://github.com/jnicklas/carrierwave
-  gem 'asset_sync'#                                                                         MIT - https://github.com/rumblelabs/asset_sync
 
 # Admin Portal
   gem 'meta_search'#                                                                        MIT - https://github.com/ernie/meta_search
   gem 'activeadmin'#                                                                        MIT - https://github.com/gregbell/active_admin
 
-# Asset Specific Gems, Pulled out of Group for Activeadmin
-  gem 'sass-rails'#                                                                         MIT - https://github.com/rails/sass-rails
-  gem 'coffee-rails'#                                                                       MIT - https://github.com/rails/coffee-rails
-  gem 'uglifier'#                                                                           MIT - https://github.com/lautis/uglifier
-
 # Logging
-  gem 'quiet_assets'#                                                                       MIT - https://github.com/evrone/quiet_assets
   gem 'lograge'#                                                                            MIT - https://github.com/roidrage/lograge
 
-  group :assets do
-
-  end
+group :assets do
+  gem 'asset_sync'#                                                                         MIT - https://github.com/rumblelabs/asset_sync
+  gem 'coffee-rails'#                                                                       MIT - https://github.com/rails/coffee-rails
+  gem 'jquery-rails'#                                                                       MIT -
+  gem 'quiet_assets'#                                                                       MIT - https://github.com/evrone/quiet_assets
+  gem 'sass-rails'#                                                                         MIT - https://github.com/rails/sass-rails
+  gem 'turbo-sprockets-rails3'#                                                             MIT - https://github.com/ndbroadbent/turbo-sprockets-rails3
+  gem 'uglifier'#                                                                           MIT - https://github.com/lautis/uglifier
+end
 
 # Seeding Data
   gem 'timecop'#                                                                            MIT - https://github.com/jtrupiano/timecop
