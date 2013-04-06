@@ -32,6 +32,12 @@ class Game < ActiveRecord::Base
                    uniqueness: {case_sensitive: false}
 
 ###
+# H-Store
+###
+  # Setup info to use Hstore. This should not be needed for Rails 4.
+  serialize :info, ActiveRecord::Coders::Hstore
+
+###
 # Public Methods
 ###
 
@@ -84,17 +90,10 @@ class Game < ActiveRecord::Base
 ###
 # Instance Methods
 ###
-
   # Quick check to see if the game is supported officially or not
   def is_supported
     self.type != 'CustomGame'
   end
-
-###
-# H-Store
-###
-  # Setup info to use Hstore. This should not be needed for Rails 4.
-  serialize :info, ActiveRecord::Coders::Hstore
 end
 
 # == Schema Information
