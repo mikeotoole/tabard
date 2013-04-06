@@ -31,6 +31,19 @@ class Theme < ActiveRecord::Base
   def self.default_theme
     Theme.find_or_create_by_name_and_css_and_thumbnail("Tabard", "default", "default.jpg")
   end
+
+  ###
+  # Only allow urls with http or https scheme.
+  # This will prevent any XSS attacks through the url.
+  ###
+  def safe_background_author_url
+    author_url = nil
+    if self.background_author_url.present?
+      uri = URI.parse("#{self.background_author_url}")
+      author_url = self.background_author_url if %w(http https).include?(uri.scheme)
+    end
+    return author_url
+  end
 end
 
 # == Schema Information

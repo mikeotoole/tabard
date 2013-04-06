@@ -86,7 +86,7 @@ class Community < ActiveRecord::Base
 ###
   delegate :css, to: :theme, prefix: true
   delegate :background_author, to: :theme, prefix: true, allow_nil: true
-  delegate :background_author_url, to: :theme, prefix: true, allow_nil: true
+  delegate :safe_background_author_url, to: :theme, prefix: true, allow_nil: true
   delegate :email, to: :admin_profile, prefix: true, allow_nil: true
   delegate :user, to: :admin_profile, prefix: true, allow_nil: true
   delegate :current_invoice, to: :admin_profile_user, allow_nil: true
