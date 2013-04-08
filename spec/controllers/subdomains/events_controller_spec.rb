@@ -40,7 +40,7 @@ describe Subdomains::EventsController do
 
     it "should redirect to new user session path when not authenticated as a user" do
       get :index
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
 
     it "should respond forbidden when not a member" do
@@ -66,7 +66,7 @@ describe Subdomains::EventsController do
 
     it "should redirect to new user session path when not authenticated as a user" do
       get :past
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
 
     it "should respond forbidden when not a member" do
@@ -93,7 +93,7 @@ describe Subdomains::EventsController do
 
       it "should redirect to new user session path when not authenticated as a user" do
         get :month_index, year: Time.now.year, month: Time.now.month
-        response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+        response.should redirect_to(new_user_session_url)
       end
 
       it "should respond forbidden when not a member" do
@@ -127,7 +127,7 @@ describe Subdomains::EventsController do
 
     it "should redirected to new user session path when not authenticated as a user" do
       get :show, :id => event
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
 
     it "should respond forbidden when not a member" do
@@ -152,7 +152,7 @@ describe Subdomains::EventsController do
 
     it "should redirected to new user session path when not authenticated as a user" do
       get :invites, :id => event
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
 
     it "should respond forbidden when not a member" do
@@ -177,7 +177,7 @@ describe Subdomains::EventsController do
 
     it "should redirect to new user session path when not authenticated as a user" do
       get :new
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
 
     it "should respond forbidden when not a member" do
@@ -208,7 +208,7 @@ describe Subdomains::EventsController do
 
     it "should redirect to new user session path when not authenticated as a user" do
       get :edit, :id => event.id.to_s
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
 
     it "should respond forbidden when not a member" do
@@ -264,7 +264,7 @@ describe Subdomains::EventsController do
   describe "POST create" do
     it "should redirected to new user session path when not authenticated as a user" do
       post :create, :event => attributes_for(:event)
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
 
     it "should respond forbidden when not a member" do
@@ -319,7 +319,7 @@ describe Subdomains::EventsController do
   describe "PUT update" do
     it "should redirected to new user session path when not authenticated as a user" do
       put :update, :id => event.id, :event => {:body => "New Body"}
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
 
     it "should respond forbidden when not a member" do
@@ -346,7 +346,7 @@ describe Subdomains::EventsController do
 
     it "should redirected to new user session path when not authenticated as a user" do
       delete :destroy, :id => event.id.to_s
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
 
     it "should respond forbidden when not a member" do

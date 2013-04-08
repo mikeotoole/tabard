@@ -13,21 +13,15 @@ module UrlHelper
   ###
   def url_for(options = nil)
     if options.kind_of?(Hash)
-      if options.has_key?(:subdomain)
-        if options[:subdomain] == 'secure'
-          options[:protocol] = (Rails.env.development? ? "http://" : "https://")
-        else
-          options[:protocol] = 'http://'
-        end
-
-        options[:host] = with_subdomain(options.delete(:subdomain))
-        options[:port] = request.port_string.gsub(':','') unless request.port_string.empty?
-        options[:only_path] ||= false
-      elsif defined?(current_community) and not current_community.blank? and current_community.respond_to?("subdomain")
+      # TODO: Don't think this is needed anymore. Delete if all tests pass. -MO
+#       if options.has_key?(:subdomain)
+#         options[:host] = with_subdomain(options.delete(:subdomain))
+#         options[:port] = request.port_string.gsub(':','') unless request.port_string.empty?
+#         options[:only_path] ||= false
+#         options[:protocol] ||= 'http://'
+#       els
+      if defined?(current_community) and not current_community.blank? and current_community.respond_to?("subdomain")
         options[:host] = with_subdomain(current_community.subdomain)
-        options[:port] = request.port_string.gsub(':','') unless request.port_string.empty?
-        options[:only_path] ||= false
-        options[:protocol] ||= 'http://'
       end
     end
     super

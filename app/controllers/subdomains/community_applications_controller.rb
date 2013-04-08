@@ -17,7 +17,6 @@ class Subdomains::CommunityApplicationsController < SubdomainsController
   before_filter :create_application, only: [:new, :create]
   before_filter :ensure_current_user_is_member, only: [:index]
   authorize_resource except: [:index]
-  skip_before_filter :limit_subdomain_access
 
   # GET /community_applications
   # GET /community_applications.json
@@ -124,7 +123,7 @@ protected
 
   # This pitches to the new user.
   def pitch_to_new_user
-    redirect_to new_user_registration_url(subdomain: "secure", community_id: current_community.id) and return false unless user_signed_in?
+    redirect_to new_user_registration_url(community_id: current_community.id) and return false unless user_signed_in?
   end
 
   ###

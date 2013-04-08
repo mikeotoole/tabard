@@ -8,6 +8,10 @@ describe "ActiveAdmin Question" do
   let(:question) { create(:short_answer_question) }
   let(:predefined_answer) { create(:check_box_question).predefined_answers.first }
 
+  before(:each) do
+    set_host "lvh.me:3000"
+  end
+
   describe "#index" do
     it "returns 200 when logged in as superadmin" do
       login_as superadmin

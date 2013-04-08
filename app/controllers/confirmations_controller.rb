@@ -19,6 +19,6 @@ class ConfirmationsController < Devise::ConfirmationsController
 
   # Override default path
   def after_resending_confirmation_instructions_path_for(resource_name)
-    root_url(subdomain: "www")
+    root_url
   end
 end

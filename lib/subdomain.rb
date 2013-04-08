@@ -11,7 +11,7 @@ class Subdomain
 # This determines if the request matches.
 # [Returns] True if the request has a subdomain that is not "www", otherwise false.
 ###
-  def self.matches?(request)
+  def self.matches?(request) # TODO: Joe - What does this do? -MO
     request.subdomain.present? && request.subdomain != "www" and request.subdomain != "secure" and request.subdomain != ""
   end
 end

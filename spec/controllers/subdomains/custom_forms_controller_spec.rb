@@ -22,7 +22,7 @@ describe Subdomains::CustomFormsController do
 
     it "should redirected to new user session path when not authenticated as a user" do
       get :index
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
   end
 
@@ -58,7 +58,7 @@ describe Subdomains::CustomFormsController do
 
     it "should redirected to new user session path when not authenticated as a user" do
       get :new
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
   end
 
@@ -71,7 +71,7 @@ describe Subdomains::CustomFormsController do
 
     it "should redirected to new user session path when not authenticated as a user" do
       get :edit, :id => custom_form.id.to_s
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
   end
 
@@ -99,7 +99,7 @@ describe Subdomains::CustomFormsController do
 
       it "should redirected to new user session path when not authenticated as a user" do
         post :create, :custom_form => attributes_for(:custom_form)
-        response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+        response.should redirect_to(new_user_session_url)
       end
     end
 
@@ -134,7 +134,7 @@ describe Subdomains::CustomFormsController do
 
     it "should redirected to new user session path when not authenticated as a user" do
       get :thankyou, :id => custom_form.id.to_s
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
   end
 

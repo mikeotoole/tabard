@@ -11,9 +11,6 @@ class CommunitiesController < ApplicationController
   # Before Filters
   ###
   before_filter :block_unauthorized_user!, except: [:show, :index, :check_name]
-  skip_before_filter :ensure_not_ssl_mode, only: [:new, :create, :destroy, :remove_confirmation]
-  skip_before_filter :limit_subdomain_access, only: [:new, :create, :destroy, :remove_confirmation]
-  before_filter :ensure_secure_subdomain, only: [:new, :create, :destroy, :remove_confirmation]
   load_and_authorize_resource except: [:create, :index, :check_name]
   before_filter :load_plans_and_stripe, only: [:new, :create]
 
@@ -69,7 +66,7 @@ class CommunitiesController < ApplicationController
     end
 
     flash[:success] = "Your community has been created." if success
-    respond_with(@community, location: edit_community_settings_url(subdomain: @community.subdomain, protocol: "http://"))
+    respond_with(@community, location: edit_community_settings_url(subdomain: @community.subdomain))
   end
 
   # DELETE /communities/:id(.:format)
@@ -78,10 +75,10 @@ class CommunitiesController < ApplicationController
       Community.delay.destory_community(@community.id)
       @community.update_column(:pending_removal, true)
       flash[:notice] = 'Community is being removed.'
-      redirect_to user_profile_url(current_user.user_profile, subdomain: "www", protocol: "http://")
+      redirect_to user_profile_url(current_user.user_profile)
     else
       flash[:alert] = 'Password was not valid.'
-      redirect_to community_remove_confirmation_community_url(@community, subdomain: "secure", protocol: "https://")
+      redirect_to community_remove_confirmation_community_url(@community)
     end
   end
 

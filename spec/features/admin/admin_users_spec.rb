@@ -7,6 +7,10 @@ describe "ActiveAdmin AdminUser" do
   let(:moderator) { create(:admin_user, :role => 'moderator') }
   let(:user) { DefaultObjects.user }
 
+  before(:each) do
+    set_host "lvh.me:3000"
+  end
+
   describe "#index" do
     it "returns 200 when logged in as superadmin" do
       login_as superadmin
@@ -428,7 +432,6 @@ describe "ActiveAdmin AdminUser" do
     it "returns 200 when logged in as superadmin" do
       login_as superadmin
 
-      visit alexandria_admin_users_url
       visit reset_all_passwords_alexandria_admin_users_url
       page.status_code.should == 200
     end

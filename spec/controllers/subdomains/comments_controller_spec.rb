@@ -39,7 +39,7 @@ describe Subdomains::CommentsController do
 
     it "should redirect to new user session path when not authenticated as a user" do
       get :new, :comment => { :commentable_id => discussion.id, :commentable_type => discussion.class }
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
 
     it "should respond forbidden when not a member" do
@@ -58,7 +58,7 @@ describe Subdomains::CommentsController do
 
     it "should redirect to new user session path when not authenticated as a user" do
       get :edit, :id => comment.id.to_s
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
 
     it "should respond forbidden when not a member" do
@@ -108,7 +108,7 @@ describe Subdomains::CommentsController do
   describe "POST create" do
     it "should redirected to new user session path when not authenticated as a user" do
       post :create, :comment => attributes_for(:comment)
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
 
     it "should respond forbidden when not a member" do
@@ -161,7 +161,7 @@ describe Subdomains::CommentsController do
   describe "PUT update" do
     it "should redirect to new user session path when not authenticated as a user" do
       put :update, :id => comment.id, :comment => attributes_for(:comment)
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
 
     it "should respond forbidden when not a member" do
@@ -224,7 +224,7 @@ describe Subdomains::CommentsController do
   describe "DELETE destroy" do
     it "should redirect to new user session path when not authenticated as a user" do
       delete :destroy, :id => comment.id.to_s
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
 
     it "should respond forbidden when not a member" do
@@ -264,7 +264,7 @@ describe Subdomains::CommentsController do
 
     it "should redirect to new user session path when not authenticated as a user" do
       post :lock, :id => comment.id.to_s
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
 
     it "should respond forbidden when not a member" do
@@ -307,7 +307,7 @@ describe Subdomains::CommentsController do
 
     it "should redirect to new user session path when not authenticated as a user" do
       post :unlock, :id => comment.id.to_s
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
 
     it "should respond forbidden when not a member" do

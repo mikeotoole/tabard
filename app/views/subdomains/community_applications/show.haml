@@ -8,7 +8,7 @@
 
 - if can? :edit, current_community and can? :upgrade, current_community
   #submenu
-    = link_to 'Upgrade Subscription', edit_subscription_url(current_community, subdomain: 'secure', upgrade: true), class: 'button'
+    = link_to 'Upgrade Subscription', edit_subscription_url(current_community, upgrade: true), class: 'button'
 
 %h1 Member Application
 = render 'communities/population', community: current_community
@@ -25,7 +25,7 @@
     .sidebar
       .submitter
         %h2 Applicant
-        %a{ href: user_profile_url(@community_application.user_profile, subdomain: "www") }
+        %a{ href: user_profile_url(@community_application.user_profile) }
           = image_tag @community_application.user_profile_avatar_url(:tiny), class: 'avatar'
           = @community_application.user_profile_display_name
 

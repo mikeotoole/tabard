@@ -14,7 +14,6 @@ class Subdomains::AnnouncementsController < SubdomainsController
   before_filter :ensure_current_user_is_member
   before_filter :authorize_community_and_game, only: [:community, :game]
   authorize_resource except: [:community, :game]
-  skip_before_filter :limit_subdomain_access
   load_and_authorize_resource through: :current_community, only: [:new, :create, :lock, :unlock, :destroy]
 
 ###

@@ -13,7 +13,7 @@ class CharactersController < ApplicationController
   def create
     flash.now[:success] = "Your character has been created." if @character.save
     @character.find_and_upload_avatar_from_game
-    respond_with(@character, location: user_profile_url(current_user.user_profile, anchor: "games", subdomain: "www"))
+    respond_with(@character, location: user_profile_url(current_user.user_profile, anchor: "games"))
   end
 
   # GET /characters/:id/edit
@@ -24,7 +24,7 @@ class CharactersController < ApplicationController
   def update
     flash.now[:success] = "Your character has been updated." if @character.update_attributes(params[:character])
     @character.find_and_upload_avatar_from_game
-    respond_with(@character, location: user_profile_url(current_user.user_profile, anchor: "games", subdomain: "www"))
+    respond_with(@character, location: user_profile_url(current_user.user_profile, anchor: "games"))
   end
 
   # DELETE /characters/:id
@@ -36,7 +36,7 @@ class CharactersController < ApplicationController
         session[:poster_id] = nil
       end
     end
-    redirect_to user_profile_url(current_user.user_profile, anchor: "games", subdomain: "www")
+    redirect_to user_profile_url(current_user.user_profile, anchor: "games")
   end
 
 protected

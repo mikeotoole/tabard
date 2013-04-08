@@ -16,7 +16,6 @@ class Subdomains::CommunityGamesController < SubdomainsController
   before_filter :load_community_game, except: [:new, :create, :index]
   before_filter :create_community_game, only: [:new, :create]
   authorize_resource except: [:index, :autocomplete]
-  skip_before_filter :limit_subdomain_access
   after_filter :create_activity, only: [:update, :create]
 
 ###

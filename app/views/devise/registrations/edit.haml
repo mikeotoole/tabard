@@ -2,7 +2,7 @@
 
 %h1 Account Settings
 
-= simple_form_for(@user, url: registration_url(@user, subdomain: "secure"), html: { method: :put, autocomplete: :off }) do |f|
+= simple_form_for(@user, url: registration_url(@user), html: { method: :put, autocomplete: :off }) do |f|
   %fieldset
     %ol
       -if @user.pending_reconfirmation?
@@ -19,6 +19,6 @@
       = f.input :current_password, required: true, hint: "(we need your current password to confirm your changes)"
     %p.submit
       %button{ type: :submit } Save Changes
-      = link_to "Deactivate my account", disable_confirmation_url(subdomain: "secure"), class: 'secondary'
+      = link_to "Deactivate my account", disable_confirmation_url, class: 'secondary'
 
 = render 'shared/user_account_links'

@@ -6,6 +6,10 @@ describe "ActiveAdmin Dashboard" do
   let(:moderator) { create(:admin_user, :role => 'moderator') }
   let(:user) { DefaultObjects.user }
 
+  before(:each) do
+    set_host "lvh.me:3000"
+  end
+
   describe "#index" do
     it "returns 200 when logged in as superadmin" do
       login_as superadmin

@@ -31,16 +31,13 @@ class ApplicationController < ActionController::Base
   # This before_filter ensures that a user is in good payment standing
   before_filter :ensure_user_is_in_good_payment_standing
 
-  # This before_filter ensures that ssl mode is not running
-  prepend_before_filter :ensure_not_ssl_mode
-
   # This before_filter set the time zone to the users given value.
   before_filter :set_timezone
 
   # This before_filter checks browser is supported.
   before_filter :check_supported_browser
 
-  # Allow subdomains to punch through to www
+  # Allow subdomains to punch through to apex domain.
   after_filter :set_access_control_headers
 
 
@@ -267,42 +264,10 @@ protected
   # The allows us to white list controller that inherit from application controller.
   ###
   def limit_subdomain_access
-    if request.subdomain.present? and request.subdomain != 'www'
-      redirect_to [request.protocol, 'www.', request.domain, request.port_string, request.path].join # Try to downgrade gracefully...
-      #redirect_to root_url(subdomain: "www"), alert: "Invalid action on a subdomain."
+    if request.subdomain.present?
+      # TODO: In think I would like to log or track when this is happending. We should limit redirects. -MO
+      redirect_to [request.protocol, request.domain, request.port_string, request.path].join # Try to downgrade gracefully...
     end
-  end
-
-  ###
-  # _before_filter_
-  #
-  # This method ensures that the request is located at https://secure.
-  # If not it will try to redirect to that location in the secure mode.
-  ###
-  def ensure_secure_subdomain
-    if not Rails.env.test?
-      the_subdomain = request.subdomain
-      the_protocol = request.protocol
-
-      the_subdomain = "secure" if not(request.subdomain.present?) or request.subdomain != "secure"
-      the_protocol = "https://" if !Rails.env.development? and request.protocol != "https://"
-
-      redirect_to [the_protocol, (the_subdomain.blank? ? "" : "#{the_subdomain}."), request.domain, request.port_string, request.path].join if the_protocol != request.protocol or the_subdomain != request.subdomain # Try to downgrade gracefully...
-    end
-  end
-
-  ###
-  # _before_filter_
-  #
-  # This method ensures that the protocol is not https://.
-  # If it is, it will try to redirect to that location with the http:// protocol.
-  ###
-  def ensure_not_ssl_mode
-    the_protocol = request.protocol
-
-    the_protocol = "http://" if !Rails.env.development? or request.protocol == "https://"
-
-    redirect_to [the_protocol, (request.subdomain.blank? ? "" : "#{request.subdomain}."), request.domain, request.port_string, request.path].join if the_protocol != request.protocol # Try to downgrade gracefully...
   end
 
   ###
@@ -407,15 +372,16 @@ protected
   ###
   # _after_filter_
   #
-  # This method allows requests to be sent to www from community subdomains
+  # This method allows requests to be sent to apex from community subdomains
   ###
   def set_access_control_headers
     if current_community != nil
-      # Subdomain -> www request
+      # Subdomain -> apex
     else
-      # www -> subdomain request
+      # apex -> subdomain request
       origin = request.env['HTTP_ORIGIN']
       begin
+        # TODO: See if moving to using apex F's this up. -MO
         origin_uri = URI.parse(request.env['HTTP_ORIGIN'])
         some_subdomain = origin_uri.hostname.split('.').first
         is_our_domain = origin_uri.hostname.split('.').last(2).join('.') == ENV['BV_HOST_DOMAIN']
@@ -431,36 +397,26 @@ protected
 ###
 # Devise
 ###
-  # This method overrides the default devise method to set the proper protocol and subdomain
+  # Used by devise to see where user should be redirected after sign in.
   def after_sign_in_path_for(resource_or_scope)
     case resource_or_scope
     when :user, User
-      root_url_hack_helper(user_profile_url(current_user.user_profile, protocol: "http://", subdomain: "www", anchor: "games"))
+      user_profile_url(current_user.user_profile, anchor: "games")
     when :admin_user, AdminUser
-      alexandria_dashboard_url(subdomain: "secure")
+      alexandria_dashboard_url
     else
       user_root_url(current_user)
     end
   end
 
-  # This method overrides the default devise method to set the proper protocol and subdomain
+  # Used by devise to see where user should be redirected after sign out.
   def after_sign_out_path_for(resource_or_scope)
-    root_url_hack_helper(root_url(protocol: "http://", subdomain: "www")) if resource and resource.kind_of?(User)
-    return root_url
+    root_url
   end
 
   # This after_filter will change the default Devise messages that would be notices into success messages instead
   def change_notices_to_successes
     flash.now[:success] = flash[:notice]
     flash.delete :notice
-  end
-
-###
-# System Hacks
-###
-  # This method replaces the default url_for in rails because they think that url_for(subdomain: "www") is ambiguous.
-  def root_url_hack_helper(the_broken_url)
-    return the_broken_url.sub('secure.', '')
-    return stored_location_for(resource)
   end
 end

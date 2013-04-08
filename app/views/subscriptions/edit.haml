@@ -18,7 +18,7 @@
 
 = render 'shared/subscriptions_submenu'
 
-= simple_form_for @invoice, url: subscription_url(@community, subdomain: "secure"), method: :put, html: {novalidate: true, id: "form_with_subscription"} do |f|
+= simple_form_for @invoice, url: subscription_url(@community), method: :put, html: {novalidate: true, id: "form_with_subscription"} do |f|
   %fieldset
     = hidden_field_tag :stripe_card_token
     %ol

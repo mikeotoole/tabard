@@ -4,39 +4,39 @@
         xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
 
   <url>
-    <loc>http://www.tabard.com/</loc>
+    <loc>http://tabard.com/</loc>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>http://www.tabard.com/features</loc>
+    <loc>http://tabard.com/features</loc>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>http://www.tabard.com/pricing</loc>
+    <loc>http://tabard.com/pricing</loc>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>http://www.tabard.com/signup</loc>
+    <loc>http://tabard.com/signup</loc>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>http://www.tabard.com/login</loc>
+    <loc>http://tabard.com/login</loc>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>http://www.tabard.com/search</loc>
+    <loc>http://tabard.com/search</loc>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>http://www.tabard.com/terms-of-service</loc>
+    <loc>http://tabard.com/terms-of-service</loc>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>http://www.tabard.com/privacy-policy</loc>
+    <loc>http://tabard.com/privacy-policy</loc>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>http://www.tabard.com/trademark-disclaimer</loc>
+    <loc>http://tabard.com/trademark-disclaimer</loc>
     <changefreq>monthly</changefreq>
   </url>
 </urlset>

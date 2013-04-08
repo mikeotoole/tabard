@@ -9,9 +9,7 @@ class RegistrationsController < Devise::RegistrationsController
   prepend_view_path "app/views/devise"
 
   skip_before_filter :block_unauthorized_user!, only: [:create, :new]
-  skip_before_filter :ensure_accepted_most_recent_legal_documents, :limit_subdomain_access
-  skip_before_filter :ensure_not_ssl_mode, only: [:create, :update, :new, :edit, :disable_confirmation, :destroy, :reinstate_account_edit, :reinstate_account]
-  before_filter :ensure_secure_subdomain, only: [:create, :update, :new, :edit, :disable_confirmation, :destroy, :reinstate_account_edit, :reinstate_account]
+  skip_before_filter :ensure_accepted_most_recent_legal_documents
   before_filter :block_unauthorized_user!, only: [:cancel_confirmation]
   before_filter :sign_out_admin_user, only: :create
   after_filter :change_notices_to_successes, only: [:create, :reinstate_account, :update]
@@ -53,7 +51,7 @@ class RegistrationsController < Devise::RegistrationsController
     @user = current_user
     if not @user
       set_flash_message :alert, :not_signed_id
-      redirect_to new_user_session_url(subdomain: 'secure')
+      redirect_to new_user_session_url
     end
   end
 
@@ -63,7 +61,7 @@ class RegistrationsController < Devise::RegistrationsController
     if success
       Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
       flash[:notice] = "Your account has been deactivated."
-      redirect_to root_url_hack_helper(root_url(protocol: "http://", subdomain: "www"))
+      redirect_to root_url
     else
       render 'disable_confirmation'
     end
@@ -140,11 +138,11 @@ class RegistrationsController < Devise::RegistrationsController
 
   # Where to redirect to after signing up with devise, and the account is inactive.
   def after_inactive_sign_up_path_for(resource)
-    root_url(subdomain: "www")
+    root_url
   end
 
   # Where to redirect to after updating the account with devise
   def after_update_path_for(resource)
-    edit_user_registration_url(subdomain: "secure")
+    edit_user_registration_url
   end
 end

@@ -33,7 +33,7 @@ describe PlayedGamesController do
     it "should create the game" do
       sign_in user
       post 'create', user_profile_id: user_profile.id, played_game_attributes: FactoryGirl.attributes_for(:minecraft_played_game)
-      response.should redirect_to(redirect_to user_profile_url(user_profile, anchor: "games", subdomain: "www"))
+      response.should redirect_to(redirect_to user_profile_url(user_profile, anchor: "games"))
     end
   end
 
@@ -42,7 +42,7 @@ describe PlayedGamesController do
       played_game = create(:minecraft_played_game)
       sign_in user
       delete 'destroy', user_profile_id: user_profile.id, id: played_game.id
-      response.should redirect_to(redirect_to user_profile_url(user_profile, anchor: "games", subdomain: "www"))
+      response.should redirect_to(redirect_to user_profile_url(user_profile, anchor: "games"))
     end
   end
 end

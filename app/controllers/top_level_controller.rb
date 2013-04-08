@@ -16,7 +16,6 @@ class TopLevelController < ApplicationController
   skip_before_filter :check_maintenance_mode, only: [:maintenance]
   skip_before_filter :ensure_accepted_most_recent_legal_documents, only: [:bar, :ignore_browser]
   skip_before_filter :limit_subdomain_access, only: [:bar, :ignore_browser]
-  skip_before_filter :ensure_not_ssl_mode, only: [:bar, :ignore_browser]
   skip_before_filter :check_supported_browser
 
 ###
@@ -27,7 +26,7 @@ class TopLevelController < ApplicationController
   # This method returns the bar in/out partial for dynamic loading
   # GET /bar(.:format)
   ###
-  def bar
+  def bar # TODO: Doug - Is this not used anymore? If so it should be removed. -MO
     if user_signed_in?
       render partial: "layouts/bar_in"
     else
@@ -55,7 +54,7 @@ class TopLevelController < ApplicationController
   # GET /
   ###
   def index
-    redirect_to user_profile_url(current_user.user_profile, subdomain: "www") + '#characters' if user_signed_in?
+    redirect_to user_profile_url(current_user.user_profile) + '#characters' if user_signed_in?
   end
 
   # This method gets the Pricing page.

@@ -17,7 +17,6 @@ class Subdomains::SubmissionsController < SubdomainsController
   before_filter :create_submission, only: [:new, :create]
   load_and_authorize_resource except: [:index, :new, :create]
   authorize_resource only: [:index, :new, :create]
-  skip_before_filter :limit_subdomain_access
 
   # GET /custom_forms/:custom_form_id/submissions(.:format)
   def index

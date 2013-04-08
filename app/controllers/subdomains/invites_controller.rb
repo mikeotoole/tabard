@@ -12,7 +12,6 @@ class Subdomains::InvitesController < SubdomainsController
 ###
   before_filter :block_unauthorized_user!
   before_filter :ensure_current_user_is_member
-  skip_before_filter :limit_subdomain_access
   load_and_authorize_resource through: :current_user, except: [:batch_update]
 
 ###

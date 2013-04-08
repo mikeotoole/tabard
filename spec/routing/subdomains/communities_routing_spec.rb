@@ -20,27 +20,27 @@ describe Subdomains::CommunitiesController do
 
     it "routes #index to StatusCodeController#not_found" do
       { :get => "#{community.subdomain}.example.com/communities" }.should
-        route_to(:controller => :status_code, :action => :not_found, :subdomain => 'www')
+        route_to(:controller => :status_code, :action => :not_found)
     end
 
     it "routes #new to StatusCodeController#not_found" do
       { :get => "#{community.subdomain}.example.com/communities/new" }.should
-        route_to(:controller => :status_code, :action => :not_found, :subdomain => 'www')
+        route_to(:controller => :status_code, :action => :not_found)
     end
 
     it "routes #show to StatusCodeController#not_found" do
       { :get => "#{community.subdomain}.example.com/communities/#{community.id}" }.should
-        route_to(:controller => :status_code, :action => :not_found, :subdomain => 'www')
+        route_to(:controller => :status_code, :action => :not_found)
     end
 
     it "routes #create to StatusCodeController#not_found" do
       { :post => "#{community.subdomain}.example.com/communities" }.should
-        route_to(:controller => :status_code, :action => :not_found, :subdomain => 'www')
+        route_to(:controller => :status_code, :action => :not_found)
     end
 
     it "routes #destroy to StatusCodeController#not_found" do
       { :delete => "#{community.subdomain}.example.com/communities/#{community.id}" }.should
-        route_to(:controller => :status_code, :action => :not_found, :subdomain => 'www')
+        route_to(:controller => :status_code, :action => :not_found)
     end
   end
 end
