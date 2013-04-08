@@ -80,7 +80,7 @@ describe CharactersController do
 
     it "should redirect to user profile games tab" do
       post :create, :played_game_id => played_game, :character => valid_attributes
-      response.should redirect_to(user_profile_url(user.user_profile, subdomain: 'www') + "#games")
+      response.should redirect_to(user_profile_url(user.user_profile) + "#games")
     end
 
     it "should create an activity" do
@@ -120,7 +120,7 @@ describe CharactersController do
     end
 
     it "should redirect user profile games tab" do
-      response.should redirect_to(user_profile_url(user.user_profile, subdomain: 'www') + "#games")
+      response.should redirect_to(user_profile_url(user.user_profile) + "#games")
     end
 
     it "should create an Activity when attributes change" do
@@ -165,7 +165,7 @@ describe CharactersController do
     it "should be successful when authenticated as a user" do
       sign_in user
       delete 'destroy', :id => character
-      response.should redirect_to(user_profile_url(character.user_profile, subdomain: 'www') + "#games")
+      response.should redirect_to(user_profile_url(character.user_profile) + "#games")
     end
 
     it "should redirected to new user session path when not authenticated as a user" do

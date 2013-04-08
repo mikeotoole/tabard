@@ -22,7 +22,7 @@
               %strong= roster_assignment.community_game_smart_name
               %p.meta
                 Requested by
-                = (link_to roster_assignment.user_profile_display_name, user_profile_url(roster_assignment.user_profile, subdomain: "www") + '#characters') + ', '
+                = (link_to roster_assignment.user_profile_display_name, user_profile_url(roster_assignment.user_profile) + '#characters') + ', '
                 who has
                 %strong= pluralize roster_assignment.community_profile.approved_characters.size, 'character'
                 on the roster.

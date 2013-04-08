@@ -37,7 +37,7 @@ class ApplicationController < ActionController::Base
   # This before_filter checks browser is supported.
   before_filter :check_supported_browser
 
-  # Allow subdomains to punch through to www
+  # Allow subdomains to punch through to apex domain.
   after_filter :set_access_control_headers
 
 
@@ -264,8 +264,8 @@ protected
   # The allows us to white list controller that inherit from application controller.
   ###
   def limit_subdomain_access
-    if request.subdomain.present? and request.subdomain != 'www'
-      redirect_to [request.protocol, 'www.', request.domain, request.port_string, request.path].join # Try to downgrade gracefully...
+    if request.subdomain.present?
+      redirect_to [request.protocol, request.domain, request.port_string, request.path].join # Try to downgrade gracefully...
     end
   end
 
@@ -389,15 +389,16 @@ protected
   ###
   # _after_filter_
   #
-  # This method allows requests to be sent to www from community subdomains
+  # This method allows requests to be sent to apex from community subdomains
   ###
   def set_access_control_headers
     if current_community != nil
-      # Subdomain -> www request
+      # Subdomain -> apex
     else
-      # www -> subdomain request
+      # apex -> subdomain request
       origin = request.env['HTTP_ORIGIN']
       begin
+        # TODO: See if moving to using apex F's this up. -MO
         origin_uri = URI.parse(request.env['HTTP_ORIGIN'])
         some_subdomain = origin_uri.hostname.split('.').first
         is_our_domain = origin_uri.hostname.split('.').last(2).join('.') == ENV['BV_HOST_DOMAIN']
@@ -413,11 +414,11 @@ protected
 ###
 # Devise
 ###
-  # This method overrides the default devise method to set the proper protocol and subdomain
+  # Used by devise to see where user should be redirected after sign in.
   def after_sign_in_path_for(resource_or_scope)
     case resource_or_scope
     when :user, User
-      user_profile_url(current_user.user_profile, subdomain: "www", anchor: "games")
+      user_profile_url(current_user.user_profile, anchor: "games")
     when :admin_user, AdminUser
       alexandria_dashboard_url(subdomain: "secure", protocol: "https://")
     else
@@ -425,9 +426,9 @@ protected
     end
   end
 
-  # This method overrides the default devise method to set the proper protocol and subdomain
+  # Used by devise to see where user should be redirected after sign out.
   def after_sign_out_path_for(resource_or_scope)
-    root_url(protocol: "http://", subdomain: "www")
+    root_url
   end
 
   # This after_filter will change the default Devise messages that would be notices into success messages instead

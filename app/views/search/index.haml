@@ -13,9 +13,9 @@
   = render 'submenu'
 
 #searchbox
-  = form_tag search_url(subdomain: "www"), method: 'get' do
+  = form_tag search_url, method: 'get' do
     %p
-      = text_field_tag :term, params[:term], id: 'search', placeholder: 'Community, Game, Character, or Player', autocomplete: 'off', data: {url: search_autocomplete_url(subdomain: "www")}
+      = text_field_tag :term, params[:term], id: 'search', placeholder: 'Community, Game, Character, or Player', autocomplete: 'off', data: {url: search_autocomplete_url}
       %button{ type: 'submit' } Search
 
 - unless params[:term].blank?

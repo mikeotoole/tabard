@@ -53,7 +53,7 @@
       - if current_community.community_games.any?
         You do not have any characters available to be added to the roster.
         %p
-          = link_to 'Add Characters', user_profile_url(current_user.user_profile, subdomain: "www") + '#characters', class: 'button'
+          = link_to 'Add Characters', user_profile_url(current_user.user_profile) + '#characters', class: 'button'
       - else
         This community does not have any community games, and thus no rosters.
         %p

@@ -27,12 +27,12 @@ class PlayedGamesController < ApplicationController
 
   def create
     flash[:success] = "The game has been added to your list." if @played_game.save
-    redirect_to user_profile_url(@user_profile, anchor: "games", subdomain: "www")
+    redirect_to user_profile_url(@user_profile, anchor: "games")
   end
 
   def destroy
     @played_game.destroy
-    redirect_to user_profile_url(@user_profile, anchor: "games", subdomain: "www")
+    redirect_to user_profile_url(@user_profile, anchor: "games")
   end
 
   # GET /played_games/autocomplete

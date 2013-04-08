@@ -62,7 +62,7 @@ class RegistrationsController < Devise::RegistrationsController
     if success
       Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
       flash[:notice] = "Your account has been deactivated."
-      redirect_to root_url(protocol: "http://", subdomain: "www")
+      redirect_to root_url
     else
       render 'disable_confirmation'
     end
@@ -139,7 +139,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   # Where to redirect to after signing up with devise, and the account is inactive.
   def after_inactive_sign_up_path_for(resource)
-    root_url(subdomain: "www")
+    root_url
   end
 
   # Where to redirect to after updating the account with devise

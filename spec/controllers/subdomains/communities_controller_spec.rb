@@ -165,7 +165,7 @@ describe Subdomains::CommunitiesController do
     describe "with bad user" do
       it "should be forbidden for anon" do
         get 'clear_action_items'
-        response.should redirect_to(new_user_session_url(subdomain: 'secure', protocol: "http://"))
+        response.should redirect_to(new_user_session_url(subdomain: 'secure'))
       end
       it "should be forbidden for non-community member" do
         random_user = create(:user)
