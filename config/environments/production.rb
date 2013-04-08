@@ -37,10 +37,6 @@ DaBvRails::Application.configure do
   # The levels available on the logger are (in ascending order): debug, info, warn, error, and fatal.
   config.log_level = :info
 
-  # Use a different logger for distributed setups
-  # config.logger = SyslogLogger.new
-  config.logger = Logger.new(STDOUT)
-
   # Add info to the logs for tracking requests.
   # config.log_tags = [ :remote_ip ]
 
