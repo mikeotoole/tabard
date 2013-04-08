@@ -6,7 +6,6 @@ class Alexandria::Devise::PasswordsController < ActiveAdmin::Devise::PasswordsCo
   skip_before_filter :check_maintenance_mode
   skip_before_filter :block_unauthorized_user!, except: [:new, :create]
   skip_before_filter :limit_subdomain_access
-  skip_before_filter :ensure_not_ssl_mode
   before_filter :ensure_secure_subdomain, only: [:edit, :update]
   layout 'application'
 end

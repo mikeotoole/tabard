@@ -10,7 +10,6 @@ class RegistrationsController < Devise::RegistrationsController
 
   skip_before_filter :block_unauthorized_user!, only: [:create, :new]
   skip_before_filter :ensure_accepted_most_recent_legal_documents, :limit_subdomain_access
-  skip_before_filter :ensure_not_ssl_mode, only: [:create, :update, :new, :edit, :disable_confirmation, :destroy, :reinstate_account_edit, :reinstate_account]
   before_filter :ensure_secure_subdomain, only: [:create, :update, :new, :edit, :disable_confirmation, :destroy, :reinstate_account_edit, :reinstate_account]
   before_filter :block_unauthorized_user!, only: [:cancel_confirmation]
   before_filter :sign_out_admin_user, only: :create
@@ -63,7 +62,7 @@ class RegistrationsController < Devise::RegistrationsController
     if success
       Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
       flash[:notice] = "Your account has been deactivated."
-      redirect_to root_url_hack_helper(root_url(protocol: "http://", subdomain: "www"))
+      redirect_to root_url(protocol: "http://", subdomain: "www")
     else
       render 'disable_confirmation'
     end
