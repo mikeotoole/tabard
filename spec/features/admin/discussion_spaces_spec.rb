@@ -8,6 +8,10 @@ describe "ActiveAdmin DiscussionSpace" do
   let(:discussion_space) { DefaultObjects.discussion_space }
   let(:discussion_space_att) { attributes_for(:discussion_space, :name => "Test Case Name") }
 
+  before(:each) do
+    set_host "lvh.me:3000"
+  end
+
   describe "#index" do
     it "returns 200 when logged in as superadmin" do
       login_as superadmin

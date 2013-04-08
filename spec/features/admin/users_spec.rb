@@ -8,6 +8,10 @@ describe "ActiveAdmin User" do
   let(:user_2) { DefaultObjects.fresh_user_profile.user }
   let(:community_admin) { DefaultObjects.community_admin }
 
+  before(:each) do
+    set_host "lvh.me:3000"
+  end
+
   describe "#index" do
     it "returns 200 when logged in as superadmin" do
       login_as superadmin

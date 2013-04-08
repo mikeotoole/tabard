@@ -19,7 +19,8 @@ require 'database_cleaner'
 require 'capybara/poltergeist'
 Capybara.run_server = true #Whether start server when testing
 def set_host (host)
-  host! host
+  # host! host
+  default_url_options[:host] = host
   Capybara.app_host = "http://" + host
 end
 Capybara.server_port = 1337
