@@ -8,9 +8,6 @@
 class InvoicesController < PaymentController
   respond_to :html, :js
 
-  skip_before_filter :limit_subdomain_access
-  before_filter :ensure_secure_subdomain
-
   # GET /statements
   def index
     @invoices = current_user.invoices.historical

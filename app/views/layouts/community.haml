@@ -31,7 +31,7 @@
           - if !!current_community.slogan
             %cite= shorten_words current_community.slogan
         - if can? :upgrade, current_community and not current_community.is_paid_community?
-          = link_to 'Upgrade to Pro', edit_subscription_url(current_community, subdomain: 'secure', upgrade: true), class: 'button pro'
+          = link_to 'Upgrade to Pro', edit_subscription_url(current_community, upgrade: true), class: 'button pro'
         = render 'layouts/action_items' if has_action_items?
         .menu
           %ul
@@ -81,7 +81,7 @@
                   - elsif current_user.application_pending? current_community
                     %a Application Pending
                 - else
-                  = link_to 'Apply Now', new_user_registration_url(subdomain: "secure", community_id: current_community.id)
+                  = link_to 'Apply Now', new_user_registration_url(community_id: current_community.id)
       #body
         = yield
         = render 'layouts/footer', current_layout: 'community'

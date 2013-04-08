@@ -20,7 +20,6 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   before_filter :find_available_characters, only: [:mine, :create, :new]
   authorize_resource except: [:index, :game]
   skip_authorize_resource only: [:pending]
-  skip_before_filter :limit_subdomain_access
   before_filter :ensure_roster_is_public, only: [:index, :game]
 
   # GET /roster_assignments
@@ -208,7 +207,7 @@ class Subdomains::RosterAssignmentsController < SubdomainsController
   def enforce_community_features
     if current_community.is_disabled? and can? :accept, CommunityApplication
       overage_count = current_community.community_profiles.count - current_community.max_number_of_users
-      upgrade_link = edit_subscription_url(current_community,subdomain: "secure")
+      upgrade_link = edit_subscription_url(current_community)
       flash[:alert] = "This community is over capacity by #{view_context.pluralize overage_count, 'member', 'members'}. #{view_context.link_to 'Upgrade your subscription', upgrade_link} or remove some of your members."
       return true
     else

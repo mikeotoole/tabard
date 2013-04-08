@@ -265,25 +265,8 @@ protected
   ###
   def limit_subdomain_access
     if request.subdomain.present?
+      # TODO: In think I would like to log or track when this is happending. We should limit redirects. -MO
       redirect_to [request.protocol, request.domain, request.port_string, request.path].join # Try to downgrade gracefully...
-    end
-  end
-
-  ###
-  # _before_filter_
-  #
-  # This method ensures that the request is located at https://secure.
-  # If not it will try to redirect to that location in the secure mode.
-  ###
-  def ensure_secure_subdomain
-    if not Rails.env.test?
-      the_subdomain = request.subdomain
-      the_protocol = request.protocol
-
-      the_subdomain = "secure" if not(request.subdomain.present?) or request.subdomain != "secure"
-      the_protocol = "https://" if !Rails.env.development? and request.protocol != "https://"
-
-      redirect_to [the_protocol, (the_subdomain.blank? ? "" : "#{the_subdomain}."), request.domain, request.port_string, request.path].join if the_protocol != request.protocol or the_subdomain != request.subdomain # Try to downgrade gracefully...
     end
   end
 
@@ -420,7 +403,7 @@ protected
     when :user, User
       user_profile_url(current_user.user_profile, anchor: "games")
     when :admin_user, AdminUser
-      alexandria_dashboard_url(subdomain: "secure", protocol: "https://")
+      alexandria_dashboard_url
     else
       user_root_url(current_user)
     end

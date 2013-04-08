@@ -3,7 +3,7 @@
 %h1 Sign up for Tabard
 
 - resource.build_user_profile unless resource.user_profile
-= simple_form_for(resource, as: resource_name, url: registration_url(resource_name, subdomain: "secure")) do |f|
+= simple_form_for(resource, as: resource_name, url: registration_url(resource_name)) do |f|
   %fieldset
     %ol
       = f.input :beta_code if User::BETA_CODE_REQUIRED

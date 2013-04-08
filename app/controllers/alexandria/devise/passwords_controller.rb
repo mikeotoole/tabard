@@ -5,8 +5,6 @@ class Alexandria::Devise::PasswordsController < ActiveAdmin::Devise::PasswordsCo
   prepend_view_path "app/views/devise"
   skip_before_filter :check_maintenance_mode
   skip_before_filter :block_unauthorized_user!, except: [:new, :create]
-  skip_before_filter :limit_subdomain_access
-  before_filter :ensure_secure_subdomain, only: [:edit, :update]
   layout 'application'
 end
 

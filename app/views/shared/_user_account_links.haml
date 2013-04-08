@@ -1,5 +1,5 @@
 %ul.sidelinks
   %li= link_to_unless_current 'Edit my profile', edit_user_profile_url(current_user.user_profile)
-  %li= link_to_unless_current 'Edit my account', account_settings_url(subdomain: "secure")
-  %li= link_to_unless_current 'Subscriptions', subscriptions_url(subdomain: "secure") if ENV["ENABLE_PAYMENT"]
-  %li= link_to_unless_current 'Create a new community', new_community_url(subdomain: "secure")
+  %li= link_to_unless_current 'Edit my account', account_settings_url
+  %li= link_to_unless_current 'Subscriptions', subscriptions_url if ENV["ENABLE_PAYMENT"]
+  %li= link_to_unless_current 'Create a new community', new_community_url

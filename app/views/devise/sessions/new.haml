@@ -2,7 +2,7 @@
 
 %h1 Log in to Tabard
 
-= simple_form_for(resource, as: resource_name, url: session_url(resource_name, subdomain: "secure")) do |f|
+= simple_form_for(resource, as: resource_name, url: session_url(resource_name)) do |f|
   %fieldset
     %ol
       = f.input :email, label: false, placeholder: 'Email'

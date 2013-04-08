@@ -15,7 +15,6 @@ class Subdomains::PageSpacesController < SubdomainsController
   before_filter :load_page_space, except: [:new, :create, :index]
   before_filter :create_page_space, only: [:new, :create]
   authorize_resource except: :index
-  skip_before_filter :limit_subdomain_access
   after_filter :create_activity, only: [:update, :create]
 
 ###

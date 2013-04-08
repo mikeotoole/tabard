@@ -26,7 +26,7 @@ class TopLevelController < ApplicationController
   # This method returns the bar in/out partial for dynamic loading
   # GET /bar(.:format)
   ###
-  def bar
+  def bar # TODO: Doug - Is this not used anymore? If so it should be removed. -MO
     if user_signed_in?
       render partial: "layouts/bar_in"
     else

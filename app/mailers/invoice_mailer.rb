@@ -13,7 +13,7 @@ class InvoiceMailer < ActionMailer::Base
   # Tell user payment was successful
   def payment_successful(invoice_id)
     @invoice = Invoice.find_by_id(invoice_id)
-    @url = invoice_url(@invoice, subdomain: "secure")
+    @url = invoice_url(@invoice)
     @user_profile = @invoice.user_profile
     mail(to: @user_profile.email, subject: "Tabard: Payment Receipt") do |format|
       format.html { render "mailers/payment_successful" }
@@ -23,7 +23,7 @@ class InvoiceMailer < ActionMailer::Base
   # Tell user payment failed
   def payment_failed(invoice_id, message_short, message_full=nil)
     @invoice = Invoice.find_by_id(invoice_id)
-    @url = invoice_url(@invoice, subdomain: "secure")
+    @url = invoice_url(@invoice)
     @user_profile = @invoice.user_profile
     @message_short = message_short
     @message_full = message_full
@@ -35,7 +35,7 @@ class InvoiceMailer < ActionMailer::Base
   # Tell user subscription has been canceled for non-payment.
   def subscription_canceled(invoice_id, payment_due)
     @invoice = Invoice.find_by_id(invoice_id)
-    @url = invoice_url(@invoice, subdomain: "secure")
+    @url = invoice_url(@invoice)
     @user_profile = @invoice.user_profile
     @payment_due = payment_due
     mail(to: @user_profile.email, subject: "Tabard: Subscription Canceled") do |format|

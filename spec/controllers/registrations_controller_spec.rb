@@ -41,7 +41,7 @@ describe RegistrationsController do
 
     it "should redirect to new user session path when not authenticated as a user" do
       get :disable_confirmation
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
   end
 
@@ -108,7 +108,7 @@ describe RegistrationsController do
 
     it "should redirect to new user session path when not authenticated as a user" do
       delete :destroy, :user => {:current_password => "Password"}
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
   end
 end

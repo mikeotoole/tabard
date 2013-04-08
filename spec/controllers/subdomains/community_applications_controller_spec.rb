@@ -43,7 +43,7 @@ describe Subdomains::CommunityApplicationsController do
 
     it "should redirect to new user session path when not authenticated as a user" do
       get 'index'
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
   end
 
@@ -74,7 +74,7 @@ describe Subdomains::CommunityApplicationsController do
 
     it "should redirect to new user session path when not authenticated as a user" do
       get 'show', :id => community_application
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
   end
 
@@ -93,7 +93,7 @@ describe Subdomains::CommunityApplicationsController do
 
     it "should redirect to new user session path when not authenticated as a user" do
       get 'new'
-      response.should redirect_to(new_user_registration_url(subdomain: 'secure', community_id: community.id))
+      response.should redirect_to(new_user_registration_url(community_id: community.id))
     end
   end
 
@@ -162,7 +162,7 @@ describe Subdomains::CommunityApplicationsController do
       post 'create', :community_application => community_application_attr
     end
     it "should redirect to new user session path" do
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
   end
 
@@ -209,7 +209,7 @@ describe Subdomains::CommunityApplicationsController do
     end
     it "should be forbidden for anon" do
       post 'accept', :id => community_application
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
     describe "community admin" do
       before(:each) do
@@ -247,7 +247,7 @@ describe Subdomains::CommunityApplicationsController do
     end
     it "should be forbidden for anon" do
       put 'reject', :id => community_application
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
     describe "community admin" do
       before(:each) do
@@ -292,7 +292,7 @@ describe Subdomains::CommunityApplicationsController do
     it "should not be successful when not authenticated as a user" do
       delete 'destroy', :id => @community_application
       CommunityApplication.exists?(@community_application).should be_true
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
   end
 end

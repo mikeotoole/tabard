@@ -6,8 +6,7 @@ class SessionsController < Devise::SessionsController
 
   skip_before_filter :block_unauthorized_user!
   skip_before_filter :check_force_logout, only: [:create, :destroy]
-  skip_before_filter :ensure_accepted_most_recent_legal_documents, :limit_subdomain_access
-  before_filter :ensure_secure_subdomain, only: [:new, :create]
+  skip_before_filter :ensure_accepted_most_recent_legal_documents
   before_filter :sign_out_admin_user, only: :create
   after_filter :change_notices_to_successes, only: [:create]
 

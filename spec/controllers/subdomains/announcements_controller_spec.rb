@@ -42,7 +42,7 @@ describe Subdomains::AnnouncementsController do
 
     it "should redirect to new user session path when not authenticated as a user" do
       get :show, :id => announcement
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
 
     it "should respond forbidden when not a member" do
@@ -61,7 +61,7 @@ describe Subdomains::AnnouncementsController do
 
     it "should redirect to new user session path when not authenticated as a user" do
       get :new
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
 
     it "should respond forbidden when not a member" do
@@ -118,7 +118,7 @@ describe Subdomains::AnnouncementsController do
   describe "POST create" do
     it "should redirect to new user session path when not authenticated as a user" do
       post :create, :announcement => announcement_attr
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
 
     it "should respond forbidden when not a member" do
@@ -153,7 +153,7 @@ describe Subdomains::AnnouncementsController do
     it "should redirect to new user session path when not authenticated as a user" do
       announcement
       delete :destroy, :id => announcement
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
 
     it "should respond forbidden when not a member" do
@@ -201,7 +201,7 @@ describe Subdomains::AnnouncementsController do
 
     it "should redirect to new user session path when not authenticated as a user" do
       post :lock, :id => announcement
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
 
     it "should respond forbidden when not a member" do
@@ -243,7 +243,7 @@ describe Subdomains::AnnouncementsController do
 
     it "should redirect to new user session path when not authenticated as a user" do
       post :unlock, :id => announcement
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
 
     it "should respond forbidden when not a member" do
@@ -274,7 +274,7 @@ describe Subdomains::AnnouncementsController do
 
     it "should redirect to user sign_in when not authenticated as a user" do
       post 'batch_destroy', :ids => [announcement.id => 'true']
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
   end
 end

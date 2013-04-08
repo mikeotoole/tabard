@@ -18,6 +18,6 @@ class UnlocksController < Devise::UnlocksController
   end
 
   def after_unlock_path_for(resource)
-    new_session_url(resource, subdomain: "secure")
+    new_session_url(resource)
   end
 end
