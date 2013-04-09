@@ -60,8 +60,9 @@ end
 
 # Production Specific Gems
 group :production do
-  gem 'pg'#                                                                               Ruby - https://bitbucket.org/ged/ruby-pg/wiki/Home
+  gem 'hirefire-resource'#                                                                None - https://github.com/meskyanichi/hirefire-resource
   gem 'newrelic_rpm'#                                                                     MIT - https://github.com/newrelic/rpm
+  gem 'pg'#                                                                               Ruby - https://bitbucket.org/ged/ruby-pg/wiki/Home
 end
 
 # Development Specific Gems
