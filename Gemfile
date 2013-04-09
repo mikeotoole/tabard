@@ -59,7 +59,7 @@ group :assets do
 end
 
 # Production Specific Gems
-group :production do
+group :production, :staging do
   gem 'hirefire-resource'#                                                                None - https://github.com/meskyanichi/hirefire-resource
   gem 'newrelic_rpm'#                                                                     MIT - https://github.com/newrelic/rpm
   gem 'pg'#                                                                               Ruby - https://bitbucket.org/ged/ruby-pg/wiki/Home
