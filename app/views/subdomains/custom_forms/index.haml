@@ -14,13 +14,14 @@
   %tbody
     - @custom_forms.each do |custom_form|
       - if can? :read, custom_form and ( (custom_form.is_published and not custom_form.application_form?) or can? :edit, custom_form)
-        %tr
-          - if custom_form.application_form?
-            %td
+        %tr{ class: custom_form.is_published ? '' : 'dim' }
+          %td
+            - if custom_form.application_form?
               %strong= link_to shorten_words(custom_form.name, 21), new_community_application_url
-          - else
-            %td
+            - else
               = link_to shorten_words(custom_form.name, 21), new_custom_form_submission_url(custom_form)
+            - unless custom_form.is_published
+              &mdash; Draft
           %td.actions
             %div
               - if can? :update, custom_form
