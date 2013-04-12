@@ -19,6 +19,11 @@ class PlayedGame < ActiveRecord::Base
   has_many :characters, dependent: :destroy, order: 'LOWER(name)', conditions: {is_removed: nil}
 
 ###
+# Callbacks
+###
+  after_destroy :removed_unused_custom_games
+
+###
 # Delegates
 ###
   delegate :type, to: :game, prefix: true, allow_nil: true
@@ -26,8 +31,7 @@ class PlayedGame < ActiveRecord::Base
 ###
 # Validators
 ###
-  validates :game, presence: true
-  validates :game_id, uniqueness: {scope: :user_profile_id}
+  validates :game_id, presence: true, uniqueness: {scope: :user_profile_id}
 
 ###
 # Public Methods
@@ -43,10 +47,15 @@ class PlayedGame < ActiveRecord::Base
   # [Args]
   #   * +name+ -> A string containing the name of the game to set for this character.
   ###
-  def game_name=(name)
-    if name.present?
-      some_game = Game.where(name: name).first
-      some_game = CustomGame.where(name: name).first_or_create if some_game.blank?
+  def game_name=(some_name)
+    if some_name.present?
+      some_game = Game.where(name: some_name).first
+      if some_game.blank?
+        some_game = CustomGame.where(name: some_name).first_or_create
+        unless some_game.valid?
+          some_game = Game.where{name.matches some_name}.first
+        end
+      end
       self.game = some_game
     end
   end
@@ -61,6 +70,12 @@ class PlayedGame < ActiveRecord::Base
     character = self.game.new_character(params)
     character.played_game = self
     return character
+  end
+
+  def removed_unused_custom_games
+    if self.game.class == CustomGame and self.game.played_games.count <= 0
+      self.game.destroy
+    end
   end
 end
 
