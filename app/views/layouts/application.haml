@@ -10,7 +10,7 @@
     = yield :header
     = render 'layouts/ie'
 
-  %body{ class: body_classes.join(' ') }
+  %body{ class: body_classes }
 
     #bar
       = link_to 'Tabard', root_url(subdomain: "www"), class: 'logo'

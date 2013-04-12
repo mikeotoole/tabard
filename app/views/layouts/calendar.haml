@@ -11,7 +11,7 @@
     = yield :header
     = render 'layouts/ie'
 
-  %body{ class: [body_classes,'fluid'].flatten.join(' ') }
+  %body{ class: [body_classes,'fluid'].flatten }
     #bar= render "layouts/bar_in"
 
     = render "layouts/flash_messages"
