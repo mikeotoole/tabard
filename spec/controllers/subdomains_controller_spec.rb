@@ -31,7 +31,7 @@ describe SubdomainsController do
       @request.host = "DOESNOTEXIST.lvh.me"
       sign_in community.admin_profile.user
       get 'index'
-      response.should redirect_to(root_url(subdomain: false))
+      response.should redirect_to(root_url)
     end
 
     describe "deliquent_account" do
