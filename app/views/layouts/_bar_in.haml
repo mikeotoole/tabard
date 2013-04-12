@@ -31,4 +31,4 @@
     %li.settings= link_to 'Account Settings', account_settings_url
     - if ENV["ENABLE_PAYMENT"]
       %li.subscriptions= link_to 'Subscriptions', subscriptions_url
-    %li.logout= link_to 'Logout', destroy_user_session_url, method: :delete
+    %li.logout= link_to 'Logout', destroy_user_session_url
