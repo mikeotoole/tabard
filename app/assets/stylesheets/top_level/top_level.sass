@@ -43,14 +43,12 @@ button,
 #body button,
 #body .button
   background: #A23826
-  +bg_gradient(#d24723,#792b28)
   color: #f8d5bb
   &.read span:before
     content: '\F107'
   &:focus,
   &:hover
     background: #BE4931
-    +bg_gradient(#e05c2e,#9e3834)
     +box_shadow(0 0 10px rgba(#000,.2))
     color: #fff
 
@@ -74,7 +72,7 @@ button,
     display: block
     float: left
     font-family: inherit
-    font-size: 13px
+    font-size: .9em
     height: 20px
     line-height: 20px
     margin: 0 0 0 5px
@@ -116,7 +114,7 @@ body.index.minecrafts #submenu .minecraft
   
   h1
     color: #5a3971
-    font-size: 35px
+    font-size: 2.4em
     font-weight: 300
     line-height: 40px
     padding: 0 0 15px
@@ -124,7 +122,8 @@ body.index.minecrafts #submenu .minecraft
   
   h2
     color: #367BB1
-    font-size: 24px
+    font-size: 1.4em
+    font-weight: 700
     line-height: 28px
     padding: 20px 0 10px 0
     &:first-child
@@ -132,7 +131,8 @@ body.index.minecrafts #submenu .minecraft
     
   h3
     color: #367BB1
-    font-size: 18px
+    font-size: 1.2em
+    font-weight: 700
     padding: 20px 0 10px 0
     line-height: 20px
     &:first-child
@@ -160,8 +160,9 @@ body.index.minecrafts #submenu .minecraft
       &:before
         +border_radius(2)
         content: counter(li)
-        color: #227FB5
-        font-size: 11px
+        color: #000
+        font-size: .8em
+        font-weight: 700
         height: 15px
         line-height: 15px
         left: -40px
@@ -208,7 +209,6 @@ body.index.minecrafts #submenu .minecraft
   
   label
     color: #000
-    font-size: 16px
   li label + h2
     padding: 5px 0 0
     + dfn.hint
@@ -310,7 +310,7 @@ body.index.minecrafts #submenu .minecraft
       clear: both
       cursor: pointer
       display: inline-block
-      font-size: 13px
+      font-size: .9em
       margin: 0 0 10px
       padding: 0
       text-decoration: underline
@@ -333,7 +333,8 @@ body.index.minecrafts #submenu .minecraft
       label
         color: #333
         display: block
-        font-size: 13px
+        font-size: .9em
+        font-weight: 400
         line-height: 15px
         padding: 0 0 0 40px
         text-indent: 0
@@ -343,16 +344,6 @@ body.index.minecrafts #submenu .minecraft
   table
     +border_radius(3)
     margin: 0 0 15px
-    
-    td,
-    tr
-      
-      &.pitch p
-        border-left: 1px solid #ccc
-        font-size: 14px
-        margin: 0
-        padding: 10px 0 10px 15px
-        width: 400px !important
   
     thead
       text-align: left
@@ -511,7 +502,6 @@ body.index.minecrafts #submenu .minecraft
                   +border_radius(3)
                   color: #fff
                   content: attr(meta)
-                  font-size: 13px
                   height: 30px
                   line-height: 30px
                   margin: 0 5px 0 0
@@ -526,7 +516,7 @@ body.index.minecrafts #submenu .minecraft
           
         time
           display: block
-          font-size: 12px
+          font-size: .8em
           white-space: nowrap
         
         h3
@@ -620,7 +610,6 @@ body.index.minecrafts #submenu .minecraft
   
   .document
     background: #eee
-    +bg_gradient(#eeeeee,#f9f9f9)
     border: 1px solid #fff
     +border_radius(3)
     +box_shadow(0 0 3px rgba(#000,.2))
@@ -637,8 +626,8 @@ body.index.minecrafts #submenu .minecraft
     h1,
     h2,
     h3
-      color: #251533
-      font-size: 24px
+      color: #000
+      font-size: 2.2em
       padding: 20px 20px 0
     
     .alignleft,
@@ -694,7 +683,6 @@ body.index.minecrafts #submenu .minecraft
         margin-top: 0
     
     .scroll
-      +bg_gradient(#dddddd,#ffffff)
       +border_radius(3,3,0,0)
       margin: 0 0 -40px
       overflow: scroll
@@ -703,7 +691,6 @@ body.index.minecrafts #submenu .minecraft
   
     .accept
       background: #ccc
-      +bg_gradient(#bbbbbb,#dddddd)
       +border_radius(0,0,3,3)
       border-top: 1px solid #999
       height: 26px
@@ -713,7 +700,6 @@ body.index.minecrafts #submenu .minecraft
       
       &:before
         border-bottom: 1px solid #999
-        +bg_gradient(rgba(#eee,0),rgba(#999,.5))
         content: ''
         height: 20px
         left: 0
@@ -789,7 +775,6 @@ body.index.minecrafts #submenu .minecraft
     .secondary
       display: block
       float: right
-      font-size: 13px
       line-height: 30px
       padding: 0 10px
   
@@ -811,8 +796,7 @@ body.index.minecrafts #submenu .minecraft
         margin-right: 36px
       
       >ul li
-        font-size: 14px
-        line-height: 15px
+        font-size: .9em
         margin-bottom: 10px
   
   .col3
@@ -845,20 +829,9 @@ body.index.minecrafts #submenu .minecraft
         margin-right: 0
       
       h2
-        font-size: 20px
-        line-height: 23px
         position: relative
-        mark
-          background: #367BB1
-          +border_radius(10)
-          color: #fff
-          font-size: 12px
-          height: 20px
-          line-height: 20px
-          padding: 0 5px
-          position: absolute
-          right: -25px
-          top: 0
+        &:first-child
+          padding-top: 20px
       
       .imglink
         background: transparent
@@ -883,42 +856,6 @@ body.index.minecrafts #submenu .minecraft
     button
       margin: 0 0 10px
 
-.status_code #body
-
-  .col3 article
-    width: 210px
-  
-  .browsers article
-    background: #eee
-    +bg_gradient(#eeeeee,#ffffff)
-    border-top: 1px solid #ccc
-    text-align: center
-    
-    > h2
-      font-size: 30px
-      height: 60px
-      padding-bottom: 0
-    
-      span
-        display: block
-        font-size: 15px
-    
-    > dfn
-      display: block
-    
-    > a
-      background: transparent
-      display: block
-      margin: 10px 0
-      padding: 10px
-      
-      img
-        display: block
-        margin: 0 auto
-      
-      &:hover
-        background: #ccc
-
 body.features,
 body.intro,
 body.pricing
@@ -939,8 +876,6 @@ body.pricing
       right: -30px
     article.upgrade:before
       left: -30px
-    h2
-      padding-top: 20px
   .price
     border-bottom: 1px solid #ccc
     height: 60px
@@ -953,13 +888,11 @@ body.pricing
       line-height: 50px
       padding: 0 10px
       text-align: center
-    em
-      font-size: 14px
     strong
       background: #5A3971
       +border_radius(30)
       color: #fff
-      font-size: 30px
+      font-size: 2em
       min-width: 40px
 
 body.registrations #new_user
@@ -992,9 +925,10 @@ body.sessions
     background: transparent
   
   #body
-    background: #6a5c73
+    background: #ddd
+    border: 1px solid #eee
     +border_radius(3)
-    +box_shadow(0 0 30px #999)
+    +box_shadow(0 0 3px #aaa)
     color: #C0DAEB
     margin: -130px 0 0 -200px
     overflow: hidden
@@ -1004,11 +938,6 @@ body.sessions
     +transition(border .3s linear)
     width: 340px
     z-index: 2
-    h1
-      color: #fff
-      font-size: 30px
-      padding: 0
-      text-shadow: 0 -2px 1px #000
     form
       width: auto
       fieldset li
@@ -1016,12 +945,7 @@ body.sessions
         min-height: 32px
         padding: 5px 0 0
       input
-        color: #444
         width: 318px
-        &:-moz-placeholder
-          color: #aaa
-        &::-webkit-input-placeholder
-          color: #aaa
       .boolean
         float: left
         margin-top: 3px
@@ -1029,16 +953,14 @@ body.sessions
         label
           width: auto
         label
-          color: #fff
           float: left
-          text-shadow: 0 -1px 1px #000
       input,
       .boolean label:before
-        +box_shadow(0 0 5px #000 !important)
+        background: #fff
+        +box_shadow(0 0 3px #999 !important)
       .submit
         float: right
       button
-        +box_shadow(0 0 5px #504758)
         margin: 5px 0 0
       p.help
         clear: both
@@ -1046,12 +968,8 @@ body.sessions
         text-align: right
         a
           background: transparent
-          color: #ccc1d4
-          font-size: 13px
+          font-size: .8em
           text-decoration: underline
-          text-shadow: 0 -1px 1px #504758
-          &:hover
-            color: #fff
     div.help
       background: #fff
       +border_radius(2)
@@ -1141,7 +1059,7 @@ form.edit_character
   border-top: 0
   +border_radius(0,0,3,3)
   color: #09558a
-  font-size: 13px
+  font-size: .8em
   padding: 4px 6px
   text-align: left
   li
@@ -1172,15 +1090,6 @@ form.edit_character
 blockquote.card-on-file img
   float: left
   margin: -14px 15px 0 -9px
-
-#invoice
-  .heading .button
-    float: left
-    font-size: 13px
-    height: 20px
-    line-height: 20px !important
-    margin: -2px 10px 0 0
-    padding: 0 10px
 
 
 @import application/footer

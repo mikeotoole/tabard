@@ -83,19 +83,17 @@ button,
 #body button,
 #body .button
   background: #1880AB
-  +bg_gradient(#128abb,#107098)
   border-color: #135a7d
   color: #D1E3EE
   
   &:focus,
   &:hover
     background: #1295CA
-    +bg_gradient(#13a0db,#128abb)
     +box_shadow(0 0 15px rgba(#000,.2))
     color: #fff
   
   &.disabled
-    +bg_gradient(#128abb,#107098)
+    background: #1880AB
     color: #409fc7
     text-shadow: 0 -1px #107098
 

@@ -16,7 +16,6 @@ body.fluid
     text-align: right
 
   time
-    font-size: 12px
     padding: 5px
     white-space: nowrap
 
@@ -33,7 +32,8 @@ body.fluid
     
     h1
       color: #fff
-      font-size: 20px
+      font-size: 1.6em
+      font-weight: 300
     
     .prev,
     .next
@@ -65,6 +65,7 @@ body.fluid
       background: #ddd
       +bg_gradient(#cccccc,#eeeeee)
       border-bottom: 1px solid #ccc
+      font-size: .8em
       height: 70px
       line-height: 20px
       vertical-align: bottom
@@ -99,7 +100,7 @@ body.fluid
               background: rgba(#666,.1)
               +border_radius(0,0,20,0)
               color: #666
-              font-size: 12px
+              font-size: .8em
               height: 18px
               left: -1px
               line-height: 15px
@@ -117,7 +118,7 @@ body.fluid
                 +border_radius(3)
                 color: #fff
                 display: block
-                font-size: 12px
+                font-size: .8em
                 margin: 2px 0 0
                 padding: 2px 6px
                 +transition(box-shadow .2s linear)
@@ -203,6 +204,9 @@ body.fluid
       margin: 70px 0 0
       position: relative
       min-width: 100px
+
+      time
+        font-size: .8em
       
       dd
         border-bottom: 1px solid rgba(#666,.1)
@@ -221,7 +225,6 @@ body.fluid
           +border_radius(0,0,3,3)
           color: #666
           display: block
-          font-size: 12px
           height: 23px
           line-height: 23px
           margin: 0 3px
@@ -238,7 +241,7 @@ body.fluid
           +border_radius(3)
           color: #fff
           display: block
-          font-size: 13px
+          font-size: .8em
           line-height: 18px
           overflow: hidden
           padding: 5px
@@ -325,7 +328,7 @@ table tfoot td
   border: 0
   +box_shadow(none)
   color: #ccc
-  font-size: 12px
+  font-size: .8em
   height: 25px
   line-height: 25px !important
   +opacity(1)
