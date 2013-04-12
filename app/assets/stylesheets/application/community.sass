@@ -36,12 +36,12 @@ body
     bottom: 90px
     strong
       display: block
-      font-size: 36px
-      letter-spacing: -2px
+      font-size: 3em
+      font-weight: 300
     cite
       display: block
-      font-size: 24px
-      letter-spacing: -1px
+      font-size: 1.4em
+      font-weight: 700
   
   .button.pro
     margin: 0
@@ -226,16 +226,17 @@ body.fixed-menu #header .menu
   h1,
   h2,
   h3
-    letter-spacing: -1px
     line-height: 30px
     padding: 0 0 15px
     text-decoration: none
   
   h1
-    font-size: 30px
+    font-size: 2.4em
+    font-weight: 300
   
   h2
-    font-size: 24px
+    font-size: 1.4em
+    font-weight: 700
     padding: 10px 0
     
     + fieldset
@@ -243,7 +244,8 @@ body.fixed-menu #header .menu
       margin-top: -5px
   
   h3
-    font-size: 18px
+    font-size: 1.2em
+    font-weight: 700
     padding: 10px 0
   
   hr
@@ -419,7 +421,7 @@ body.fixed-menu #header .menu
       &.invitees:after
         content: '\F200'
       &.lock:after
-        content: '\F108'
+        content: '\F109'
       &.month:after
         content: '\F009'
       &.new:after
@@ -437,7 +439,7 @@ body.fixed-menu #header .menu
       &.submission:after
         content: '\F30A'
       &.unlock:after
-        content: '\F109'
+        content: '\F108'
       &.unpublish:after
         content: '\F107'
       &.week:after
@@ -698,6 +700,9 @@ body.fixed-menu #header .menu
     ol
       margin: 0
       padding: 0
+    
+    li > a
+      font-weight: 700
     
     li.owned
     

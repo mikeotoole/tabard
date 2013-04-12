@@ -1,7 +1,7 @@
 - if !comment.is_removed or (comment.is_removed and comment.comments.size > 0)
   %li.comment{ class: comment_class_names(comment) }
     %blockquote
-      %a.avatar{ href: user_profile_url(comment.user_profile, anchor: 'games') }
+      = link_to user_profile_url(comment.user_profile, subdomain: false, format: :js), remote: true, class: 'avatar' do
         - if !comment.is_removed
           = image_tag comment.poster.avatar_url :small
       %span.meta
@@ -9,7 +9,7 @@
           = last_action_word(comment).capitalize
         - else
           = "#{last_action_word(comment).capitalize} by"
-          = link_to shorten_words(comment.poster_name, 17), comment.user_profile, anchor: 'games', meta: "#{shorten_words(comment.user_profile_display_name)} — user since #{l comment.user_profile_created_at, format: :date_short}"
+          = link_to shorten_words(comment.poster_name, 17), user_profile_url(comment.user_profile, subdomain: false, format: :js), remote: true, class: 'profile', meta: "#{shorten_words(comment.user_profile_display_name)} — user since #{l comment.user_profile_created_at, format: :date_short}"
         %time= "#{time_ago_in_words(comment.updated_at)} ago"
       %p
         - unless comment.is_removed
