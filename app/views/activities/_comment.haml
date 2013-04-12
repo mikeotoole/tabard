@@ -1,14 +1,14 @@
 - unless comment.blank? or comment.is_removed
   %li.comment{ class: comment_class_names(comment), created_at: comment.created_at }
     %blockquote
-      %a.avatar{ href: user_profile_url(comment.poster) }
+      = link_to user_profile_url(comment.user_profile, subdomain: false, format: :js), remote: true, class: 'avatar' do
         - if !comment.is_removed
           = image_tag comment.poster.avatar_url :small
       %span.meta
         - if controller_name == 'user_profiles' and user_profile == comment.user_profile
           = last_action_word(comment).capitalize
         - else
-          %strong= link_to shorten_words(comment.poster_name, 17), user_profile_url(comment.user_profile, format: :js), remote: true, class: 'profile', meta: shorten_words(comment.user_profile_display_name)
+          = link_to shorten_words(comment.poster_name, 17), user_profile_url(comment.user_profile, subdomain: false, format: :js), remote: true, class: 'profile', meta: shorten_words(comment.user_profile_display_name)
           = last_action_word(comment)
         a comment &mdash;
         %time= "#{time_ago_in_words(comment.updated_at)} ago"

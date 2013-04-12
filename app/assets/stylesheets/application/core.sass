@@ -1,9 +1,10 @@
 @import mixins
 
 *
-  font-family: MuseoSans500, sans-serif
+  font-family: 'Source Sans Pro', sans-serif
 body
   font-size: 16px
+  font-weight: 400
 
 
 // Dynamic loading links
@@ -157,7 +158,8 @@ button,
 #body .button
   +border_radius(3)
   display: inline-block
-  font-size: 16px
+  font-size: 1.2em
+  font-weight: 300
   height: 32px
   line-height: 32px !important
   margin: 0 5px 0 0
@@ -196,6 +198,16 @@ button,
 #body
   .hidden
     display: none
+  strong,
+  strong *
+    font-weight: 700
+  em,
+  em *
+    font-style: italic
+  label
+    font-weight: 700
+    &.boolean
+      font-weight: 400
   label + img
     margin: 5px 0 0
   input,
@@ -867,11 +879,16 @@ table + .pagination,
         .meta
           border-bottom: 1px solid
           font-size: 12px
+          font-style: italic
           line-height: 15px
           overflow: hidden
           padding: 5px 0 3px 0
           position: relative
           z-index: 4
+          
+          a,
+          time
+            font-style: normal
           
           a
             position: relative
@@ -1154,6 +1171,7 @@ table + .pagination,
         margin: 0 10px -10px 0
       
       a
+        font-weight: 700
         white-space: nowrap
       
       &:first-child,
@@ -1172,6 +1190,14 @@ table + .pagination,
         
         &:after
           display: none
+      
+      &.activity
+        font-style: italic
+        a,
+        span,
+        strong,
+        time
+          font-style: normal
       
       &.comment
         border-bottom: 0

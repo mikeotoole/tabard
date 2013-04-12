@@ -41,7 +41,7 @@ DaBvRails::Application.routes.draw do
   devise_scope :user do
     get 'login' => 'sessions#new', as: :new_user_session
     post 'login' => 'sessions#create', as: :user_session
-    delete 'logout' => 'sessions#destroy', as: :destroy_user_session
+    match 'logout' => 'sessions#destroy', as: :destroy_user_session
     get 'users/disable_confirmation' => 'registrations#disable_confirmation', as: :disable_confirmation
     get 'users/reinstate' => 'registrations#reinstate_confirmation', as: :reinstate_confirmation
     put 'users/reinstate' => 'registrations#send_reinstate', as: :send_reinstate

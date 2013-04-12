@@ -85,11 +85,11 @@ jQuery(document).ready ($) ->
 
     # Wire links to profile modals
     $('body')
-        .on 'ajax:before', 'a.profile[data-remote]', ->
+        .on 'ajax:before', 'a.profile[data-remote], a.avatar[data-remote]', ->
             $(@).data 'type', 'json'
-        .on 'ajax:error', 'a.profile[data-remote]', (xhr, status, error) ->
+        .on 'ajax:error', 'a.profile[data-remote], a.avatar[data-remote]', (xhr, status, error) ->
             $.alert error
-        .on 'ajax:success', 'a.profile[data-remote]', (event, data, status, xhr) ->
+        .on 'ajax:success', 'a.profile[data-remote], a.avatar[data-remote]', (event, data, status, xhr) ->
             if data.success
                 $.profile data.html
             else
