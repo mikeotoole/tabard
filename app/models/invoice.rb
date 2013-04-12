@@ -301,6 +301,15 @@ class Invoice < ActiveRecord::Base
     return success
   end
 
+  def charge_description
+    begin
+      "invoice_id:#{self.id} local_tax_code:#{self.local_tax_code} charged_state_tax_rate:#{self.charged_state_tax_rate} charged_local_tax_rate:#{self.charged_local_tax_rate} total_tax_in_dollars:#{self.total_tax_in_dollars}  tax_error_occurred:#{self.tax_error_occurred}"
+    rescue
+    ensure
+      "invoice_id:#{self.id} ERROR GETTING OTHER VALUES. See invoice."
+    end
+  end
+
   ###
   # Used to submit a charge to Stripe with this invoice cost.
   # If the invoice is still open it will first be closed.
@@ -319,10 +328,11 @@ class Invoice < ActiveRecord::Base
           else
             raise ActiveRecord::StaleObjectError.new(self, :charge_customer) if self.processing_payment
             self.update_attributes({processing_payment: true, lock_version: self.lock_version}, without_protection: true)
+            charge_description
             charge = Stripe::Charge.create( amount: self.total_price_in_cents,
                                             currency: "usd",
                                             customer: self.user_stripe_customer_token,
-                                            description: "Charge for invoice id:#{self.id}" )
+                                            description: self.charge_description)
             # Log big charge
             if self.total_price_in_cents > NOTIFY_CHARGE_AMOUNT
               logger.warn "ALERT_ERROR model=invoice method=charge_customer error=large_charge invoice_id=#{self.id} price=#{self.total_price_in_cents}"
