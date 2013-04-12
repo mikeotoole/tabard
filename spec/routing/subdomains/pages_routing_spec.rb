@@ -6,7 +6,7 @@ describe Subdomains::PagesController do
 
     it "routes #index to StatusCodeController#not_found" do
       { :get => "#{community.subdomain}.example.com/pages" }.should
-        route_to(:controller => :status_code, :action => :not_found, :subdomain => 'www')
+        route_to(:controller => :status_code, :action => :not_found)
     end
   end
 end

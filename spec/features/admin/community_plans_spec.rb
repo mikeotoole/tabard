@@ -7,6 +7,10 @@ describe "ActiveAdmin CommunityPlan" do
   let(:user) { DefaultObjects.user }
   let(:community_plan) { create(:community_plan) }
 
+  before(:each) do
+    set_host "lvh.me:3000"
+  end
+
   describe "#index" do
     it "returns 200 when logged in as superadmin" do
       login_as superadmin

@@ -67,6 +67,9 @@ module DaBvRails
     # This will make our app handle exceptions. So in the routes we can route exceptions to controllers to handle.
     config.exceptions_app = self.routes
 
+    # Use a different logger for distributed setups. This is here for Heroku and Unicorn.
+    config.logger = Logger.new(STDOUT)
+
     # Configure what files get generated with rails generate command.
     config.generators do |g|
       g.helper false

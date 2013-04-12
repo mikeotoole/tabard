@@ -8,13 +8,6 @@
 class CardController < PaymentController
   respond_to :html, :js
 
-###
-# Callbacks
-###
-  skip_before_filter :ensure_not_ssl_mode
-  skip_before_filter :limit_subdomain_access
-  before_filter :ensure_secure_subdomain
-
   # GET /card
   def edit
     begin

@@ -11,6 +11,10 @@ describe "ActiveAdmin Document" do
   let(:privacy_policy) { create(:privacy_policy) }
   let(:unpublished_terms_of_service) { create(:terms_of_service, :is_published => false) }
 
+  before(:each) do
+    set_host "lvh.me:3000"
+  end
+
   describe "#index" do
     it "returns 200 when logged in as superadmin" do
       login_as superadmin

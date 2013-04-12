@@ -15,7 +15,6 @@ class Subdomains::CommentsController < SubdomainsController
   before_filter :create_comment, only: [:new, :create]
   load_and_authorize_resource except: [:new, :create]
   authorize_resource only: [:new, :create]
-  skip_before_filter :limit_subdomain_access
 
 ###
 # REST Actions

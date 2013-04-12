@@ -7,6 +7,10 @@ describe "ActiveAdmin Character" do
   let(:user) { DefaultObjects.user }
   let(:character) { create(:swtor_character) }
 
+  before(:each) do
+    set_host "lvh.me:3000"
+  end
+
   describe "#index" do
     it "returns 200 when logged in as superadmin" do
       login_as superadmin

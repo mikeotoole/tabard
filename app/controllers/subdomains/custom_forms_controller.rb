@@ -16,7 +16,6 @@ class Subdomains::CustomFormsController < SubdomainsController
   before_filter :authorize_publish_and_unpublish, only: [:publish, :unpublish]
   authorize_resource except: [:index, :thankyou, :publish, :unpublish]
   before_filter :ensure_current_user_is_member, except: [:thankyou]
-  skip_before_filter :limit_subdomain_access
 
   # GET /custom_forms
   def index

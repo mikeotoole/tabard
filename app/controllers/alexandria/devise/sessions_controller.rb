@@ -4,8 +4,6 @@
 class Alexandria::Devise::SessionsController < ActiveAdmin::Devise::SessionsController
   skip_before_filter :block_unauthorized_user!
   skip_before_filter :check_maintenance_mode
-  skip_before_filter :ensure_not_ssl_mode, :limit_subdomain_access
-  before_filter :ensure_secure_subdomain, only: [:new,:create]
   after_filter :validation_code_correct, only: :create
   layout 'application'
 

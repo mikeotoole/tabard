@@ -17,7 +17,6 @@ class Subdomains::PagesController < SubdomainsController
   load_and_authorize_resource except: [:new, :create, :index]
   before_filter :create_page, only: [:new, :create]
   authorize_resource only: [:new, :create]
-  skip_before_filter :limit_subdomain_access
   after_filter :create_activity, only: [:update, :create]
 
 ###

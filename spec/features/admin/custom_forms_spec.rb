@@ -8,6 +8,10 @@ describe "ActiveAdmin CustomForm" do
   let(:custom_form) { create(:custom_form) }
   let(:question) { create(:short_answer_question) }
 
+  before(:each) do
+    set_host "lvh.me:3000"
+  end
+
   describe "#index" do
     it "returns 200 when logged in as superadmin" do
       login_as superadmin

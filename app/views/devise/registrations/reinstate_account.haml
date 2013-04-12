@@ -5,7 +5,7 @@
 
 %h1 Reactivate Account
 
-= simple_form_for(resource, as: resource_name, url: reinstate_account_url(subdomain: 'secure'), html: { method: :put }) do |f|
+= simple_form_for(resource, as: resource_name, url: reinstate_account_url, html: { method: :put }) do |f|
   %p Please select a new password to reactivate your account.
   %fieldset
     %ol

@@ -20,7 +20,7 @@ describe UserProfilesController do
     end
     it "should redirected to new user session path when not authenticated as a user" do
       get 'account'
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
   end
 
@@ -90,7 +90,7 @@ describe UserProfilesController do
 
     it "should redirected to new user session path when not authenticated as a user" do
       get 'edit', :id => user_profile
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
 
     it "should render communities/edit template as owner" do
@@ -179,7 +179,7 @@ describe UserProfilesController do
     end
 
     it "should redirect to new user session path" do
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
 
     it "should not change attributes" do

@@ -55,7 +55,7 @@ describe MailboxController do
 
     it "should redirected to new user session path when not authenticated as a user" do
       get :inbox
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
   end
 
@@ -99,7 +99,7 @@ describe MailboxController do
 
     it "should redirected to new user session path when not authenticated as a user" do
       get :trash
-      response.should redirect_to(new_user_session_url(subdomain: 'secure'))
+      response.should redirect_to(new_user_session_url)
     end
   end
 

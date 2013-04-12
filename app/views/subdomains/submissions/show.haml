@@ -12,7 +12,7 @@
   .sidebar
     .submitter
       %h2 Submitted by
-      %a{ href: user_profile_url(@submission.user_profile, subdomain: "www") }
+      %a{ href: user_profile_url(@submission.user_profile) }
         = image_tag @submission.user_profile_avatar_url(:tiny), class: 'avatar'
         = @submission.user_profile_display_name
   - if @submission.answers.size > 0

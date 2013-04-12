@@ -2,6 +2,6 @@
   %font{ color: '#333' }= "Hello #{@resource.is_a?(User) ? @resource.display_name : @resource.email}!"
 %p Someone has requested a link to reactivate your account, and you can do this through the link below.
 %p
-  %strong= link_to 'Reactivate account', reinstate_account_url(reset_password_token: @resource.reset_password_token, subdomain: "secure", protocol: (Rails.env.development? ? "http://" : "https://")), style: 'color: #BE4124'
+  %strong= link_to 'Reactivate account', reinstate_account_url(reset_password_token: @resource.reset_password_token, protocol: (Rails.env.development? ? "http://" : "https://")), style: 'color: #BE4124'
 %p If you didn't request this, please ignore this email.
 %p Your account will not be reactivated until you access the link above and create a new password.
