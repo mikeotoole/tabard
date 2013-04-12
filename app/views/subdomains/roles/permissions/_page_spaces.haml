@@ -1,5 +1,11 @@
 %dl
   %dt
+    %h3 New Wiki Page Spaces
+  %dd
+    = f.simple_fields_for :permissions, role.permissions_for_resource("PageSpace") do |pf|
+      = pf.input :subject_class, as: :hidden
+      = pf.input :can_create, as: :boolean, label: 'Create new wiki page spaces', wrapper: false
+  %dt
     %h3 Default Values
     %p
       These are the permissions that will be applied to new wiki page spaces and wiki pages that are created.

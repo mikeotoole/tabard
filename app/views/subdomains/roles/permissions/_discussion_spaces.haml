@@ -1,5 +1,11 @@
 %dl
   %dt
+    %h3 New Discussion Spaces
+  %dd
+    = f.simple_fields_for :permissions, role.permissions_for_resource("DiscussionSpace") do |pf|
+      = pf.input :subject_class, as: :hidden
+      = pf.input :can_create, as: :boolean, label: 'Create new discussion spaces', wrapper: false
+  %dt
     %h3 Default Values
     %p
       These are the permissions that will be applied to new discussion spaces and discussions that are created.
