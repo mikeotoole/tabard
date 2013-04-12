@@ -2,9 +2,9 @@
   %dt
     %h3 Default Values
     %p
-      These are the permissions that will be applied to new page spaces and pages that are created.
+      These are the permissions that will be applied to new wiki page spaces and wiki pages that are created.
       - if current_community.page_spaces.any?
-        You can also set permissions for individual page spaces further below.
+        You can also set permissions for individual wiki page spaces further below.
   %dd
     - defaults = role.permissions_defaults_for_resource("PageSpace")
     - child_index = 'pagespace' + (defaults.persisted? ? defaults.id : Time.zone.now.to_i).to_s
@@ -12,7 +12,7 @@
       = pf.input :object_class, as: :hidden
       %label The space itself
       = pf.input :permission_level, as: :radio_buttons, wrapper: :slider, collection: [['×',''], ['View','View'], ['Edit','Update'], ['Delete','Delete']]
-      %label Pages in the space
+      %label Wiki pages in the space
       = pf.input :nested_permission_level, as: :radio_buttons, wrapper: :slider, collection: [['×',''], ['Edit','Update'], ['Add','Create'], ['Delete','Delete']]
   - if current_community.page_spaces.any?
     %hr
@@ -29,5 +29,5 @@
           = pf.input :subject_class, as: :hidden
           = pf.input :id_of_parent, as: :hidden
           = pf.input :parent_association_for_subject, as: :hidden
-          %label Pages in the space
+          %label Wiki pages in the space
           = pf.input :permission_level, as: :radio_buttons, wrapper: :slider, collection: [['×',''], ['Edit','Update'], ['Add','Create'], ['Delete','Delete']]
