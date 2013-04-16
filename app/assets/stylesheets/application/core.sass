@@ -32,7 +32,6 @@ body
     border-top: 0
     +box_shadow(inset 0 0 5px rgba(#000,.2))
     color: #251634
-    font-size: 14px
     height: 0
     line-height: 0
     margin: 0 auto
@@ -101,7 +100,7 @@ body
       +border_radius(2)
       +box_shadow(0 0 5px rgba(#000,.2))
       color: #000
-      font-size: 12px
+      font-size: .8em
       height: 20px
       line-height: 20px
       margin: -11px 0 0
@@ -134,7 +133,7 @@ body
       top: 0
     
     .meta
-      font-size: 12px
+      font-size: .8em
       +opacity(.7)
     
     &:hover
@@ -166,8 +165,7 @@ button,
   padding: 0 15px
   position: relative
   text-decoration: none
-  text-shadow: 0 -1px 1px #451b12
-  +transition(box-shadow .2s linear)
+  +transition(background .2s linear, box-shadow .2s linear)
   span
     display: block
     margin: 0 -15px
@@ -206,7 +204,9 @@ button,
     font-style: italic
   label
     font-weight: 700
-    &.boolean
+    &.boolean,
+    &.collection_check_boxes,
+    &.collection_radio_buttons
       font-weight: 400
   label + img
     margin: 5px 0 0
@@ -268,7 +268,7 @@ button,
         z-index: 2
   dfn.hint
     display: block
-    font-size: 12px
+    font-size: .8em
     padding: 5px
     &:before
       content: '\27A5\00A0'
@@ -330,7 +330,7 @@ button,
           border-top: 1px solid
           clear: both
           display: none
-          font-size: 15px
+          font-weight: 400
           line-height: 20px
           margin: 0
           padding: 5px 10px
@@ -451,7 +451,7 @@ button,
     label
       border: 1px solid transparent
       +border_radius(2)
-      font-size: 12px
+      font-size: .9em
       height: 24px
       left: 2px
       line-height: 24px
@@ -665,7 +665,7 @@ button,
 .ui-datepicker
   border: 1px solid
   +border_radius(3)
-  font-size: 14px
+  font-size: .9em
   .ui-datepicker-prev,
   .ui-datepicker-next
     display: block
@@ -680,8 +680,11 @@ button,
     right: 10px
   .ui-datepicker-title
     height: 30px
+    font-weight: 700
     line-height: 30px
     margin: 10px 50px 0
+    span
+      font-weight: 700
   table
     margin: 10px
   td,
@@ -713,7 +716,7 @@ button,
   &:before,
   &:after
     bottom: -25px
-    font-size: 12px
+    font-size: .8em
     height: 20px
     line-height: 15px
     position: absolute
@@ -746,14 +749,15 @@ button,
     .value:before
       +border_radius(10)
       color: #fff
-      font-size: 12px
+      font-size: .8em
       height: 20px
       line-height: 20px
       padding: 0 10px
       position: absolute
       right: 0
-      text-shadow: 0 -1px 1px #000 !important
+      text-shadow: none !important
       top: -25px
+      white-space: nowrap
   &.overage
     background: #AA381D !important
     border-color: #AA381D !important
@@ -776,7 +780,7 @@ button,
 
 .pagination
   border-top: 1px solid #ccc
-  font-size: 13px
+  font-size: .9em
   padding: 5px 0 0
   + form,
   + table
@@ -878,7 +882,7 @@ table + .pagination,
         
         .meta
           border-bottom: 1px solid
-          font-size: 12px
+          font-size: .8em
           font-style: italic
           line-height: 15px
           overflow: hidden
@@ -889,6 +893,9 @@ table + .pagination,
           a,
           time
             font-style: normal
+          
+          time
+            font-size: 1em
           
           a
             position: relative
@@ -934,7 +941,6 @@ table + .pagination,
               display: none
         
         p
-          font-size: 14px
           line-height: 20px
           margin: 0
           padding: 12px 40px 40px 0
@@ -949,13 +955,10 @@ table + .pagination,
         .reply
           display: block
           float: left
-          font-size: 12px
+          font-size: .9em !important
           line-height: 20px
           padding: 0 5px
           margin: 10px 0 0
-          
-        em
-          font-size: 12px
           
         .reply
           +border_radius(0)
@@ -1112,7 +1115,6 @@ table + .pagination,
         border: 1px solid
         +border_radius(2)
         content: attr(meta)
-        font-size: 12px
         height: 20px
         left: 0
         line-height: 20px
@@ -1145,7 +1147,7 @@ table + .pagination,
 #body
 
   .activities
-    font-size: 14px
+    font-size: .9em
     margin: 0
     padding: 0
     
@@ -1281,10 +1283,9 @@ body.busy:before
 body > .modal,
 .wmd-prompt-dialog
   background: #eee
-  +bg_gradient(#dddddd,#ffffff)
   border: 1px solid #fff
-  +border_radius(10)
-  +box_shadow(0 0 50px #000)
+  +border_radius(2)
+  +box_shadow(0 0 50px rgba(#000,.5))
   left: 50%
   position: fixed
   margin: -100px 0 0 -250px
@@ -1298,18 +1299,20 @@ body > .modal,
   .wmd-prompt-question p b
     color: #367BB1
     display: block
-    font-size: 25px
-    margin: 20px 20px 0
+    font-size: 2.4em
+    font-weight: 300
+    margin: 30px 30px 0
     padding: 0
+    *
+      font-weight: 300
     
   .wmd-prompt-question p b
     margin: 0 0 -20px
   
   p
     color: #666
-    font-size: 15px
-    line-height: 18px
-    margin: 20px 20px 30px
+    line-height: 1.4em
+    margin: 30px 30px 60px
     padding: 0
     
     a
@@ -1323,10 +1326,7 @@ body > .modal,
         text-decoration: none
 
   &.profile
-    height: 170px
-    h1
-      font-size: 35px
-      margin-top: -10px
+    height: 180px
     .actions
       .close
         overflow: hidden
@@ -1348,18 +1348,18 @@ body > .modal,
           top: 0
     .avatar
       background: #ccc
-      left: 20px
+      left: 30px
       padding: 0
       position: absolute
-      top: 70px
+      top: 80px
       img
         display: block
     .stats
       height: 60px
-      left: 80px
+      left: 100px
       position: absolute
       right: 10px
-      top: 70px
+      top: 80px
       dl
         border-right: 1px solid #ccc
         color: #666
@@ -1369,11 +1369,11 @@ body > .modal,
         &:last-child
           border-right: 0
         dt
-          font-size: 14px
-          line-height: 20px
+          line-height: 1em
         dd
-          font-size: 30px
-          line-height: 40px
+          font-size: 2em
+          line-height: 1em
+          padding: .2em 0
 
   textarea,
   input[type="text"],
@@ -1404,9 +1404,8 @@ body > .modal,
     button,
     input[type="button"]
       background: #777
-      +bg_gradient(#888888,#666666)
-      border: 1px solid #eee
       +border_radius(3)
+      +box_shadow(none)
       color: #eee
       display: inline-block
       float: left
@@ -1415,20 +1414,18 @@ body > .modal,
       margin: 0 0 0 5px
       padding: 0 15px
       text-decoration: none
-      text-shadow: 0 -1px 1px #000
       text-transform: capitalize
-      +transition(box-shadow .2s linear)
+      +transition(background .2s linear)
       &:focus,
       &:hover
-        +bg_gradient(#999999,#777777)
+        background: #888
         color: #fff
       &:last-of-type
-        +bg_gradient(#d24723,#792b28)
+        background: #B03E24
         color: #f8d5bb
         &:focus,
         &:hover
-          +bg_gradient(#e05c2e,#9e3834)
-          +box_shadow(0 0 10px #aaa)
+          background: #E25533
           color: #fff
 
   &.prompt

@@ -1,7 +1,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
-//= require skylite
+//= require skylite.min
 
 
 # global var access
@@ -39,8 +39,9 @@ root = exports ? this
         modal
 
     $.profile = (options) ->
-        options = body: options if typeof(options) is 'string'
+        options = html: options if typeof(options) is 'string'
         $.extend options, modalOptions
+        console.log options
         options.type = 'profile'
         options.actions = $.extend {
             message: ((modal) -> document.location = modal.$modal.find('.avatar').attr('href').replace('/profiles/', 'mail/compose/'))

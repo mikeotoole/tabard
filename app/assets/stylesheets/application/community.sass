@@ -63,7 +63,6 @@ body
       >a
         +border_radius(2)
         display: block
-        font-size: 14px
         height: 30px
         line-height: 30px
         margin: 0 0 0 10px
@@ -97,7 +96,7 @@ body
           >a
             border-bottom: 1px solid
             display: block
-            font-size: 12px
+            font-size: .8em
             line-height: 15px
             padding: 0 40px 0 5px
             position: relative
@@ -272,7 +271,7 @@ body.fixed-menu #header .menu
     overflow: hidden
     
     ol
-      font-size: 12px
+      font-size: .8em
       line-height: 30px
       padding: 0 15px
       margin: 0
@@ -356,7 +355,7 @@ body.fixed-menu #header .menu
       padding: 10px 0
 
   time
-    font-size: 12px
+    font-size: .8em
     white-space: nowrap
   
   
@@ -545,7 +544,7 @@ body.fixed-menu #header .menu
               padding: 5px 0 0
             
             .meta
-              font-size: 12px
+              font-size: .8em
               padding: 0 0 10px
           
           &.characters
@@ -555,7 +554,7 @@ body.fixed-menu #header .menu
             
               li
                 display: inline-block
-                font-size: 13px
+                font-size: .8em
                 line-height: 20px
                 padding: 0 0 3px
                 width: 180px
@@ -564,6 +563,7 @@ body.fixed-menu #header .menu
                   margin: 0 5px 0 0
                 
                 label
+                  font-weight: normal
                   text-indent: 0
                 
                   img.avatar
@@ -627,7 +627,7 @@ body.fixed-menu #header .menu
       
       dfn
         display: block
-        font-size: 13px
+        font-size: .8em
         padding: 3px
     
     &.my_roster tfoot
@@ -660,7 +660,7 @@ body.fixed-menu #header .menu
     
     > .meta,
     > .meta *
-      font-size: 13px
+      font-size: .9em
     
     > .meta
       border-bottom: 1px solid
@@ -703,6 +703,9 @@ body.fixed-menu #header .menu
     
     li > a
       font-weight: 700
+    
+    li > time
+      font-size: 1em
     
     li.owned
     
@@ -795,7 +798,8 @@ body.fixed-menu #header .menu
                 bottom: auto
                 content: 'Posting as ' attr(meta)
                 display: block
-                font-size: 11px
+                font-size: .8em
+                font-weight: 400
                 left: 62px
                 line-height: 15px
                 pointer-events: none
@@ -832,7 +836,7 @@ body.fixed-menu #header .menu
                     +border_radius(2)
                     content: attr(meta)
                     display: block
-                    font-size: 12px
+                    font-size: .8em
                     height: 15px
                     left: 0
                     line-height: 15px
@@ -871,7 +875,6 @@ body.fixed-menu #header .menu
         border: 1px solid
         +border_radius(0)
         display: block
-        font-size: 14px
         height: 22px
         left: 5px
         line-height: 20px
@@ -915,7 +918,7 @@ body.fixed-menu #header .menu
         +border_radius(0)
         display: none
         float: none
-        font-size: 12px
+        font-size: .9em
         height: auto
         line-height: 20px !important
         margin: 5px 0 0
@@ -924,7 +927,7 @@ body.fixed-menu #header .menu
       >label
         bottom: 5px
         display: none
-        font-size: 12px
+        font-size: .8em
         line-height: 20px
         margin: 0
         padding: 0 10px 0 0
@@ -1054,7 +1057,8 @@ body.fixed-menu #header .menu
     h1,
     h2
       +border_radius(3)
-      font-size: 20px
+      font-size: 1.4em
+      font-weight: 300
       height: 40px
       line-height: 40px
       margin: 30px 0 15px
@@ -1131,7 +1135,7 @@ body.fixed-menu #header .menu
           width: 40px
       .submitter a
         height: auto
-        font-size: 14px
+        font-weight: 700
         line-height: 48px
         min-height: 48px
         padding: 0 8px 0 50px
@@ -1143,7 +1147,6 @@ body.fixed-menu #header .menu
             display: none
           &:after
             content: '\00D7'
-            font-size: 17px
             line-height: 1em
             position: absolute
             top: 0
@@ -1159,13 +1162,12 @@ body.fixed-menu #header .menu
               min-height: 16px
               line-height: 16px
               &.name
-                font-size: 14px
+                font-weight: 700
               &.game
-                font-size: 12px
+                font-size: .8em
           + ul,
-          + .select,
-          + input + .select
-            margin: -30px 0 0
+          ~ .select
+            margin: -30px 0 30px !important
       .instructions
         padding: 0 0 15px
         h2:before
@@ -1180,9 +1182,6 @@ body.fixed-menu #header .menu
       width: 580px
       >fieldset >ol >li
         padding: 0 0 20px
-        >label,
-        .select >label
-          font-size: 18px
         >input,
         >textarea
           width: 558px
@@ -1225,7 +1224,6 @@ body.fixed-menu #header .menu
     .secondary
       display: block
       float: right
-      font-size: 13px
       line-height: 30px
       padding: 0 10px
   
@@ -1263,7 +1261,6 @@ body.fixed-menu #header .menu
             +box-shadow(none)
             border: 1px dashed
             +border_radius(3)
-            font-size: 13px
             height: 6px
             margin: -10px 0 2px
             overflow: hidden
@@ -1314,6 +1311,7 @@ body.fixed-menu #header .menu
             
             h3
               display: block
+              font-weight: 300
               left: 0
               +opacity(1)
               overflow: hidden
@@ -1357,7 +1355,6 @@ body.fixed-menu #header .menu
             
             &:before
               content: '\00D7'
-              font-size: 17px
               height: 20px
               right: 0
               line-height: 17px
@@ -1391,7 +1388,7 @@ body.fixed-menu #header .menu
               
               .optreq
                 float: left
-                margin: 8px 0 0
+                margin: 8px 0 0 8px
               
               .explanation
                 clear: left
@@ -1468,7 +1465,6 @@ body.fixed-menu #header .menu
         
         &:before
           content: '\002B'
-          font-size: 17px
           height: 20px
           right: 0
           line-height: 17px
@@ -1603,7 +1599,7 @@ body.fixed-menu #header .menu
         +border_radius(3)
         border-right: 0
         border-top: 1px solid
-        font-size: 20px
+        font-weight: 300
         height: 40px
         line-height: 40px
         margin: 1px 2px 0
@@ -1639,7 +1635,8 @@ body.fixed-menu #header .menu
         
         label
           +border_radius(3)
-          font-size: 13px
+          font-size: .9em
+          font-weight: 400
           height: 17px
           line-height: 16px
           margin: 0 6px 5px 1px
@@ -1669,8 +1666,6 @@ body.fixed-menu #header .menu
       input, button
         float: left
         margin: 0 5px 0 0
-      button
-        font-size: 14px
     ul
       clear: both
       margin: 13px -2px
@@ -1691,7 +1686,6 @@ body.fixed-menu #header .menu
       a
         +border_radius(3)
         float: left
-        font-size: 14px
         height: 50px
         line-height: 25px
         margin: 2px
@@ -1739,6 +1733,7 @@ body.fixed-menu #header .menu
     height: 100px
 
   #submenu
+    font-size: .9em
     line-height: 30px
     position: absolute
     top: 30px
@@ -1748,10 +1743,10 @@ body.fixed-menu #header .menu
       border: 0
       +border_radius(2)
       display: inline
-      font-size: 12px
+      font-size: 1em
       height: auto
       line-height: 12px
-      padding: 3px 6px
+      padding: .1em .4em
       
   #breadcrumb + #submenu
     top: 61px
@@ -1800,7 +1795,7 @@ body.with_action_items
         +border_radius(3,3,0,0)
         +box_shadow(0 0 10px rgba(#000,.2))
         color: #251533
-        font-size: 14px
+        font-size: .9em
         padding: 10px
         position: relative
         
@@ -1882,7 +1877,7 @@ body.with_action_items
             color: #999
             display: block
             float: left
-            font-size: 14px
+            font-size: .9em
             margin: -10px
             padding: 10px
             text-decoration: none
@@ -1914,7 +1909,7 @@ body.with_action_items
   border: 1px solid
   border-top: 0
   +border_radius(0,0,3,3)
-  font-size: 13px
+  font-size: .9em
   padding: 4px 6px
   text-align: left
   li
@@ -1937,10 +1932,11 @@ body.with_action_items
         top: 0
 #recruits fieldset ol label
   float: left
+  font-weight: 400
   max-width: 300px
   &:hover:after
     content: '\00D7'
-    font-size: 14px
+    font-size: .9em
     line-height: 14px
     text-align: center
     text-indent: 0
