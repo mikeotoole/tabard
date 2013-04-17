@@ -45,9 +45,7 @@ DaBvRails::Application.routes.draw do
       get 'account-settings' => 'registrations#edit', as: :account_settings
     end
 
-  ###
-  # Payment and Invoices
-  ###
+    # Payment and Invoices
     get "card" => 'card#edit'
     put "card" => 'card#update'
 
@@ -56,8 +54,6 @@ DaBvRails::Application.routes.draw do
     put '/subscriptions/:community_id' => 'subscriptions#update', as: :subscription
 
     resources :invoices, only: [:index, :show], path: :statements
-
-
 
     # Documents
     get "users/accept_document/:id" => "document_acceptance#new", as: "accept_document"

@@ -39,13 +39,28 @@ root = exports ? this
         modal
 
     $.profile = (options) ->
-        options = html: options if typeof(options) is 'string'
         $.extend options, modalOptions
-        console.log options
         options.type = 'profile'
         options.actions = $.extend {
-            message: ((modal) -> document.location = modal.$modal.find('.avatar').attr('href').replace('/profiles/', 'mail/compose/'))
-            'View Profile': ((modal) -> document.location = modal.$modal.find('.avatar').attr('href'))
+            'Assign Roles': ((modal) ->
+                errMsg = 'Error: unable to load roles.'
+                $.ajax
+                    url: options.url.replace(/\.js$/, '/roles.js')
+                    type: 'get'
+                    dataType: 'text'
+                    error: (xhr, status, error) ->
+                        $.alert error ? errMsg
+                    success: (data, status, xhr) ->
+                        response = $.parseJSON data
+                        return unless response.success and response.html?
+                        node
+                            .attr('current_page', next_page)
+                            .find(node.attr('target'))
+                            .append response.html
+                return false
+            ),
+            message: ((modal) -> document.location = modal.$modal.find('.avatar').attr('href').replace('/profiles/', 'mail/compose/')),
+            'View Profile': ((modal) -> document.location = modal.$modal.find('.avatar').attr('href')),
             close: (-> true)
         }, (options.actions ? {})
         new Skylite options
@@ -92,7 +107,7 @@ jQuery(document).ready ($) ->
             $.alert error
         .on 'ajax:success', 'a.profile[data-remote], a.avatar[data-remote]', (event, data, status, xhr) ->
             if data.success
-                $.profile data.html
+                $.profile html: data.html, url: $(@).attr 'href'
             else
                 $.alert data.text
 

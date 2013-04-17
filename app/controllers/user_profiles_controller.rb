@@ -18,7 +18,7 @@ class UserProfilesController < ApplicationController
   before_filter :load_activities, only: [:show, :activities]
   before_filter :authorize_custom_actions, only: [:activites, :announcements, :characters, :invites]
 
-  # GET /user_profiles/1
+  # GET /user_profiles/1(.:format)
   def show
     respond_to do |format|
       format.html {
@@ -54,11 +54,11 @@ class UserProfilesController < ApplicationController
     end
   end
 
-  # GET /user_profiles/1/edit
+  # GET /user_profiles/1/edit(.:format)
   def edit
   end
 
-  # PUT /user_profiles/1
+  # PUT /user_profiles/1(.:format)
   def update
     begin
       @user_profile.update_attributes(params[:user_profile])
