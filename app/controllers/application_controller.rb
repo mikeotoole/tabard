@@ -37,8 +37,9 @@ class ApplicationController < ActionController::Base
   # This before_filter checks browser is supported.
   before_filter :check_supported_browser
 
-  # Allow subdomains to punch through to apex domain.
-  after_filter :set_access_control_headers
+  # Make CORS work
+  before_filter :cors_preflight_check
+  after_filter :cors_set_access_control_headers
 
 
 ###
@@ -370,28 +371,31 @@ protected
   end
 
   ###
+  # _before_filter_
+  #
+  # If this is a preflight OPTIONS request, then short-circuit the
+  # request, return only the necessary headers and return an empty
+  # text/plain.
+  ###
+  def cors_preflight_check
+    if request.method == :options
+      headers['Access-Control-Allow-Origin'] = '*'
+      headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
+      headers['Access-Control-Allow-Headers'] = 'X-Requested-With, X-Prototype-Version'
+      headers['Access-Control-Max-Age'] = '1728000'
+      render text: '', content_type: 'text/plain'
+    end
+  end
+
+  ###
   # _after_filter_
   #
-  # This method allows requests to be sent to apex from community subdomains
+  # For all responses in this controller, return the CORS access control headers.
   ###
-  def set_access_control_headers
-    if current_community != nil
-      # Subdomain -> apex
-    else
-      # apex -> subdomain request
-      origin = request.env['HTTP_ORIGIN']
-      begin
-        # TODO: See if moving to using apex F's this up. -MO
-        origin_uri = URI.parse(request.env['HTTP_ORIGIN'])
-        some_subdomain = origin_uri.hostname.split('.').first
-        is_our_domain = origin_uri.hostname.split('.').last(2).join('.') == ENV['BV_HOST_DOMAIN']
-        if is_our_domain and not origin.blank? and not some_subdomain.blank? and Community.where{subdomain == some_subdomain}.exists?
-          headers['Access-Control-Allow-Origin'] = request.env['HTTP_ORIGIN']
-          headers['Access-Control-Request-Method'] = '*'
-        end
-      rescue
-      end
-    end
+  def cors_set_access_control_headers
+    headers['Access-Control-Allow-Origin'] = '*'
+    headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
+    headers['Access-Control-Max-Age'] = "1728000"
   end
 
 ###

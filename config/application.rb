@@ -11,6 +11,18 @@ end
 
 module DaBvRails
   class Application < Rails::Application
+
+    # Rack/CORS
+    config.middleware.insert_before Warden::Manager, Rack::Cors do
+      allow do
+        origins %r{^https?:\/\/[a-z0-9\-]+.#{ENV['BV_HOST_DOMAIN']}:?\d*$}i
+        resource '*',
+          headers: ['Origin', 'Accept', 'Content-Type'],
+          methods: [:get, :put, :create, :delete]
+      end
+    end
+
+    # Mailer
     config.to_prepare do
       Devise::Mailer.layout 'mailer'
     end

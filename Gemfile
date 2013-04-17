@@ -28,6 +28,7 @@ gem 'mini_magick'#                                                              
 gem 'nilify_blanks'#                                                                      MIT - https://github.com/rubiety/nilify_blanks
 #gem 'oink'#                                                                              MIT - https://github.com/noahd1/oink
 gem 'profanalyzer', github: "digitalaugment/profanalyzer"#                                MIT - https://github.com/michaeledgar/profanalyzer
+gem 'rack-cors', require: 'rack/cors'#                                                    MIT - https://github.com/cyu/rack-cors
 gem 'rails3_acts_as_paranoid'#                                                            MIT - https://github.com/goncalossilva/rails3_acts_as_paranoid
 gem 'rdiscount'#                                                                          BSD - https://github.com/rtomayko/rdiscount
 gem 'rest-client'#                                                                        MIT - https://github.com/archiloque/rest-client
