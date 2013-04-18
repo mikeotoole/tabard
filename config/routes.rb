@@ -66,9 +66,7 @@ DaBvRails::Application.routes.draw do
         get :announcements
         get :characters
         get :invites
-        get :roles
       end
-      resources :roles, only: [:update]
       resources :played_games, only: [:index, :show]
     end
     get "/account" => "user_profiles#account", as: "account"
@@ -151,6 +149,8 @@ DaBvRails::Application.routes.draw do
       get "/autocomplete-members" => "communities#autocomplete_members", as: "autocomplete_members"
 
       # Roles and Permissions
+      get '/roles/user_profile/:user_profile_id/edit' => 'roles#user_profile_edit', as: 'edit_user_profile_roles'
+      put '/roles/user_profile/:user_profile_id' => 'roles#user_profile_update', as: 'user_profile_roles'
       resources :roles, except: [:show]
 
       # Roster assignments

@@ -12,9 +12,9 @@ class UserProfilesController < ApplicationController
   ###
   before_filter :block_unauthorized_user!, except: [:show, :activities, :characters, :index]
   before_filter :set_current_user_as_profile, only: :account
-  load_and_authorize_resource except: [:index, :activities, :characters, :announcements, :invites, :roles]
+  load_and_authorize_resource except: [:index, :activities, :characters, :announcements, :invites]
   skip_authorize_resource only: :account
-  before_filter :find_user_by_id, only: [:characters, :activities, :announcements, :invites, :roles]
+  before_filter :find_user_by_id, only: [:characters, :activities, :announcements, :invites]
   before_filter :load_activities, only: [:show, :activities]
   before_filter :authorize_custom_actions, only: [:activites, :announcements, :characters, :invites]
 
@@ -48,7 +48,7 @@ class UserProfilesController < ApplicationController
         if @user_profile.is_disabled?
           render json: {success: false, text: 'This profile is no longer active.'}
         else
-          render json: {success: true, html: render_to_string(partial: 'user_profiles/modal', locals: {user_profile: @user_profile})}
+          render json: {success: true, html: render_to_string(partial: 'user_profiles/modal', locals: {user_profile: @user_profile}), userProfileId: @user_profile.id}
         end
       }
     end
@@ -101,12 +101,6 @@ class UserProfilesController < ApplicationController
   def invites
     @invites = current_user.invites.fresh.order(:is_viewed).includes(:user_profile, :character, event: [:community]).page params[:page]
     render partial: 'user_profiles/invites', locals: { invites: @invites }
-  end
-
-  # GET /user_profiles/:id/roles(.:format)
-  def roles
-    @roles = @user_profile.roles.includes(community: [:roles, :member_role]).order(:community_id)
-    render partial: 'user_profiles/roles', locals: { roles: @roles, user_profile: @user_profile }
   end
 
 ###

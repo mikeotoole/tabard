@@ -19,11 +19,13 @@ root = exports ? this
         options = body: options if typeof(options) is 'string'
         $.extend options, modalOptions
         options.type = 'alert'
+        options.lockMask = true
         new Skylite options
 
     $.confirm = (options) ->
         $.extend options, modalOptions
         options.type = 'confirm'
+        options.lockMask = true
         options.actions = $.extend {cancel: (-> true)}, options.actions unless options.actions.cancel?
         new Skylite options
 
@@ -32,31 +34,31 @@ root = exports ? this
         options.type = 'prompt'
         options.body = '' unless options.body?
         options.body += '<p><input type="text" class="prompt" /></p>'
-        options['require'] = true unless options.require?
+        options.require = true unless options.require?
+        options.lockMask = true
         options.actions = $.extend {cancel: (-> true)}, options.actions unless options.actions.cancel?
         modal = new Skylite options
         setTimeout (-> modal.$modal.find('.prompt').focus()), 10
         modal
 
-    $.profile = (options) ->
+    $.profile = (userProfileId, options) ->
         $.extend options, modalOptions
         options.type = 'profile'
         options.actions = $.extend {
             'Assign Roles': ((modal) ->
                 errMsg = 'Error: unable to load roles.'
                 $.ajax
-                    url: options.url.replace(/\.js$/, '/roles.js')
+                    url: "/roles/user_profile/#{userProfileId}/edit.js"
                     type: 'get'
                     dataType: 'text'
                     error: (xhr, status, error) ->
                         $.alert error ? errMsg
                     success: (data, status, xhr) ->
                         response = $.parseJSON data
-                        return unless response.success and response.html?
-                        node
-                            .attr('current_page', next_page)
-                            .find(node.attr('target'))
-                            .append response.html
+                        if !response or !!response.error
+                            $.alert response.error ? errMsg
+                        else
+                            console.log data
                 return false
             ),
             message: ((modal) -> document.location = modal.$modal.find('.avatar').attr('href').replace('/profiles/', 'mail/compose/')),
@@ -107,7 +109,7 @@ jQuery(document).ready ($) ->
             $.alert error
         .on 'ajax:success', 'a.profile[data-remote], a.avatar[data-remote]', (event, data, status, xhr) ->
             if data.success
-                $.profile html: data.html, url: $(@).attr 'href'
+                $.profile data.userProfileId, (html: data.html, url: $(@).attr 'href')
             else
                 $.alert data.text
 
