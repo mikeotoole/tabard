@@ -7,7 +7,7 @@ jQuery(document).ready ($) ->
         .bind 'scroll', ->
             boxH = $(@).height()
             paneH = $(@).find('.pane').height()
-            if paneH <= boxH || $(@).scrollTop() >= paneH - boxH
+            if paneH <= boxH || $(@).scrollTop() >= paneH - boxH - 30
                 $(@)
                     .closest('.document')
                     .find('.accept')
