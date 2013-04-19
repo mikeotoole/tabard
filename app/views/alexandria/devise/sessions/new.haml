@@ -3,6 +3,11 @@
 - content_for :header do
   %meta{ name: "robots", content: "noindex" }
 
+- content_for :fotoer do
+  %script{ type: 'text/javascript' }
+    :plain
+      jQuery(document).ready(function($){ $('#admin_user_email').focus(); });
+
 %h1 Log in to Tabard
 
 = simple_form_for(resource, as: resource_name, url: session_url(resource_name)) do |f|
@@ -13,7 +18,3 @@
       = f.input :validation_code, label: false, placeholder: 'Code', autocomplete: :off
       %li.submit
         %button{ type: 'submit' } Login
-
-%script{ type: 'text/javascript' }
-  :plain
-    jQuery(document).ready(function($){ $('#admin_user_email').focus(); });
