@@ -40,6 +40,9 @@ class ApplicationController < ActionController::Base
   # Allow subdomains to punch through to apex domain.
   after_filter :set_access_control_headers
 
+  # Store the request url in the session.
+  after_filter :store_location
+
 
 ###
 # Status Code Rescues
@@ -397,16 +400,32 @@ protected
 ###
 # Devise
 ###
+  ###
+  # _after_filter_
+  #
+  # This method will set path requested in the session.
+  ###
+  def store_location
+    session[:return_to] = request.fullpath
+  end
+
+  # Clears the stored location
+  def clear_stored_location
+    session[:return_to] = nil
+  end
+
   # Used by devise to see where user should be redirected after sign in.
   def after_sign_in_path_for(resource_or_scope)
     case resource_or_scope
     when :user, User
-      user_profile_url(current_user.user_profile, anchor: "games")
+      path = session[:return_to] || user_profile_url(current_user.user_profile, anchor: "games")
     when :admin_user, AdminUser
-      alexandria_dashboard_url
+      path = alexandria_dashboard_url
     else
-      user_root_url(current_user)
+      path = user_root_url(current_user)
     end
+    clear_stored_location
+    return path
   end
 
   # Used by devise to see where user should be redirected after sign out.
