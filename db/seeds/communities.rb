@@ -35,7 +35,7 @@ def create_community(admin_user_full_name, name, slogan, game_array)
         Activity.create!({user_profile: admin_user, community: community, target: sg, action: "created"}, without_protection: true)
       when "Minecraft"
         puts "with the game Minecraft"
-        sg = community.community_games.create!(game: Minecraft.all.first, server_type: "Survival")
+        sg = community.community_games.create!(game: Minecraft.all.first, server_name: "BlockLandia", server_ip: "192.168.1.69")
         Activity.create!({user_profile: admin_user, community: community, target: sg, action: "created"}, without_protection: true)
     end
   end

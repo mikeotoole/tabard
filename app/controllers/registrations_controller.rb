@@ -10,6 +10,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   skip_before_filter :block_unauthorized_user!, only: [:create, :new]
   skip_before_filter :ensure_accepted_most_recent_legal_documents
+  skip_after_filter :store_location
   before_filter :block_unauthorized_user!, only: [:cancel_confirmation]
   before_filter :sign_out_admin_user, only: :create
   after_filter :change_notices_to_successes, only: [:create, :reinstate_account, :update]

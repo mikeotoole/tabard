@@ -47,6 +47,23 @@ class Document < ActiveRecord::Base
     self.document_acceptances.count
   end
 
+  def self.next_available_version(class_string = nil)
+    if VALID_TYPES.include?(class_string)
+      chosen_class = class_string.constantize
+      current = chosen_class.current
+      if current.blank?
+        return 1
+      else
+        return current.version + 1
+      end
+    else
+      return 1
+    end
+  end
+  def next_available_version
+    Document.next_available_version(self.class.to_s)
+  end
+
 ###
 # Class Methods
 ###
