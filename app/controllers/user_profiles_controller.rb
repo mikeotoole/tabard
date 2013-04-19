@@ -20,14 +20,6 @@ class UserProfilesController < ApplicationController
 
   # GET /user_profiles/1(.:format)
   def show
-    subdomain_community = Community.find_by_subdomain(request.referrer.match(/https?:\/\/([^\.]+)\..+/i)[1])
-    if subdomain_community.blank?
-      can_assign_roles = false
-    else
-      temp_ability = Ability.new(current_user)
-      temp_ability.dynamicContextRules(current_user, subdomain_community)
-      can_assign_roles = (temp_ability.can? :accept, Role)
-    end
     respond_to do |format|
       format.html {
         if @user_profile.is_disabled?
@@ -53,6 +45,14 @@ class UserProfilesController < ApplicationController
         end
       }
       format.js {
+        subdomain_community = Community.find_by_subdomain(request.referrer.match(/https?:\/\/([^\.]+)\..+/i)[1]) if request.referrer.present?
+        if subdomain_community.blank?
+          can_assign_roles = false
+        else
+          temp_ability = Ability.new(current_user)
+          temp_ability.dynamicContextRules(current_user, subdomain_community)
+          can_assign_roles = (temp_ability.can? :accept, Role)
+        end
         if @user_profile.is_disabled?
           render json: {success: false, text: 'This profile is no longer active.'}
         else
