@@ -1,3 +1,10 @@
+- content_for :footer do
+  %script{ type: 'text/javascript' }
+    :plain
+      $(document).ready(function(){
+        $('#tabs dt.invites + dd thead th.check').trigger('init');
+      });
+
 = form_tag invites_batch_update_url(format: :js), method: :put, remote: true, id: 'invites_batch', data: { type: :text } do
   %table
     %thead
@@ -39,9 +46,3 @@
                   %input{ id: "batch_status_#{status.downcase}", type: 'radio', name: 'status', value: status }
                   %label{ for: "batch_status_#{status.downcase}" }= status
           %button{ type: 'submit' } Update Selected
-
-%script{ type: 'text/javascript' }
-  :plain
-    $(document).ready(function(){
-      $('#tabs dt.invites + dd thead th.check').trigger('init');
-    });

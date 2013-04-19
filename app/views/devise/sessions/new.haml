@@ -1,5 +1,10 @@
 - title 'Sign in'
 
+- content_for :footer do
+  %script{ type: 'text/javascript' }
+    :plain
+      jQuery(document).ready(function($){ $('#user_email').focus(); });
+
 %h1 Log in to Tabard
 
 = simple_form_for(resource, as: resource_name, url: session_url(resource_name)) do |f|
@@ -18,7 +23,3 @@
   %h1 Account Assitance
   %a.close{ onclick: "javascript:$('#body').removeClass('with-help');" } Close
   = render "devise/shared/links"
-
-%script{ type: 'text/javascript' }
-  :plain
-    jQuery(document).ready(function($){ $('#user_email').focus(); });
