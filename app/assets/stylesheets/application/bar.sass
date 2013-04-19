@@ -89,7 +89,9 @@
     text-align: right
     top: 20px
     >li
-      display: inline
+      display: block
+      float: left
+      height: 33px
       position: relative
       >a,
       >span
@@ -103,6 +105,7 @@
         padding: 0 10px
         position: relative
         text-shadow: 0 -1px 1px #000
+        white-space: nowrap
         z-index: 92
       >span
         +border_radius(2,2,0,0)
@@ -115,12 +118,13 @@
         >span
           color: #fff
           +transition(background .1s linear)
+          white-space: nowrap
           z-index: 94
         >span
           background: #CF4527
         >ul
           +opacity(1)
-          top: 33px
+          top: 100%
           a
             padding-bottom: 10px
             padding-top: 10px
