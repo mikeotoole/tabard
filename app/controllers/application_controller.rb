@@ -37,6 +37,9 @@ class ApplicationController < ActionController::Base
   # This before_filter checks browser is supported.
   before_filter :check_supported_browser
 
+  # Ensure that the charset is passed
+  before_filter :set_charset
+
   # Store the request url in the session.
   after_filter :store_location
 
@@ -367,6 +370,15 @@ protected
       session[:supported_browser] = false
       redirect_to unsupported_browser_url
     end
+  end
+
+  ###
+  # _before_filter_
+  #
+  # This method will set the charset in the response headers
+  ###
+  def set_charset
+    response.headers['Content-Type'] = "text/html; charset=utf-8"
   end
 
 ###
