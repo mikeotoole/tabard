@@ -20,6 +20,14 @@ class UserProfilesController < ApplicationController
 
   # GET /user_profiles/1(.:format)
   def show
+    subdomain_community = Community.find_by_subdomain(params[:subdomain])
+    if subdomain_community.blank?
+      can_assign_roles = false
+    else
+      temp_ability = Ability.new(current_user)
+      temp_ability.dynamicContextRules(current_user, subdomain_community)
+      can_assign_roles = temp_ability.can? :accept, Role
+    end
     respond_to do |format|
       format.html {
         if @user_profile.is_disabled?
@@ -50,7 +58,7 @@ class UserProfilesController < ApplicationController
         else
           render json: {
             success: true,
-            can_assign_roles: true,
+            can_assign_roles: can_assign_roles,
             html: render_to_string(partial: 'user_profiles/modal', locals: {user_profile: @user_profile}), userProfileId: @user_profile.id
           }
         end
