@@ -1,5 +1,14 @@
 - title 'Confirm Deactivation of your Account'
 
+- content_for :footer do
+  %script{ type: 'text/javascript' }
+    :plain
+      jQuery(document).ready(function($){
+        $('#edit_user').on('submit', function(){
+          $('body').addClass('busy');
+        });
+      });
+
 %h1 Are you sure you want to deactivate your account?
 
 %p
@@ -15,14 +24,3 @@
       = f.input :current_password, label: "Account Password", hint: "we need your password to confirm this request"
     %p
       %button{ type: 'submit', data: {confirm: 'One last chance to back out. Are you sure you want to do this?'} } Deactivate Account
-
-- content_for :footer do
-  %script{ type: 'text/javascript' }
-    :plain
-      jQuery(document).ready(function($){
-
-        $('#edit_user').on('submit', function(){
-          $('body').addClass('busy');
-        });
-
-      });
