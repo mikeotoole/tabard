@@ -119,10 +119,6 @@ DaBvRails::Application.routes.draw do
     end
     put 'support/:id/status/:status' => 'support_tickets#status', as: :support_status
 
-    # Announcements
-    resources :announcements, only: [:show]
-    put 'announcements/batch_mark_as_seen' => "announcements#batch_mark_as_seen", as: "announcements_batch_mark_as_seen"
-
     # CommuntiyInvites
     resources :community_invites, only: [:create]
 
@@ -261,6 +257,9 @@ DaBvRails::Application.routes.draw do
 
   # Routes that use no subdomain
   defaults subdomain: false do
+    # Announcements
+    resources :announcements, only: [:show]
+    put 'announcements/batch_mark_as_seen' => "announcements#batch_mark_as_seen", as: "announcements_batch_mark_as_seen"
 
     # Site Actions
     match "/toggle_maintenance_mode" => "site_configuration#toggle_maintenance_mode", as: :toggle_maintenance_mode
