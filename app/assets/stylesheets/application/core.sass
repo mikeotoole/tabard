@@ -1324,8 +1324,8 @@ body > .modal,
         color: #fff
         text-decoration: none
 
-  &.profile
-    height: 190px
+  &.profile,
+  &.roles
     .actions
       .close
         overflow: hidden
@@ -1353,6 +1353,11 @@ body > .modal,
       top: 80px
       img
         display: block
+
+  &.profile
+    height: 190px
+    .actions .close
+      top: -160px
     .stats
       height: 60px
       left: 100px
@@ -1373,6 +1378,56 @@ body > .modal,
           font-size: 2em
           line-height: 1em
           padding: .2em 0
+
+  &.roles
+    height: 200px
+    .actions .close
+      top: -200px
+    .roles
+      height: 60px
+      left: 92px
+      position: absolute
+      right: 10px
+      top: 80px
+      li
+        background: #fff
+        color: #666
+        display: block
+        height: 16px
+        float: left
+        margin: 0 0 8px 8px
+        padding: 5px 5px 5px 30px
+        position: relative
+        width: 155px
+        &:before
+          color: #AF3D26
+          content: '\F001'
+          font: 20px Picara
+          height: 20px
+          left: 3px
+          line-height: 20px
+          position: absolute
+          text-align: center
+          top: 3px
+          width: 20px
+        a
+          color: #999
+          display: block
+          height: 16px
+          line-height: 16px
+          margin: -5px -5px -5px -30px
+          overflow: hidden
+          padding: 5px 5px 5px 30px
+        &.checked
+          &:before
+            background: #5C337C
+            color: #fff
+            content: '\F000'
+          a
+            color: #666
+        &:hover
+          a
+            color: #000
 
   textarea,
   input[type="text"],
@@ -1431,10 +1486,11 @@ body > .modal,
     padding: 0 0 20px
 
 body > .modal
-  display: none
+  +opacity(0)
   padding: 0 0 20px
-  &:last-of-type
-    display: block
+  +transition(opacity .2s linear)
+  &.active
+    +opacity(1)
 
 .wmd-prompt-dialog form
   padding: 0 0 40px

@@ -26,7 +26,7 @@ class DocumentAcceptanceController < ApplicationController
       redirect_to user_profile_url(current_user.user_profile), notice: "You have already accepted the document."
     elsif params[:accept]
       current_user.update_acceptance_of_documents(@document)
-      redirect_to user_profile_url(current_user.user_profile), notice: "The document has been accepted."
+      redirect_to user_profile_url(current_user.user_profile)
     else
       ensure_accepted_most_recent_legal_documents
     end

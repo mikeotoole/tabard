@@ -1,27 +1,35 @@
-%h1 Roles &amp; Permissions
+- is_my_profile = (user_signed_in? and user_profile == current_user.user_profile)
 
-- if roles.any?
-  - roles.group_by{|r| r.community }.each do |community, roles|
-    %h2= "#{community.name} roles"
-    - if community.admin_profile == user_profile
-      %ul
-        %li Community Admin
+%h1
+  = link_to user_profile do
+    = shorten_words(user_profile.display_name.to_s, 21) + "'s Roles"
+
+%p
+  = link_to user_profile, class: 'avatar' do
+    = image_tag user_profile.avatar_url :small
+
+.roles
+  - if community.admin_profile == user_profile
+    %ul
+      %li.checked
+        %strong Community Admin
+  - else
+    - temp_ability = Ability.new(current_user)
+    - temp_ability.dynamicContextRules(current_user, community)
+    - if temp_ability.can? :accept, Role
+      %ul.checkboxes
+        %li.checked
+          %strong Member
+          (required)
+        - community.roles.each do |role|
+          - next if role.is_member_role?
+          - has_role = roles.include?(role)
+          %li{ class: has_role ? 'checked' : ''}
+            = link_to role.name, user_profile_role_url(role, user_profile, format: 'js'), method: (has_role ? :delete : :put), remote: :true
     - else
-      - temp_ability = Ability.new(current_user)
-      - temp_ability.dynamicContextRules(current_user, community)
-      - if temp_ability.can? :accept, Role
-        %ul.checkboxes
-          %li.checked
-            %strong Member
-            (required)
-          - community.roles.each do |role|
-            - next if role.is_member_role?
-            %li{ class: roles.include?(role) ? 'checked' : ''}
-              = link_to role.name, user_profile_role_url(user_profile, role), method: :put, remote: :true
-      - else
-        %ul
-          %li Member
-          - community.roles.each do |role|
-            - next if role.is_member_role?
-            - if roles.include?(role)
-              %li= role.name
+      %ul
+        %li Member
+        - community.roles.each do |role|
+          - next if role.is_member_role?
+          - if roles.include?(role)
+            %li= role.name
