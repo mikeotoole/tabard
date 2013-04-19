@@ -45,7 +45,12 @@ root = exports ? this
         $.extend options, modalOptions
         options.type = 'profile'
         options.actions = $.extend {
-            'Assign Roles': ((modal) ->
+            'Message': ((modal) -> document.location = modal.$modal.find('.avatar').attr('href').replace('/profiles/', 'mail/compose/')),
+            'View Profile': ((modal) -> document.location = modal.$modal.find('.avatar').attr('href')),
+            'Close': (-> true)
+        }, (options.actions ? {})
+        if !!options.assignroles
+            options.actions['Assign Roles'] = (modal) ->
                 errMsg = 'Error: unable to load roles.'
                 $.ajax
                     url: "/roles/user_profile/#{userProfileId}/edit.js"
@@ -59,11 +64,6 @@ root = exports ? this
                         else
                             $.roles userProfileId, html: data.html
                 return false
-            ),
-            message: ((modal) -> document.location = modal.$modal.find('.avatar').attr('href').replace('/profiles/', 'mail/compose/')),
-            'View Profile': ((modal) -> document.location = modal.$modal.find('.avatar').attr('href')),
-            close: (-> true)
-        }, (options.actions ? {})
         new Skylite options
 
     $.roles = (userProfileId, options) ->
@@ -138,7 +138,7 @@ jQuery(document).ready ($) ->
             $.alert error
         .on 'ajax:success', 'a.profile[data-remote], a.avatar[data-remote]', (event, data, status, xhr) ->
             if data.success
-                $.profile data.userProfileId, (html: data.html, url: $(@).attr 'href')
+                $.profile data.userProfileId, (html: data.html, assignroles: data.can_assign_roles, url: $(@).attr 'href')
             else
                 $.alert data.text
 

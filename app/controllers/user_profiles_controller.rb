@@ -48,7 +48,11 @@ class UserProfilesController < ApplicationController
         if @user_profile.is_disabled?
           render json: {success: false, text: 'This profile is no longer active.'}
         else
-          render json: {success: true, html: render_to_string(partial: 'user_profiles/modal', locals: {user_profile: @user_profile}), userProfileId: @user_profile.id}
+          render json: {
+            success: true,
+            can_assign_roles: true,
+            html: render_to_string(partial: 'user_profiles/modal', locals: {user_profile: @user_profile}), userProfileId: @user_profile.id
+          }
         end
       }
     end
