@@ -2,8 +2,8 @@
 %html
   %head
     %title= yield_for :title, "Tabard"
+    %link{ href="/stylesheets/picara.css", media: "screen", rel: "stylesheet", type: "text/css" }
     = stylesheet_link_tag "//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic"
-    = stylesheet_link_tag "/stylesheets/picara.css"
     = stylesheet_link_tag "application/error"
     = render 'layouts/set_timezone' unless !!cookies[:timezone]
     = csrf_meta_tags unless @page_caching
