@@ -289,7 +289,6 @@ class Ability
     cannot :delete, CustomForm do |form|
       form.application_form?
     end
-    can [:read, :update], Role
     can :manage, Permission
     can [:read, :destroy], Submission
     can :manage, Question

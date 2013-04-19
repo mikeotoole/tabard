@@ -45,9 +45,7 @@ DaBvRails::Application.routes.draw do
       get 'account-settings' => 'registrations#edit', as: :account_settings
     end
 
-  ###
-  # Payment and Invoices
-  ###
+    # Payment and Invoices
     get "card" => 'card#edit'
     put "card" => 'card#update'
 
@@ -56,8 +54,6 @@ DaBvRails::Application.routes.draw do
     put '/subscriptions/:community_id' => 'subscriptions#update', as: :subscription
 
     resources :invoices, only: [:index, :show], path: :statements
-
-
 
     # Documents
     get "users/accept_document/:id" => "document_acceptance#new", as: "accept_document"
@@ -70,9 +66,7 @@ DaBvRails::Application.routes.draw do
         get :announcements
         get :characters
         get :invites
-        get :roles
       end
-      resources :roles, only: [:update]
       resources :played_games, only: [:index, :show]
     end
     get "/account" => "user_profiles#account", as: "account"
@@ -155,6 +149,9 @@ DaBvRails::Application.routes.draw do
       get "/autocomplete-members" => "communities#autocomplete_members", as: "autocomplete_members"
 
       # Roles and Permissions
+      get '/roles/user_profile/:user_profile_id/edit' => 'roles#user_profile', as: "user_profile_roles"
+      put '/roles/:id/user_profile/:user_profile_id' => 'roles#update_user_profile', as: "user_profile_role"
+      delete '/roles/:id/user_profile/:user_profile_id' => 'roles#delete_user_profile', as: "user_profile_role"
       resources :roles, except: [:show]
 
       # Roster assignments

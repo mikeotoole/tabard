@@ -37,8 +37,8 @@ class ApplicationController < ActionController::Base
   # This before_filter checks browser is supported.
   before_filter :check_supported_browser
 
-  # Allow subdomains to punch through to apex domain.
-  after_filter :set_access_control_headers
+  # Ensure that the charset is passed
+  before_filter :set_charset
 
   # Store the request url in the session.
   after_filter :store_location
@@ -373,28 +373,12 @@ protected
   end
 
   ###
-  # _after_filter_
+  # _before_filter_
   #
-  # This method allows requests to be sent to apex from community subdomains
+  # This method will set the charset in the response headers
   ###
-  def set_access_control_headers
-    if current_community != nil
-      # Subdomain -> apex
-    else
-      # apex -> subdomain request
-      origin = request.env['HTTP_ORIGIN']
-      begin
-        # TODO: See if moving to using apex F's this up. -MO
-        origin_uri = URI.parse(request.env['HTTP_ORIGIN'])
-        some_subdomain = origin_uri.hostname.split('.').first
-        is_our_domain = origin_uri.hostname.split('.').last(2).join('.') == ENV['BV_HOST_DOMAIN']
-        if is_our_domain and not origin.blank? and not some_subdomain.blank? and Community.where{subdomain == some_subdomain}.exists?
-          headers['Access-Control-Allow-Origin'] = request.env['HTTP_ORIGIN']
-          headers['Access-Control-Request-Method'] = '*'
-        end
-      rescue
-      end
-    end
+  def set_charset
+    response.headers['Content-Type'] = "text/html; charset=utf-8"
   end
 
 ###

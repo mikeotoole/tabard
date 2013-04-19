@@ -11,19 +11,21 @@ root = exports ? this
 ((jQuery) ->
 
     modalOptions =
-        cssIn: {opacity: 0, top: '45%'}
-        animIn: [{opacity: 1, top: '50%'}, 200]
-        animOut: [{opacity: 0, top: '55%'}, 400]
+        cssIn: {top: '45%'}
+        animIn: [{top: '50%'}, 200]
+        animOut: [{top: '55%', opacity: 0}, 400]
 
     $.alert = (options) ->
         options = body: options if typeof(options) is 'string'
         $.extend options, modalOptions
         options.type = 'alert'
+        options.lockMask = true
         new Skylite options
 
     $.confirm = (options) ->
         $.extend options, modalOptions
         options.type = 'confirm'
+        options.lockMask = true
         options.actions = $.extend {cancel: (-> true)}, options.actions unless options.actions.cancel?
         new Skylite options
 
@@ -32,23 +34,69 @@ root = exports ? this
         options.type = 'prompt'
         options.body = '' unless options.body?
         options.body += '<p><input type="text" class="prompt" /></p>'
-        options['require'] = true unless options.require?
+        options.require = true unless options.require?
+        options.lockMask = true
         options.actions = $.extend {cancel: (-> true)}, options.actions unless options.actions.cancel?
         modal = new Skylite options
         setTimeout (-> modal.$modal.find('.prompt').focus()), 10
         modal
 
-    $.profile = (options) ->
-        options = html: options if typeof(options) is 'string'
+    $.profile = (userProfileId, options) ->
         $.extend options, modalOptions
-        console.log options
         options.type = 'profile'
         options.actions = $.extend {
-            message: ((modal) -> document.location = modal.$modal.find('.avatar').attr('href').replace('/profiles/', 'mail/compose/'))
-            'View Profile': ((modal) -> document.location = modal.$modal.find('.avatar').attr('href'))
+            'Message': ((modal) -> document.location = modal.$modal.find('.avatar').attr('href').replace('/profiles/', 'mail/compose/')),
+            'View Profile': ((modal) -> document.location = modal.$modal.find('.avatar').attr('href')),
+            'Close': (-> true)
+        }, (options.actions ? {})
+        if !!options.assignroles
+            options.actions = $.extend { 'Assign Roles': (modal) ->
+                errMsg = 'Error: unable to load roles.'
+                $.ajax
+                    url: "/roles/user_profile/#{userProfileId}/edit.js"
+                    type: 'get'
+                    dataType: 'json'
+                    error: (xhr, status, error) ->
+                        $.alert error ? errMsg
+                    success: (data, status, xhr) ->
+                        if !data or !!data.error
+                            $.alert data.error ? errMsg
+                        else
+                            $.roles userProfileId, html: data.html
+                return false
+            }, options.actions
+        new Skylite options
+
+    $.roles = (userProfileId, options) ->
+        $.extend options, modalOptions
+        options.type = 'roles'
+        options.actions = $.extend {
             close: (-> true)
         }, (options.actions ? {})
-        new Skylite options
+        $modal = new Skylite options
+        defaultError = 'Unable to update role.'
+        $modal.on 'ajax:before', '.roles a', (xhr, status, error) ->
+            $this = $(@)
+            $li = $this.closest 'li'
+            $this.data 'type', 'json'
+            $this.data 'method', $this.attr 'data-method'
+            $li.addClass 'busy'
+        $modal.on 'ajax:error', '.roles a', (xhr, status, error) ->
+            $(@).closest('li').removeClass 'busy'
+            $.alert error ? defaultError
+        $modal.on 'ajax:success', '.roles a', (event, data, status, xhr) ->
+            $this = $(@)
+            $li = $this.closest 'li'
+            $li.removeClass 'busy'
+            if !!data.success and data.checked?
+                if !!data.checked
+                    $li.addClass 'checked'
+                    $this.attr 'data-method', 'delete'
+                else
+                    $li.removeClass 'checked'
+                    $this.attr 'data-method', 'put'
+            else
+                $.alert data.error ? defaultError
 
     $.flash = (type, html) ->
         $('<ul id="flash">').insertAfter '#bar' unless $('#flash').length
@@ -88,11 +136,12 @@ jQuery(document).ready ($) ->
     $('body')
         .on 'ajax:before', 'a.profile[data-remote], a.avatar[data-remote]', ->
             $(@).data 'type', 'json'
+            $(@).data 'with-credentials', true
         .on 'ajax:error', 'a.profile[data-remote], a.avatar[data-remote]', (xhr, status, error) ->
             $.alert error
         .on 'ajax:success', 'a.profile[data-remote], a.avatar[data-remote]', (event, data, status, xhr) ->
             if data.success
-                $.profile data.html
+                $.profile data.userProfileId, (html: data.html, assignroles: data.can_assign_roles, url: $(@).attr 'href')
             else
                 $.alert data.text
 

@@ -12,13 +12,13 @@ class UserProfilesController < ApplicationController
   ###
   before_filter :block_unauthorized_user!, except: [:show, :activities, :characters, :index]
   before_filter :set_current_user_as_profile, only: :account
-  load_and_authorize_resource except: [:index, :activities, :characters, :announcements, :invites, :roles]
+  load_and_authorize_resource except: [:index, :activities, :characters, :announcements, :invites]
   skip_authorize_resource only: :account
-  before_filter :find_user_by_id, only: [:characters, :activities, :announcements, :invites, :roles]
+  before_filter :find_user_by_id, only: [:characters, :activities, :announcements, :invites]
   before_filter :load_activities, only: [:show, :activities]
   before_filter :authorize_custom_actions, only: [:activites, :announcements, :characters, :invites]
 
-  # GET /user_profiles/1
+  # GET /user_profiles/1(.:format)
   def show
     respond_to do |format|
       format.html {
@@ -45,20 +45,32 @@ class UserProfilesController < ApplicationController
         end
       }
       format.js {
+        subdomain_community = Community.find_by_subdomain(request.referrer.match(/https?:\/\/([^\.]+)\..+/i)[1]) if request.referrer.present?
+        if subdomain_community.blank?
+          can_assign_roles = false
+        else
+          temp_ability = Ability.new(current_user)
+          temp_ability.dynamicContextRules(current_user, subdomain_community)
+          can_assign_roles = (temp_ability.can? :accept, Role)
+        end
         if @user_profile.is_disabled?
           render json: {success: false, text: 'This profile is no longer active.'}
         else
-          render json: {success: true, html: render_to_string(partial: 'user_profiles/modal', locals: {user_profile: @user_profile})}
+          render json: {
+            success: true,
+            can_assign_roles: can_assign_roles,
+            html: render_to_string(partial: 'user_profiles/modal', locals: {user_profile: @user_profile}), userProfileId: @user_profile.id
+          }
         end
       }
     end
   end
 
-  # GET /user_profiles/1/edit
+  # GET /user_profiles/1/edit(.:format)
   def edit
   end
 
-  # PUT /user_profiles/1
+  # PUT /user_profiles/1(.:format)
   def update
     begin
       @user_profile.update_attributes(params[:user_profile])
@@ -101,12 +113,6 @@ class UserProfilesController < ApplicationController
   def invites
     @invites = current_user.invites.fresh.order(:is_viewed).includes(:user_profile, :character, event: [:community]).page params[:page]
     render partial: 'user_profiles/invites', locals: { invites: @invites }
-  end
-
-  # GET /user_profiles/:id/roles(.:format)
-  def roles
-    @roles = @user_profile.roles.includes(community: [:roles, :member_role]).order(:community_id)
-    render partial: 'user_profiles/roles', locals: { roles: @roles, user_profile: @user_profile }
   end
 
 ###
