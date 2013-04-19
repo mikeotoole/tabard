@@ -117,6 +117,7 @@ class Subdomains::RolesController < SubdomainsController
   # PUT /roles/1/user_profile/:user_profile_id(.:format)
   def update_user_profile
     @role = Role.find_by_id params[:id]
+    raise CanCan::AccessDenied unless can? :accept, @role
     @user_profile = UserProfile.find_by_slug params[:user_profile_id]
     default_error = 'Unable to assign role.'
 
@@ -134,6 +135,7 @@ class Subdomains::RolesController < SubdomainsController
   # DELETE /roles/1/user_profile/:user_profile_id(.:format)
   def delete_user_profile
     @role = Role.find_by_id params[:id]
+    raise CanCan::AccessDenied unless can? :accept, @role
     @user_profile = UserProfile.find_by_slug params[:user_profile_id]
     default_error = 'Unable to remove role.'
 
