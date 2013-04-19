@@ -1428,6 +1428,15 @@ body > .modal,
         &:hover
           a
             color: #000
+        &.busy:after
+          background: image-url('application/busy-mini.gif') 50% 50% no-repeat #aaa
+          bottom: 0
+          content: ''
+          left: 0
+          +opacity(.8)
+          position: absolute
+          right: 0
+          top: 0
 
   textarea,
   input[type="text"],
