@@ -65,7 +65,7 @@ module DaBvRails
     config.assets.enabled = true
 
     # Version of your assets, change this if you want to expire all your assets
-    config.assets.version = '1.0'
+    config.assets.version = '1.1'
 
     # This will make our app handle exceptions. So in the routes we can route exceptions to controllers to handle.
     config.exceptions_app = self.routes
