@@ -50,7 +50,6 @@ ActiveAdmin.register Document do
   form do |f|
     f.inputs "Details" do
       f.input :type, as: :select, collection: Document::VALID_TYPES
-      f.input :version
       f.input :body
       f.input :is_published
     end

@@ -43,26 +43,26 @@ class Document < ActiveRecord::Base
 ###
 # Public Methods
 ###
+
+###
+# Instance Methods
+###
   # Gets the number of times this document has been accepted.
   def acceptance_count
     self.document_acceptances.count
   end
 
-  def self.next_available_version(class_string = nil)
-    if VALID_TYPES.include?(class_string)
-      chosen_class = class_string.constantize
-      current = chosen_class.current
-      if current.blank?
-        return 1
+
+  # Creates a human readable document based on the document type
+  def title
+    case self.type
+      when 'TermsOfService'
+        'Terms of Service and User Agreement'
+      when 'ArtworkAgreement'
+        'Artwork Licensing Agreement'
       else
-        return current.version + 1
-      end
-    else
-      return 1
+        self.type.scan(/[A-Z][a-z0-9]*/).join ' '
     end
-  end
-  def next_available_version
-    Document.next_available_version(self.class.to_s)
   end
 
 ###
@@ -84,15 +84,20 @@ class Document < ActiveRecord::Base
     super
   end
 
-  # Creates a human readable document based on the document type
-  def title
-    case self.type
-      when 'TermsOfService'
-        'Terms of Service and User Agreement'
-      when 'ArtworkAgreement'
-        'Artwork Licensing Agreement'
+  ###
+  # Helper to get the next version number for file.
+  ###
+  def self.next_available_version(class_string = nil)
+    if VALID_TYPES.include?(class_string)
+      chosen_class = class_string.constantize
+      current = chosen_class.current
+      if current.blank?
+        return 1
       else
-        self.type.scan(/[A-Z][a-z0-9]*/).join ' '
+        return current.version + 1
+      end
+    else
+      return 1
     end
   end
 
@@ -125,7 +130,7 @@ protected
   # Sets a user's acceptance of the Privacy Policy to false
   ###
   def set_version_number
-    self.version = (self.next_available_version + 1)
+    self.version = self.next_available_version(self.type)
     return true
   end
 
@@ -136,14 +141,14 @@ protected
   ###
   def reset_user_acceptance
     case self.type
-      when 'TermsOfService'
-        if self.id == TermsOfService.current.id
-          User.update_all(accepted_current_terms_of_service: false)
-        end
-      when 'PrivacyPolicy'
-        if self.id == PrivacyPolicy.current.id
-          User.update_all(accepted_current_privacy_policy: false)
-        end
+    when 'TermsOfService'
+      if self.id == TermsOfService.current.id
+        User.update_all(accepted_current_terms_of_service: false)
+      end
+    when 'PrivacyPolicy'
+      if self.id == PrivacyPolicy.current.id
+        User.update_all(accepted_current_privacy_policy: false)
+      end
     end
   end
 end
