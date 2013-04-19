@@ -248,4 +248,57 @@ describe Subdomains::RolesController do
       response.should redirect_to(new_user_session_url)
     end
   end
+
+  describe "UserProfile Cards" do
+    describe "GET 'user_profile'" do
+      it "should return the requested user_profile with permissions" do
+        sign_in admin_user
+        get 'user_profile', :user_profile_id => admin_user.user_profile_id
+        response.response_code.should == 403
+      end
+      it "should not return the requested user_profile with no permissions" do
+        sign_in user
+        xhr :get, 'user_profile', :user_profile_id => admin_user.user_profile_id
+        response.response_code.should == 403
+      end
+      it "should not be successful when not authenticated as a user" do
+        xhr :get, 'user_profile', :user_profile_id => admin_user.user_profile_id
+        response.response_code.should == 401
+      end
+    end
+
+    describe "PUT 'update_user_profile'" do
+      it "should return the requested user_profile with permissions" do
+        sign_in admin_user
+        put 'update_user_profile', :user_profile_id => admin_user.user_profile_id, :id => community.roles.first.id
+        response.response_code.should == 403
+      end
+      it "should not return the requested user_profile with no permissions" do
+        sign_in user
+        xhr :put, 'update_user_profile', :user_profile_id => admin_user.user_profile_id, :id => community.roles.first.id
+        response.response_code.should == 403
+      end
+      it "should not be successful when not authenticated as a user" do
+        xhr :put, 'update_user_profile', :user_profile_id => admin_user.user_profile_id, :id => community.roles.first.id
+        response.response_code.should == 401
+      end
+    end
+
+    describe "DELETE 'delete_user_profile'" do
+      it "should return the requested user_profile with permissions" do
+        sign_in admin_user
+        delete 'delete_user_profile', :user_profile_id => admin_user.user_profile_id, :id => community.roles.first.id
+        response.response_code.should == 403
+      end
+      it "should not return the requested user_profile with no permissions" do
+        sign_in user
+        xhr :delete, 'delete_user_profile', :user_profile_id => admin_user.user_profile_id, :id => community.roles.first.id
+        response.response_code.should == 403
+      end
+      it "should not be successful when not authenticated as a user" do
+        xhr :delete, 'delete_user_profile', :user_profile_id => admin_user.user_profile_id, :id => community.roles.first.id
+        response.response_code.should == 401
+      end
+    end
+  end
 end
