@@ -50,7 +50,7 @@ root = exports ? this
             'Close': (-> true)
         }, (options.actions ? {})
         if !!options.assignroles
-            options.actions['Assign Roles'] = (modal) ->
+            options.actions = $.extend { 'Assign Roles': (modal) ->
                 errMsg = 'Error: unable to load roles.'
                 $.ajax
                     url: "/roles/user_profile/#{userProfileId}/edit.js"
@@ -64,6 +64,7 @@ root = exports ? this
                         else
                             $.roles userProfileId, html: data.html
                 return false
+            }, options.actions
         new Skylite options
 
     $.roles = (userProfileId, options) ->
@@ -133,7 +134,9 @@ jQuery(document).ready ($) ->
     # Wire links to profile modals
     $('body')
         .on 'ajax:before', 'a.profile[data-remote], a.avatar[data-remote]', ->
-            $(@).data 'type', 'json'
+            $(@).data
+                type: 'json'
+                subdomain: location.hostname.replace(/\..+/, '')
         .on 'ajax:error', 'a.profile[data-remote], a.avatar[data-remote]', (xhr, status, error) ->
             $.alert error
         .on 'ajax:success', 'a.profile[data-remote], a.avatar[data-remote]', (event, data, status, xhr) ->
