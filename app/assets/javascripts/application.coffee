@@ -135,6 +135,7 @@ jQuery(document).ready ($) ->
     $('body')
         .on 'ajax:before', 'a.profile[data-remote], a.avatar[data-remote]', ->
             $(@).data 'type', 'json'
+            $(@).data 'with-credentials', true
         .on 'ajax:error', 'a.profile[data-remote], a.avatar[data-remote]', (xhr, status, error) ->
             $.alert error
         .on 'ajax:success', 'a.profile[data-remote], a.avatar[data-remote]', (event, data, status, xhr) ->
