@@ -78,6 +78,7 @@ root = exports ? this
         $modal.on 'ajax:before', '.roles a', (xhr, status, error) ->
             $this = $(@)
             $li = $this.closest 'li'
+            $this.data 'type', 'json'
             $this.data 'method', $this.attr 'data-method'
             $li.addClass 'busy'
         $modal.on 'ajax:error', '.roles a', (xhr, status, error) ->
