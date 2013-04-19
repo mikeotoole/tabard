@@ -37,10 +37,6 @@ class ApplicationController < ActionController::Base
   # This before_filter checks browser is supported.
   before_filter :check_supported_browser
 
-  # Make CORS work
-  before_filter :cors_preflight_check
-  after_filter :cors_set_access_control_headers
-
   # Store the request url in the session.
   after_filter :store_location
 
@@ -371,34 +367,6 @@ protected
       session[:supported_browser] = false
       redirect_to unsupported_browser_url
     end
-  end
-
-  ###
-  # _before_filter_
-  #
-  # If this is a preflight OPTIONS request, then short-circuit the
-  # request, return only the necessary headers and return an empty
-  # text/plain.
-  ###
-  def cors_preflight_check
-    if request.method == :options
-      headers['Access-Control-Allow-Origin'] = '*'
-      headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
-      headers['Access-Control-Allow-Headers'] = 'X-Requested-With, X-Prototype-Version'
-      headers['Access-Control-Max-Age'] = '1728000'
-      render text: '', content_type: 'text/plain'
-    end
-  end
-
-  ###
-  # _after_filter_
-  #
-  # For all responses in this controller, return the CORS access control headers.
-  ###
-  def cors_set_access_control_headers
-    headers['Access-Control-Allow-Origin'] = '*'
-    headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
-    headers['Access-Control-Max-Age'] = "1728000"
   end
 
 ###

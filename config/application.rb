@@ -17,7 +17,7 @@ module DaBvRails
       allow do
         origins %r{^https?:\/\/[a-z0-9\-]+.#{ENV['BV_HOST_DOMAIN']}:?\d*$}i
         resource '*',
-          headers: ['Origin', 'Accept', 'Content-Type'],
+          headers: :any,
           methods: [:get, :put, :create, :delete]
       end
     end
