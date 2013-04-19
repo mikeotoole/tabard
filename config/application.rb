@@ -33,6 +33,9 @@ module DaBvRails
                                       :message_association_observer, :acknowledgement_observer, :comment_observer,
                                       :invite_observer, :support_ticket_observer, :support_comment_observer, :community_invite_observer
 
+    # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
+    config.assets.precompile += %w(active_admin.css active_admin.js application/*.* themes/*.* top_level/*.* *.js)
+
     # This protects attributes automatically
     config.active_record.whitelist_attributes = true
 
