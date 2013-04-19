@@ -20,6 +20,7 @@ class Document < ActiveRecord::Base
 ###
   before_update :ensure_published_document_not_updated
   after_save :reset_user_acceptance
+  before_validation :set_version_number
 
 ###
 # Attribute accessible
@@ -116,6 +117,16 @@ protected
     else
       return true
     end
+  end
+
+  ###
+  # _before_validation_
+  #
+  # Sets a user's acceptance of the Privacy Policy to false
+  ###
+  def set_version_number
+    self.version = (self.next_available_version + 1)
+    return true
   end
 
   ###
