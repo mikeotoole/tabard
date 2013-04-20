@@ -1,6 +1,10 @@
 # This file is used by Rack-based servers to start the application.
 
 require ::File.expand_path('../config/environment',  __FILE__)
+
+# gzip all responces
+use Rack::Deflater
+
 run DaBvRails::Application
 
 # Unicorn self-process killer
