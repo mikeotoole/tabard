@@ -6,131 +6,6 @@ DaBvRails::Application.routes.draw do
   # Active Admin Routes
   ActiveAdmin.routes(self)
 
-###
-# Autentication Routes for Users and Admins
-###
-  # Routes that use no subdomain
-  defaults subdomain: false do
-    # Admin Users
-    devise_for :admin_users, path: ActiveAdmin.application.default_namespace,
-                             controllers: {sessions: 'alexandria/devise/sessions', passwords: 'alexandria/devise/passwords'},
-                             path_names: { sign_in: 'login', sign_out: "logout" }
-    devise_scope :admin_user do
-      get "/alexandria/login" => "alexandria/devise/sessions#new"
-      post "/alexandria/login" => "alexandria/devise/sessions#create"
-      get "/alexandria/logout" => "alexandria/devise/sessions#destroy"
-      get "/admin_users/sign_in" => "alexandria/devise/sessions#new"
-      post "/admin_users/sign_in" => "alexandria/devise/sessions#create"
-      get "/admin_users/password/edit" => "alexandria/devise/passwords#edit"
-      put "/admin_users/password" => "alexandria/devise/passwords#update"
-      get "/admin_users/password/new" => "alexandria/devise/passwords#new"
-      post "/admin_users/password" => "alexandria/devise/passwords#create"
-    end
-
-    # Users
-    devise_for :users, controllers: { sessions: 'sessions',
-                                      registrations: 'registrations',
-                                      passwords: 'passwords',
-                                      confirmations: 'confirmations',
-                                      unlocks: 'unlocks' }
-    devise_scope :user do
-      get 'login' => 'sessions#new', as: :new_user_session
-      post 'login' => 'sessions#create', as: :user_session
-      get 'logout' => 'sessions#destroy', as: :destroy_user_session
-      get 'users/disable_confirmation' => 'registrations#disable_confirmation', as: :disable_confirmation
-      get 'users/reinstate' => 'registrations#reinstate_confirmation', as: :reinstate_confirmation
-      put 'users/reinstate' => 'registrations#send_reinstate', as: :send_reinstate
-      get 'users/reinstate_account' => 'registrations#reinstate_account_edit', as: :reinstate_account
-      put 'users/reinstate_account' => 'registrations#reinstate_account', as: :reinstate_account
-      get 'account-settings' => 'registrations#edit', as: :account_settings
-    end
-
-    # Payment and Invoices
-    get "card" => 'card#edit'
-    put "card" => 'card#update'
-
-    resources :subscriptions, only: :index
-    get '/subscriptions/:community_id/edit' => 'subscriptions#edit', as: :edit_subscription
-    put '/subscriptions/:community_id' => 'subscriptions#update', as: :subscription
-
-    resources :invoices, only: [:index, :show], path: :statements
-
-    # Documents
-    get "users/accept_document/:id" => "document_acceptance#new", as: "accept_document"
-    post "users/accept_document/:id" => "document_acceptance#create", as: "accept_document_create"
-
-    # User Profiles
-    resources :user_profiles, path: :profiles, only: [:show, :edit, :update] do
-      member do
-        get :activities
-        get :announcements
-        get :characters
-        get :invites
-      end
-      resources :played_games, only: [:index, :show]
-    end
-    get "/account" => "user_profiles#account", as: "account"
-    put "/account/update" => "user_profiles#update", as: "update_account"
-
-    # Characer and PlayedGames
-    resources :played_games, only: [:new, :create, :update, :destroy] do
-      resource :characters, only: [:new, :create]
-      collection do
-        get :autocomplete
-      end
-    end
-    resources :characters, only: [:edit, :update, :destroy]
-
-    # Communities
-    resources :communities, only: [:show, :new, :create, :destroy] do
-      get 'page/:page', action: :index, on: :collection
-      get 'check_name', action: :check_name, on: :collection
-      member do
-        get :remove_confirmation, as: "community_remove_confirmation"
-      end
-    end
-
-    # Messaging
-    resources :sent_messages, only: [:create]
-    get 'mail/sent/autocomplete' => "sent_messages#autocomplete", as: 'sent_autocomplete'
-    get 'mail/sent/:id' => "sent_messages#show", as: "sent_mail"
-    get 'mail/sent' => "sent_messages#index", as: "sent_mailbox"
-    get 'mail/compose' => "sent_messages#new", as: "compose_mail"
-    get 'mail/compose/:id' => "sent_messages#new", as: "compose_mail_to"
-    get 'mail/inbox/:id' => "messages#show", as: "mail"
-    post 'mail/mark_read/:id' => "messages#mark_read", as: "mail_mark_read"
-    post 'mail/mark_unread/:id' => "messages#mark_unread", as: "mail_mark_unread"
-    put 'mail/:id/move/:folder_id' => "messages#move", as: "mail_move"
-    put 'mail/batch_move/:folder_id' => "messages#batch_move", as: "mail_batch_move"
-    put 'mail/batch_mark_read/' => "messages#batch_mark_read", as: "mail_batch_mark_read"
-    put 'mail/batch_mark_unread/' => "messages#batch_mark_unread", as: "mail_batch_mark_unread"
-    get 'mail/reply/:id' => "messages#reply", as: "mail_reply"
-    get 'mail/reply-all/:id' => "messages#reply_all", as: "mail_reply_all"
-    get 'mail/forward/:id' => "messages#forward", as: "mail_forward"
-    delete 'mail/delete/:id' => "messages#destroy", as: "mail_delete"
-    delete 'mail/delete' => "messages#destroy", as: "mail_delete_all"
-    delete 'mail/batch_delete' => "messages#batch_destroy", as: "mail_batch_delete"
-    get 'mail/inbox' => "mailbox#inbox", as: "inbox"
-    get 'mail/trash' => "mailbox#trash", as: "trash"
-
-    # Support Tickets
-    resources :support_tickets, path: :support, as: :support, only: [:index, :show, :new, :create] do
-      resources :support_comments, path: :comment, as: :comment, only: [:new, :create]
-    end
-    put 'support/:id/status/:status' => 'support_tickets#status', as: :support_status
-
-    # CommuntiyInvites
-    resources :community_invites, only: [:create]
-
-    # Invites
-    resources :invites, only: [:show]
-    put 'invites/batch_update' => "invites#batch_update", as: "invites_batch_update"
-
-    # Artwork Upload
-    resources :artwork_uploads, only: [:create, :new]
-
-  end # end of 'defaults subdomain: false' block
-
   # Subdomains
   constraints(Subdomain) do
     get "/" => "subdomains#index", as: 'subdomain_home'
@@ -257,6 +132,125 @@ DaBvRails::Application.routes.draw do
 
   # Routes that use no subdomain
   defaults subdomain: false do
+
+    # Admin Users
+    devise_for :admin_users, path: ActiveAdmin.application.default_namespace,
+                             controllers: {sessions: 'alexandria/devise/sessions', passwords: 'alexandria/devise/passwords'},
+                             path_names: { sign_in: 'login', sign_out: "logout" }
+    devise_scope :admin_user do
+      get "/alexandria/login" => "alexandria/devise/sessions#new"
+      post "/alexandria/login" => "alexandria/devise/sessions#create"
+      get "/alexandria/logout" => "alexandria/devise/sessions#destroy"
+      get "/admin_users/sign_in" => "alexandria/devise/sessions#new"
+      post "/admin_users/sign_in" => "alexandria/devise/sessions#create"
+      get "/admin_users/password/edit" => "alexandria/devise/passwords#edit"
+      put "/admin_users/password" => "alexandria/devise/passwords#update"
+      get "/admin_users/password/new" => "alexandria/devise/passwords#new"
+      post "/admin_users/password" => "alexandria/devise/passwords#create"
+    end
+
+    # Users
+    devise_for :users, controllers: { sessions: 'sessions',
+                                      registrations: 'registrations',
+                                      passwords: 'passwords',
+                                      confirmations: 'confirmations',
+                                      unlocks: 'unlocks' }
+    devise_scope :user do
+      get 'login' => 'sessions#new', as: :new_user_session
+      post 'login' => 'sessions#create', as: :user_session
+      get 'logout' => 'sessions#destroy', as: :destroy_user_session
+      get 'users/disable_confirmation' => 'registrations#disable_confirmation', as: :disable_confirmation
+      get 'users/reinstate' => 'registrations#reinstate_confirmation', as: :reinstate_confirmation
+      put 'users/reinstate' => 'registrations#send_reinstate', as: :send_reinstate
+      get 'users/reinstate_account' => 'registrations#reinstate_account_edit', as: :reinstate_account
+      put 'users/reinstate_account' => 'registrations#reinstate_account', as: :reinstate_account
+      get 'account-settings' => 'registrations#edit', as: :account_settings
+    end
+
+    # Payment and Invoices
+    get "card" => 'card#edit'
+    put "card" => 'card#update'
+
+    resources :subscriptions, only: :index
+    get '/subscriptions/:community_id/edit' => 'subscriptions#edit', as: :edit_subscription
+    put '/subscriptions/:community_id' => 'subscriptions#update', as: :subscription
+
+    resources :invoices, only: [:index, :show], path: :statements
+
+    # Documents
+    get "users/accept_document/:id" => "document_acceptance#new", as: "accept_document"
+    post "users/accept_document/:id" => "document_acceptance#create", as: "accept_document_create"
+
+    # User Profiles
+    resources :user_profiles, path: :profiles, only: [:show, :edit, :update] do
+      member do
+        get :activities
+        get :announcements
+        get :characters
+        get :invites
+      end
+      resources :played_games, only: [:index, :show]
+    end
+    get "/account" => "user_profiles#account", as: "account"
+    put "/account/update" => "user_profiles#update", as: "update_account"
+
+    # Characer and PlayedGames
+    resources :played_games, only: [:new, :create, :update, :destroy] do
+      resource :characters, only: [:new, :create]
+      collection do
+        get :autocomplete
+      end
+    end
+    resources :characters, only: [:edit, :update, :destroy]
+
+    # Communities
+    resources :communities, only: [:show, :new, :create, :destroy] do
+      get 'page/:page', action: :index, on: :collection
+      get 'check_name', action: :check_name, on: :collection
+      member do
+        get :remove_confirmation, as: "community_remove_confirmation"
+      end
+    end
+
+    # Messaging
+    resources :sent_messages, only: [:create]
+    get 'mail/sent/autocomplete' => "sent_messages#autocomplete", as: 'sent_autocomplete'
+    get 'mail/sent/:id' => "sent_messages#show", as: "sent_mail"
+    get 'mail/sent' => "sent_messages#index", as: "sent_mailbox"
+    get 'mail/compose' => "sent_messages#new", as: "compose_mail"
+    get 'mail/compose/:id' => "sent_messages#new", as: "compose_mail_to"
+    get 'mail/inbox/:id' => "messages#show", as: "mail"
+    post 'mail/mark_read/:id' => "messages#mark_read", as: "mail_mark_read"
+    post 'mail/mark_unread/:id' => "messages#mark_unread", as: "mail_mark_unread"
+    put 'mail/:id/move/:folder_id' => "messages#move", as: "mail_move"
+    put 'mail/batch_move/:folder_id' => "messages#batch_move", as: "mail_batch_move"
+    put 'mail/batch_mark_read/' => "messages#batch_mark_read", as: "mail_batch_mark_read"
+    put 'mail/batch_mark_unread/' => "messages#batch_mark_unread", as: "mail_batch_mark_unread"
+    get 'mail/reply/:id' => "messages#reply", as: "mail_reply"
+    get 'mail/reply-all/:id' => "messages#reply_all", as: "mail_reply_all"
+    get 'mail/forward/:id' => "messages#forward", as: "mail_forward"
+    delete 'mail/delete/:id' => "messages#destroy", as: "mail_delete"
+    delete 'mail/delete' => "messages#destroy", as: "mail_delete_all"
+    delete 'mail/batch_delete' => "messages#batch_destroy", as: "mail_batch_delete"
+    get 'mail/inbox' => "mailbox#inbox", as: "inbox"
+    get 'mail/trash' => "mailbox#trash", as: "trash"
+
+    # Support Tickets
+    resources :support_tickets, path: :support, as: :support, only: [:index, :show, :new, :create] do
+      resources :support_comments, path: :comment, as: :comment, only: [:new, :create]
+    end
+    put 'support/:id/status/:status' => 'support_tickets#status', as: :support_status
+
+    # CommuntiyInvites
+    resources :community_invites, only: [:create]
+
+    # Invites
+    resources :invites, only: [:show]
+    put 'invites/batch_update' => "invites#batch_update", as: "invites_batch_update"
+
+    # Artwork Upload
+    resources :artwork_uploads, only: [:create, :new]
+
     # Announcements
     resources :announcements, only: [:show]
     put 'announcements/batch_mark_as_seen' => "announcements#batch_mark_as_seen", as: "announcements_batch_mark_as_seen"
