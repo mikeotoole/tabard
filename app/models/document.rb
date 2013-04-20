@@ -130,7 +130,7 @@ protected
   # Sets a user's acceptance of the Privacy Policy to false
   ###
   def set_version_number
-    self.version = self.next_available_version(self.type)
+    self.version = Document.next_available_version(self.type)
     return true
   end
 
