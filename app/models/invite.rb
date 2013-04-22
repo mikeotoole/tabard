@@ -133,15 +133,14 @@ end
 #
 # Table name: invites
 #
-#  id                 :integer          not null, primary key
-#  event_id           :integer
-#  user_profile_id    :integer
-#  character_proxy_id :integer
-#  status             :string(255)
-#  is_viewed          :boolean          default(FALSE)
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
-#  expiration         :datetime
-#  character_id       :integer
+#  id              :integer          not null, primary key
+#  event_id        :integer
+#  user_profile_id :integer
+#  status          :string(255)
+#  is_viewed       :boolean          default(FALSE)
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  expiration      :datetime
+#  character_id    :integer
 #
 

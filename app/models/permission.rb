@@ -20,7 +20,7 @@ class Permission < ActiveRecord::Base
 # Constants
 ###
   # This is a collection of strings that are valid for subject classes.
-  VALID_SUBJECT_CLASSES = %w( Announcement Comment CustomForm PageSpace Page DiscussionSpace Discussion CommunityApplication CommunityInvite Role Submission Event )
+  VALID_SUBJECT_CLASSES = %w( Announcement Comment CustomForm PageSpace Page DiscussionSpace Discussion CommunityApplication CommunityInvite Submission Event )
   # This is a collection of strings that are valid for parent associations.
   VALID_PARENT_ASSOCIATIONS = %w( discussion_space page_space custom_form )
   # This is a collection of strings that are valid for permission levels.

@@ -14,7 +14,7 @@ class Subdomains::RolesController < SubdomainsController
   before_filter :block_unauthorized_user!
   before_filter :load_roles
   before_filter :create_role, only: [:new, :create]
-  authorize_resource except: [:user_profile_edit, :user_profile_update]
+  authorize_resource except: [:user_profile, :user_profile_edit, :user_profile_update]
   before_filter :ensure_current_user_is_member
 
   # GET /roles
@@ -95,6 +95,7 @@ class Subdomains::RolesController < SubdomainsController
 
   # GET /roles/user_profile/:user_profile_id/edit(.:format)
   def user_profile
+    raise CanCan::AccessDenied unless can? :accept, Role
     @user_profile = UserProfile.find params[:user_profile_id]
     if @user_profile.blank?
       render json: { success: false, error: 'Unable to find user.' }
