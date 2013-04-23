@@ -130,6 +130,26 @@ ActiveRecord::Schema.define(:version => 20130215184154) do
 
   add_index "artwork_uploads", ["document_id"], :name => "index_artwork_uploads_on_document_id"
 
+  create_table "character_proxies", :force => true do |t|
+    t.integer  "user_profile_id"
+    t.integer  "character_id"
+    t.string   "character_type"
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+    t.boolean  "is_removed",      :default => false
+  end
+
+  add_index "character_proxies", ["character_type", "character_id"], :name => "index_proxies_on_character_type_and_character_id", :unique => true
+  add_index "character_proxies", ["user_profile_id"], :name => "index_character_proxies_on_user_profile_id"
+
+  create_table "character_proxies_community_applications", :id => false, :force => true do |t|
+    t.integer "character_proxy_id"
+    t.integer "community_application_id"
+  end
+
+  add_index "character_proxies_community_applications", ["character_proxy_id"], :name => "habtm_cproxy_app_proxy_id"
+  add_index "character_proxies_community_applications", ["community_application_id"], :name => "habtm_cproxy_app_app_id"
+
   create_table "characters", :force => true do |t|
     t.string   "name"
     t.string   "avatar"
@@ -526,6 +546,20 @@ ActiveRecord::Schema.define(:version => 20130215184154) do
 
   add_index "messages", ["author_id"], :name => "index_messages_on_author_id"
 
+  create_table "minecraft_characters", :force => true do |t|
+    t.string   "name"
+    t.string   "avatar"
+    t.text     "about"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "minecrafts", :force => true do |t|
+    t.string   "server_type"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
   create_table "page_spaces", :force => true do |t|
     t.string   "name"
     t.integer  "supported_game_id"
@@ -714,6 +748,30 @@ ActiveRecord::Schema.define(:version => 20130215184154) do
   add_index "supported_games", ["game_announcement_space_id"], :name => "index_supported_games_on_game_announcement_space_id"
   add_index "supported_games", ["game_id", "game_type"], :name => "index_supported_games_on_game_id_and_game_type"
 
+  create_table "swtor_characters", :force => true do |t|
+    t.string   "name"
+    t.integer  "swtor_id"
+    t.string   "avatar"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.string   "char_class"
+    t.string   "advanced_class"
+    t.string   "species"
+    t.string   "level"
+    t.string   "about"
+    t.string   "gender"
+  end
+
+  add_index "swtor_characters", ["swtor_id"], :name => "index_swtor_characters_on_game_id"
+
+  create_table "swtors", :force => true do |t|
+    t.string   "faction"
+    t.string   "server_name"
+    t.string   "server_type"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
   create_table "themes", :force => true do |t|
     t.datetime "created_at",            :null => false
     t.datetime "updated_at",            :null => false
@@ -789,5 +847,28 @@ ActiveRecord::Schema.define(:version => 20130215184154) do
 
   add_index "view_logs", ["user_profile_id"], :name => "index_view_logs_on_user_profile_id"
   add_index "view_logs", ["view_loggable_type", "view_loggable_id"], :name => "index_view_logs_on_view_loggable_type_and_id"
+
+  create_table "wow_characters", :force => true do |t|
+    t.string   "name"
+    t.string   "race"
+    t.integer  "level"
+    t.integer  "wow_id"
+    t.string   "avatar"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "char_class"
+    t.text     "about"
+    t.string   "gender"
+  end
+
+  add_index "wow_characters", ["wow_id"], :name => "index_wow_characters_on_game_id"
+
+  create_table "wows", :force => true do |t|
+    t.string   "faction"
+    t.string   "server_name"
+    t.string   "server_type"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
 end
