@@ -30,6 +30,7 @@ class Page < ActiveRecord::Base
   belongs_to :page_space
   has_one :community, through: :page_space
   has_many :activities, as: :target, dependent: :destroy
+  has_one :community, foreign_key: "home_page_id", dependent: :nullify
 
   scope :navigation_pages, conditions: {show_in_navigation: true}
   scope :alphabetical, order("name ASC")
