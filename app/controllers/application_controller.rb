@@ -350,10 +350,13 @@ protected
   # This method will set the time zone to the users given value. This will ensure the views disply the correct time.
   ###
   def set_timezone
-    if current_user and defined? current_user.time_zone
-      Time.zone = cookies[:timezone] = current_user.time_zone
-    elsif !!cookies[:timezone]
-      Time.zone = cookies[:timezone].to_i
+    begin
+      if current_user and defined? current_user.time_zone
+        Time.zone = cookies[:timezone] = current_user.time_zone
+      elsif !!cookies[:timezone]
+        Time.zone = cookies[:timezone].to_i
+      end
+    rescue ArgumentError
     end
   end
 
