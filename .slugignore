@@ -2,5 +2,6 @@ doc
 lib/tasks/dev_tasks
 log
 public/uploads
+public/assets
 spec
 tmp
