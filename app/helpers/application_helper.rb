@@ -44,6 +44,7 @@ module ApplicationHelper
     classes.push 'top_level' if current_community
     classes.push 'qstring' unless request.query_string.blank?
     classes.push 'with_action_items' if has_action_items?
+    classes.push 'my_profile' if defined?(@user_profile) and user_signed_in? and current_user.user_profile == @user_profile
     return classes
   end
 

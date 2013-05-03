@@ -186,7 +186,6 @@ DaBvRails::Application.routes.draw do
       member do
         get :activities
         get :announcements
-        get :characters
         get :invites
       end
       resources :played_games, only: [:index, :show]

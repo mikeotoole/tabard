@@ -1,634 +1,641 @@
 @import mixins
 
 #body
-  h1
-    font-size: 3em
+    h1
+        font-size: 3em
 
-  .activities
-    padding: 10px 0
-    a
-      color: #56149C
-      text-decoration: none
-    li
-      &:after
-        border-top-color: #eee
-      &.comment >blockquote
-        >.avatar
-          background: #efe8de
-          border-color: #ccc
-          left: 0
-          &:before
-            border-right-color: #fff
-          &:after
-            border-top-color: #fff
-          >img
-            border-color: #fff
-        >.meta
-          border-bottom-color: #eee
-      time
-        color: #3679B3
-    li.comment:hover >blockquote >.avatar
-      +box_shadow(0 0 10px rgba(#000,.2))
-    li.activity
-      >a:first-child
-        display: none
-      *[meta]:hover
-        &:before
-          background: #3679B3
-          border-color: #5196CF
-          +box_shadow(0 0 15px rgba(#000,.4))
-          color: #fff
-        &:after
-          border-left-color: #5196CF
-          border-top-color: #5196CF
+    .activities
+        padding: 10px 0
+        a
+            color: #56149C
+            text-decoration: none
+        li
+            &:after
+                border-top-color: #eee
+            &.comment >blockquote
+                >.avatar
+                    background: #efe8de
+                    border-color: #ccc
+                    left: 0
+                    &:before
+                        border-right-color: #fff
+                    &:after
+                        border-top-color: #fff
+                    >img
+                        border-color: #fff
+                >.meta
+                    border-bottom-color: #eee
+            time
+                color: #3679B3
+        li.comment:hover >blockquote >.avatar
+            +box_shadow(0 0 10px rgba(#000,.2))
+        li.activity
+            >a:first-child
+                display: none
+            *[meta]:hover
+                &:before
+                    background: #3679B3
+                    border-color: #5196CF
+                    +box_shadow(0 0 15px rgba(#000,.4))
+                    color: #fff
+                &:after
+                    border-left-color: #5196CF
+                    border-top-color: #5196CF
 
 body.user_profiles.show,
 body.user_profiles.dashboard
-  
-  a.load
-    visibility: hidden
-
-  #content
-    background-image: image-url('application/block-2a.png')
-    margin: 100px 0 0
     
-    #body
-    
-      >header
-        height: 60px
-        margin: -110px 0 50px -30px
-        padding: 0
-        
-        h1
-          font-size: 3em
-          line-height: 1em
-          margin: 0
-          padding: 0
-          text-shadow: 0 2px 2px #fff
-      
-      >aside
-        float: left
-        margin: -10px -10px 0
-        width: 260px
-      
-        .avatar
-          background: #efe8de
-          border: 10px solid #DAE7EE
-          +border_radius(3,3,0,0)
-          height: 240px
-          position: relative
-          
-          &:before
-            border: 1px solid #b1cada
-            bottom: -2px
-            content: ''
-            left: -2px
-            position: absolute
-            right: -2px
-            top: -2px
-          
-          &:after
-            border: 1px solid #fff
-            bottom: -1px
-            content: ''
-            left: -1px
-            position: absolute
-            right: -1px
-            top: -1px
-          
-          img
-            display: block
-            height: 240px
-            width: 240px
-          
-        .actions
-          background: #42324e
-          border-top: 1px solid #fff
-          +border_radius(0,0,3,3)
-          color: #a89db5
-          font-size: .8em
-          padding: 0
-          position: relative
-          
-          &:after
-            clear: both
-            content: ''
-            display: block
-            height: 0
-            visibility: hidden
-            
-          >a,
-          >div
-            background: none
-            color: #fff
-            display: block
-            float: left
-            height: 26px
-            line-height: 26px
-            margin: 5px
-            padding: 0 5px
-            position: relative
-            text-decoration: none
-            text-shadow: 0 -1px 1px #000
-            &:before
-              background: #70667A
-              +border_radius(3)
-              display: block
-              float: left
-              font: 2em Picara
-              height: 26px
-              left: 0
-              line-height: 26px
-              margin: 0 5px 0 -5px
-              +opacity(.5)
-              text-align: center
-              top: 0
-              width: 26px
-            &.edit:before
-              content: '\F007'
-            &.message:before
-              content: '\F100'
-            &.recruit:before
-              content: '\F30B'
-            &.settings:before
-              content: '\F204'
-            &:hover
-              background: #CB472C
-              &:before
-                background: transparent
-                +opacity(.9)
-            
-            >ul
-              background: #CC4728
-              +bg_gradient(#CC4728,#A1392F)
-              +border_radius(0,3,3,3)
-              display: none
-              left: 0
-              position: absolute
-              top: 25px
-              z-index: 2
-            
-            &.recruit:hover
-              +border_radius(3,3,0,0)
-              >ul
-                display: block
-                padding: 5px
-                >li
-                  display: inline
-                  margin: 0
-                  padding: 0
-                  &:before
-                    display: none
-                  a
-                    +border_radius(0)
-                    border-top: 1px solid rgba(#792B27,.5)
-                    color: #E9D9C4
-                    display: block
-                    line-height: 15px
-                    min-width: 100px
-                    padding: 10px
-                    text-decoration: none
-                    white-space: nowrap
-                    &:hover
-                      background: #792B27
-                      color: #fff
-                  &:first-child a
-                    border-top: 0
-        
-        h3
-          line-height: 1em
-          padding: 30px 0 0
+    a.load
+        visibility: hidden
 
-          + p
-            padding: 5px 0 0
-          
-        ul.communities
-          padding: 5px 0 0
-          
-          li
-            margin: 0
-            
-            &:before
-              margin: 5px 0 0 20px
-            
-            a
-              +bg_gradient(#eeeeee,#ffffff)
-              border-bottom: 1px solid #ccc
-              +border_radius(0)
-              color: #AC371E
-              display: block
-              margin: 0
-              padding: 5px 0 5px 30px
-              position: relative
-              text-decoration: none
-              text-shadow: 0 1px 1px #fff
-              &:before
-                display: none
-              &:after
-                color: #aaa
-                content: '\F500'
-                font: 1.5em Picara
-                left: 10px
-                line-height: .75em
-                position: absolute
-                top: 5px
-              &:hover
-                background: #A23B31
-                color: #fff
-                text-shadow: 0 -1px 1px #000
-                &:after
-                  color: #fff
-            
-            &:first-child a
-              +border_radius(3,3,0,0)
-              
-            &:last-child a
-              +border_radius(0,0,3,3)
-            
-            &:only-child a
-              +border_radius(3)
+    #content
+        background-image: image-url('application/block-2a.png')
+        margin: 100px 0 0
         
-        .stats
-          font-size: .8em
-          line-height: 15px
-      
-      >article
-        float: right
-        margin: -10px -10px 0
-        padding: 0
-        position: relative
-        width: 590px
+        #body
         
-        >dl
-          margin: 0
-          padding: 0
-        
-          >dd
-            display: none
+            >header
+                height: 60px
+                margin: -110px 0 50px -30px
+                padding: 0
+                
+                h1
+                    font-size: 3em
+                    line-height: 1em
+                    margin: 0
+                    padding: 0
+                    text-shadow: 0 2px 2px #fff
             
-            &.busy
-              background: image-url('application/busy.gif') center center no-repeat
-              min-height: 50px
-            
-            .pagination
-              border: 0
-              padding: 0
-            
-            >h1
-              font-size: 2.2em
-              line-height: 24px
-              padding: 0 0 .5em
-            
-            >h2
-              background: #dae7ee
-              border-bottom: 2px solid #90b4ca
-              +border_radius(2,2,0,0)
-              clear: both
-              font-weight: 400
-              line-height: 1em
-              margin: 0
-              padding: 10px
-              position: relative
-              text-shadow: 0 -2px 1px #fff
-              z-index: 2
-              &[data-char-count]:after
-                background: #90B4CA
-                +border_radius(20)
-                content: attr(data-char-count)
-                color: #fff
-                display: inline-block
-                font-size: .6em
-                min-width: 20px
-                padding: 0 .2em
-                text-align: center
-                text-shadow: none
-              + h2
-                margin-top: 20px
-              .menu
-                +opacity(0)
-                +transition(opacity .2s linear)
-              &:hover .menu
-                +opacity(1)
-              a
-                background: #2D7CB4
-                +border_radius(2)
-                color: #fff
-                font-size: .6em
-                margin: 0
-                padding: 3px 9px
-                position: absolute
-                right: 7px
-                text-decoration: none
-                text-shadow: 0 -1px 1px #000
-                top: 7px
-                &:before
-                  content: '\F002'
-                  font: 1.5em Picara
-                  padding-right: 5px
-                &:hover
-                  background: #1467a1
-              &.add
-                background: #eee
-                height: 24px
-                margin-bottom: -20px
-                a
-                  background: #666
-                  left: 7px
-                  right: auto
-                  &:hover
-                    background: #A53E34
-                ~ h2
-                  +border_radius(0)
-              &.toggle
-                cursor: pointer
-                &:hover
-                  background: #c7d9e3
-                  color: #226599
-              &.closed + ul
-                display: none
-              a.remove
-                background: #A53E34
-                overflow: hidden
-                text-indent: -500em
-                width: 12px
-                &:before
-                  content: '\F001'
-                  font: 1.5em Picara
-                  left: 0
-                  line-height: 100%
-                  padding-right: 0
-                  position: absolute
-                  right: 0
-                  text-align: center
-                  text-indent: 0
-                &:hover
-                  background: #8b3027
-              a.remove + a.add
-                right: 42px
-            
-            .characters
-              margin: 0
-              padding: 0
-              position: relative
-              z-index: 1
-              >li
-                border-top: 1px solid #D1E1EB
+            >aside
                 float: left
-                margin: -1px 0 10px
-                min-height: 50px
-                padding: 20px 0 20px 75px
-                position: relative
-                width: 220px
-                &:before
-                  display: none
+                margin: -10px -10px 0
+                width: 260px
+            
                 .avatar
-                  background: #efe8de
-                  height: 60px
-                  left: 0
-                  position: absolute
-                  top: 20px
-                  width: 60px
-                  &:before
-                    background: image-url('application/comment-shadow.png') 0 0 no-repeat
-                    content: ''
-                    height: 101px
-                    position: absolute
-                    right: 0
-                    top: -15px
-                    width: 18px
+                    background: #efe8de
+                    border: 10px solid #DAE7EE
+                    +border_radius(3,3,0,0)
+                    height: 240px
+                    position: relative
+                    
+                    &:before
+                        border: 1px solid #b1cada
+                        bottom: -2px
+                        content: ''
+                        left: -2px
+                        position: absolute
+                        right: -2px
+                        top: -2px
+                    
+                    &:after
+                        border: 1px solid #fff
+                        bottom: -1px
+                        content: ''
+                        left: -1px
+                        position: absolute
+                        right: -1px
+                        top: -1px
+                    
+                    img
+                        display: block
+                        height: 240px
+                        width: 240px
+                    
+                .actions
+                    background: #42324e
+                    border-top: 1px solid #fff
+                    +border_radius(0,0,3,3)
+                    color: #a89db5
+                    font-size: .8em
+                    padding: 0
+                    position: relative
+                    
+                    &:after
+                        clear: both
+                        content: ''
+                        display: block
+                        height: 0
+                        visibility: hidden
+                        
+                    >a,
+                    >div
+                        background: none
+                        color: #fff
+                        display: block
+                        float: left
+                        height: 26px
+                        line-height: 26px
+                        margin: 5px
+                        padding: 0 5px
+                        position: relative
+                        text-decoration: none
+                        text-shadow: 0 -1px 1px #000
+                        &:before
+                            background: #70667A
+                            +border_radius(3)
+                            display: block
+                            float: left
+                            font: 2em Picara
+                            height: 26px
+                            left: 0
+                            line-height: 26px
+                            margin: 0 5px 0 -5px
+                            +opacity(.5)
+                            text-align: center
+                            top: 0
+                            width: 26px
+                        &.edit:before
+                            content: '\F007'
+                        &.message:before
+                            content: '\F100'
+                        &.recruit:before
+                            content: '\F30B'
+                        &.settings:before
+                            content: '\F204'
+                        &:hover
+                            background: #CB472C
+                            &:before
+                                background: transparent
+                                +opacity(.9)
+                        
+                        >ul
+                            background: #CC4728
+                            +bg_gradient(#CC4728,#A1392F)
+                            +border_radius(0,3,3,3)
+                            display: none
+                            left: 0
+                            position: absolute
+                            top: 25px
+                            z-index: 2
+                        
+                        &.recruit:hover
+                            +border_radius(3,3,0,0)
+                            >ul
+                                display: block
+                                padding: 5px
+                                >li
+                                    display: inline
+                                    margin: 0
+                                    padding: 0
+                                    &:before
+                                        display: none
+                                    a
+                                        +border_radius(0)
+                                        border-top: 1px solid rgba(#792B27,.5)
+                                        color: #E9D9C4
+                                        display: block
+                                        line-height: 15px
+                                        min-width: 100px
+                                        padding: 10px
+                                        text-decoration: none
+                                        white-space: nowrap
+                                        &:hover
+                                            background: #792B27
+                                            color: #fff
+                                    &:first-child a
+                                        border-top: 0
+                
                 h3
-                  color: #56149C
-                  line-height: 1em
-                  margin: 0 0 10px
-                  padding: 0
-                  a
-                    color: #56149C
-                    margin: 0 -3px
-                    &:hover
-                      color: #BE4124
-                .attributes
-                  font-size: .8em
-                  line-height: 15px
-                  dt
-                    clear: left
-                    float: left
-                    width: 60px
-                  dd
-                    color: #000
-                    float: left
-                    width: 160px
-            table
-              
-              thead th
-                background: #dae7ee
-                +bg_gradient(#dae7ee,#dae7ee)
-                border-bottom: 2px solid #90B4CA
-                color: #327BB4
-                font-size: 1.1em
-                text-shadow: 0 -1px 1px #fff
-                &.check a
-                  background: #327BB4 !important
-                  color: #fff
-                  display: block
-                  float: left
-                  height: 24px
-                  margin: -2px
-                  padding: 0 !important
-                  text-align: center
-                  text-shadow: 0 -1px 1px #000
-                  width: 24px
-                  &:before
-                    font: 1.5em Picara
-                    line-height: auto
-                  &:hover
-                    background: #A03B32 !important
-              
-              tbody
-                td
-                  background: #fff
-                  +bg_gradient(#ffffff,#ffffff)
-                  border-color: #D1E1EB
-                  font-size: .9em
-                  padding: 10px
-                  &.check
-                    padding: 10px 14px
-                  &.check:empty:before
-                    content: '\F000'
-                    font: 2em Picara
-                  &.check input,
-                  &.check label
-                    margin-left: -9px
-                  &.check label:before
-                    +bg_gradient(#B2CADA,#DAE7EE)
-                    +box_shadow(0 0 5px #B2CADA)
-                  &.invitee
-                    white-space: nowrap
-                tr.read a
-                  color: #56149C
-                  &:hover
-                    color: #BE4124
-              
-              tfoot td
-                background: #dae7ee
-                +bg_gradient(#dae7ee,#dae7ee)
-                border-top: 2px solid #90B4CA
-                color: #327BB4
-                button
-                  border: 0
-                  &:hover
-                    +box_shadow(0 0 10px #4486BA)
-                &.status
-                  .select
-                    float: left
-                    margin: 0 10px 0 0
-                    width: 140px
-                  button
-                    clear: none
-                    float: left
+                    line-height: 1em
+                    padding: 30px 0 0
+
+                    + p
+                        padding: 5px 0 0
+                    
+                ul.communities
+                    padding: 5px 0 0
+                    
+                    li
+                        margin: 0
+                        
+                        &:before
+                            margin: 5px 0 0 20px
+                        
+                        a
+                            +bg_gradient(#eeeeee,#ffffff)
+                            border-bottom: 1px solid #ccc
+                            +border_radius(0)
+                            color: #AC371E
+                            display: block
+                            margin: 0
+                            padding: 5px 0 5px 30px
+                            position: relative
+                            text-decoration: none
+                            text-shadow: 0 1px 1px #fff
+                            &:before
+                                display: none
+                            &:after
+                                color: #aaa
+                                content: '\F500'
+                                font: 1.5em Picara
+                                left: 10px
+                                line-height: .75em
+                                position: absolute
+                                top: 5px
+                            &:hover
+                                background: #A23B31
+                                color: #fff
+                                text-shadow: 0 -1px 1px #000
+                                &:after
+                                    color: #fff
+                        
+                        &:first-child a
+                            +border_radius(3,3,0,0)
+                            
+                        &:last-child a
+                            +border_radius(0,0,3,3)
+                        
+                        &:only-child a
+                            +border_radius(3)
+                
+                .stats
+                    font-size: .8em
+                    line-height: 15px
             
-            .checkboxes li
-              color: #aaa
-              height: 25px
-              line-height: 25px
-              margin: 0
-              padding: 0 10px 0 35px
-              position: relative
-              &:before
-                +bg_gradient(#B2CADA,#DAE7EE)
-                border: 1px solid #fff
-                +box_shadow(0 0 5px #B2CADA)
-                content: ''
-                height: 20px
-                left: 0
-                line-height: 20px
-                position: absolute
-                text-align: center
-                top: 0
-                width: 20px
-              a
-                color: #aaa
-                display: block
-                float: left
-                margin: 0 -10px 0 -35px
-                padding: 0 10px 0 35px
+            >article
+                float: right
+                margin: -10px -10px 0
+                padding: 0
                 position: relative
-                text-decoration: none
-                z-index: 2
-                &:hover
-                  background: transparent
-                  color: #CF4527 !important
-              &.checked
-                color: #251533
-                a
-                  color: #251533
-                &:before
-                  color: #251533 !important
-                  content: '\F000'
-                  font: 1.5em Picara
-                  line-height: auto
-              &.busy:after
-                background: image-url('application/busy-mini.gif') 50% 50% no-repeat #aaa
-                +border_radius(3)
-                content: ''
-                height: 22px
-                left: 0
-                +opacity(.5)
-                position: absolute
-                top: 0
-                width: 22px
-                z-index: 2
-          
-          >dt
-            background: #E4E4E4
-            +border_radius(3,3,0,0)
-            +box_shadow(0 -5px 5px rgba(#000,.1))
-            height: 35px
-            padding: 0
-            position: absolute
-            text-indent: -500em
-            top: -56px
-            +transition(background .2s linear)
-            width: 40px
-            z-index: 1
-            &:before
-              content: ''
-              color: #000
-              font: 2.5em Picara
-              +opacity(.3)
-              height: 30px
-              width: 30px
-              left: 5px
-              line-height: 30px
-              position: absolute
-              text-align: center
-              text-indent: 0
-              top: 0
-            &:after
-              background: #333
-              +border_radius(2)
-              color: #ccc
-              content: attr(data-hint)
-              display: none
-              font-size: .8em
-              height: 20px
-              line-height: 20px
-              margin: 0 8px 0 0
-              padding: 0 8px
-              position: absolute
-              right: 100%
-              text-indent: 0
-              top: 8px
-              white-space: nowrap
-            &:hover:after
-              display: block
+                width: 590px
+                
+                >dl
+                    margin: 0
+                    padding: 0
+                    position: relative
+                    &:before
+                        background: image-url('application/busy-orange-on-white@200x15.gif') 50% 30px no-repeat #fff
+                        +border_radius(5)
+                        bottom: -20px
+                        left: -20px
+                        min-height: 75px
+                        +opacity(.8)
+                        position: absolute
+                        right: -20px
+                        top: -21px
+                        z-index: 7
+                    &.busy:before
+                        content: ''
+                
+                    >dd
+                        display: none
+                        .pagination
+                            border: 0
+                            padding: 0
+                        >h1
+                            font-size: 2.2em
+                            line-height: 24px
+                            padding: 0 0 .5em
+                        >h2
+                            background: #dae7ee
+                            border-bottom: 2px solid #90b4ca
+                            +border_radius(2,2,0,0)
+                            clear: both
+                            font-weight: 400
+                            line-height: 1em
+                            margin: 0
+                            padding: 10px
+                            position: relative
+                            text-shadow: 0 -2px 1px #fff
+                            z-index: 2
+                            &[data-char-count]:after
+                                background: #90B4CA
+                                +border_radius(20)
+                                content: attr(data-char-count)
+                                color: #fff
+                                display: inline-block
+                                font-size: .6em
+                                min-width: 20px
+                                padding: 0 .2em
+                                text-align: center
+                                text-shadow: none
+                            + h2
+                                margin-top: 20px
+                            .menu
+                                +opacity(0)
+                                +transition(opacity .2s linear)
+                            &:hover .menu
+                                +opacity(1)
+                            a
+                                background: #2D7CB4
+                                +border_radius(2)
+                                color: #fff
+                                font-size: .6em
+                                margin: 0
+                                padding: 3px 9px
+                                position: absolute
+                                right: 7px
+                                text-decoration: none
+                                text-shadow: 0 -1px 1px #000
+                                top: 7px
+                                &:before
+                                    content: '\F002'
+                                    font: 1.5em Picara
+                                    padding-right: 5px
+                                &:hover
+                                    background: #1467a1
+                            &.add
+                                background: #eee
+                                height: 24px
+                                margin-bottom: -20px
+                                a
+                                    background: #666
+                                    left: 7px
+                                    right: auto
+                                    &:hover
+                                        background: #A53E34
+                                ~ h2
+                                    +border_radius(0)
+                            &.toggle
+                                cursor: pointer
+                                &:hover
+                                    background: #c7d9e3
+                                    color: #226599
+                            &.closed + ul
+                                display: none
+                            a.remove
+                                background: #A53E34
+                                overflow: hidden
+                                text-indent: -500em
+                                width: 12px
+                                &:before
+                                    content: '\F001'
+                                    font: 1.5em Picara
+                                    left: 0
+                                    line-height: 100%
+                                    padding-right: 0
+                                    position: absolute
+                                    right: 0
+                                    text-align: center
+                                    text-indent: 0
+                                &:hover
+                                    background: #8b3027
+                            a.remove + a.add
+                                right: 42px
+                        
+                        .characters
+                            margin: 0
+                            padding: 0
+                            position: relative
+                            z-index: 1
+                            >li
+                                border-top: 1px solid #D1E1EB
+                                float: left
+                                margin: -1px 0 10px
+                                min-height: 50px
+                                padding: 20px 0 20px 75px
+                                position: relative
+                                width: 220px
+                                &:before
+                                    display: none
+                                .avatar
+                                    background: #efe8de
+                                    height: 60px
+                                    left: 0
+                                    position: absolute
+                                    top: 20px
+                                    width: 60px
+                                    &:before
+                                        background: image-url('application/comment-shadow.png') 0 0 no-repeat
+                                        content: ''
+                                        height: 101px
+                                        position: absolute
+                                        right: 0
+                                        top: -15px
+                                        width: 18px
+                                h3
+                                    color: #56149C
+                                    line-height: 1em
+                                    margin: 0 0 10px
+                                    padding: 0
+                                    a
+                                        color: #56149C
+                                        margin: 0 -3px
+                                        &:hover
+                                            color: #BE4124
+                                .attributes
+                                    font-size: .8em
+                                    line-height: 15px
+                                    dt
+                                        clear: left
+                                        float: left
+                                        width: 60px
+                                    dd
+                                        color: #000
+                                        float: left
+                                        width: 160px
+                        table
+                            
+                            thead th
+                                background: #dae7ee
+                                +bg_gradient(#dae7ee,#dae7ee)
+                                border-bottom: 2px solid #90B4CA
+                                color: #327BB4
+                                font-size: 1.1em
+                                text-shadow: 0 -1px 1px #fff
+                                &.check a
+                                    background: #327BB4 !important
+                                    color: #fff
+                                    display: block
+                                    float: left
+                                    height: 24px
+                                    margin: -2px
+                                    padding: 0 !important
+                                    text-align: center
+                                    text-shadow: 0 -1px 1px #000
+                                    width: 24px
+                                    &:before
+                                        font: 1.5em Picara
+                                        line-height: auto
+                                    &:hover
+                                        background: #A03B32 !important
+                            
+                            tbody
+                                td
+                                    background: #fff
+                                    +bg_gradient(#ffffff,#ffffff)
+                                    border-color: #D1E1EB
+                                    font-size: .9em
+                                    padding: 10px
+                                    &.check
+                                        padding: 10px 14px
+                                    &.check:empty:before
+                                        content: '\F000'
+                                        font: 2em Picara
+                                    &.check input,
+                                    &.check label
+                                        margin-left: -9px
+                                    &.check label:before
+                                        +bg_gradient(#B2CADA,#DAE7EE)
+                                        +box_shadow(0 0 5px #B2CADA)
+                                    &.invitee
+                                        white-space: nowrap
+                                tr.read a
+                                    color: #56149C
+                                    &:hover
+                                        color: #BE4124
+                            
+                            tfoot td
+                                background: #dae7ee
+                                +bg_gradient(#dae7ee,#dae7ee)
+                                border-top: 2px solid #90B4CA
+                                color: #327BB4
+                                button
+                                    border: 0
+                                    &:hover
+                                        +box_shadow(0 0 10px #4486BA)
+                                &.status
+                                    .select
+                                        float: left
+                                        margin: 0 10px 0 0
+                                        width: 140px
+                                    button
+                                        clear: none
+                                        float: left
+                        
+                        .checkboxes li
+                            color: #aaa
+                            height: 25px
+                            line-height: 25px
+                            margin: 0
+                            padding: 0 10px 0 35px
+                            position: relative
+                            &:before
+                                +bg_gradient(#B2CADA,#DAE7EE)
+                                border: 1px solid #fff
+                                +box_shadow(0 0 5px #B2CADA)
+                                content: ''
+                                height: 20px
+                                left: 0
+                                line-height: 20px
+                                position: absolute
+                                text-align: center
+                                top: 0
+                                width: 20px
+                            a
+                                color: #aaa
+                                display: block
+                                float: left
+                                margin: 0 -10px 0 -35px
+                                padding: 0 10px 0 35px
+                                position: relative
+                                text-decoration: none
+                                z-index: 2
+                                &:hover
+                                    background: transparent
+                                    color: #CF4527 !important
+                            &.checked
+                                color: #251533
+                                a
+                                    color: #251533
+                                &:before
+                                    color: #251533 !important
+                                    content: '\F000'
+                                    font: 1.5em Picara
+                                    line-height: auto
+                            &.busy:after
+                                background: image-url('application/busy-mini.gif') 50% 50% no-repeat #aaa
+                                +border_radius(3)
+                                content: ''
+                                height: 22px
+                                left: 0
+                                +opacity(.5)
+                                position: absolute
+                                top: 0
+                                width: 22px
+                                z-index: 2
+                    
+                    >dt
+                        background: #E4E4E4
+                        +border_radius(3,3,0,0)
+                        +box_shadow(0 -5px 5px rgba(#000,.1))
+                        height: 35px
+                        padding: 0
+                        position: absolute
+                        text-indent: -500em
+                        top: -56px
+                        +transition(background .2s linear)
+                        width: 40px
+                        z-index: 1
+                        &:before
+                            content: ''
+                            color: #000
+                            font: 2.5em Picara
+                            +opacity(.3)
+                            height: 30px
+                            width: 30px
+                            left: 5px
+                            line-height: 30px
+                            position: absolute
+                            text-align: center
+                            text-indent: 0
+                            top: 0
+                        &:after
+                            background: #333
+                            +border_radius(2)
+                            color: #ccc
+                            content: attr(data-hint)
+                            display: none
+                            font-size: .8em
+                            height: 20px
+                            line-height: 20px
+                            margin: 0 8px 0 0
+                            padding: 0 8px
+                            position: absolute
+                            right: 100%
+                            text-indent: 0
+                            top: 8px
+                            white-space: nowrap
+                        &:hover:after
+                            display: block
 
-            &:nth-child(1)
-              right: 0
-            &:nth-child(3)
-              right: 41px
-            &:nth-child(5)
-              right: 82px
-            &:nth-child(7)
-              right: 123px
-            &:nth-child(9)
-              right: 164px
+                        &:nth-child(1)
+                            right: 0
+                        &:nth-child(3)
+                            right: 41px
+                        &:nth-child(5)
+                            right: 82px
+                        &:nth-child(7)
+                            right: 123px
+                        &:nth-child(9)
+                            right: 164px
 
-            a
-              background: transparent !important
-              bottom: 0
-              left: 0
-              overflow: hidden
-              padding: 0
-              pointer-events: auto
-              position: absolute
-              right: 0
-              text-indent: -500em
-              top: 0
-              visibility: visible
-              z-index: 1
-            &.invites:before
-              content: '\F206'
-            &.announcements:before
-              content: '\F207'
-            &.activities:before
-              content: '\F205'
-            &.games + dd > p
-              padding-top: 30px
-            &.games:before
-              content: '\F008'
-            &.roles:before
-              content: '\F108'
-            &:hover
-              background: #fff
-              cursor: pointer
-              z-index: 3
-              &:before
-                +opacity(.5)
-            &.current
-              background: #fff
-              cursor: default
-              z-index: 2
-              &:before
-                +opacity(.2)
-              + dd
-                display: block
+                        a
+                            background: transparent !important
+                            bottom: 0
+                            left: 0
+                            overflow: hidden
+                            padding: 0
+                            pointer-events: auto
+                            position: absolute
+                            right: 0
+                            text-indent: -500em
+                            top: 0
+                            visibility: visible
+                            z-index: 1
+                        &.invites:before
+                            content: '\F206'
+                        &.announcements:before
+                            content: '\F207'
+                        &.activities:before
+                            content: '\F205'
+                        &.games + dd > p
+                            padding-top: 30px
+                        &.games:before
+                            content: '\F008'
+                        &.roles:before
+                            content: '\F108'
+                        &:hover
+                            background: #fff
+                            cursor: pointer
+                            z-index: 3
+                            &:before
+                                +opacity(.5)
+                        &.current
+                            background: #fff
+                            cursor: default
+                            z-index: 2
+                            &:before
+                                +opacity(.2)
+                            + dd
+                                display: block

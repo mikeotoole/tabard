@@ -26,4 +26,11 @@
 
     = javascript_include_tag "application"
     = yield :footer
+    %script
+      :plain
+        jQuery(document).ready(function($){
+          if(!!window.location.hash) {
+            $('#tabs dt.' + window.location.hash.replace('#','') + ' > a').trigger('click');
+          }
+        });
     = render 'layouts/analytics'
