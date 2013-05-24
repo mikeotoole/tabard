@@ -46,7 +46,6 @@ gem 'validates_timeliness' #                                                    
 
 # TODO: This should be in the dev test group.
 gem 'timecop'#                                                                            MIT - https://github.com/jtrupiano/timecop
-gem 'simplecov'#                                                                          MIT - https://github.com/colszowka/simplecov
 
 # Assets Specific Gems
 group :assets do
@@ -84,6 +83,7 @@ group :development, :test do
   gem 'rspec-rails'#                                                                      MIT - https://github.com/rspec/rspec-rails
   gem 'factory_girl_rails'#                                                               MIT - https://github.com/thoughtbot/factory_girl_rails
   gem 'debugger'#                                                                         MIT - https://github.com/cldwalker/debugger
+  gem 'simplecov'#                                                                          MIT - https://github.com/colszowka/simplecov
 end
 
 # Test Specific Gems
