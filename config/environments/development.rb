@@ -14,8 +14,8 @@ DaBvRails::Application.configure do
   config.action_controller.perform_caching = false
 
   # Don't care if the mailer can't send
-  config.action_mailer.raise_delivery_errors = true # Make true to turn on E-mail.
-  config.action_mailer.perform_deliveries = true # Make true to turn on E-mail
+  config.action_mailer.raise_delivery_errors = false # Make true to turn on E-mail.
+  config.action_mailer.perform_deliveries = false # Make true to turn on E-mail
   # IMPORTANT - For devise email the delayed jobs server needs to be started with "rake jobs:work" (async ignores the above settings).
 
   # Print deprecation notices to the Rails logger
