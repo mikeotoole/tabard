@@ -89,7 +89,6 @@ protected
 ###
 # Callback Methods
 ###
-
   ###
   # _after_save_
   #
@@ -103,10 +102,9 @@ protected
       self.support_ticket.update_column(:status, "Closed")
       self.close_comment = nil
       self.save!
+    end
+    return true
   end
-  return true
-end
-
 end
 
 # == Schema Information

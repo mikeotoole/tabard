@@ -12,8 +12,7 @@ class SupportTicketMailer < ActionMailer::Base
 
   # Tell user they have a new message
   def new_support_ticket(support_ticket_id)
-    @support_ticket = SupportTicket.find_by_id(support_ticket_id)
-    if !!@support_ticket
+    if @support_ticket = SupportTicket.find_by_id(support_ticket_id)
       @user_profile = UserProfile.find_by_id(@support_ticket.user_profile_id)
       @url = alexandria_support_ticket_url(@support_ticket)
       mail(to: "support@tabard.com", subject: "Tabard: New Support Ticket") do |format|

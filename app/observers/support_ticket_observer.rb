@@ -10,12 +10,7 @@ class SupportTicketObserver < ActiveRecord::Observer
   # Notifies support with an email
   def after_create(support_ticket)
     unless Rails.env.test?
-      SupportTicketObserver.delay.send_support_email(support_ticket.id)
+      SupportTicketMailer.delay.new_support_ticket(support_ticket.id)
     end
-  end
-
-  # Sends the email
-  def self.send_support_email(support_ticket_id)
-    SupportTicketMailer.new_support_ticket(support_ticket_id).deliver
   end
 end
