@@ -1,45 +1,29 @@
 jQuery(document).ready ($) ->
 
     $('#tabs')
-        # Clear tab before before loading new stuff
         .on 'ajax:before', 'dt > a', ->
-            $(@).closest('dt').find('+ dd').html ''
+            $this = $(@)
+            $this.data 'type', 'json'
+            $this.closest('dl').addClass 'busy'
         # Announcements
         .on 'ajax:error', 'dt.announcements + dd form', (xhr, status, error) ->
             $.alert 'Unable to mark announcements as read.'
         .on 'ajax:complete', 'dt.announcements + dd form', (event, data, status, xhr) ->
             $('#tabs dt.announcements a').trigger 'click'
-        # Update window history on tabl switching
-        .on 'ajax:success', 'dt > a', ->
+        # Update window history on tab switching
+        .on 'ajax:success', 'dt > a', (event, data, status, xhr) ->
+            return false unless !!data.success
+            $this = $(@)
+            $dt = $this.closest 'dt'
+            $dl = $dt.closest 'dl'
+            $dd = $dt.find '+dd'
+            $dd.html data.html
+            $dl.removeClass 'busy'
+            $dl.find('>dt').removeClass 'current'
+            $dt.addClass 'current'
             if typeof(history.replaceState) is typeof(Function)
-                hash = $(@).closest('dt').prop('class').split(' ').shift()
-                history.replaceState {}, $(@).text(), "##{hash}"
-
-    # Links rom user bar that activate tabs instead of full page reloads
-    if $('#body:has(header.myprofile)').length
-        $('#bar')
-            .on 'click','.avatar > a', ->
-                $('#tabs dt.games a').trigger 'click'
-                false
-            .on 'click','.dashboard .notice a', ->
-                $('#tabs dt.announcements a').trigger 'click'
-                false
-            .on 'click','.dashboard .calendar a', ->
-                $('#tabs dt.invites a').trigger 'click'
-                false
-
-    hash = window.location.hash
-    switch hash
-        when '#invites'
-            $('#tabs dt.invites a').trigger 'click'
-        when '#games'
-            $('#tabs dt.games a').trigger 'click'
-        when '#announcements'
-            $('#tabs dt.announcements a').trigger 'click'
-        when '#roles'
-            $('#tabs dt.roles a').trigger 'click'
-        else
-            $('#tabs dt.activities a').trigger 'click'
+                hash = $dt.prop('class').split(' ').shift()
+                history.replaceState {}, $this.text(), "##{hash}"
 
     # Batch invites action
     $('#body')
@@ -57,22 +41,6 @@ jQuery(document).ready ($) ->
             else
                 $.alert response.message
 
-    # Role assignment toggling
-    $('#body')
-        .on 'ajax:before', '#tabs dd .checkboxes a', ->
-            $(@).closest('li').addClass 'busy'
-        .on 'ajax:success', '#tabs dd .checkboxes a', (event, data, status, xhr) ->
-            $(@).closest('li').removeClass 'busy'
-            response = $.parseJSON xhr.responseText
-            if response.success
-                if response.assigned
-                    $(@).closest('li').addClass 'checked'
-                else
-                    $(@).closest('li').removeClass 'checked'
-            else
-                $.alert 'Error. Unable to assign role.'
-
-    # Games/Charactesr
-    $('#body')
-        .on 'click', '#tabs dt.games + dd h2', (e) ->
-            $(@).toggleClass 'closed' if @ is e.target
+    # Games/Characters
+    $('#body').on 'click', '#tabs dt.games + dd h2', (e) ->
+        $(@).toggleClass 'closed' if @ is e.target

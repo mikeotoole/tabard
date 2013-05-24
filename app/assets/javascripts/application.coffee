@@ -160,18 +160,6 @@ jQuery(document).ready ($) ->
                 ul.hide().animate opacity: 0, 50, ->
                     ul.show().css opacity: 1
 
-    # replace derp avatars with default
-    $('.avatar img, img.avatar').bind 'error', ->
-        if $(@).css('width')
-            width = $(@).css('width').replace /[^\d]/g, ''
-        else
-            width = $(@).closest('.avatar').width()
-        src = $(@).attr('src')
-        avatar = '/assets/application/avatar@'+width+'.png'
-        $(@)
-            .attr('src', avatar)
-            .unbind 'error'
-
     # Override rails allow action (for data-confirm)
     $.rails.allowAction = (element) ->
         message = element.data("confirm")
@@ -189,13 +177,11 @@ jQuery(document).ready ($) ->
             false
 
     # Batch actions
-    $('form .batch button, form button.batch')
-        .click ->        
-            $(@)
-                .closest('form')
-                .prop({ action: $(@).attr('action') })
-                .find('input[name="_method"]')
-                .val $(@).attr('method')
+    $('form .batch button, form button.batch').click ->        
+        $this = $(@)
+        $form = $this.closest 'form'
+        $form.prop action: $(@).attr('action')
+        $form.find('input[name="_method"]').val $this.attr('method')
 
     # Flash message events
     $('body').on 'init', '#flash li', ->
@@ -239,51 +225,42 @@ jQuery(document).ready ($) ->
     $('#flash li').trigger 'init'
 
     # Tiered form field selection
-    $('form .select[affects] input')
-        .change ->
-            select = $(@).closest('.select')
-            li = select.closest('li')
-            affects_collection = select.attr('affects')
-            form = select.closest('form')
-            for affects in affects_collection.split(/\s/) when affects
-                affected = form.find('.affected.'+affects)
-                val = select.find('input:checked').val()
-                if li.filter('[affected_by]').length
-                    val = form.find('.select.'+li.attr('affected_by')+' input:checked').val() + '_' + val
-                val = if val? then val.replace /\s/gi, '_' else ''
-                options = affected.find('.options[class_name="'+val+'"]')
-                affected
-                    .hide()
-                    .find('.options')
-                    .hide()
-                    .find('input')
-                    .prop('disabled', true)
-                    .prop('readonly', true)
-                if options.length
-                    affected.show()
-                options
-                    .show()
-                    .find('input')
-                    .each ->
-                        $(@)
-                            .prop('disabled', false)
-                            .prop('readonly', false)
-                if affected.find('.select[affects]:visible').length
-                    affected.find('.select[affects]:visible input:first').trigger 'change'
+    $('form .select[affects] input').change ->
+        $select = $(@).closest '.select'
+        $li = $select.closest 'li'
+        $form = $select.closest 'form'
+        affects_collection = $select.attr 'affects'
+        for affects in affects_collection.split(/\s/) when affects
+            affected = $form.find ".affected.#{affects}"
+            val = $select.find('input:checked').val()
+            if $li.filter('[affected_by]').length
+                val = $form.find(".select.#{$li.attr 'affected_by'} input:checked").val() + '_' + val
+            val = if val? then val.replace(/\s/gi, '_') else ''
+            options = affected.find ".options[class_name='#{val}']"
+            affected
+                .hide()
+                .find('.options')
+                .hide()
+                .find('input')
+                .prop('disabled', true)
+                .prop('readonly', true)
+            if options.length
+                affected.show()
+            options
+                .show()
+                .find('input')
+                .each ->
+                    $(@)
+                        .prop('disabled', false)
+                        .prop('readonly', false)
+            if affected.find('.select[affects]:visible').length
+                affected.find('.select[affects]:visible input:first').trigger 'change'
     $('form .select[affects] input:checked').trigger 'change'
 
-    # Tabs
-    $('dl.tabs >dt').click ->
-        $(@).closest('dl.tabs').find('>dt').removeClass('current')
-        $(@).addClass('current')
-    if window.location.hash
-        $('#tabs .'+window.location.hash.replace('#','')).trigger 'click'
+    # Links to tabs
     $('a[href*="#"]').click ->
-        link = $(@).attr('href').split('#').pop()
-        tab = $('dl.tabs >dt.'+link)
-        if(tab.length)
-            tab.trigger 'click'
-            return false
+        hash = $(@).attr('href').split('#').pop()
+        $("#tabs dt.#{hash} > a").trigger 'click'
 
     # Slider input fields
     $('body').on 'init', '.slider', -> $(@).css('width', $(@).find('label').length * 70)

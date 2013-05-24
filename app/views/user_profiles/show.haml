@@ -63,15 +63,15 @@
   %dl#tabs.tabs
     - if is_my_profile
       %dt{ class: 'invites', 'data-hint' => 'Invitations' }
-        = link_to 'Invites', invites_user_profile_url(@user_profile, format: :js), remote: true, class: 'dynload wait', data: { type: :text, target: '#tabs dt.invites + dd', error: 'Error: unable to load invites.' }
+        = link_to 'Invites', invites_user_profile_url(@user_profile, format: :js), remote: true
       %dd
       %dt{ class: 'announcements', 'data-hint' => 'Announcements' }
-        = link_to 'Announcements', announcements_user_profile_url(@user_profile, format: :js), remote: true, class: 'dynload wait', data: { type: :text, target: '#tabs dt.announcements + dd', error: 'Error: unable to load announcements.' }
+        = link_to 'Announcements', announcements_user_profile_url(@user_profile, format: :js), remote: true
       %dd
     - if is_my_profile or !is_private
       %dt{ class: 'games', 'data-hint' => 'Games & Characters' }
-        = link_to 'Games & Characters', user_profile_played_games_url(@user_profile, format: :js), remote: true, class: 'dynload wait', data: { type: :text, target: '#tabs dt.games + dd', error: 'Error: unable to load games.' }
+        = link_to 'Games & Characters', user_profile_played_games_url(@user_profile, format: :js), remote: true
       %dd
       %dt{ class: 'activities current', 'data-hint' => 'Recent Activity' }
-        = link_to 'Recent Activity', activities_user_profile_url(@user_profile, format: :js), remote: true, class: 'dynload wait', data: { type: :text, target: '#tabs dt.activities + dd', error: 'Error: unable to load recent activity.' }
+        = link_to 'Recent Activity', activities_user_profile_url(@user_profile, format: :js), remote: true
       %dd

@@ -14,7 +14,10 @@ class PlayedGamesController < ApplicationController
 
   def index
     respond_with(@played_games) do |format|
-      format.js {render partial: 'user_profiles/played_games', locals: { user_profile: @user_profile, played_games: @played_games }}
+      format.js {
+        html = render_to_string(partial: 'user_profiles/played_games', locals: { user_profile: @user_profile, played_games: @played_games })
+        render json: {success: true, html: html}
+      }
     end
   end
 

@@ -92,27 +92,26 @@ class UserProfilesController < ApplicationController
   # GET /user_profiles/:id/activities(.:format)
   def activities
     unless params[:updated]
-      render partial: 'user_profiles/activities', locals: { user_profile: @user_profile, activities: @activities, activities_count_initial: @activities_count_initial, activities_count_increment: @activities_count_increment }
+      html = render_to_string(partial: 'user_profiles/activities', locals: { user_profile: @user_profile, activities: @activities, activities_count_initial: @activities_count_initial, activities_count_increment: @activities_count_increment })
+      render json: {success: true, html: html}
     else
-      render partial: "activities/activities", locals: { activities: @activities, user_profile: @user_profile }
+      html = render_to_string(partial: "activities/activities", locals: { activities: @activities, user_profile: @user_profile })
+      render json: {success: true, html: html}
     end
   end
 
   # GET /user_profiles/:id/activities(.:format)
   def announcements
     @acknowledgements = current_user.acknowledgements.includes(announcement: [:community]).order(:has_been_viewed).ordered.page params[:page]
-    render partial: 'user_profiles/announcements', locals: { acknowledgements: @acknowledgements }
-  end
-
-  # GET /user_profiles/:id/characters(.:format)
-  def characters
-    render partial: 'user_profiles/characters', locals: { user_profile: @user_profile }
+    html = render_to_string(partial: 'user_profiles/announcements', locals: { acknowledgements: @acknowledgements })
+    render json: {success: true, html: html}
   end
 
   # GET /user_profiles/:id/invites(.:format)
   def invites
     @invites = current_user.invites.fresh.order(:is_viewed).includes(:user_profile, :character, event: [:community]).page params[:page]
-    render partial: 'user_profiles/invites', locals: { invites: @invites }
+    html = render_to_string(partial: 'user_profiles/invites', locals: { invites: @invites })
+    render json: {success: true, html: html}
   end
 
 ###
