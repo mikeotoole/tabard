@@ -26,6 +26,8 @@ describe MessagesController do
   let(:sender) { DefaultObjects.user }
   let(:receiver) { DefaultObjects.additional_community_user_profile.user }
   let(:other_user) { create(:user_profile).user }
+  # Uses spec/support/default_params.rb to make 'default subdomain: false' block work with tests.
+  let(:default_params) { {subdomain: false} }
 
   describe "GET show" do
     it "assigns the requested message as @message when authenticated as owner" do

@@ -3,6 +3,8 @@ require 'spec_helper'
 describe DocumentAcceptanceController do
   let(:privacy_policy) { create(:privacy_policy) }
   let(:user) { DefaultObjects.user }
+  # Uses spec/support/default_params.rb to make 'default subdomain: false' block work with tests.
+  let(:default_params) { {subdomain: false} }
 
   describe "GET 'new'" do
     it "returns http success" do

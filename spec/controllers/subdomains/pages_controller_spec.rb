@@ -32,7 +32,7 @@ describe Subdomains::PagesController do
   let(:space) { DefaultObjects.page_space }
 
   before(:each) do
-    @request.host = "#{community.subdomain}.example.com"
+    @request.host = "#{community.subdomain}.lvh.me:3000"
   end
 
   describe "GET show" do

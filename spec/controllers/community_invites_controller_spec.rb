@@ -4,6 +4,9 @@ describe CommunityInvitesController do
   let(:community) { create(:community) }
   let(:admin_user) { community.admin_profile.user }
   let(:applicant) { create(:user_profile) }
+  # Uses spec/support/default_params.rb to make 'default subdomain: false' block work with tests.
+  let(:default_params) { {subdomain: false} }
+
   describe "POST 'create'" do
     it "should create with good attributes" do
       sign_in admin_user

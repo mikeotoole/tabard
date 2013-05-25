@@ -5,10 +5,8 @@ describe UserProfilesController do
   let(:owner) { create(:user) }
   let(:user_profile) { owner.user_profile }
   let(:disabled_user_profile) { create(:disabled_user).user_profile }
-
-  before(:each) do
-    @request.host = "lvh.me"
-  end
+  # Uses spec/support/default_params.rb to make 'default subdomain: false' block work with tests.
+  let(:default_params) { {subdomain: false} }
 
   describe "GET 'account'" do
     it "should show the current user when authenticated as a user" do

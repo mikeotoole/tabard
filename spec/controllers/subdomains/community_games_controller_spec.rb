@@ -28,7 +28,7 @@ describe Subdomains::CommunityGamesController do
   let(:valid_attributes) { attributes_for(:community_game_att) }
 
   before(:each) do
-    @request.host = "#{community.subdomain}.lvh.me"
+    @request.host = "#{community.subdomain}.lvh.me:3000"
   end
 
   describe "GET index" do

@@ -5,6 +5,8 @@ describe CharactersController do
   let(:character) { create(:swtor_character) }
   let(:user) { character.user_profile.user }
   let(:played_game) { character.played_game }
+  # Uses spec/support/default_params.rb to make 'default subdomain: false' block work with tests.
+  let(:default_params) { {subdomain: false} }
 
   describe "GET 'show'" do
     it "should throw routing error" do

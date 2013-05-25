@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe TopLevelController do
+  # Uses spec/support/default_params.rb to make 'default subdomain: false' block work with tests.
+  let(:default_params) { {subdomain: false} }
+
   describe "GET 'index'" do
     it "should be successful" do
       get 'index'

@@ -3,6 +3,8 @@ require 'spec_helper'
 describe PlayedGamesController do
   let(:user_profile) { DefaultObjects.user_profile }
   let(:user) { user_profile.user }
+  # Uses spec/support/default_params.rb to make 'default subdomain: false' block work with tests.
+  let(:default_params) { {subdomain: false} }
 
   describe "GET 'index'" do
     it "should show the index" do

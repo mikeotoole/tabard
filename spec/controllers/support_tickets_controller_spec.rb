@@ -4,6 +4,8 @@ describe SupportTicketsController do
   let(:user) { create(:user) }
   let(:user_profile) { user.user_profile }
   let(:support_ticket) { create(:support_ticket, user_profile: user_profile)  }
+  # Uses spec/support/default_params.rb to make 'default subdomain: false' block work with tests.
+  let(:default_params) { {subdomain: false} }
 
   describe "GET 'index'" do
     it "should show the index" do

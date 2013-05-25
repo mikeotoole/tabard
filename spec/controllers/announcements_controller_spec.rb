@@ -8,6 +8,8 @@ describe AnnouncementsController do
   let(:announcement) { create(:announcement, :community => community, :user_profile => admin.user_profile) }
   let(:announcement_attr) { attributes_for(:announcement, :community => community, :user_profile => admin.user_profile) }
   let(:invalid_announcement_attr) { attributes_for(:announcement, :community => community, :name => nil) }
+  # Uses spec/support/default_params.rb to make 'default subdomain: false' block work with tests.
+  let(:default_params) { {subdomain: false} }
 
   before(:each) do
     if not member.is_member?(community)

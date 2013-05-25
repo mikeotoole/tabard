@@ -5,6 +5,8 @@ describe SupportCommentsController do
   let(:user_profile) { user.user_profile }
   let(:support_ticket) { create(:support_ticket, user_profile: user_profile)  }
   let(:support_comment) { create(:support_comment, user_profile: user_profile) }
+  # Uses spec/support/default_params.rb to make 'default subdomain: false' block work with tests.
+  let(:default_params) { {subdomain: false} }
 
   describe "POST 'create'" do
     it "should create with good attributes" do

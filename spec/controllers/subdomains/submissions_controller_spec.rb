@@ -8,7 +8,7 @@ describe Subdomains::SubmissionsController do
   let(:submission) { create(:submission) }
 
   before(:each) do
-    @request.host = "#{community.subdomain}.lvh.me"
+    @request.host = "#{community.subdomain}.lvh.me:3000"
   end
 
   describe "GET index" do

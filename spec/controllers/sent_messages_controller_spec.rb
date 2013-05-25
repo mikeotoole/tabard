@@ -23,6 +23,8 @@ describe SentMessagesController do
   let(:rec_message) { message.message_associations.first }
   let(:sender) { DefaultObjects.user }
   let(:receiver) { DefaultObjects.additional_community_user_profile.user }
+  # Uses spec/support/default_params.rb to make 'default subdomain: false' block work with tests.
+  let(:default_params) { {subdomain: false} }
 
   describe "GET index" do
     it "assigns all users sent_messages as @messages when authenticated as a user" do

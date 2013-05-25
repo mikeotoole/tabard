@@ -26,7 +26,7 @@ describe Subdomains::PageSpacesController do
   let(:space) { DefaultObjects.page_space }
 
   before(:each) do
-    @request.host = "#{community.subdomain}.lvh.me"
+    @request.host = "#{community.subdomain}.lvh.me:3000"
   end
 
   describe "GET index" do

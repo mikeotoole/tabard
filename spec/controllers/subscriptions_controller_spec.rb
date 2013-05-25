@@ -9,6 +9,8 @@ describe SubscriptionsController do
   let(:community_with_stripe) { admin_with_stripe.owned_communities.first }
   let(:pro_community) { create(:pro_community) }
   let(:pro_admin) { pro_community.admin_profile.user }
+  # Uses spec/support/default_params.rb to make 'default subdomain: false' block work with tests.
+  let(:default_params) { {subdomain: false} }
 
   describe "GET index" do
     it "assigns all users owned_communities as @owned_communities when authenticated as a user" do

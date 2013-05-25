@@ -20,6 +20,8 @@ require 'spec_helper'
 
 describe ArtworkUploadsController do
   let(:valid_attributes) { attributes_for(:artwork_upload_att) }
+  # Uses spec/support/default_params.rb to make 'default subdomain: false' block work with tests.
+  let(:default_params) { {subdomain: false} }
 
   describe "GET new" do
     it "assigns a new artwork_upload as @artwork_upload" do
@@ -48,7 +50,7 @@ describe ArtworkUploadsController do
       end
     end
 
-    describe "with invalid params" do    
+    describe "with invalid params" do
       it "assigns a newly created but unsaved artwork_upload as @artwork_upload" do
         post :create, :artwork_upload => attributes_for(:artwork_upload_att, :email => nil)
         assigns(:artwork_upload).should be_a_new(ArtworkUpload)

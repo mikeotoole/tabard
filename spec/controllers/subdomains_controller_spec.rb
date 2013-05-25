@@ -4,9 +4,11 @@ describe SubdomainsController do
   let(:user_profile) { create(:user_profile)}
   let(:user) { user_profile.user }
   let(:community) { create(:community) }
+  # Uses spec/support/default_params.rb to make 'default subdomain: false' block work with tests.
+  let(:default_params) { {subdomain: false} }
 
   before(:each) do
-    @request.host = "#{community.subdomain}.example.com"
+    @request.host = "#{community.subdomain}.lvh.me:3000"
   end
 
   describe "GET 'index'" do
@@ -28,7 +30,7 @@ describe SubdomainsController do
     end
 
     it "should redirect to root if not exist" do
-      @request.host = "DOESNOTEXIST.lvh.me"
+      @request.host = "DOESNOTEXIST.lvh.me:3000"
       sign_in community.admin_profile.user
       get 'index'
       response.should redirect_to(root_url)

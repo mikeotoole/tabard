@@ -22,6 +22,8 @@ describe MailboxController do
   let(:message) { create(:message) }
   let(:sender) { DefaultObjects.user }
   let(:receiver) { DefaultObjects.additional_community_user_profile.user }
+  # Uses spec/support/default_params.rb to make 'default subdomain: false' block work with tests.
+  let(:default_params) { {subdomain: false} }
 
   describe "GET inbox" do
     it "assigns todays messages as @todays_messages when authenticated as user" do

@@ -67,11 +67,16 @@ RSpec.configure do |config|
     Rails.cache.clear
     Timecop.return
   end
+  config.before(:each, type: :controller) do
+    @request.host = "lvh.me:3000"
+  end
   config.after(:each) do
     DatabaseCleaner.clean
     DefaultObjects.clean
     Timecop.return
   end
+
+  config.include Rails.application.routes.url_helpers
 
   config.include(MailerMacros)
   config.before(:each) { reset_email }

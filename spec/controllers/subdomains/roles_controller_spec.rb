@@ -78,7 +78,7 @@ describe Subdomains::RolesController do
     end
 
     it "should be successful when authenticated as a pro community admin" do
-      @request.host = "#{pro_community.subdomain}.lvh.me"
+      @request.host = "#{pro_community.subdomain}.lvh.me:3000"
       sign_in pro_admin_user
       get 'new'
       response.should be_success
@@ -111,7 +111,7 @@ describe Subdomains::RolesController do
 
   describe "POST 'create' authenticated as pro community admin" do
     before(:each) do
-      @request.host = "#{pro_community.subdomain}.lvh.me"
+      @request.host = "#{pro_community.subdomain}.lvh.me:3000"
       sign_in pro_admin_user
       post 'create', :role => pro_role_att
     end
@@ -220,7 +220,7 @@ describe Subdomains::RolesController do
     end
 
     it "should be successful when authenticated as a pro community admin" do
-      @request.host = "#{pro_community.subdomain}.lvh.me"
+      @request.host = "#{pro_community.subdomain}.lvh.me:3000"
       some_role = create(:role, :community => pro_community)
       sign_in pro_admin_user
       delete 'destroy', :id => some_role

@@ -21,6 +21,8 @@ require 'spec_helper'
 describe RegistrationsController do
   let(:user) { DefaultObjects.user }
   let(:admin) { DefaultObjects.community_admin }
+  # Uses spec/support/default_params.rb to make 'default subdomain: false' block work with tests.
+  let(:default_params) { {subdomain: false} }
 
   before :each do
     request.env["devise.mapping"] = Devise.mappings[:user]
