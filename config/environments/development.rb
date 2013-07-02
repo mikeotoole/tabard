@@ -59,12 +59,12 @@ DaBvRails::Application.configure do
 
   # Mail setting for development
   ActionMailer::Base.smtp_settings = {
-    :address              => "secure.emailsrvr.com",
-    :port                 => 587,
-    :user_name            => ENV['BV_DEV_EMAIL_USERNAME'],
-    :password             => ENV['BV_DEV_EMAIL_PASSWORD'],
+    :address              => 'smtp.sendgrid.net',
+    :port                 => '587',
+    :user_name            => ENV['SENDGRID_USERNAME'],
+    :password             => ENV['SENDGRID_PASSWORD'],
     :authentication       => 'plain',
-    enable_starttls_auto: true
+    :domain               => 'lvh.me:3000'
   }
 
   config.after_initialize do
