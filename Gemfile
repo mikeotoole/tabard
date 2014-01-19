@@ -74,7 +74,6 @@ group :development do
   gem 'brakeman'#                                                                         MIT - https://github.com/presidentbeef/brakeman
   gem 'better_errors'#                                                                    MIT - https://github.com/charliesome/better_errors
   gem "binding_of_caller"#                                                                MIT - https://github.com/banister/binding_of_caller
-  gem 'rubygems-bundler'#                                                                 Apache2 - https://github.com/mpapis/rubygems-bundler
   gem 'thin'#                                                                             Ruby - https://github.com/nragaz/thin-gem
 end
 
