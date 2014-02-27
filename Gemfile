@@ -2,6 +2,9 @@ source 'http://rubygems.org'#                                                   
 
 ruby '2.0.0'
 
+# At top so it is before any other gems that use environment variables.
+gem 'dotenv-rails', groups: [:development, :test]
+
 # Rails Gem
 gem "rails", "~> 3.2.13" #                                                                MIT - https://github.com/rails/rails
 
